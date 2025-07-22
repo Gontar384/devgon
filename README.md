@@ -7,7 +7,8 @@ saving development time and enabling the creation of impressive products repeate
 ## Environment Variables
 
 ### Frontend (.env)
-`NEXT_PUBLIC_TEST=`
+`NEXT_PUBLIC_API_URL=`
 
 ### Backend (.env)
 `NODE_ENV=`
+`MONGO_URI=`
