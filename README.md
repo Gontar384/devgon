@@ -11,4 +11,4 @@ saving development time and enabling the creation of impressive products repeate
 
 ### Backend (.env)
 `NODE_ENV=`
-`MONGO_URI=`
+`DATABASE_URL=`
