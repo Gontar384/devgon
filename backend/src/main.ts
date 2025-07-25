@@ -10,6 +10,11 @@ async function bootstrap() {
   const config = createSwaggerConfig();
   const document = SwaggerModule.createDocument(app, config);
 
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  });
+
   if (process.env.NODE_ENV !== 'production') {
     SwaggerModule.setup('docs', app, document);
   }
@@ -22,4 +27,4 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3001);
 }
-bootstrap();
+bootstrap().catch(console.error);
