@@ -21,10 +21,27 @@ describe('ProductController (e2e)', () => {
 
   it('/products (GET) should return array', () => {
     return request(app.getHttpServer())
-        .get('/products')
-        .expect(200)
-        .expect(res => {
-          expect(Array.isArray(res.body)).toBe(true);
-        });
+      .get('/products')
+      .expect(200)
+      .expect((res) => {
+        expect(Array.isArray(res.body)).toBe(true);
+      });
+  });
+
+  it('/products (POST) should create and return a product', () => {
+    const newProduct = {
+      title: 'Test Product',
+      description: 'Test description',
+    };
+
+    return request(app.getHttpServer())
+      .post('/products')
+      .send(newProduct)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('id');
+        expect(res.body.title).toBe(newProduct.title);
+        expect(res.body.description).toBe(newProduct.description);
+      });
   });
 });
