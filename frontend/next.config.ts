@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -7,5 +7,5 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
-}
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+};

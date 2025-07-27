@@ -7,8 +7,26 @@ saving development time and enabling the creation of impressive products repeate
 ## Environment Variables
 
 ### Frontend (.env)
-`NEXT_PUBLIC_API_URL=`
+NEXT_PUBLIC_API_URL=
 
 ### Backend (.env)
-`NODE_ENV=`
-`DATABASE_URL=`
+NODE_ENV=
+DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
+
+##After clone:
+
+git checkout dev
+
+/root
+npm install
+delete package-lock.json
+
+/backend
+npm install
+npm run prisma:generate
+.env
+.env.test
+
+/frontend
+npm install
+.env
