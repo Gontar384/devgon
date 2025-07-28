@@ -7,17 +7,10 @@ import { createSwaggerConfig } from './config/swagger.config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const config = createSwaggerConfig();
-  const document = SwaggerModule.createDocument(app, config);
-
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   });
-
-  if (process.env.NODE_ENV !== 'production') {
-    SwaggerModule.setup('docs', app, document);
-  }
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -25,6 +18,12 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT ?? 3001);
+  if (process.env.NODE_ENV !== 'production') {
+    const config = createSwaggerConfig();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('docs', app, document);
+  }
+
+  await app.listen(8000);
 }
 bootstrap().catch(console.error);

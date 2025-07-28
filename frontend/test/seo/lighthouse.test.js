@@ -1,7 +1,10 @@
-const lighthouseModule = require('lighthouse');
-const lighthouse = lighthouseModule.default || lighthouseModule;
-const chromeLauncher = require('chrome-launcher');
-const spawn = require('cross-spawn');
+import lighthouseModule from 'lighthouse';
+import spawn from 'cross-spawn';
+import treeKill from 'tree-kill';
+import * as chromeLauncher from 'chrome-launcher';
+
+lighthouseModule.default = undefined;
+const lighthouse = lighthouseModule;
 
 async function launchNextDev() {
   const child = spawn('npm', ['run', 'dev'], { stdio: 'inherit' });
@@ -16,7 +19,6 @@ async function runLighthouse(url) {
   const options = {
     port: chrome.port,
     output: 'json',
-    outputPath: './seo/reports/report.json',
   };
 
   const runnerResult = await lighthouse(url, options);
@@ -43,7 +45,13 @@ async function main() {
     console.error('Lighthouse test failed:', e);
     process.exitCode = 1;
   } finally {
-    nextProcess.kill();
+    treeKill(nextProcess.pid, 'SIGKILL', (err) => {
+      if (err) {
+        console.error('Failed to kill Next.js dev server:', err);
+      } else {
+        console.log('Next.js dev server stopped');
+      }
+    });
   }
 }
 

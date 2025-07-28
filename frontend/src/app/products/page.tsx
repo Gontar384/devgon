@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import api from '../../services/axios';
 
-export default function ProductsPage() {
+const ProductsPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
@@ -11,12 +11,7 @@ export default function ProductsPage() {
     e.preventDefault();
 
     try {
-      const res = await api.post('/products', {
-        title,
-        description,
-      });
-
-      console.log(res);
+      const res = await api.post('/products', { title, description });
 
       if (res.status === 201) {
         setMessage('Produkt został dodany!');
@@ -31,7 +26,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <main className="max-w-md mx-auto p-4">
+    <main className="max-w-md mx-auto p-4 bg-purple-500">
       <h1 className="text-2xl font-bold mb-4">Dodaj produkt</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -51,7 +46,7 @@ export default function ProductsPage() {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-gray-500"
         >
           Wyślij
         </button>
@@ -59,4 +54,6 @@ export default function ProductsPage() {
       {message && <p className="mt-4">{message}</p>}
     </main>
   );
-}
+};
+
+export default ProductsPage;

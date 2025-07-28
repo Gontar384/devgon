@@ -7,10 +7,11 @@ saving development time and enabling the creation of impressive products repeate
 ## Environment Variables
 
 ### Frontend (.env)
-NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 
 ### Backend (.env)
-NODE_ENV=
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
 
 ##After clone:
