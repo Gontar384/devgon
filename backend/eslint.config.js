@@ -7,7 +7,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.js'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -37,14 +37,11 @@ export default tseslint.config(
     },
   },
   {
-    overrides: [
-      {
-        files: ['**/*.e2e-spec.ts', '**/*.test.ts'],
-        rules: {
-          '@typescript-eslint/no-unsafe-argument': 'off',
-          '@typescript-eslint/no-unsafe-member-access': 'off',
-        },
-      },
-    ],
-  },
+    files: ['**/*.e2e-spec.ts', '**/*.spec.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+    },
+  }
 );

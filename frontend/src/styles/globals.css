@@ -1,5 +1,0 @@
-@tailwind utilities;
-
-body {
-  @apply bg-background text-foreground font-sans;
-}
