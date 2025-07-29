@@ -10,11 +10,15 @@ saving development time and enabling the creation of impressive products repeate
 NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 
 ### Backend (.env)
-NODE_ENV=development
+NODE_ENV=dev/test/prod
+
 FRONTEND_URL=http://localhost:3000
+
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
 
-##After clone:
+
+
+## After clone:
 
 git checkout dev
 

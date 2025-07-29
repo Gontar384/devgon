@@ -18,12 +18,12 @@ async function bootstrap() {
     }),
   );
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'dev') {
     const config = createSwaggerConfig();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
   }
 
-  await app.listen(8000);
+  await app.listen(4000);
 }
 bootstrap().catch(console.error);
