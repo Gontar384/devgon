@@ -69,10 +69,20 @@ async function saveReport(runnerResult) {
 }
 
 async function main() {
-  const nextProcess = await launchNextDev();
+  const url = 'http://localhost:3000';
+  let nextProcess = null;
+  let startedNextDev = false;
 
   try {
-    const url = 'http://localhost:3000';
+    await waitForServer(url, 1000);
+    console.log('🟢 Next.js server already running, skipping launch');
+  } catch {
+    console.log('🔄 Next.js server not running. Launching...');
+    nextProcess = await launchNextDev();
+    startedNextDev = true;
+  }
+
+  try {
     const runnerResult = await runLighthouse(url);
     await saveReport(runnerResult);
 
@@ -87,13 +97,15 @@ async function main() {
     console.error('Lighthouse test failed:', e);
     process.exitCode = 1;
   } finally {
-    treeKill(nextProcess.pid, 'SIGKILL', (err) => {
-      if (err) {
-        console.error('Failed to kill Next.js dev server:', err);
-      } else {
-        console.log('✅ Next.js dev server stopped');
-      }
-    });
+    if (startedNextDev && nextProcess) {
+      treeKill(nextProcess.pid, 'SIGKILL', (err) => {
+        if (err) {
+          console.error('Failed to kill Next.js dev server:', err);
+        } else {
+          console.log('✅ Next.js dev server stopped');
+        }
+      });
+    }
   }
 }
 
