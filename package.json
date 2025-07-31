@@ -11,7 +11,9 @@
     "test:ci": "echo '▶️ BACKEND TESTS' && npm run test:ci --prefix backend && echo '▶️ FRONTEND TESTS' && npm run test:ci --prefix frontend",
     "ci": "start-server-and-test dev:ci http://localhost:3000 \"test:ci\"",
     "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
-    "build": "npm run build --prefix backend && npm run build --prefix frontend"
+    "build": "echo '📦 Building BACKEND...' && npm run build --prefix backend && echo '🌐 Building FRONTEND...' && npm run build --prefix frontend",
+    "lint": "npm run lint --prefix backend && npm run lint --prefix frontend",
+    "format": "npm run format --prefix backend && npm run format --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
