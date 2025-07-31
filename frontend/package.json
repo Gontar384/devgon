@@ -16,7 +16,7 @@
     "test:ci": "npm run test:playwright && (npm run test:seo || echo 'SEO failed but ignored')",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "format": "prettier --write ."
   },
   "dependencies": {

@@ -7,7 +7,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.js'],
+    ignores: ['eslint.config.mjs'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -43,5 +43,5 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/unbound-method': 'off',
     },
-  }
+  },
 );

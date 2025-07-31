@@ -1,0 +1,113 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-pr:
+    name: Test on dev push & create PR if passed
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.1
+
+      # Install root dependencies (for concurrently, etc.), remove root lock file to avoid conflict with app-level lock files
+      - run: npm install
+      - run: rm -f package-lock.json
+
+      # Install frontend & backend dependencies
+      - run: npm install --prefix backend
+      - run: npm install --prefix frontend
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+
+      - name: Set DATABASE_URL for tests
+        run: echo "DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb" >> $GITHUB_ENV
+
+      # Create .env.test
+      - name: Create .env.test
+        run: |
+          echo "NODE_ENV=test" > backend/.env.test
+          echo "FRONTEND_URL=http://localhost:3000" >> backend/.env.test
+          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> backend/.env.test
+        working-directory: backend
+
+      # Prisma and database
+      - name: Generate Prisma Client
+        run: npm run prisma:generate --prefix backend
+      - name: Run DB Migrations (test DB)
+        run: npm run prisma:migrate --prefix backend
+
+      # Run server and tests
+      - name: Run tests
+        run: npm run ci
+
+      # Create PR to main (if tests pass)
+      - name: Create Pull Request to main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: dev
+          base: main
+          title: 'Dev → Main - Auto PR after successful tests'
+          body: 'This PR was created automatically after passing tests on dev.'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy on PR to main
+    needs: test-and-pr
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.1
+
+      # Create dummy .env (optional, for Docker if needed)
+      - name: Create frontend .env
+        run: |
+          echo "NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}" >> frontend/.env
+
+      # Docker login & build/push
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devgon:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devgon:latest
