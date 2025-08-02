@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   test-and-pr:
@@ -16,7 +21,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:17.2
         ports:
           - 5432:5432
         env:
@@ -57,9 +62,9 @@ jobs:
       # Create .env.test
       - name: Create .env.test
         run: |
-          echo "NODE_ENV=test" > backend/.env.test
-          echo "FRONTEND_URL=http://localhost:3000" >> backend/.env.test
-          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> backend/.env.test
+          echo "NODE_ENV=test" > .env.test
+          echo "FRONTEND_URL=http://localhost:3000" >> .env.test
+          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.test
         working-directory: backend
 
       # Prisma and database
@@ -71,6 +76,10 @@ jobs:
       # Run server and tests
       - name: Run tests
         run: npm run ci
+
+      # Lint and prettier test
+      - name: Run Lint & Format Checks
+        run: npm run check:code-style
 
       # Create PR to main (if tests pass)
       - name: Create Pull Request to main

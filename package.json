@@ -13,7 +13,10 @@
     "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
     "build": "echo '📦 Building BACKEND...' && npm run build --prefix backend && echo '🌐 Building FRONTEND...' && npm run build --prefix frontend",
     "lint": "npm run lint --prefix backend && npm run lint --prefix frontend",
-    "format": "npm run format --prefix backend && npm run format --prefix frontend"
+    "lint:fix": "npm run lint:fix --prefix backend && npm run lint:fix --prefix frontend",
+    "format": "npm run format --prefix backend && npm run format --prefix frontend",
+    "format:fix": "npm run format:fix --prefix backend && npm run format:fix --prefix frontend",
+    "check:code-style": "echo '🧹 LINTING BACKEND' && npm run lint --prefix backend && echo '🧹 LINTING FRONTEND' && npm run lint --prefix frontend && echo '🎨 FORMAT CHECK BACKEND' && npm run format --prefix backend && echo '🎨 FORMAT CHECK FRONTEND' && npm run format --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.2.0",
