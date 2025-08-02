@@ -18,6 +18,8 @@ jobs:
     name: Test on dev push & create PR if passed
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev'
+    env:
+      CI: true
 
     services:
       postgres:
@@ -72,6 +74,11 @@ jobs:
         run: npm run prisma:generate --prefix backend
       - name: Run DB Migrations (test DB)
         run: npm run prisma:migrate --prefix backend
+
+      # Playwright web environment
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+        working-directory: frontend
 
       # Run server and tests
       - name: Run tests
