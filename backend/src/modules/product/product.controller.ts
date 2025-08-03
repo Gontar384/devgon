@@ -8,6 +8,7 @@ export class ProductController {
 
   @Post()
   async create(@Body() createProductDto: CreateProductDto) {
+    console.log(createProductDto);
     return this.productService.create(
       createProductDto.title,
       createProductDto.description,
