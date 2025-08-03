@@ -1,42 +1,38 @@
-# --- Base image ---
-FROM node:22.17.1-alpine AS base
+FROM node:22.17.1-alpine AS deps
 WORKDIR /app
 
-# Copy package.json and package-lock.json from root and subfolders
 COPY package.json ./
 COPY backend/package.json ./backend/
-COPY backend/package-lock.json ./backend/
 COPY frontend/package.json ./frontend/
-COPY frontend/package-lock.json ./frontend/
 
-# Install dependencies from root package.json
-RUN npm install \
-    && npm install --prefix backend \
-    && npm install --prefix frontend \
-    && rm -f package-lock.json
+RUN npm install && npm install --prefix backend && npm install --prefix frontend
 
-# --- Build stage ---
-FROM base AS build
+FROM node:22.17.1-alpine AS build
+WORKDIR /app
 
-# Copy full source code
-COPY . ./
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/backend/node_modules ./backend/node_modules
+COPY --from=deps /app/frontend/node_modules ./frontend/node_modules
 
-# Generate Prisma client
+COPY . .
+
 RUN npm run prisma:generate --prefix backend
 
-# Build both backend and frontend using root scripts
 RUN npm run build
 
-# --- Production image ---
 FROM node:22.17.1-alpine AS runner
 WORKDIR /app
 
-# Copy build output from build stage
-COPY --from=build /app ./
+COPY --from=build /app/package.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/backend/package.json ./backend/
+COPY --from=build /app/backend/node_modules ./backend/node_modules
+COPY --from=build /app/backend/dist ./backend/dist
+COPY --from=build /app/frontend/package.json ./frontend/
+COPY --from=build /app/frontend/node_modules ./frontend/node_modules
+COPY --from=build /app/frontend/.next ./frontend/.next
 
-# Expose ports for backend and frontend (adjust if needed)
-EXPOSE 3000
 EXPOSE 4000
+EXPOSE 3000
 
-# Start both backend and frontend concurrently using root script
 CMD ["npm", "run", "start"]
