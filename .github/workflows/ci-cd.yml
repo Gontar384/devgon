@@ -74,8 +74,17 @@ jobs:
         run: npm run prisma:migrate --prefix backend
 
       # Playwright web environment
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Install Playwright Browsers
-        uses: microsoft/playwright-github-action@v1
+        run: npx playwright install --with-deps
+        working-directory: frontend
 
       # Run server and tests
       - name: Run tests
