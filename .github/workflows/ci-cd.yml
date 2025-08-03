@@ -45,27 +45,10 @@ jobs:
       - name: Install Next.js dependencies
         run: npm ci --prefix frontend
 
-      - name: Restore Playwright browser cache
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-build-playwright-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-playwright-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Show Playwright cache before install
-        run: ls -la ~/.cache/ms-playwright
-
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium
         working-directory: frontend
-
-      - name: Show Playwright cache after install
-        run: ls -la ~/.cache/ms-playwright
 
       - name: Wait for PostgreSQL to be ready
         run: |
