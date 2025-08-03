@@ -40,13 +40,14 @@ jobs:
         with:
           node-version: 22.17.1
 
+      - name: Install Project dependencies
+        run: npm ci
       - name: Install NestJS dependencies
         run: npm ci --prefix backend
       - name: Install Next.js dependencies
         run: npm ci --prefix frontend
 
-      - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Install Playwright Browser
         run: npx playwright install chromium
         working-directory: frontend
 
@@ -72,29 +73,8 @@ jobs:
       - name: Run DB Migrations (test DB)
         run: npm run prisma:migrate --prefix backend
 
-      - name: Run backend server with .env.test
-        run: npm run dev:test --prefix backend &
-
-      - name: Wait for backend to be ready
-        run: npm run wait-on --prefix backend
-
-      - name: Run frontend
-        run: npm run dev --prefix frontend &
-
-      - name: Wait for frontend to be ready
-        run: npm run wait-on --prefix frontend
-
-      - name: Run backend (Jest) Unit tests
-        run: npm run test:unit --prefix backend
-
-      - name: Run backend (Jest) E2E tests
-        run: npm run test:e2e --prefix backend
-
-      - name: Run frontend (Playwright) E2E tests
-        run: npm run test:playwright --prefix frontend
-
-      - name: Run frontend (Lighthouse) SEO test
-        run: npm run test:seo --prefix frontend
+      - name: Run frontend & backend + run tests (Unit & E2E with Jest for backend and E2E with Playwright, SEO with Lighthouse for frontend)
+        run: npm run test
 
       - name: Run Lint & Format Checks
         run: npm run check:code-style
