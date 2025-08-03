@@ -68,6 +68,11 @@ jobs:
           echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.test
         working-directory: backend
 
+      - name: Create frontend .env
+        run: |
+          echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:4000" > .env
+        working-directory: frontend
+
       - name: Generate Prisma Client
         run: npm run prisma:generate --prefix backend
       - name: Run DB Migrations (test DB)
