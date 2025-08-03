@@ -56,10 +56,16 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Show Playwright cache before install
+        run: ls -la ~/.cache/ms-playwright
+
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
         working-directory: frontend
+
+      - name: Show Playwright cache after install
+        run: ls -la ~/.cache/ms-playwright
 
       - name: Wait for PostgreSQL to be ready
         run: |
@@ -87,13 +93,13 @@ jobs:
         run: npm run dev:test --prefix backend &
 
       - name: Wait for backend to be ready
-        run: npx wait-on http://localhost:4000/health
+        run: npx wait-on http://localhost:4000/health --prefix backend
 
       - name: Run frontend
         run: npm run dev --prefix frontend &
 
       - name: Wait for frontend to be ready
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on http://localhost:3000 --prefix frontend
 
       - name: Run backend (Jest) Unit tests
         run: npm run test:unit --prefix backend
