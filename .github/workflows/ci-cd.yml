@@ -84,6 +84,15 @@ jobs:
       - name: Run Lint & Format Checks
         run: npm run check:code-style
 
+      - name: Checkout dev branch (full history)
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Fetch main branch
+        run: git fetch origin main
+
       - name: Create Pull Request to main
         uses: peter-evans/create-pull-request@v6
         with:
