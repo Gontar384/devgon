@@ -7,6 +7,7 @@ export class TestController {
 
   @Post('reset-db')
   async resetDatabase() {
+    console.log('Reset Database');
     await this.prisma.$transaction([this.prisma.product.deleteMany()]);
     return { message: 'Database reset' };
   }
