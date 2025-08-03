@@ -8,6 +8,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     headless: true,
+    actionTimeout: 10_000,
     screenshot: 'only-on-failure',
   },
   projects: [
