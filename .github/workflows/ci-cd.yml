@@ -84,10 +84,16 @@ jobs:
         run: npm run prisma:migrate --prefix backend
 
       - name: Run backend server with .env.test
-        run: npm run dev:test --prefix backend
+        run: npm run dev:test --prefix backend &
+
+      - name: Wait for backend to be ready
+        run: npx wait-on http://localhost:4000/health
 
       - name: Run frontend
-        run: npm run dev --prefix frontend
+        run: npm run dev --prefix frontend &
+
+      - name: Wait for frontend to be ready
+        run: npx wait-on http://localhost:3000
 
       - name: Run backend (Jest) Unit tests
         run: npm run test:unit --prefix backend
