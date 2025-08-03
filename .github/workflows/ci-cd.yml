@@ -47,7 +47,7 @@ jobs:
 
       # Install frontend & backend dependencies
       - run: npm install --prefix backend
-      - run: npm install --prefix frontend
+      - run: npm ci --prefix frontend
 
       # Playwright web environment (caching)
       - name: Restore Playwright browser cache
