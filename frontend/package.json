@@ -13,11 +13,13 @@
     "test:playwright": "playwright test test/e2e",
     "test:seo": "node test/seo/lighthouse.test.js",
     "test": "npm run test:e2e && npm run test:seo",
-    "test:ci": "npm run test:playwright && (npm run test:seo || echo 'SEO failed but ignored')",
+    "test:all": "npm run test:playwright && (npm run test:seo || echo 'SEO failed but ignored')",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix",
-    "format": "prettier --write ."
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "dependencies": {
     "axios": "1.11.0",

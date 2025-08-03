@@ -20,18 +20,19 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
 
 ## After clone:
 
-git checkout dev
+- git checkout dev
 
-/root
-npm install
-delete package-lock.json
+### /root
+- npm install
+- delete package-lock.json
 
-/backend
-npm install
-npm run prisma:generate
-.env
-.env.test
+### /backend
+- npm install
+- npm run prisma:generate
+- npm run prisma:migrate
+- .env 
+- .env.test
 
-/frontend
-npm install
-.env
+### /frontend
+- npm install
+- .env

@@ -14,16 +14,18 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "dev": "nest start --watch",
-    "dev:ci": "dotenv -e .env.test -- nest start --watch",
+    "dev:test": "dotenv -e .env.test -- nest start --watch",
     "test:unit": "dotenv -e .env.test -- jest --testRegex='src/.*\\.spec\\.ts$'",
     "test:e2e": "dotenv -e .env.test -- jest --testRegex='test/.*\\.e2e-spec\\.ts$'",
-    "test:ci": "npm run test:unit && npm run test:e2e",
+    "test:all": "npm run test:unit && npm run test:e2e",
     "prisma:generate": "prisma generate --schema=./src/prisma/config/schema.prisma",
     "prisma:migrate": "prisma migrate dev --schema=./src/prisma/config/schema.prisma",
     "prisma:studio": "prisma studio --schema=./src/prisma/config/schema.prisma",
     "prisma:migrate-test": "dotenv -e .env.test -- prisma migrate dev --schema=./src/prisma/config/schema.prisma",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --write ."
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
