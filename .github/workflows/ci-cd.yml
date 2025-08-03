@@ -50,25 +50,9 @@ jobs:
       - run: npm install --prefix frontend
 
       # Playwright web environment (caching)
-      - name: Cache Playwright browsers restore
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Install Chromium only
+        run: npx playwright install chromium
         working-directory: frontend
-
-      - name: Cache Playwright browsers save
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
 
       # Postgres
       - name: Wait for PostgreSQL to be ready
