@@ -1,0 +1,72 @@
+name: CI - Tests
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  test-before-pr:
+    name: Test on dev push before PR
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17.2
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.17.1
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix backend
+          npm ci --prefix frontend
+      - name: Install Playwright Browser
+        run: npx playwright install chromium
+        working-directory: frontend
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
+      - name: Set DATABASE_URL for tests
+        run: echo "DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb" >> $GITHUB_ENV
+
+      - name: Create .env.test
+        run: |
+          echo "NODE_ENV=test" > .env.test
+          echo "FRONTEND_URL=http://localhost:3000" >> .env.test
+          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.test
+        working-directory: backend
+
+      - name: Create frontend .env
+        run: |
+          echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:4000" > .env
+        working-directory: frontend
+
+      - name: Generate Prisma Client and migrate DB
+        run: |
+          npm run prisma:generate --prefix backend
+          npm run prisma:migrate --prefix backend
+
+      - name: Run Tests and Lint
+        run: |
+          npm run test
+          npm run check:code-style
