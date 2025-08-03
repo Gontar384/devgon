@@ -18,8 +18,6 @@ jobs:
     name: Test on dev push & create PR if passed
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev'
-    env:
-      CI: true
 
     services:
       postgres:
@@ -77,8 +75,7 @@ jobs:
 
       # Playwright web environment
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        working-directory: frontend
+        uses: microsoft/playwright-github-action@v1
 
       # Run server and tests
       - name: Run tests
