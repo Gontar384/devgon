@@ -19,7 +19,8 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "wait-on": "wait-on http://localhost:3000"
   },
   "dependencies": {
     "axios": "1.11.0",

@@ -76,13 +76,13 @@ jobs:
         run: npm run dev:test --prefix backend &
 
       - name: Wait for backend to be ready
-        run: npx wait-on http://localhost:4000/health --prefix backend
+        run: npm wait-on --prefix backend
 
       - name: Run frontend
         run: npm run dev --prefix frontend &
 
       - name: Wait for frontend to be ready
-        run: npx wait-on http://localhost:3000 --prefix frontend
+        run: npm wait-on --prefix frontend
 
       - name: Run backend (Jest) Unit tests
         run: npm run test:unit --prefix backend
