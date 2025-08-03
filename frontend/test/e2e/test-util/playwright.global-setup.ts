@@ -3,6 +3,10 @@ export default async function globalSetup() {
     method: 'POST',
   });
 
+  if (res.ok) {
+    console.log('Successfully set up');
+  }
+
   if (!res.ok) {
     throw new Error(`Failed to reset DB. Status: ${res.status}`);
   }
