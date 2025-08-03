@@ -7,9 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
-    "dev:ci": "concurrently \"npm run dev:ci --prefix backend\" \"npm run dev --prefix frontend\"",
-    "test:ci": "echo '▶️ BACKEND TESTS' && npm run test:ci --prefix backend && echo '▶️ FRONTEND TESTS' && npm run test:ci --prefix frontend",
-    "ci": "start-server-and-test dev:ci http://localhost:3000 \"test:ci\"",
+    "dev:test": "concurrently \"npm run dev:test --prefix backend\" \"npm run dev --prefix frontend\"",
+    "test:all": "echo '▶️ BACKEND TESTS' && npm run test:all --prefix backend && echo '▶️ FRONTEND TESTS' && npm run test:all --prefix frontend",
+    "test": "start-server-and-test dev:test http://localhost:3000 \"test:all\"",
     "start": "concurrently \"npm run start --prefix backend\" \"npm run start --prefix frontend\"",
     "build": "echo '📦 Building BACKEND...' && npm run build --prefix backend && echo '🌐 Building FRONTEND...' && npm run build --prefix frontend",
     "lint": "npm run lint --prefix backend && npm run lint --prefix frontend",

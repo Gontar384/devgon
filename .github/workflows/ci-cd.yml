@@ -36,38 +36,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22.17.1
 
-      # Install root dependencies (for concurrently, etc.), remove root lock file to avoid conflict with app-level lock files
-      - run: npm install
-      - run: rm -f package-lock.json
+      - name: Install NestJS dependencies
+        run: npm ci --prefix backend
+      - name: Install Next.js dependencies
+        run: npm ci --prefix frontend
 
-      # Install frontend & backend dependencies
-      - run: npm install --prefix backend
-      - run: npm ci --prefix frontend
-
-      # Playwright web environment (caching)
       - name: Restore Playwright browser cache
         id: playwright-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('frontend/package-lock.json') }}
+          key: ${{ runner.os }}-build-playwright-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-
+            ${{ runner.os }}-build-playwright-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
         working-directory: frontend
 
-      - name: Debug Playwright cache
-        run: ls -R ~/.cache/ms-playwright
-
-      # Postgres
       - name: Wait for PostgreSQL to be ready
         run: |
           until pg_isready -h localhost -p 5432; do
@@ -78,7 +71,6 @@ jobs:
       - name: Set DATABASE_URL for tests
         run: echo "DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb" >> $GITHUB_ENV
 
-      # Create .env.test
       - name: Create .env.test
         run: |
           echo "NODE_ENV=test" > .env.test
@@ -86,21 +78,32 @@ jobs:
           echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.test
         working-directory: backend
 
-      # Prisma and database
       - name: Generate Prisma Client
         run: npm run prisma:generate --prefix backend
       - name: Run DB Migrations (test DB)
         run: npm run prisma:migrate --prefix backend
 
-      # Run server and tests
-      - name: Run tests
-        run: npm run ci
+      - name: Run backend server with .env.test
+        run: npm run dev:test --prefix backend
 
-      # Lint and prettier test
+      - name: Run frontend
+        run: npm run dev --prefix frontend
+
+      - name: Run backend (Jest) Unit tests
+        run: npm run test:unit --prefix backend
+
+      - name: Run backend (Jest) E2E tests
+        run: npm run test:e2e --prefix backend
+
+      - name: Run frontend (Playwright) E2E tests
+        run: npm run test:playwright --prefix frontend
+
+      - name: Run frontend (Lighthouse) SEO test
+        run: npm run test:seo --prefix frontend
+
       - name: Run Lint & Format Checks
         run: npm run check:code-style
 
-      # Create PR to main (if tests pass)
       - name: Create Pull Request to main
         uses: peter-evans/create-pull-request@v6
         with:
@@ -123,12 +126,10 @@ jobs:
         with:
           node-version: 22.17.1
 
-      # Create dummy .env (optional, for Docker if needed)
       - name: Create frontend .env
         run: |
           echo "NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}" >> frontend/.env
 
-      # Docker login & build/push
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
