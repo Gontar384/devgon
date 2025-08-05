@@ -7,10 +7,7 @@ RUN npm ci
 
 COPY . .
 
-RUN DATABASE_URL="file:dummy.db" npx prisma generate
-
 RUN npm run build
-
 
 FROM node:22.17.1-alpine AS runner
 
@@ -20,6 +17,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/migrations ./migrations
 
 EXPOSE 4000
 

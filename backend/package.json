@@ -25,7 +25,7 @@
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./data-source.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --check .",
+    "format": "prettier --list-different .",
     "format:fix": "prettier --write ."
   },
   "dependencies": {
