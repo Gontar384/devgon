@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TestController } from './test.controller';
-import { PrismaModule } from '../../src/prisma/prisma.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Product } from '../../src/modules/product/product.entity';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [TypeOrmModule.forFeature([Product])],
   controllers: [TestController],
 })
 export class TestModule {}

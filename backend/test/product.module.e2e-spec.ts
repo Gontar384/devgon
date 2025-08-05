@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { cleanDb, disconnectDb } from './test-utils/cleanDb';
+import { cleanDb, disconnectDb, initDb } from './test-utils/cleanDb';
 
 describe('ProductController (e2e)', () => {
   let app: INestApplication;
@@ -14,6 +14,8 @@ describe('ProductController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    initDb(app);
   });
 
   beforeEach(async () => {
