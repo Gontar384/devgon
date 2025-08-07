@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './modules/product/product.module';
-import { PrismaModule } from './prisma/prisma.module';
 import { TestModule } from '../test/test-utils/test.module';
+import { TypeOrmConfigModule } from './config/typeorm/typeorm.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    PrismaModule,
+    TypeOrmConfigModule,
     ProductModule,
     ...(process.env.NODE_ENV === 'test' ? [TestModule] : []),
   ],

@@ -1,15 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from './product.entity';
 
 @Injectable()
 export class ProductRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @InjectRepository(Product)
+    private readonly repo: Repository<Product>,
+  ) {}
 
-  async create(data: { title: string; description?: string }) {
-    return this.prisma.product.create({ data });
+  async create(data: Partial<Product>) {
+    const product = this.repo.create(data);
+    return this.repo.save(product);
   }
 
   async findAll() {
-    return this.prisma.product.findMany();
+    return this.repo.find();
+  }
+
+  async deleteAll() {
+    await this.repo.delete({});
   }
 }
