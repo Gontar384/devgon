@@ -64,4 +64,4 @@ jobs:
       - name: Run Tests and Lint
         run: |
           npm run test
-          npm run check:code-style
+          npm run check:code
