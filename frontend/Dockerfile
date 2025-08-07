@@ -1,14 +1,23 @@
-FROM node:22.17.1-alpine
+FROM node:22.17.1-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm ci
 
 COPY . .
 
 RUN npm run build
+
+FROM node:22.17.1-alpine AS runner
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 
