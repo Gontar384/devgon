@@ -38,11 +38,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: |
-            backend.tar.gz
-            frontend.tar.gz
-            docker-compose.yml
-            nginx/nginx.conf
+          source: "backend.tar.gz frontend.tar.gz docker-compose.yml nginx/nginx.conf"
           target: "/home/${{ secrets.VPS_USER }}/app"
 
       - name: SSH and deploy on VPS
@@ -52,24 +48,27 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            set -e  # przerwij skrypt, jeśli jakikolwiek krok się nie powiedzie
+            set -e
+            
             cd /home/${{ secrets.VPS_USER }}/app
-
+            
             echo "Loading backend image..."
             gunzip -c backend.tar.gz | docker load
-
+            
             echo "Loading frontend image..."
             gunzip -c frontend.tar.gz | docker load
-
+            
             echo "Writing environment variables to .env..."
-            echo "NODE_ENV=prod" > .env
-            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-            echo "FRONTEND_URL=https://devgon.site" >> .env
-
+            {
+              echo "NODE_ENV=prod"
+              echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+              echo "FRONTEND_URL=https://devgon.site"
+            } > .env
+            
             echo "Running database migrations..."
             docker compose run --rm backend npm run migration:prod
-
+            
             echo "Restarting containers..."
-            docker compose up -d
-
+            docker compose up -d --remove-orphans
+            
             echo "Deployment finished successfully."
