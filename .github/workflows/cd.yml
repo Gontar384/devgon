@@ -23,7 +23,7 @@ jobs:
       - name: Build frontend image
         run: |
           docker build \
-            --build-arg NEXT_PUBLIC_BACKEND_URL=https://devgon.site/api \
+            --build-arg NEXT_PUBLIC_BACKEND_URL=https://devgon.site \
             -t frontend:latest \
             ./frontend
 
