@@ -11,7 +11,7 @@ const ProductsPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const res = await api.post('/products', { title, description });
+      const res = await api.post('/api/products', { title, description });
 
       if (res.status === 201) {
         setMessage('Produkt został dodany!');

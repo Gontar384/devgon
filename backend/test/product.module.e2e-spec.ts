@@ -13,6 +13,9 @@ describe('ProductController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+
+    app.setGlobalPrefix('api');
+
     await app.init();
 
     initDb(app);
