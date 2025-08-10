@@ -32,6 +32,9 @@ jobs:
           docker save backend:latest | gzip > backend.tar.gz
           docker save frontend:latest | gzip > frontend.tar.gz
 
+      - name: List files before upload
+        run: ls -lR
+
       - name: Upload images and configs to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
