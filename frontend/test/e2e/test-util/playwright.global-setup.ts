@@ -1,5 +1,5 @@
 export default async function globalSetup() {
-  const res = await fetch('http://localhost:4000/test-utils/reset-db', {
+  const res = await fetch('http://localhost:4000/api/test-utils/reset-db', {
     method: 'POST',
   });
 

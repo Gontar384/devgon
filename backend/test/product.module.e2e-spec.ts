@@ -29,7 +29,7 @@ describe('ProductController (e2e)', () => {
 
   it('/products (GET) should return array', () => {
     return request(app.getHttpServer())
-      .get('/products')
+      .get('/api/products')
       .expect(200)
       .expect((res) => {
         expect(Array.isArray(res.body)).toBe(true);
@@ -43,7 +43,7 @@ describe('ProductController (e2e)', () => {
     };
 
     return request(app.getHttpServer())
-      .post('/products')
+      .post('/api/products')
       .send(newProduct)
       .expect(201)
       .expect((res) => {
