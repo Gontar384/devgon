@@ -23,7 +23,7 @@ jobs:
       - name: Build frontend image
         run: |
           docker build \
-            --build-arg NEXT_PUBLIC_BACKEND_URL=https://devgon.site \
+            --build-arg NEXT_PUBLIC_BACKEND_URL=http://devgon.site \
             -t frontend:latest \
             ./frontend
 
@@ -89,7 +89,7 @@ jobs:
             {
               echo "NODE_ENV=prod"
               echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
-              echo "FRONTEND_URL=https://devgon.site"
+              echo "FRONTEND_URL=http://devgon.site"
             } > .env
             
             echo "Running database migrations..."
