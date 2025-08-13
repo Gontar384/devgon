@@ -48,7 +48,8 @@ ssh-keygen -t ed25519 -C "hetzner"
 adduser deploy
 usermod -aG sudo deploy
 mkdir -p /home/deploy/app
-chown -R deploy:deploy /home/deploy/app
+sudo chown -R deploy:deploy /home/deploy/app 
+chmod -R u+rwX /home/deploy/app
 
 - Copy ssh to 'deploy' user
 mkdir -p /home/deploy/.ssh
@@ -84,5 +85,11 @@ ALTER USER postgres WITH PASSWORD 'password';
 \q
 psql -U postgres -h localhost -d devgon
 
+- Give permission to db for docker container to connect to
+postgres@ubuntu-devgon:/etc/postgresql/17/main$
+nano postgresql.conf
+listen_addresses = '*'
+nano pg_hba.conf
+host    all             all             172.18.0.0/16           md5
 
 
