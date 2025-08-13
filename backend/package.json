@@ -19,7 +19,7 @@
     "test:e2e": "dotenv -e .env.test -- jest --testRegex='test/.*\\.e2e-spec\\.ts$'",
     "test:all": "npm run test:unit && npm run test:e2e",
     "migrate": "npm run migration:generate -- migrations/migration",
-    "migration:prod": "node dist/data-source.js migration:run",
+    "migration:prod": "npx typeorm migration:run -d dist/data-source.js",
     "migration:dev": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./data-source.ts",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d ./data-source.ts",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./data-source.ts",
