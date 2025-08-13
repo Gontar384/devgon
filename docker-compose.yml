@@ -8,7 +8,6 @@ services:
     environment:
       - VIRTUAL_HOST=api.devgon.site
       - LETSENCRYPT_HOST=api.devgon.site
-      - LETSENCRYPT_EMAIL=devgonteam@gmail.com
     networks:
       - app-network
     extra_hosts:
@@ -21,7 +20,6 @@ services:
     environment:
       - VIRTUAL_HOST=devgon.site
       - LETSENCRYPT_HOST=devgon.site
-      - LETSENCRYPT_EMAIL=devgonteam@gmail.com
     networks:
       - app-network
 
@@ -33,9 +31,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - ./certs:/etc/nginx/certs:ro
+      - ./data/vhost.d:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+      - ./data/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
       - app-network
@@ -47,9 +45,9 @@ services:
     environment:
       - DEFAULT_EMAIL=devgonteam@gmail.com
     volumes:
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - ./certs:/etc/nginx/certs
+      - ./data/vhost.d:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+      - ./data/certs:/etc/nginx/certs
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - nginx-proxy
