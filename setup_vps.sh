@@ -14,6 +14,8 @@ sudo usermod -aG sudo $DEPLOY_USER
 sudo mkdir -p $APP_DIR
 sudo chown -R $DEPLOY_USER:$DEPLOY_USER $APP_DIR
 sudo chmod -R u+rwX $APP_DIR
+echo "$DEPLOY_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$DEPLOY_USER
+sudo chmod 440 /etc/sudoers.d/$DEPLOY_USER
 
 echo "=== Copying SSH key from root to '$DEPLOY_USER' ==="
 sudo mkdir -p /home/$DEPLOY_USER/.ssh
