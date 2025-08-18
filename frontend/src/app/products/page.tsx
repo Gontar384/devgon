@@ -1,6 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import api from '../../services/axios';
+import api from '../../lib/axios';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 
 const ProductsPage: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -25,32 +28,37 @@ const ProductsPage: React.FC = () => {
     }
   };
 
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle('dark');
+  };
+
   return (
-    <main className="max-w-md mx-auto p-4 bg-purple-500">
-      <h1 className="text-2xl font-bold mb-4">Dodaj produkt</h1>
+    <main className="max-w-md mx-auto p-4">
+      <h1 className="text-2xl mb-4">Dodaj produkt</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
+        <Input
           type="text"
           placeholder="Tytuł"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
           required
         />
-        <textarea
+        <Textarea
           placeholder="Opis"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
           required
         />
-        <button
+        <Button
+          className="hover:animate"
           type="submit"
-          className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-gray-500"
+          variant="outline"
+          size="default"
         >
           Wyślij
-        </button>
+        </Button>
       </form>
+      <Button onClick={toggleDarkMode}>Dark Mode</Button>
       {message && <p className="mt-4">{message}</p>}
     </main>
   );
