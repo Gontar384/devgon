@@ -1,6 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import api from '../../services/axios';
+import api from '../../lib/axios';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import SEO from '@/components/SEO';
 
 const ProductsPage: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -9,10 +13,8 @@ const ProductsPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const res = await api.post('/api/products', { title, description });
-
       if (res.status === 201) {
         setMessage('Produkt został dodany!');
         setTitle('');
@@ -26,33 +28,44 @@ const ProductsPage: React.FC = () => {
   };
 
   return (
-    <main className="max-w-md mx-auto p-4 bg-purple-500">
-      <h1 className="text-2xl font-bold mb-4">Dodaj produkt</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Tytuł"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
-        <textarea
-          placeholder="Opis"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-gray-500"
-        >
-          Wyślij
-        </button>
-      </form>
-      {message && <p className="mt-4">{message}</p>}
-    </main>
+    <>
+      <SEO
+        title="Dodaj nowy produkt – Moja Strona"
+        description="Dodaj nowy produkt do naszej bazy. Wypełnij tytuł i opis produktu i wyślij formularz."
+        path="/products"
+      />
+      <main className="max-w-md mx-auto p-4">
+        <h1 className="text-2xl mb-4">Dodaj produkt</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            className="md:text-base"
+            type="text"
+            placeholder="Tytuł"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <Textarea
+            className="resize-none md:text-base"
+            spellCheck={false}
+            autoCorrect="off"
+            placeholder="Opis"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          <Button
+            className="select-none hover:bg-primary hover:cursor-pointer hover:scale-105 active:scale-105"
+            type="submit"
+            variant="default"
+            size="default"
+          >
+            Wyślij
+          </Button>
+        </form>
+        {message && <p className="mt-4">{message}</p>}
+      </main>
+    </>
   );
 };
 
