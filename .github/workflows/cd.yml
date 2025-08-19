@@ -18,7 +18,10 @@ jobs:
         run: docker build -t backend:latest ./backend
 
       - name: Build frontend image
-        run: docker build --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.site -t frontend:latest ./frontend
+        run: docker build \
+          --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.site \
+          --build-arg NEXT_PUBLIC_SITE_NAME=devgon.site \
+          -t frontend:latest ./frontend
 
       - name: Save images as tar.gz
         run: |
