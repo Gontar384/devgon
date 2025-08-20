@@ -8,7 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        {/*<Navbar />*/}
+        <main className="min-h-screen">{children}</main>
+        {/*} <Footer />*/}
+      </body>
     </html>
   );
 }
