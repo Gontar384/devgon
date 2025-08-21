@@ -1,5 +1,8 @@
 import './globals.css';
 import React from 'react';
+import { Toaster } from '@/components/ui/sonner';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 export default function RootLayout({
   children,
@@ -9,9 +12,10 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body>
-        {/*<Navbar />*/}
+        <Navbar />
         <main className="min-h-screen">{children}</main>
-        {/*} <Footer />*/}
+        <Footer />
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );

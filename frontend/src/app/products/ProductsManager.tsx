@@ -1,11 +1,26 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import api from '@/lib/axios';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { toast } from 'sonner';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Loader2Icon } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -29,65 +44,137 @@ export const ProductsManager: React.FC<Props> = ({
     },
   );
   const [title, setTitle] = useState('');
+  const titleRef = useRef<HTMLInputElement>(null);
   const [description, setDescription] = useState('');
-  const [message, setMessage] = useState('');
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const [showErrors, setShowErrors] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!title.trim()) {
+      setShowErrors(true);
+      titleRef.current?.focus();
+      return;
+    }
+    if (!description.trim()) {
+      setShowErrors(true);
+      descriptionRef.current?.focus();
+      return;
+    }
+
     try {
+      setIsLoading(true);
       const res = await api.post('/api/products', { title, description });
       if (res.status === 201) {
         const newProduct = res.data;
         mutate((current) => [...(current ?? []), newProduct], {
           revalidate: true,
         });
-        setMessage('Produkt został dodany!');
         setTitle('');
         setDescription('');
+        setShowErrors(false);
+        toast.success('Produkt został dodany! 🎉');
       } else {
-        setMessage('Wystąpił błąd podczas dodawania produktu.');
+        toast.error('Wystąpił błąd podczas dodawania produktu.');
       }
-    } catch (err) {
-      setMessage('Błąd sieci: ' + String(err));
+    } catch {
+      toast.error('Wystąpił błąd podczas dodawania produktu.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <section className="max-w-md mx-auto p-4">
       <h1 className="text-2xl mb-4">Dodaj produkt</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          type="text"
-          placeholder="Tytuł"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          className="md:text-base"
-        />
-        <Textarea
-          placeholder="Opis"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          className="resize-none h-24 md:text-base"
-        />
+      <form onSubmit={handleSubmit} className="space-y-4 mb-4">
+        <label htmlFor="title" className="sr-only">
+          Tytuł produktu
+        </label>
+        <Tooltip open={showErrors && !title.trim()}>
+          <TooltipTrigger asChild>
+            <Input
+              ref={titleRef}
+              id="title"
+              type="text"
+              placeholder="Tytuł"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              aria-invalid={showErrors && !title.trim()}
+              aria-describedby={
+                showErrors && !title.trim() ? 'title-error' : undefined
+              }
+            />
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>Tytuł jest wymagany</p>
+          </TooltipContent>
+        </Tooltip>
+        {showErrors && !title.trim() && (
+          <p id="title-error" className="sr-only">
+            Tytuł jest wymagany
+          </p>
+        )}
+        <label htmlFor="description" className="sr-only">
+          Opis produktu
+        </label>
+        <Tooltip open={showErrors && !description.trim()}>
+          <TooltipTrigger asChild>
+            <Textarea
+              ref={descriptionRef}
+              id="description"
+              placeholder="Opis"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              aria-invalid={showErrors && !description.trim()}
+              aria-describedby={
+                showErrors && !description.trim()
+                  ? 'description-error'
+                  : undefined
+              }
+              className="resize-none h-24 md:text-base"
+            />
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>Opis jest wymagany</p>
+          </TooltipContent>
+        </Tooltip>
+        {showErrors && !description.trim() && (
+          <p id="description-error" className="sr-only">
+            Opis jest wymagany
+          </p>
+        )}
         <Button
           type="submit"
           variant="default"
           className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none"
+          disabled={isLoading}
         >
+          {isLoading && <Loader2Icon className="animate-spin" />}
           Wyślij
         </Button>
       </form>
-      {message && <p className="mt-4 text-green-600">{message}</p>}
-
-      <ul className="mt-6 space-y-2">
-        {(products ?? []).map((p) => (
-          <li key={p.id}>
-            <strong>{p.title}</strong>: {p.description}
-          </li>
-        ))}
-      </ul>
+      <Table>
+        <caption className="sr-only">
+          Lista produktów z tytułem i opisem
+        </caption>
+        <TableHeader>
+          <TableRow>
+            <TableHead scope="col">Tytuł</TableHead>
+            <TableHead scope="col">Opis</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {(products ?? []).map((p) => (
+            <TableRow key={p.id}>
+              <TableCell className="font-medium">{p.title}</TableCell>
+              <TableCell>{p.description}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </section>
   );
 };
