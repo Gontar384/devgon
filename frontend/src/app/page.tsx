@@ -6,7 +6,8 @@ export const generateMetadata = (): Metadata =>
   createMetadata({
     title: 'devgon - Innowacje z pasją',
     description:
-      'Tworzymy zaawansowane strony internetowe, będące zaawansowanymi systemami zarządzania treścią. Oferujemy automatyzację procesów przy użyciu najnowszych technologii, w tym AI.',
+      'Tworzymy inteligentne strony internetowe, będące zaawansowanymi systemami zarządzania treścią. Oferujemy automatyzację procesów przy użyciu najnowszych technologii, w tym AI.',
+    path: '/',
   });
 
 export default function Home() {
