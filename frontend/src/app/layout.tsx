@@ -1,8 +1,8 @@
 import './globals.css';
 import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description:
       'Tworzymy inteligentne strony internetowe, będące zaawansowanymi systemami zarządzania treścią. Oferujemy automatyzację procesów przy użyciu najnowszych technologii, w tym AI.',
     path: '/',
-    image: '/logo.png',
+    image: '/logo_caption.svg',
   }),
   icons: {
     icon: '/favicon.ico',
