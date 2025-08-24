@@ -16,10 +16,10 @@ export function createMetadata({
   path,
   image,
 }: MetadataOptions): Metadata {
-  const url = `${siteUrl}${path}`;
+  const url = path ? `${siteUrl}${path}` : siteUrl;
 
   return {
-    title: `${title} – ${siteName}`,
+    title: title,
     description,
     alternates: {
       canonical: url,
@@ -30,7 +30,7 @@ export function createMetadata({
       url,
       siteName,
       type: 'website',
-      images: image ? [image] : [],
+      images: image ? [image] : undefined,
     },
     twitter: {
       card: image ? 'summary_large_image' : 'summary',

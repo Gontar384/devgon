@@ -9,11 +9,21 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export function Navbar() {
   return (
-    <nav className="flex items-center justify-between p-4 bg-background shadow-md">
-      <div className="text-xl font-bold">MyApp</div>
+    <nav className="flex items-center justify-between p-1 bg-background shadow-md">
+      <Link href="/">
+        <Image
+          src="/logo.png"
+          alt="Logo devgon"
+          width={75}
+          height={69}
+          priority
+        />
+      </Link>
 
       <div className="hidden md:flex">
         <NavigationMenu>
