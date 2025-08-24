@@ -96,6 +96,7 @@ export const ProductsManager: React.FC<Props> = ({
         <Tooltip open={showErrors && !title.trim()}>
           <TooltipTrigger asChild>
             <Input
+              className="md:text-base"
               ref={titleRef}
               id="title"
               type="text"

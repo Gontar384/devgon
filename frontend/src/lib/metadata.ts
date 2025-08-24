@@ -19,6 +19,7 @@ export function createMetadata({
   const url = path ? `${siteUrl}${path}` : siteUrl;
 
   return {
+    metadataBase: new URL(siteUrl),
     title: title,
     description,
     alternates: {
