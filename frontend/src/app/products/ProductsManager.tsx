@@ -88,7 +88,7 @@ export const ProductsManager: React.FC<Props> = ({
 
   return (
     <section className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl mb-4">Dodaj produkt</h1>
+      <h1 className="text-2xl mb-10 select-none">Dodaj produkt</h1>
       <form onSubmit={handleSubmit} className="space-y-4 mb-4">
         <label htmlFor="title" className="sr-only">
           Tytuł produktu
@@ -109,7 +109,7 @@ export const ProductsManager: React.FC<Props> = ({
               }
             />
           </TooltipTrigger>
-          <TooltipContent side="right">
+          <TooltipContent side="top">
             <p>Tytuł jest wymagany</p>
           </TooltipContent>
         </Tooltip>
@@ -138,7 +138,7 @@ export const ProductsManager: React.FC<Props> = ({
               className="resize-none h-24 md:text-base"
             />
           </TooltipTrigger>
-          <TooltipContent side="right">
+          <TooltipContent side="bottom">
             <p>Opis jest wymagany</p>
           </TooltipContent>
         </Tooltip>

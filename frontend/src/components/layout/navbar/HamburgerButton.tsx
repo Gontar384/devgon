@@ -1,17 +1,18 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Hamburger, CircleX } from 'lucide-react';
-import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { CircleX, Hamburger } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import { useSidebarStore } from '../../../../store/sidebarStore';
 
-export const MobileSidebar = () => {
-  const [open, setOpen] = React.useState(false);
+export const HamburgerButton = () => {
+  const { toggle, open } = useSidebarStore();
 
   return (
     <Button
       variant="ghost"
-      className="p-2 sm:hidden cursor-pointer"
-      onClick={() => setOpen(!open)}
+      className="mr-3 p-2 sm:hidden cursor-pointer"
+      onClick={toggle}
     >
       <AnimatePresence mode="wait">
         {!open ? (
@@ -22,7 +23,7 @@ export const MobileSidebar = () => {
             exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <Hamburger className="!w-8 !h-8" />
+            <Hamburger className="!w-10 !h-10" />
           </motion.div>
         ) : (
           <motion.div
@@ -32,7 +33,7 @@ export const MobileSidebar = () => {
             exit={{ opacity: 0, rotate: -90, scale: 0.8 }}
             transition={{ duration: 0.2 }}
           >
-            <CircleX className="!w-8 !h-8" />
+            <CircleX className="!w-10 !h-10" />
           </motion.div>
         )}
       </AnimatePresence>
