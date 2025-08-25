@@ -1,10 +1,11 @@
 import './globals.css';
 import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
-import Navbar from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/navbar/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
+import MobileSidebar from '@/components/layout/navbar/MobileSidebar';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -12,12 +13,12 @@ export const metadata: Metadata = {
     description:
       'Tworzymy inteligentne strony internetowe, będące zaawansowanymi systemami zarządzania treścią. Oferujemy automatyzację procesów przy użyciu najnowszych technologii, w tym AI.',
     path: '/',
-    image: '/logo_caption.svg',
+    image: '/logo/logo_caption_color.svg',
   }),
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-96x96.png',
-    apple: '/apple-touch-icon.png',
+    icon: '/icon/favicon.ico',
+    shortcut: '/icon/favicon-96x96.png',
+    apple: '/icon/apple-touch-icon.png',
   },
 };
 
@@ -30,7 +31,8 @@ export default function RootLayout({
     <html lang="pl">
       <body>
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <MobileSidebar />
+        <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <Toaster position="bottom-center" />
       </body>
