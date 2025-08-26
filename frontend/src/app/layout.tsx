@@ -5,7 +5,7 @@ import Navbar from '@/components/layout/navbar/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
-import MobileSidebar from '@/components/layout/navbar/MobileSidebar';
+import MobileBar from '@/components/layout/navbar/MobileBar';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="pl">
       <body>
         <Navbar />
-        <MobileSidebar />
+        <MobileBar />
         <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <Toaster position="bottom-center" />
