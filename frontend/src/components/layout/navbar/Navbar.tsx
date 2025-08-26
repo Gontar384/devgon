@@ -11,11 +11,18 @@ import { HamburgerButton } from '@/components/layout/navbar/HamburgerButton';
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between bg-background shadow-md animate-fadeIn">
-      <Link href="/frontend/public" className="ml-5 select-none flex-shrink-0">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between bg-background shadow-md"
+      aria-label="Główna nawigacja"
+    >
+      <Link
+        href="/"
+        className="ml-5 select-none flex-shrink-0 animate-fadeIn"
+        aria-label="Strona główna"
+      >
         <Image
           src="/logo/logo_caption_color.svg"
-          alt="Logo devgon"
+          alt=""
           width={80}
           height={60}
           priority
@@ -23,28 +30,40 @@ export default function Navbar() {
       </Link>
       <div className="hidden sm:flex">
         <NavigationMenu>
-          <NavigationMenuList className="flex gap-4">
+          <NavigationMenuList className="flex gap-4 ">
             <NavigationMenuItem>
-              <NavigationMenuLink href="/frontend/public">
+              <NavigationMenuLink
+                href="/"
+                aria-current="page"
+                className="text-base"
+              >
                 Home
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/products">Produkty</NavigationMenuLink>
+              <NavigationMenuLink href="/products" className="text-base">
+                Produkty
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/frontend/public">
+              <NavigationMenuLink href="/" className="text-base">
                 O nas
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink href="/" className="text-base">
+                Opcja 4
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="hidden sm:flex gap-2">
-        <Button variant="outline">Log in</Button>
-        <Button>Sign up</Button>
+      <div className="hidden sm:flex mr-5" aria-label="Akcje użytkownika">
+        <Button className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none">
+          Kontakt
+        </Button>
       </div>
-      <HamburgerButton />
+      <HamburgerButton aria-label="Otwórz menu nawigacji mobilnej" />
     </nav>
   );
 }
