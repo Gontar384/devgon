@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export function Footer() {
   return (
-    <footer className="bg-background mt-12 p-6">
+    <footer className="mt-12 p-6">
       <Card>
         <CardContent className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-muted-foreground">
