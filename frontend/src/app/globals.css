@@ -61,7 +61,7 @@
 
   --accent-foreground: oklch(0.21 0.034 264.665);
 
-  --radius: 0.625rem;
+  --radius: 1.2rem;
 
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0.028 261.692);

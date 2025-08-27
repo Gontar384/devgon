@@ -12,7 +12,7 @@ import { HamburgerButton } from '@/components/layout/navbar/HamburgerButton';
 export default function Navbar() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between bg-background shadow-md"
+      className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between bg-background/90 shadow-md"
       aria-label="Główna nawigacja"
     >
       <Link
@@ -21,7 +21,7 @@ export default function Navbar() {
         aria-label="Strona główna"
       >
         <Image
-          src="/logo/logo_caption_color.svg"
+          src="/logo/logo_caption_black.svg"
           alt=""
           width={80}
           height={60}
@@ -37,22 +37,17 @@ export default function Navbar() {
                 aria-current="page"
                 className="text-base"
               >
-                Home
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/products" className="text-base">
-                Produkty
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/" className="text-base">
                 O nas
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <NavigationMenuLink href="/products" className="text-base">
+                Oferta
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <NavigationMenuLink href="/" className="text-base">
-                Opcja 4
+                Kontakt
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -60,7 +55,7 @@ export default function Navbar() {
       </div>
       <div className="hidden sm:flex mr-5" aria-label="Akcje użytkownika">
         <Button className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none">
-          Kontakt
+          Zaloguj się
         </Button>
       </div>
       <HamburgerButton aria-label="Otwórz menu nawigacji mobilnej" />

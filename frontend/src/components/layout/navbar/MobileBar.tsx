@@ -36,7 +36,7 @@ export default function MobileBar() {
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-40 bg-background p-8 sm:hidden flex flex-col justify-center items-center overflow-y-auto"
+          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 sm:hidden flex flex-col justify-center items-center overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
@@ -52,7 +52,7 @@ export default function MobileBar() {
                   aria-current="page"
                   className="text-base hover:scale-105 active:scale-105"
                 >
-                  Home
+                  O nas
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -60,7 +60,7 @@ export default function MobileBar() {
                   href="/products"
                   className="text-base hover:scale-105 active:scale-105"
                 >
-                  Produkty
+                  Oferta
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -68,15 +68,7 @@ export default function MobileBar() {
                   href="/"
                   className="text-base hover:scale-105 active:scale-105"
                 >
-                  O nas
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/"
-                  className="text-base hover:scale-105 active:scale-105"
-                >
-                  Opcja 4
+                  Kontakt
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
