@@ -21,6 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Loader2Icon } from 'lucide-react';
+import Image from 'next/image';
 
 interface Product {
   id: string;
@@ -147,15 +148,25 @@ export const ProductsManager: React.FC<Props> = ({
             Opis jest wymagany
           </p>
         )}
-        <Button
-          type="submit"
-          variant="default"
-          className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none"
-          disabled={isLoading}
-        >
-          {isLoading && <Loader2Icon className="animate-spin" />}
-          Wyślij
-        </Button>
+        <div className="flex items-center">
+          <Button
+            type="submit"
+            variant="default"
+            className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader2Icon className="animate-spin" />}
+            Wyślij
+          </Button>
+          <Image
+            className="select-none"
+            src="/svg/friendly-guy-avatar.svg"
+            alt="Friendly guy avatar"
+            width={60}
+            height={60}
+            priority
+          />
+        </div>
       </form>
       <Table>
         <caption className="sr-only">

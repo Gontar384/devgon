@@ -2,11 +2,17 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleX, Hamburger } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import React from 'react';
-import { useSidebarStore } from '../../../../store/sidebarStore';
+import React, { useEffect } from 'react';
+import { useMobileBarStore } from '../../../../store/mobileBarStore';
+import { useDeviceStore } from '../../../../store/deviceStore';
 
 export const HamburgerButton = () => {
-  const { toggle, open } = useSidebarStore();
+  const { toggle, open } = useMobileBarStore();
+
+  const detectDevice = useDeviceStore((state) => state.detectDevice);
+  useEffect(() => {
+    detectDevice();
+  }, [detectDevice]);
 
   return (
     <Button
