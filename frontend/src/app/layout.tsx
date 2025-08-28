@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     image: '/logo/logo_caption_black.svg',
   }),
   icons: {
-    icon: '/icon/favicon.ico',
-    shortcut: '/icon/favicon-96x96.png',
-    apple: '/icon/apple-touch-icon.png',
+    icon: '/logo-icon/favicon.ico',
+    shortcut: '/logo-icon/favicon-96x96.png',
+    apple: '/logo-icon/apple-touch-icon.png',
   },
 };
 
