@@ -1,16 +1,22 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMobileBarStore } from '../../../../store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LoginButton } from '@/components/layout/navbar/LoginButton';
 import Link from 'next/link';
-import { CircleChevronRight } from 'lucide-react';
+import { CircleChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 export default function MobileBar() {
   const { open, close } = useMobileBarStore();
   const pathname = usePathname();
+  const [accordionActive, setAccordionActive] = useState<boolean[]>([
+    false,
+    false,
+    false,
+  ]);
 
   useEffect(() => {
     if (open) {
@@ -33,6 +39,12 @@ export default function MobileBar() {
     }
   }, [open]);
 
+  const handleAccordionToggle = (index: number) => {
+    setAccordionActive((prev) =>
+      prev.map((val, i) => (i === index ? !val : val)),
+    );
+  };
+
   return (
     <AnimatePresence>
       {open && (
@@ -42,7 +54,7 @@ export default function MobileBar() {
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 sm:hidden flex flex-col items-center overflow-y-auto"
+          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 sm:hidden flex flex-col items-center overflow-y-auto select-none"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
@@ -50,111 +62,205 @@ export default function MobileBar() {
           <h2 id="mobile-menu-title" className="sr-only">
             Menu mobilne
           </h2>
-          <div className="sm:hidden flex flex-col justify-center gap-6 p-4">
+          <div className="sm:hidden flex flex-col justify-center gap-6 mt-8">
             <div className="flex flex-col gap-2">
-              <Link
-                href="/"
-                className="rounded-xl flex items-center justify-between border border-foreground/40 px-4 h-12 text-xl font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
-              >
-                O nas
-                <CircleChevronRight className="w-8 h-8" />
-              </Link>
-              <div className="flex flex-col gap-2 pl-4">
+              <div className="flex gap-1 items-center">
                 <Link
                   href="/"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                  className="rounded-xl flex items-center justify-between border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent/50 active:bg-accent/50"
                 >
-                  Co robimy
-                  <Image
-                    src="/svg/what-we-do.svg"
-                    alt="Co robimy"
-                    width={35}
-                    height={34}
-                  />
+                  O nas
                 </Link>
-                <Link
-                  href="/"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                <Button
+                  variant="ghost"
+                  onClick={() => handleAccordionToggle(0)}
+                  className="cursor-pointer h-12 !p-1.5 active:bg-accent"
                 >
-                  Nasz zespół
-                  <Image
-                    src="/svg/our-team.svg"
-                    alt="Nasz zespół"
-                    width={67}
-                    height={37}
-                  />
-                </Link>
+                  <motion.div
+                    animate={{ rotate: accordionActive[0] ? 180 : 0 }}
+                    initial={false}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <CircleChevronUp className="!w-10 !h-10" />
+                  </motion.div>
+                </Button>
               </div>
+              <AnimatePresence initial={false}>
+                {accordionActive[0] && (
+                  <motion.div
+                    key="submenu-1"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="flex flex-col gap-2 pl-4 overflow-hidden"
+                  >
+                    <Link
+                      href="/"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Czym się zajmujemy?
+                      <Image
+                        src="/svg/btn-what-we-do.svg"
+                        alt="Czym się zajmujemy?"
+                        width={34}
+                        height={33}
+                        priority
+                      />
+                    </Link>
+                    <Link
+                      href="/"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Nasz zespół
+                      <Image
+                        src="/svg/btn-our-team.svg"
+                        alt="Nasz zespół"
+                        width={60}
+                        height={31}
+                        priority
+                      />
+                    </Link>
+                    <Link
+                      href="/"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Aktualności
+                      <Image
+                        src="/svg/btn-news.svg"
+                        alt="Aktualności"
+                        width={39}
+                        height={34}
+                        priority
+                      />
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <div className="flex flex-col gap-2">
-              <Link
-                href="/products"
-                className="rounded-xl flex items-center justify-between border border-foreground/40 px-4 h-12 text-xl font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
-              >
-                Oferta
-                <CircleChevronRight className="w-8 h-8" />
-              </Link>
-              <div className="flex flex-col gap-2 pl-4">
+              <div className="flex flex-row gap-1">
                 <Link
                   href="/products"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                  className="rounded-xl flex items-center justify-between border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent/50 active:bg-accent/50"
                 >
-                  Usługi
-                  <Image
-                    src="/svg/offer.svg"
-                    alt="Usługi"
-                    width={42}
-                    height={45}
-                  />
+                  Oferta
                 </Link>
-                <Link
-                  href="/products"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                <Button
+                  variant="ghost"
+                  onClick={() => handleAccordionToggle(1)}
+                  className="cursor-pointer h-12 !p-1.5 active:bg-accent"
                 >
-                  Czemu warto
-                  <Image
-                    src="/svg/why-its-worth.svg"
-                    alt="Czemu warto"
-                    width={46}
-                    height={36}
-                  />
-                </Link>
+                  <motion.div
+                    animate={{ rotate: accordionActive[1] ? 180 : 0 }}
+                    initial={false}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <CircleChevronUp className="!w-10 !h-10" />
+                  </motion.div>
+                </Button>
               </div>
+              <AnimatePresence initial={false}>
+                {accordionActive[1] && (
+                  <motion.div
+                    key="submenu-1"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="flex flex-col gap-2 pl-4 overflow-hidden"
+                  >
+                    <Link
+                      href="/products"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Świadczone usługi
+                      <Image
+                        src="/svg/btn-our-offer.svg"
+                        alt="Świadczone usługi"
+                        width={40}
+                        height={42}
+                        priority
+                      />
+                    </Link>
+                    <Link
+                      href="/products"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Dlaczego warto?
+                      <Image
+                        src="/svg/btn-why-its-worth.svg"
+                        alt="Dlaczego warto?"
+                        width={42}
+                        height={33}
+                        priority
+                      />
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <div className="flex flex-col gap-2">
-              <Link
-                href="/"
-                className="rounded-xl flex items-center justify-between border border-foreground/40 px-4 h-12 text-xl font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
-              >
-                Kontakt
-                <CircleChevronRight className="w-8 h-8" />
-              </Link>
-              <div className="flex flex-col gap-2 pl-4">
+              <div className="flex flex-row gap-1">
                 <Link
                   href="/"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                  className="rounded-xl flex items-center justify-between border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent/50 active:bg-accent/50"
                 >
-                  Odezwij się
-                  <Image
-                    src="/svg/call-us.svg"
-                    alt="Odezwij się"
-                    width={40}
-                    height={40}
-                  />
+                  Kontakt
                 </Link>
-                <Link
-                  href="/"
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 px-4 h-14 text-lg transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98]"
+                <Button
+                  variant="ghost"
+                  onClick={() => handleAccordionToggle(2)}
+                  className="cursor-pointer h-12 !p-1.5 active:bg-accent"
                 >
-                  Gdzie znaleźć
-                  <Image
-                    src="/svg/where-to-find.svg"
-                    alt="Gdzie znaleźć"
-                    width={33}
-                    height={42}
-                  />
-                </Link>
+                  <motion.div
+                    animate={{ rotate: accordionActive[2] ? 180 : 0 }}
+                    initial={false}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <CircleChevronUp className="!w-10 !h-10" />
+                  </motion.div>
+                </Button>
               </div>
+              <AnimatePresence initial={false}>
+                {accordionActive[2] && (
+                  <motion.div
+                    key="submenu-1"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="flex flex-col gap-2 pl-4 overflow-hidden"
+                  >
+                    <Link
+                      href="/"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Skontaktuj się
+                      <Image
+                        src="/svg/btn-contact-us.svg"
+                        alt="Skontaktuj się"
+                        width={47}
+                        height={30}
+                        priority
+                      />
+                    </Link>
+                    <Link
+                      href="/"
+                      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-sm transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent active:bg-accent"
+                    >
+                      Gdzie nas znaleźć?
+                      <Image
+                        src="/svg/btn-where-to-find-us.svg"
+                        alt="Gdzie nas znaleźć?"
+                        width={44}
+                        height={36}
+                        priority
+                      />
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
           <div
@@ -165,7 +271,7 @@ export default function MobileBar() {
               Zaloguj się za pomocą Google, aby odblokować pełne możliwości
               naszej strony
             </button>
-            <LoginButton mobileScreen={true} />
+            <LoginButton isMobileBar={true} />
           </div>
         </motion.nav>
       )}

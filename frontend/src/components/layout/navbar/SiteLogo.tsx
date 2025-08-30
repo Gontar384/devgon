@@ -9,7 +9,7 @@ export function SiteLogo() {
   return (
     <Link
       href="/"
-      className="ml-5 mr-3 select-none flex-shrink-0 animate-logo"
+      className="ml-4 select-none flex-shrink-0 animate-logo"
       aria-label="Strona główna"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

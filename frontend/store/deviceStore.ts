@@ -1,3 +1,5 @@
+'use client';
+
 import { create } from 'zustand';
 
 interface DeviceState {
@@ -8,16 +10,24 @@ interface DeviceState {
 export const useDeviceStore = create<DeviceState>((set) => ({
   isMobile: false,
   detectDevice: () => {
-    if (typeof window !== 'undefined') {
-      const detect = () => {
-        const isTouch =
-          'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        const isSmall = window.innerWidth <= 640;
-        set({ isMobile: isTouch || isSmall });
-      };
+    if (typeof window === 'undefined') return;
 
-      detect();
-      window.addEventListener('resize', detect);
-    }
+    const handleTouch = () => {
+      set({ isMobile: true });
+      cleanup();
+    };
+
+    const handleMouse = () => {
+      set({ isMobile: false });
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener('touchstart', handleTouch);
+      window.removeEventListener('mousedown', handleMouse);
+    };
+
+    window.addEventListener('touchstart', handleTouch, { once: true });
+    window.addEventListener('mousedown', handleMouse, { once: true });
   },
 }));
