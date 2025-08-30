@@ -11,74 +11,92 @@ import Image from 'next/image';
 
 export function MainMenu() {
   return (
-    <div className="hidden sm:flex">
-      <Menubar className="flex gap-5">
+    <div className="hidden sm:flex select-none">
+      <Menubar className="flex gap-1">
         <MenubarMenu>
-          <div className="flex items-center gap-1.5">
-            <Link href="/" className="select-none animate-menubar text-lg">
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="animate-menubar text-lg py-1 px-2 rounded-xl hover:bg-accent/50 action:bg-accent/50"
+            >
               O nas
             </Link>
-            <MenubarTrigger className="p-0 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar">
-              <CircleChevronDown className="!w-6 !h-6 cursor-pointer" />
+            <MenubarTrigger className="p-0.5 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar hover:bg-accent/50 action:bg-accent/50">
+              <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/50">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
             <MenubarItem asChild>
               <Link
                 href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20 active:bg-accent"
               >
-                Co robimy
+                Czym się zajmujemy?
                 <Image
-                  src="/svg/what-we-do.svg"
-                  alt="Co robimy"
-                  width={35}
+                  src="/svg/btn-what-we-do.svg"
+                  alt="Czym się zajmujemy?"
+                  width={34}
+                  height={33}
+                  priority
+                />
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href="/"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none rounded-b-none border border-foreground/20 active:bg-accent"
+              >
+                Nasz zespół
+                <Image
+                  src="/svg/btn-our-team.svg"
+                  alt="Nasz zespół"
+                  width={60}
+                  height={31}
+                  priority
+                />
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href="/"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20 active:bg-accent"
+              >
+                Aktualności
+                <Image
+                  src="/svg/btn-news.svg"
+                  alt="Aktualności"
+                  width={39}
                   height={34}
                   priority
                 />
               </Link>
             </MenubarItem>
-            <MenubarItem asChild>
-              <Link
-                href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20"
-              >
-                Nasz zespół
-                <Image
-                  src="/svg/our-team.svg"
-                  alt="Nasz zespół"
-                  width={67}
-                  height={37}
-                  priority
-                />
-              </Link>
-            </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center">
             <Link
               href="/products"
-              className="select-none animate-menubar text-lg"
+              className="animate-menubar text-lg py-1 px-2 rounded-xl hover:bg-accent/50 action:bg-accent/50"
             >
               Oferta
             </Link>
-            <MenubarTrigger className="p-0 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar">
-              <CircleChevronDown className="!w-6 !h-6 cursor-pointer" />
+            <MenubarTrigger className="p-0.5 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar hover:bg-accent/50 action:bg-accent/50">
+              <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/50">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
             <MenubarItem asChild>
               <Link
                 href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20 active:bg-accent"
               >
-                Usługi
+                Świadczone usługi
                 <Image
-                  src="/svg/offer.svg"
-                  alt="Usługi"
-                  width={42}
-                  height={45}
+                  src="/svg/btn-our-offer.svg"
+                  alt="Świadczone usługi"
+                  width={40}
+                  height={42}
                   priority
                 />
               </Link>
@@ -86,14 +104,14 @@ export function MainMenu() {
             <MenubarItem asChild>
               <Link
                 href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20 active:bg-accent"
               >
-                Czemu warto
+                Dlaczego warto?
                 <Image
-                  src="/svg/why-its-worth.svg"
-                  alt="Czemu warto"
-                  width={46}
-                  height={36}
+                  src="/svg/btn-why-its-worth.svg"
+                  alt="Dlaczego warto?"
+                  width={42}
+                  height={33}
                   priority
                 />
               </Link>
@@ -101,26 +119,29 @@ export function MainMenu() {
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <div className="flex items-center gap-1.5">
-            <Link href="/" className="select-none animate-menubar text-lg">
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="animate-menubar text-lg py-1 px-2 rounded-xl hover:bg-accent/50 action:bg-accent/50"
+            >
               Kontakt
             </Link>
-            <MenubarTrigger className="p-0 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar">
-              <CircleChevronDown className="!w-6 !h-6 cursor-pointer" />
+            <MenubarTrigger className="p-0.5 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar active:bg-accent hover:bg-accent/50 action:bg-accent/50">
+              <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/50">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
             <MenubarItem asChild>
               <Link
                 href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-b-none border border-foreground/20 active:bg-accent"
               >
-                Odezwij się
+                Skontaktuj się
                 <Image
-                  src="/svg/call-us.svg"
-                  alt="Odezwij się"
-                  width={40}
-                  height={40}
+                  src="/svg/btn-contact-us.svg"
+                  alt="Skontaktuj się"
+                  width={47}
+                  height={30}
                   priority
                 />
               </Link>
@@ -128,14 +149,14 @@ export function MainMenu() {
             <MenubarItem asChild>
               <Link
                 href="/"
-                className="select-none cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20"
+                className="cursor-pointer h-12 py-2 flex items-center gap-2 rounded-t-none border border-foreground/20"
               >
-                Gdzie znaleźć
+                Gdzie nas znaleźć?
                 <Image
-                  src="/svg/where-to-find.svg"
-                  alt="Gdzie znaleźć"
-                  width={33}
-                  height={42}
+                  src="/svg/btn-where-to-find-us.svg"
+                  alt="Gdzie nas znaleźć?"
+                  width={44}
+                  height={36}
                   priority
                 />
               </Link>

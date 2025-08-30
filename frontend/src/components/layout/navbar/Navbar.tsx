@@ -13,12 +13,12 @@ export default function Navbar() {
       <p className="sr-only">devgon logo</p>
       <SiteLogo />
       <MainMenu />
-      <div className="hidden sm:flex mr-5" aria-label="Akcje użytkownika">
+      <div className="hidden sm:flex mr-4" aria-label="Akcje użytkownika">
         <button className="sr-only">
           Zaloguj się za pomocą Google, aby odblokować pełne możliwości naszej
           strony
         </button>
-        <LoginButton mobileScreen={false} />
+        <LoginButton isMobileBar={false} />
       </div>
       <HamburgerButton aria-label="Otwórz menu nawigacji mobilnej" />
     </nav>

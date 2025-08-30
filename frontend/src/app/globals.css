@@ -14,7 +14,7 @@
   }
 }
 .animate-logo {
-  animation: logo 0.6s ease-in-out forwards;
+  animation: logo 0.4s ease-in-out forwards;
 }
 
 @keyframes menubar {
@@ -28,20 +28,9 @@
     transform: translateY(0%) scale(1);
   }
 }
-
 .animate-menubar:hover {
   animation: menubar 0.4s ease-in-out forwards;
 }
-
-
-
-
-
-
-
-
-
-
 
 @layer base {
   * {
