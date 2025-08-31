@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME;
+const siteName = process.env.NEXT_PUBLIC_DOMAIN;
 const siteUrl = `https://${siteName}`;
 
 interface MetadataOptions {

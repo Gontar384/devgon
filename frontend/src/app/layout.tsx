@@ -32,7 +32,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         <MobileBar />
-        <main className="min-h-screen my-16">{children}</main>
+        <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <Toaster position="bottom-center" />
       </body>
