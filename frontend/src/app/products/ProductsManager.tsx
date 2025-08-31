@@ -110,7 +110,7 @@ export const ProductsManager: React.FC<Props> = ({
               }
             />
           </TooltipTrigger>
-          <TooltipContent side="top">
+          <TooltipContent side="top" className="!z-40">
             <p>Tytuł jest wymagany</p>
           </TooltipContent>
         </Tooltip>
@@ -139,7 +139,7 @@ export const ProductsManager: React.FC<Props> = ({
               className="resize-none h-24 md:text-base"
             />
           </TooltipTrigger>
-          <TooltipContent side="bottom">
+          <TooltipContent side="bottom" className="!z-40">
             <p>Opis jest wymagany</p>
           </TooltipContent>
         </Tooltip>
