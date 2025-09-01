@@ -5,6 +5,7 @@ Its main goal is to provide a flexible app framework that’s easy to customize 
 saving development time and enabling the creation of impressive products repeatedly.
 
 ### Frontend (.env)
+NEXT_PUBLIC_ENV=dev/test/prod
 NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 NEXT_PUBLIC_DOMAIN=test.site
 ### Backend (.env)
