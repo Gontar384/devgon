@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="px-4 select-none mt-16">
+    <footer className="px-2 select-none mt-16">
       <Card>
         <CardContent className="flex flex-col md:flex-row justify-between items-center px-4 md:px-8 gap-6">
           <div className="flex items-center gap-4 pr-10">
@@ -23,13 +23,13 @@ export function Footer() {
           </div>
           <div className="flex flex-wrap items-center text-sm text-muted-foreground gap-4 whitespace-nowrap">
             <Link
-              href="/"
+              href="/frontend/public"
               className="cursor-pointer hover:underline active:underline"
             >
               Regulamin
             </Link>
             <Link
-              href="/"
+              href="/frontend/public"
               className="cursor-pointer hover:underline active:underline"
             >
               Polityka prywatności
@@ -37,7 +37,7 @@ export function Footer() {
           </div>
           <div className="flex flex-wrap items-center text-sm gap-4 text-muted-foreground">
             <Link
-              href="/"
+              href="/frontend/public"
               className="flex items-center gap-1 cursor-pointer hover:underline active:underline"
             >
               <Image
@@ -50,7 +50,7 @@ export function Footer() {
               Facebook
             </Link>
             <Link
-              href="/"
+              href="/frontend/public"
               className="flex items-center gap-1 cursor-pointer hover:underline active:underline"
             >
               <Image

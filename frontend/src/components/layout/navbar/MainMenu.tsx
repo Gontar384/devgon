@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 export function MainMenu() {
   return (
-    <div className="hidden sm:flex select-none">
+    <div className="hidden md:flex select-none">
       <Menubar className="flex gap-1">
         <MenubarMenu>
           <div className="flex items-center">
@@ -25,7 +25,7 @@ export function MainMenu() {
               <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden md:block">
             <MenubarItem asChild>
               <Link
                 href="/"
@@ -85,7 +85,7 @@ export function MainMenu() {
               <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden md:block">
             <MenubarItem asChild>
               <Link
                 href="/"
@@ -130,7 +130,7 @@ export function MainMenu() {
               <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
             </MenubarTrigger>
           </div>
-          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden sm:block">
+          <MenubarContent className="bg-background p-0 border border-foreground/20 hidden md:block">
             <MenubarItem asChild>
               <Link
                 href="/"

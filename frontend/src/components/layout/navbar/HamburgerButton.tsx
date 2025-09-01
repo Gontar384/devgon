@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CircleX, Hamburger } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React, { useEffect } from 'react';
-import { useMobileBarStore } from '../../../../store/mobileBarStore';
-import { useDeviceStore } from '../../../../store/deviceStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
+import { useDeviceStore } from '@/store/deviceStore';
 
 export const HamburgerButton = () => {
   const { toggle, open } = useMobileBarStore();
@@ -17,7 +17,7 @@ export const HamburgerButton = () => {
   return (
     <Button
       variant="ghost"
-      className="mr-3 h-12 p-3 sm:hidden cursor-pointer active:bg-accent"
+      className="mr-3 h-12 p-3 md:hidden cursor-pointer active:bg-accent"
       onClick={toggle}
     >
       <AnimatePresence mode="wait">

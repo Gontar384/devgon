@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useMobileBarStore } from '../../../../store/mobileBarStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LoginButton } from '@/components/layout/navbar/LoginButton';
 import Link from 'next/link';
@@ -54,7 +54,7 @@ export default function MobileBar() {
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 sm:hidden flex flex-col items-center overflow-y-auto select-none"
+          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
@@ -62,7 +62,7 @@ export default function MobileBar() {
           <h2 id="mobile-menu-title" className="sr-only">
             Menu mobilne
           </h2>
-          <div className="sm:hidden flex flex-col justify-center gap-6 mt-8">
+          <div className="md:hidden flex flex-col justify-center gap-6 mt-8">
             <div className="flex flex-col gap-2">
               <div className="flex gap-1 items-center">
                 <Link
