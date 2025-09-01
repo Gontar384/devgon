@@ -9,7 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Hero from "@/app/home/ui/Hero";
+import Hero from '@/app/home/ui/Hero';
+import Image from 'next/image';
+import Hero1 from '@/app/home/ui/Hero1';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -21,41 +23,74 @@ export const generateMetadata = (): Metadata =>
 
 export default function Home() {
   return (
-    <section className="w-full h-screen relative">
+    <section className="w-full min-h-screen relative select-none">
       <ParticlesBackground />
-      <Hero />
-      {/* Overlay dla karty */}
-      <div className="absolute inset-0 flex items-center justify-center px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl w-full">
-          {/* Przykładowa karta */}
-          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300">
+
+      <div className="relative flex flex-col items-center px-4 z-40">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl w-full mt-8">
+          <div className="md:col-span-3">
+            <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word">
+              <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+                <div className="flex-1">
+                  <CardHeader>
+                    <CardTitle>
+                      <Hero text="devgon" />
+                    </CardTitle>
+                    <CardDescription>
+                      Tutaj możesz umieścić dłuższy opis albo coś, co ma być
+                      bardziej wyróżnione.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    To jest ten większy card u góry — zajmuje całą szerokość
+                    siatki.
+                  </CardContent>
+                </div>
+                <div className="flex-shrink-0 pr-4">
+                  <Image
+                    src="/image/homepage-dev-image.png"
+                    alt="Web developer"
+                    width={400}
+                    height={400}
+                    priority
+                    className="rounded-lg"
+                  />
+                </div>
+              </div>
+            </Card>
+          </div>
+          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word">
             <CardHeader>
-              <CardTitle>Innowacje</CardTitle>
+              <CardTitle>
+                <Hero1 text="Innowacje" />
+              </CardTitle>
               <CardDescription>
                 Tutaj możesz wstawić swoją treść o innowacjach i technologiach.
               </CardDescription>
             </CardHeader>
-            <CardContent>{/* Wklej tu dowolny content */}</CardContent>
+            <CardContent>Dowolny content o innowacjach</CardContent>
           </Card>
-
-          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300">
+          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word">
             <CardHeader>
-              <CardTitle>Automatyzacja</CardTitle>
+              <CardTitle>
+                <Hero1 text="Automatyzacja" />
+              </CardTitle>
               <CardDescription>
                 Opis automatyzacji procesów przy użyciu AI lub innych narzędzi.
               </CardDescription>
             </CardHeader>
-            <CardContent>{/* Wklej tu dowolny content */}</CardContent>
+            <CardContent>Dowolny content o automatyzacji</CardContent>
           </Card>
-
-          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300">
+          <Card className="bg-background/80 backdrop-blur-lg border border-border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word">
             <CardHeader>
-              <CardTitle>Systemy CMS</CardTitle>
+              <CardTitle>
+                <Hero1 text="Systemy CRM" />
+              </CardTitle>
               <CardDescription>
                 Możesz opisać systemy zarządzania treścią i ich funkcjonalności.
               </CardDescription>
             </CardHeader>
-            <CardContent>{/* Wklej tu dowolny content */}</CardContent>
+            <CardContent>Dowolny content o systemach</CardContent>
           </Card>
         </div>
       </div>

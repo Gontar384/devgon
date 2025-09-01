@@ -4,21 +4,24 @@ import { useState, useEffect } from 'react';
 
 interface TypingEffectProps {
   text: string;
-  speed?: number; // czas między literami w ms
-  pause?: number; // pauza po napisaniu/wykasowaniu tekstu
+  speed?: number;
+  deleteSpeed?: number;
+  pause?: number;
+  mode?: 'typing' | 'cursor';
 }
 
 export default function TypingEffect({
   text,
-  speed = 150,
+  speed = 300,
+  deleteSpeed = 100,
   pause = 1000,
+  mode = 'typing',
 }: TypingEffectProps) {
   const [displayed, setDisplayed] = useState('');
   const [index, setIndex] = useState(0);
-  const [forward, setForward] = useState(true); // true = piszemy, false = kasujemy
+  const [forward, setForward] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
 
-  // Migający kursor
   useEffect(() => {
     const cursorInterval = setInterval(() => {
       setShowCursor((prev) => !prev);
@@ -27,36 +30,42 @@ export default function TypingEffect({
   }, []);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (forward) {
-        // Pisanie do przodu
-        if (index < text.length) {
+    if (mode !== 'typing') return;
+
+    let timeout: NodeJS.Timeout;
+
+    if (forward) {
+      if (index < text.length) {
+        timeout = setTimeout(() => {
           setDisplayed((prev) => prev + text[index]);
           setIndex(index + 1);
-        } else {
-          setForward(false);
-          setTimeout(() => {}, pause);
-        }
+        }, speed);
       } else {
-        // Kasowanie tekstu
-        if (index > 0) {
+        timeout = setTimeout(() => {
+          setForward(false);
+        }, pause);
+      }
+    } else {
+      if (index > 0) {
+        timeout = setTimeout(() => {
           setDisplayed((prev) => prev.slice(0, -1));
           setIndex(index - 1);
-        } else {
+        }, deleteSpeed);
+      } else {
+        timeout = setTimeout(() => {
           setForward(true);
-          setTimeout(() => {}, pause);
-        }
+        }, pause);
       }
-    }, speed);
+    }
 
     return () => clearTimeout(timeout);
-  }, [index, forward, text, speed, pause]);
+  }, [index, forward, text, speed, deleteSpeed, pause, mode]);
 
   return (
     <span>
-      {displayed}
+      {mode === 'typing' ? displayed : text}
       <span
-        className={`inline-block h-[1em] w-[2px] bg-current align-bottom text-primary ${
+        className={`inline-block h-[1em] w-[2px] bg-current align-bottom text-primary transition-opacity duration-150 ${
           showCursor ? 'opacity-100' : 'opacity-0'
         }`}
       ></span>

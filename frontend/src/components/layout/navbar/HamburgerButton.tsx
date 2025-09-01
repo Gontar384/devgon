@@ -17,7 +17,7 @@ export const HamburgerButton = () => {
   return (
     <Button
       variant="ghost"
-      className="mr-3 h-12 p-3 sm:hidden cursor-pointer active:bg-accent"
+      className="mr-3 h-12 p-3 md:hidden cursor-pointer active:bg-accent"
       onClick={toggle}
     >
       <AnimatePresence mode="wait">

@@ -13,7 +13,7 @@ export default function Navbar() {
       <p className="sr-only">devgon logo</p>
       <SiteLogo />
       <MainMenu />
-      <div className="hidden sm:flex mr-4" aria-label="Akcje użytkownika">
+      <div className="hidden md:flex mr-4" aria-label="Akcje użytkownika">
         <button className="sr-only">
           Zaloguj się za pomocą Google, aby odblokować pełne możliwości naszej
           strony
