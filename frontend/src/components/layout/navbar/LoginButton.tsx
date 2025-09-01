@@ -7,8 +7,8 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { useDeviceStore } from '../../../../store/deviceStore';
-import { useMobileBarStore } from '../../../../store/mobileBarStore';
+import { useDeviceStore } from '@/store/deviceStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
 
 interface Props {
   isMobileBar: boolean;

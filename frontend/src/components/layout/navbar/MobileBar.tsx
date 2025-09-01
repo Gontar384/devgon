@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useMobileBarStore } from '../../../../store/mobileBarStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LoginButton } from '@/components/layout/navbar/LoginButton';
 import Link from 'next/link';

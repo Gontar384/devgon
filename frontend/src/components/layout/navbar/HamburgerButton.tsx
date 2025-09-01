@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CircleX, Hamburger } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React, { useEffect } from 'react';
-import { useMobileBarStore } from '../../../../store/mobileBarStore';
-import { useDeviceStore } from '../../../../store/deviceStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
+import { useDeviceStore } from '@/store/deviceStore';
 
 export const HamburgerButton = () => {
   const { toggle, open } = useMobileBarStore();
