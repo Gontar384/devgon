@@ -9,12 +9,11 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
 import { useMobileBarStore } from '@/store/mobileBarStore';
+import { LoginButtonInterface } from '@/app/layout-ui/navbar/types';
 
-interface Props {
-  isMobileBar: boolean;
-}
-
-export const LoginButton: React.FC<Props> = ({ isMobileBar }) => {
+export const LoginButton: React.FC<LoginButtonInterface> = ({
+  isMobileBar,
+}) => {
   const [show, setShow] = useState(false);
   const [display, setDisplay] = useState(false);
   const { isMobile } = useDeviceStore();

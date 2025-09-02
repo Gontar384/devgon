@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useDeviceStore } from '@/store/deviceStore';
 
-export const HamburgerButton = () => {
+export function HamburgerButton() {
   const { toggle, open } = useMobileBarStore();
 
   const detectDevice = useDeviceStore((state) => state.detectDevice);
@@ -45,4 +45,4 @@ export const HamburgerButton = () => {
       </AnimatePresence>
     </Button>
   );
-};
+}

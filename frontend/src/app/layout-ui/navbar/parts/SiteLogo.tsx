@@ -5,10 +5,11 @@ import React from 'react';
 export function SiteLogo() {
   return (
     <Link
-      href="/"
+      href="/frontend/public"
       className="ml-4 select-none flex-shrink-0 animate-logo"
       aria-label="Strona główna"
     >
+      <p className="sr-only">Logo</p>
       <Image
         src={'/logo/logo_caption_black.svg'}
         alt=""

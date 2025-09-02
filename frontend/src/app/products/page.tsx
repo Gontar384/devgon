@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metadata';
 import api from '@/lib/axios';
 import { ProductsManager } from '@/app/products/ProductsManager';
 import { Metadata } from 'next';
-import fallbackProducts from '@/data/products-fallback.json';
+import fallbackProducts from '@/app/products/products-fallback.json';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({

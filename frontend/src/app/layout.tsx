@@ -1,17 +1,17 @@
 import './globals.css';
 import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
-import Navbar from '@/components/layout/navbar/Navbar';
-import { Footer } from '@/components/layout/footer/Footer';
+import Navbar from '@/app/layout-ui/navbar/Navbar';
+import { Footer } from '@/app/layout-ui/footer/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
-import MobileBar from '@/components/layout/navbar/MobileBar';
+import MobileBar from '@/app/layout-ui/navbar/MobileBar';
 
 export const metadata: Metadata = {
   ...createMetadata({
     title: 'devgon',
     description:
-      'Tworzymy inteligentne strony internetowe, będące zaawansowanymi systemami zarządzania treścią. Oferujemy automatyzację procesów przy użyciu najnowszych technologii, w tym AI.',
+      'Inteligentne strony internetowe, automatyzacja procesów i nowoczesne rozwiązania technologiczne – zwiększ efektywność swojej firmy już dziś.',
     path: '/',
     image: '/logo/logo_caption_black.svg',
   }),
