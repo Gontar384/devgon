@@ -1,4 +1,4 @@
-import TypingEffect from '@/app/home/ui/TypingEffect';
+import TypingEffect from '@/app/page-ui/TypingEffect';
 
 interface Props {
   text: string;
