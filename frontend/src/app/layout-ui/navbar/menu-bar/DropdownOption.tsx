@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MenubarItem } from '@/components/ui/menubar';
-import { DropdownOptionInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownOptionProps } from '@/app/layout-ui/types';
 
-export const DropdownOption: React.FC<DropdownOptionInterface> = ({
+export const DropdownOption: React.FC<DropdownOptionProps> = ({
   title,
   href,
   imageSrc,

@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { DropdownOptionInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownOptionProps } from '@/app/layout-ui/types';
 
-export const MobileDropdownOption: React.FC<DropdownOptionInterface> = ({
+export const MobileDropdownOption: React.FC<DropdownOptionProps> = ({
   title,
   href,
   imageSrc,

@@ -5,7 +5,7 @@ import React from 'react';
 export function SiteLogo() {
   return (
     <Link
-      href="/frontend/public"
+      href="/"
       className="ml-4 select-none flex-shrink-0 animate-logo"
       aria-label="Strona główna"
     >

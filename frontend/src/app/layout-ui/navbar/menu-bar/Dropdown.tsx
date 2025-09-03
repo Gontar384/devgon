@@ -3,18 +3,18 @@ import Link from 'next/link';
 import { MenubarContent, MenubarTrigger } from '@/components/ui/menubar';
 import { CircleChevronDown } from 'lucide-react';
 import { MenubarMenu } from '@radix-ui/react-menubar';
-import { DropdownWrapperInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownWrapperProps } from '@/app/layout-ui/types';
 
-export const Dropdown: React.FC<DropdownWrapperInterface> = ({
+export const Dropdown: React.FC<DropdownWrapperProps> = ({
   title,
-  hRef,
+  href,
   children,
 }) => {
   return (
     <MenubarMenu>
       <div className="flex items-center">
         <Link
-          href={hRef}
+          href={href}
           className="animate-menubar text-lg py-1 px-2 rounded-xl hover:bg-accent/50 action:bg-accent/50"
         >
           {title}

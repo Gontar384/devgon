@@ -40,7 +40,7 @@ export const ParticlesBackground = () => {
             quantity: 4,
           },
           repulse: {
-            distance: 100,
+            distance: 130,
             duration: 0.4,
           },
         },
@@ -53,7 +53,7 @@ export const ParticlesBackground = () => {
           color: '#000000',
           distance: 150,
           enable: true,
-          opacity: 0.5,
+          opacity: 0.6,
           width: 1,
         },
         move: {
@@ -63,23 +63,23 @@ export const ParticlesBackground = () => {
             default: OutMode.out,
           },
           random: false,
-          speed: 4,
+          speed: 5,
           straight: false,
         },
         number: {
           density: {
             enable: true,
           },
-          value: 200,
+          value: 100,
         },
         opacity: {
-          value: 0.6,
+          value: 0.8,
         },
         shape: {
           type: 'circle',
         },
         size: {
-          value: { min: 1, max: 5 },
+          value: { min: 3, max: 7 },
         },
       },
       detectRetina: true,

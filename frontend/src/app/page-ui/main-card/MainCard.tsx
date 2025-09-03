@@ -5,22 +5,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import Hero from '@/app/page-ui/Hero';
+import { MainHero } from '@/app/page-ui/main-card/MainHero';
 import Image from 'next/image';
 import React from 'react';
+import { MainCardProps } from '@/app/page-ui/types';
 
-interface Props {
-  title: string;
-  description: string;
-  content: string;
-  imageSrc: string;
-}
-
-export const MainCard: React.FC<Props> = ({
+export const MainCard: React.FC<MainCardProps> = ({
   title,
   description,
   content,
   imageSrc,
+  imageW,
+  imageH,
 }) => {
   return (
     <Card className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word px-6">
@@ -28,7 +24,7 @@ export const MainCard: React.FC<Props> = ({
         <div className="flex-1">
           <CardHeader>
             <CardTitle>
-              <Hero text={title} />
+              <MainHero text={title} />
             </CardTitle>
             <CardDescription>{description}</CardDescription>
           </CardHeader>
@@ -37,9 +33,9 @@ export const MainCard: React.FC<Props> = ({
         <div className="flex-shrink-0">
           <Image
             src={imageSrc}
-            alt="Web developer"
-            width={400}
-            height={400}
+            alt={`${title} image`}
+            width={imageW}
+            height={imageH}
             priority
             className="rounded-lg"
           />

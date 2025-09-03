@@ -1,8 +1,8 @@
-import { LoginButtonInterface } from '@/app/layout-ui/navbar/types';
+import { LoginButtonProps } from '@/app/layout-ui/types';
 import React from 'react';
 import { LoginButton } from '@/app/layout-ui/navbar/parts/LoginButton';
 
-export const LoginButtonWrapper: React.FC<LoginButtonInterface> = ({
+export const LoginButtonWrapper: React.FC<LoginButtonProps> = ({
   isMobileBar,
 }) => {
   return (
