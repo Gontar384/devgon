@@ -3,10 +3,10 @@ import React from 'react';
 import { Dropdown } from '@/app/layout-ui/navbar/menu-bar/Dropdown';
 import menuData from '@/app/layout-ui/navbar/menuData.json';
 import { DropdownOption } from '@/app/layout-ui/navbar/menu-bar/DropdownOption';
-import { DropdownInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownData } from '@/app/layout-ui/types';
 
 export function MenuBar() {
-  const typedMenuData: DropdownInterface[] = menuData;
+  const typedMenuData: DropdownData[] = menuData;
 
   return (
     <div className="hidden md:flex select-none">
@@ -14,7 +14,7 @@ export function MenuBar() {
         {typedMenuData.map((dropdown) => (
           <Dropdown
             title={dropdown.title}
-            hRef={dropdown.href}
+            href={dropdown.href}
             key={dropdown.title}
           >
             {dropdown.option.map((option) => (

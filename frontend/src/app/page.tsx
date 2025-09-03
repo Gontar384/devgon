@@ -1,9 +1,12 @@
 import React from 'react';
 import { createMetadata } from '@/lib/metadata';
 import { Metadata } from 'next';
-import { ParticlesBackground } from '@/app/page-ui/ParticlesBackground';
-import { MainCard } from '@/app/page-ui/MainCard';
-import { SmallCard } from '@/app/page-ui/SmallCard';
+import { ParticlesBackground } from '@/app/page-ui/parts/ParticlesBackground';
+import { MainCard } from '@/app/page-ui/main-card/MainCard';
+import { SideCard } from '@/app/page-ui/side-card/SideCard';
+import mainCardData from '@/app/page-ui/main-card/mainCardData.json';
+import sideCardData from '@/app/page-ui/side-card/sideCardData.json';
+import { MainCardProps, SideCardProps } from '@/app/page-ui/types';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -14,6 +17,9 @@ export const generateMetadata = (): Metadata =>
   });
 
 export default function Home() {
+  const typedMainCardData: MainCardProps = mainCardData;
+  const typedSideCardData: SideCardProps[] = sideCardData;
+
   return (
     <section className="w-full min-h-screen relative select-none">
       <ParticlesBackground />
@@ -21,27 +27,22 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full mt-14">
           <div className="md:col-span-3">
             <MainCard
-              title="devgon"
-              description="asdhasdhsaiku hah sdiuhas iudhasiuhd iuashdi hihasiduh aiush diashdi ushaidh ash"
-              content="a oihasod haishd iuhasid hasiudh yawhsid uhasiud hasiud huiasd haus"
-              imageSrc="/image/homepage-dev-image.png"
+              title={typedMainCardData.title}
+              description={typedMainCardData.description}
+              content={typedMainCardData.content}
+              imageSrc={typedMainCardData.imageSrc}
+              imageW={typedMainCardData.imageW}
+              imageH={typedMainCardData.imageH}
             />
           </div>
-          <SmallCard
-            title="Innowacje"
-            description="Tutaj możesz wstawić swoją treść o innowacjach i technologiach."
-            content="Dowolny content o innowacjach"
-          />
-          <SmallCard
-            title="Automatyzacja"
-            description="Opis automatyzacji procesów przy użyciu AI lub innych narzędzi."
-            content="Dowolny content o automatyzacji"
-          />
-          <SmallCard
-            title="Systemy CRM"
-            description="Możesz opisać systemy zarządzania treścią i ich funkcjonalności."
-            content="Dowolny content o systemach"
-          />
+          {typedSideCardData.map((card) => (
+            <SideCard
+              key={card.title}
+              title={card.title}
+              description={card.description}
+              content={card.content}
+            />
+          ))}
         </div>
       </div>
     </section>

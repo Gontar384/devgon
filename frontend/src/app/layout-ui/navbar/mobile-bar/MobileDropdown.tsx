@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { DropdownWrapperInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownWrapperProps } from '@/app/layout-ui/types';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleChevronUp } from 'lucide-react';
 
-export const MobileDropdown: React.FC<DropdownWrapperInterface> = ({
+export const MobileDropdown: React.FC<DropdownWrapperProps> = ({
   title,
-  hRef,
+  href,
   children,
 }) => {
   const [accordionActive, setAccordionActive] = useState<boolean>(false);
@@ -20,7 +20,7 @@ export const MobileDropdown: React.FC<DropdownWrapperInterface> = ({
     <div className="flex flex-col gap-2">
       <div className="flex gap-1 items-center">
         <Link
-          href={hRef}
+          href={href}
           className="rounded-xl flex items-center justify-between border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md active:scale-[0.98] hover:bg-accent/50 active:bg-accent/50"
         >
           {title}

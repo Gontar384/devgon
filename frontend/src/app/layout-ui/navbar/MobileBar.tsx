@@ -4,7 +4,7 @@ import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { LoginButtonWrapper } from '@/app/layout-ui/navbar/parts/LoginButtonWrapper';
-import { DropdownInterface } from '@/app/layout-ui/navbar/types';
+import { DropdownData } from '@/app/layout-ui/types';
 import menuData from '@/app/layout-ui/navbar/menuData.json';
 import { MobileDropdown } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdownOption';
@@ -34,7 +34,7 @@ export default function MobileBar() {
     }
   }, [open]);
 
-  const typedMenuData: DropdownInterface[] = menuData;
+  const typedMenuData: DropdownData[] = menuData;
 
   return (
     <AnimatePresence>
@@ -57,7 +57,7 @@ export default function MobileBar() {
             {typedMenuData.map((dropdown) => (
               <MobileDropdown
                 title={dropdown.title}
-                hRef={dropdown.href}
+                href={dropdown.href}
                 key={dropdown.title}
               >
                 {dropdown.option.map((option) => (

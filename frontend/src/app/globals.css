@@ -3,7 +3,7 @@
 @import 'tw-animate-css';
 @config '../../tailwind.config.ts';
 
-@keyframes logo {
+@keyframes appear {
   0% {
     opacity: 0;
     scale: 120%;
@@ -14,10 +14,10 @@
   }
 }
 .animate-logo {
-  animation: logo 0.4s ease-in-out forwards;
+  animation: appear 0.4s ease-in-out forwards;
 }
 
-@keyframes menubar {
+@keyframes trigger {
   0% {
     transform: translateY(0%) scale(1);
   }
@@ -29,10 +29,10 @@
   }
 }
 .animate-menubar:hover {
-  animation: menubar 0.4s ease-in-out forwards;
+  animation: trigger 0.4s ease-in-out forwards;
 }
 
-@keyframes cardShow {
+@keyframes appear1 {
   0% {
     transform: translateY(-5%) scale(1.05);
   }
@@ -44,20 +44,20 @@
 
 .card-animate {
   opacity: 0;
-  animation: cardShow 0.4s ease-in-out forwards;
+  animation: appear1 0.5s ease-in-out forwards;
 }
 
 .card-animate:nth-child(1) {
   animation-delay: 0s;
 }
 .card-animate:nth-child(2) {
-  animation-delay: 0.3s;
+  animation-delay: 0.4s;
 }
 .card-animate:nth-child(3) {
-  animation-delay: 0.6s;
+  animation-delay: 0.8s;
 }
 .card-animate:nth-child(4) {
-  animation-delay: 0.9s;
+  animation-delay: 1.2s;
 }
 
 /*=============================================LAYOUT CONFIGURATION============================================*/
