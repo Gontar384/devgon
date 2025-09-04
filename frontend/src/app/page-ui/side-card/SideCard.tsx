@@ -10,15 +10,18 @@ import React from 'react';
 import { SideCardProps } from '@/app/page-ui/types';
 
 export const SideCard: React.FC<SideCardProps> = ({
-  title,
+  sideHero,
   description,
   content,
 }) => {
   return (
-    <Card className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word">
+    <Card
+      className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word"
+      aria-label="Mniejsza karta informacyjna"
+    >
       <CardHeader>
         <CardTitle>
-          <SideHero text={title} />
+          <SideHero text={sideHero.text} mode={sideHero.mode} />
         </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>

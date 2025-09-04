@@ -7,7 +7,7 @@ interface TypingEffectProps {
   speed?: number;
   deleteSpeed?: number;
   pause?: number;
-  mode?: 'typing' | 'cursor';
+  mode?: string;
 }
 
 export default function TypingEffect({
@@ -65,7 +65,7 @@ export default function TypingEffect({
     <span>
       {mode === 'typing' ? displayed : text}
       <span
-        className={`inline-block h-[1em] w-[2px] bg-current align-bottom text-primary transition-opacity duration-150 ${
+        className={`inline-block h-[1em] w-[2px] bg-current align-middle text-primary transition-opacity duration-150 ${
           showCursor ? 'opacity-100' : 'opacity-0'
         }`}
       ></span>

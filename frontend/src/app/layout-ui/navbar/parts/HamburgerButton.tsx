@@ -18,6 +18,7 @@ export function HamburgerButton() {
     <Button
       variant="ghost"
       className="mr-3 h-12 p-3 md:hidden cursor-pointer active:bg-accent"
+      aria-label="Otwórz menu nawigacji mobilnej"
       onClick={toggle}
     >
       <AnimatePresence mode="wait">

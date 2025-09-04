@@ -1,8 +1,8 @@
 import { HamburgerButton } from '@/app/layout-ui/navbar/parts/HamburgerButton';
 import React from 'react';
 import { SiteLogo } from '@/app/layout-ui/navbar/parts/SiteLogo';
-import { MenuBar } from '@/app/layout-ui/navbar/menu-bar/MenuBar';
-import { LoginButtonWrapper } from './parts/LoginButtonWrapper';
+import { MainMenuBar } from '@/app/layout-ui/navbar/main-menu-bar/MainMenuBar';
+import { LoginButton } from '@/app/layout-ui/navbar/parts/LoginButton';
 
 export default function Navbar() {
   return (
@@ -11,9 +11,9 @@ export default function Navbar() {
       aria-label="Główna nawigacja"
     >
       <SiteLogo />
-      <MenuBar />
-      <LoginButtonWrapper isMobileBar={false} />
-      <HamburgerButton aria-label="Otwórz menu nawigacji mobilnej" />
+      <MainMenuBar />
+      <LoginButton isMobileBar={false} />
+      <HamburgerButton />
     </nav>
   );
 }

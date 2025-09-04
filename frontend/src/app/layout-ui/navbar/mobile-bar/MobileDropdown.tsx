@@ -29,6 +29,8 @@ export const MobileDropdown: React.FC<DropdownWrapperProps> = ({
           variant="ghost"
           onClick={handleAccordionToggle}
           className="cursor-pointer h-12 !p-1.5 active:bg-accent"
+          aria-expanded={accordionActive}
+          aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
         >
           <motion.div
             animate={{ rotate: accordionActive ? 180 : 0 }}
@@ -42,6 +44,7 @@ export const MobileDropdown: React.FC<DropdownWrapperProps> = ({
       <AnimatePresence initial={false}>
         {accordionActive && (
           <motion.div
+            id={`submenu-${title.replace(/\s/g, '-')}`}
             key="submenu-1"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}

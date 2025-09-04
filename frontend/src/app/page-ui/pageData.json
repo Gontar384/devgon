@@ -1,0 +1,48 @@
+{
+  "metaData": {
+    "title": "devgon - Strona główna",
+    "description": "Poznaj naszą ofertę: inteligentne strony internetowe, nowoczesne rozwiązania technologiczne i automatyzacja procesów – wszystko dla twojej firmy.",
+    "path": "/"
+  },
+  "mainCard": {
+    "mainHero": {
+      "text": "devgon",
+      "speed": 300,
+      "deleteSpeed": 100,
+      "pause": 1000,
+      "mode": "typing"
+    },
+    "description": "Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis",
+    "content": "Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis; Testowy opis",
+    "imageSrc": "/image/homepage-dev-image.png",
+    "imageAlt": "Programista stron internetowych",
+    "imageW": 400,
+    "imageH": 400
+  },
+  "sideCard": [
+    {
+      "sideHero": {
+        "text": "Innowacje",
+        "mode": "cursor"
+      },
+      "description": "Tutaj możesz wstawić swoją treść o innowacjach i technologiach.",
+      "content": "Dowolny content o innowacjach"
+    },
+    {
+      "sideHero": {
+        "text": "Automatyzacja",
+        "mode": "cursor"
+      },
+      "description": "Opis automatyzacji procesów przy użyciu AI lub innych narzędzi.",
+      "content": "Dowolny content o automatyzacji"
+    },
+    {
+      "sideHero": {
+        "text": "Systemy CRM",
+        "mode": "cursor"
+      },
+      "description": "Możesz opisać systemy zarządzania treścią i ich funkcjonalności.",
+      "content": "Dowolny content o systemach"
+    }
+  ]
+}

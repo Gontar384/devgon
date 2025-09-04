@@ -1,15 +1,28 @@
-export interface Hero {
+export interface SideHeroProps {
   text: string;
+  mode: string;
 }
 
 export interface SideCardProps {
-  title: string;
+  sideHero: SideHeroProps;
   description: string;
   content: string;
 }
 
-export interface MainCardProps extends SideCardProps {
+export interface MainHeroProps {
+  text: string;
+  speed: number;
+  deleteSpeed: number;
+  pause: number;
+  mode: string;
+}
+
+export interface MainCardProps {
+  mainHero: MainHeroProps;
+  description: string;
+  content: string;
   imageSrc: string;
+  imageAlt: string;
   imageW: number;
   imageH: number;
 }
