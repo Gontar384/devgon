@@ -11,20 +11,30 @@ import React from 'react';
 import { MainCardProps } from '@/app/page-ui/types';
 
 export const MainCard: React.FC<MainCardProps> = ({
-  title,
+  mainHero,
   description,
   content,
   imageSrc,
+  imageAlt,
   imageW,
   imageH,
 }) => {
   return (
-    <Card className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word px-6">
+    <Card
+      className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word px-6"
+      aria-label="Główna karta informacyjna"
+    >
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4">
         <div className="flex-1">
           <CardHeader>
             <CardTitle>
-              <MainHero text={title} />
+              <MainHero
+                text={mainHero.text}
+                speed={mainHero.speed}
+                deleteSpeed={mainHero.deleteSpeed}
+                pause={mainHero.pause}
+                mode={mainHero.mode}
+              />
             </CardTitle>
             <CardDescription>{description}</CardDescription>
           </CardHeader>
@@ -33,7 +43,7 @@ export const MainCard: React.FC<MainCardProps> = ({
         <div className="flex-shrink-0">
           <Image
             src={imageSrc}
-            alt={`${title} image`}
+            alt={imageAlt}
             width={imageW}
             height={imageH}
             priority

@@ -6,20 +6,11 @@ import { Footer } from '@/app/layout-ui/footer/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
 import MobileBar from '@/app/layout-ui/navbar/MobileBar';
+import layoutData from '@/app/layout-ui/layoutData.json';
 
 export const metadata: Metadata = {
-  ...createMetadata({
-    title: 'devgon',
-    description:
-      'Inteligentne strony internetowe, automatyzacja procesów i nowoczesne rozwiązania technologiczne – zwiększ efektywność swojej firmy już dziś.',
-    path: '/',
-    image: '/logo/logo_caption_black.svg',
-  }),
-  icons: {
-    icon: '/logo-icon/favicon.ico',
-    shortcut: '/logo-icon/favicon-96x96.png',
-    apple: '/logo-icon/apple-touch-icon.png',
-  },
+  ...createMetadata(layoutData.metaData),
+  icons: layoutData.metaData.icons,
 };
 
 export default function RootLayout({

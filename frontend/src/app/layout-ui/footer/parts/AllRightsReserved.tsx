@@ -1,19 +1,24 @@
 import Image from 'next/image';
 import React from 'react';
+import { AllRightsReservedData } from '@/app/layout-ui/types';
+import layoutData from '@/app/layout-ui/layoutData.json';
 
 export function AllRightsReserved() {
+  const typedAllRightsReservedData: AllRightsReservedData =
+    layoutData.allRightsReserved;
+
   return (
     <div className="flex items-center gap-4 pr-12">
       <Image
-        src="/svg/footer-page-designer.svg"
-        alt="Page designer image"
-        width={50}
-        height={46}
+        src={typedAllRightsReservedData.imageSrc}
+        alt={typedAllRightsReservedData.imageAlt}
+        width={typedAllRightsReservedData.imageW}
+        height={typedAllRightsReservedData.imageH}
         priority
       />
       <div className="flex flex-col text-sm text-muted-foreground whitespace-nowrap">
-        <span>© 2025 devgon</span>
-        <span>All rights reserved</span>
+        <span>{typedAllRightsReservedData.content}</span>
+        <span>{typedAllRightsReservedData.content1}</span>
       </div>
     </div>
   );

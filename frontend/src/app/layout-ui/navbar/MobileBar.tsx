@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { LoginButtonWrapper } from '@/app/layout-ui/navbar/parts/LoginButtonWrapper';
 import { DropdownData } from '@/app/layout-ui/types';
-import menuData from '@/app/layout-ui/navbar/menuData.json';
+import layoutData from '@/app/layout-ui/layoutData.json';
 import { MobileDropdown } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdownOption';
+import { LoginButton } from '@/app/layout-ui/navbar/parts/LoginButton';
 
 export default function MobileBar() {
   const { open, close } = useMobileBarStore();
@@ -34,7 +34,7 @@ export default function MobileBar() {
     }
   }, [open]);
 
-  const typedMenuData: DropdownData[] = menuData;
+  const typedMenuData: DropdownData[] = layoutData.menuData;
 
   return (
     <AnimatePresence>
@@ -48,11 +48,8 @@ export default function MobileBar() {
           className="fixed inset-0 top-16 z-45 bg-background/90 p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="mobile-menu-title"
+          aria-label="Menu mobilne"
         >
-          <h2 id="mobile-menu-title" className="sr-only">
-            Menu mobilne
-          </h2>
           <div className="md:hidden flex flex-col justify-center gap-6 mt-8">
             {typedMenuData.map((dropdown) => (
               <MobileDropdown
@@ -73,7 +70,7 @@ export default function MobileBar() {
               </MobileDropdown>
             ))}
           </div>
-          <LoginButtonWrapper isMobileBar={true} />
+          <LoginButton isMobileBar={true} />
         </motion.nav>
       )}
     </AnimatePresence>
