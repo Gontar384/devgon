@@ -12,6 +12,11 @@ NEXT_PUBLIC_DOMAIN=test.site
 NODE_ENV=dev/test/prod
 FRONTEND_URL=http://localhost:3000
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+JWT_SECRET_KEY=
+- to generate (Powershell):
+-join ((1..32 | ForEach-Object { "{0:X2}" -f (Get-Random -Maximum 256) })).ToLower()
 
 ### VPS server configuration
 - Generate key and put public version to VPS

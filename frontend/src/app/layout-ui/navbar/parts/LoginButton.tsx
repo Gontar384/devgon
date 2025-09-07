@@ -32,10 +32,11 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ isMobileBar }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
-  const handleClick = () => {
+  const handleLogin = () => {
     if (isMobile) {
       setDisplay(false);
     }
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/oauth`;
   };
 
   return (
@@ -51,7 +52,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ isMobileBar }) => {
           <Button
             size="lg"
             className="hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary select-none"
-            onClick={handleClick}
+            onClick={handleLogin}
           >
             {typedLoginButton.buttonContent}
           </Button>

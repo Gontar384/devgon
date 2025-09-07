@@ -8,8 +8,8 @@ import { FooterLinkData, SocialLinkData } from '@/app/layout-ui/types';
 import layoutData from '@/app/layout-ui/layoutData.json';
 
 export function Footer() {
-  const footerLinks: FooterLinkData[] = layoutData.footerLinks;
-  const socialLinks: SocialLinkData[] = layoutData.socialLinks;
+  const footerLinks: FooterLinkData[] = layoutData.footerLinks.items;
+  const socialLinks: SocialLinkData[] = layoutData.socialLinks.items;
 
   return (
     <footer className="px-2 select-none mt-16" aria-label="Stopka strony">

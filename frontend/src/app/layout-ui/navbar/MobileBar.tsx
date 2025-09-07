@@ -34,7 +34,7 @@ export default function MobileBar() {
     }
   }, [open]);
 
-  const typedMenuData: DropdownData[] = layoutData.menuData;
+  const typedMenuData: DropdownData[] = layoutData.menu.items;
 
   return (
     <AnimatePresence>

@@ -6,7 +6,7 @@ import { DropdownOption } from '@/app/layout-ui/navbar/main-menu-bar/DropdownOpt
 import { DropdownData } from '@/app/layout-ui/types';
 
 export function MainMenuBar() {
-  const typedMenuData: DropdownData[] = layoutData.menuData;
+  const typedMenuData: DropdownData[] = layoutData.menu.items;
 
   return (
     <div

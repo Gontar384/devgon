@@ -7,7 +7,7 @@ import pageData from '@/app/page-ui/pageData.json';
 
 export function HomeManager() {
   const typedMainCardData: MainCardProps = pageData.mainCard;
-  const typedSideCardData: SideCardProps[] = pageData.sideCard;
+  const typedSideCardData: SideCardProps[] = pageData.sideCard.items;
 
   return (
     <section className="w-full min-h-screen relative select-none">

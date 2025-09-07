@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './modules/product/product.module';
 import { TestModule } from '../test/test-utils/test.module';
 import { TypeOrmConfigModule } from './config/typeorm/typeorm.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -10,7 +12,9 @@ import { TypeOrmConfigModule } from './config/typeorm/typeorm.module';
       isGlobal: true,
     }),
     TypeOrmConfigModule,
+    AuthModule,
     ProductModule,
+    UserModule,
     ...(process.env.NODE_ENV === 'test' ? [TestModule] : []),
   ],
 })
