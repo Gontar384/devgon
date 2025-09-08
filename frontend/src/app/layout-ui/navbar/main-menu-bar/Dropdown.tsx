@@ -24,7 +24,14 @@ export const Dropdown: React.FC<DropdownWrapperProps> = ({
         </MenubarTrigger>
       </div>
       <MenubarContent className="bg-background p-0 border border-foreground/50 hidden md:block">
-        {children}
+        {React.Children.map(children, (child, index) => (
+          <>
+            {child}
+            {index < React.Children.count(children) - 1 && (
+              <div className="h-px bg-foreground/50" />
+            )}
+          </>
+        ))}
       </MenubarContent>
     </MenubarMenu>
   );

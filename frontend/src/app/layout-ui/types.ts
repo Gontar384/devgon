@@ -1,4 +1,9 @@
 import React from 'react';
+import { AuthUser } from '@/lib/types/auth-types';
+
+export interface NavbarData {
+  authUser: AuthUser;
+}
 
 export interface SiteLogoData {
   href: string;
@@ -40,10 +45,13 @@ export interface LoginButtonData {
   image1Alt: string;
   image1W: number;
   image1H: number;
+  buttonAlt: string;
+  tooltipContent3: string;
 }
 
 export interface LoginButtonProps {
   isMobileBar: boolean;
+  authUser: AuthUser;
 }
 
 export interface FooterLinkData {

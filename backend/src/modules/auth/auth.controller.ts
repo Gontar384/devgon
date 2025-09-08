@@ -32,6 +32,7 @@ export class AuthController {
   @UseGuards(JwtGuard)
   @Get('logout')
   logout(@Res() res: Response) {
-    return this.authService.logout(res);
+    this.authService.logout(res);
+    return res.status(200).json({ message: 'Logged out' });
   }
 }

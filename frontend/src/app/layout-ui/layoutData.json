@@ -103,7 +103,9 @@
     "image1Src": "/svg/tooltip-login-girl.svg",
     "image1Alt": "Login icon",
     "image1W": 64,
-    "image1H": 64
+    "image1H": 64,
+    "buttonAlt": "Użytkownik",
+    "tooltipContent3": "Wyloguj się"
   },
   "footerLinks": {
     "editable": false,

@@ -21,7 +21,7 @@ export const MainCard: React.FC<MainCardProps> = ({
 }) => {
   return (
     <Card
-      className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word px-6"
+      className="card-animate bg-background/80 backdrop-blur border hover:scale-105 transition-transform duration-300 wrap-break-word px-6"
       aria-label="Główna karta informacyjna"
     >
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4">

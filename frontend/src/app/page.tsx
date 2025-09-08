@@ -17,7 +17,6 @@ async function getContent() {
 
 export default async function HomePage() {
   await checkAuth('/');
-
   await getContent();
   return <HomeManager />;
 }

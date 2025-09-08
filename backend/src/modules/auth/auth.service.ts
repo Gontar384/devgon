@@ -53,12 +53,19 @@ export class AuthService {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'prod',
       sameSite: 'lax',
+      path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
   }
 
   logout(res: Response) {
-    res.clearCookie('auth_token');
+    res.cookie('auth_token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'prod',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 0,
+    });
     return { message: 'Logged out' };
   }
 }
