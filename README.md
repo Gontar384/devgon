@@ -11,12 +11,14 @@ NEXT_PUBLIC_DOMAIN=test.site
 ### Backend (.env & .env.test)
 NODE_ENV=development/testing/production
 FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:4000
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
 JWT_SECRET_KEY=
 - to generate (Powershell):
--join ((1..32 | ForEach-Object { "{0:X2}" -f (Get-Random -Maximum 256) })).ToLower()
+  -join ((1..32 | ForEach-Object { "{0:X2}" -f (Get-Random -Maximum 256) })).ToLower()
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+COOKIE_DOMAIN=.test.site
 
 ### VPS server configuration
 - Generate key and put public version to VPS

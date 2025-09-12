@@ -50,7 +50,6 @@ export interface LogoutButtonData {
 export interface LoginDialogData {
   dialogTitle: string;
   dialogDescription: string;
-  cardTitle: string;
   loginButton: string;
   cancelButton: string;
   imageSrc: string;

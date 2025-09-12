@@ -41,25 +41,21 @@ export class AuthService {
     };
   }
 
-  setJwtCookie(jwtPayload: JwtPayload, res: Response) {
-    const token = this.jwtService.sign(jwtPayload);
+  private createCookie(res: Response, token: string, maxAge: number) {
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      domain:
+        process.env.NODE_ENV === 'production' ? process.env.DOMAIN : undefined,
       path: '/',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge,
     });
   }
 
-  logout(res: Response) {
-    res.cookie('auth_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 0,
-    });
+  setJwtCookie(jwtPayload: JwtPayload, res: Response) {
+    const token = this.jwtService.sign(jwtPayload);
+    this.createCookie(res, token, 7 * 24 * 60 * 60 * 1000);
   }
 
   refreshJwtCookie(
@@ -70,12 +66,10 @@ export class AuthService {
     const { exp, iat, ...payload } = user;
     const token = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    res.cookie('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    this.createCookie(res, token, 7 * 24 * 60 * 60 * 1000);
+  }
+
+  logout(res: Response) {
+    this.createCookie(res, '', 0);
   }
 }
