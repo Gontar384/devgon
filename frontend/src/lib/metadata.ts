@@ -1,14 +1,8 @@
 import { Metadata } from 'next';
+import { MetadataOptions } from '@/lib/types/metadata-types';
 
 const siteName = process.env.NEXT_PUBLIC_DOMAIN;
 const siteUrl = `https://${siteName}`;
-
-interface MetadataOptions {
-  title: string;
-  description: string;
-  path?: string;
-  image?: string;
-}
 
 export function createMetadata({
   title,

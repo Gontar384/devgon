@@ -1,16 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { TypingEffectProps } from '@/app/page-ui/types';
 
-interface TypingEffectProps {
-  text: string;
-  speed?: number;
-  deleteSpeed?: number;
-  pause?: number;
-  mode?: string;
-}
-
-export default function TypingEffect({
+export function TypingEffect({
   text,
   speed = 300,
   deleteSpeed = 100,

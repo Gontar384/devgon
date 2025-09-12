@@ -1,5 +1,6 @@
 {
   "metaData": {
+    "editable": false,
     "title": "devgon",
     "description": "Inteligentne strony internetowe, automatyzacja procesów i nowoczesne rozwiązania technologiczne – zwiększ efektywność swojej firmy już dziś.",
     "path": "/",
@@ -11,121 +12,145 @@
     }
   },
   "siteLogo": {
+    "editable": false,
     "href": "/",
     "imageSrc": "/logo/logo_caption_black.svg",
     "imageAlt": "Logo strony głównej",
     "imageW": 80,
     "imageH": 60
   },
-  "menuData": [
-    {
-      "title": "O nas",
-      "href": "/",
-      "option": [
-        {
-          "title": "Czym się zajmujemy?",
-          "href": "/",
-          "imageSrc": "/svg/btn-what-we-do.svg",
-          "imageW": 34,
-          "imageH": 33
-        },
-        {
-          "title": "Nasz zespół",
-          "href": "/",
-          "imageSrc": "/svg/btn-our-team.svg",
-          "imageW": 60,
-          "imageH": 31
-        },
-        {
-          "title": "Aktualności",
-          "href": "/",
-          "imageSrc": "/svg/btn-news.svg",
-          "imageW": 39,
-          "imageH": 34
-        }
-      ]
-    },
-    {
-      "title": "Oferta",
-      "href": "/products",
-      "option": [
-        {
-          "title": "Świadczone usługi",
-          "href": "/products",
-          "imageSrc": "/svg/btn-our-offer.svg",
-          "imageW": 40,
-          "imageH": 42
-        },
-        {
-          "title": "Dlaczego warto?",
-          "href": "/products",
-          "imageSrc": "/svg/btn-why-its-worth.svg",
-          "imageW": 42,
-          "imageH": 33
-        }
-      ]
-    },
-    {
-      "title": "Kontakt",
-      "href": "/",
-      "option": [
-        {
-          "title": "Skontaktuj się",
-          "href": "/",
-          "imageSrc": "/svg/btn-contact-us.svg",
-          "imageW": 47,
-          "imageH": 30
-        },
-        {
-          "title": "Gdzie nas znaleźć?",
-          "href": "/products",
-          "imageSrc": "/svg/btn-where-to-find-us.svg",
-          "imageW": 44,
-          "imageH": 36
-        }
-      ]
-    }
-  ],
-  "loginButton": {
-    "buttonContent": "Zaloguj się",
-    "tooltipContent": "Zaloguj się za pomocą Google",
-    "tooltipContent1": "i odblokuj pełne możliwości naszej strony!",
-    "imageSrc": "/svg/google.svg",
-    "imageAlt": "Google icon",
-    "imageW": 16,
-    "imageH": 16,
-    "image1Src": "/svg/tooltip-login-girl.svg",
-    "image1Alt": "Login icon",
-    "image1W": 64,
-    "image1H": 64
+  "menu": {
+    "editable": false,
+    "items": [
+      {
+        "title": "O nas",
+        "href": "/",
+        "option": [
+          {
+            "title": "Czym się zajmujemy?",
+            "href": "/",
+            "imageSrc": "/svg/btn-what-we-do.svg",
+            "imageW": 34,
+            "imageH": 33
+          },
+          {
+            "title": "Nasz zespół",
+            "href": "/",
+            "imageSrc": "/svg/btn-our-team.svg",
+            "imageW": 60,
+            "imageH": 31
+          },
+          {
+            "title": "Aktualności",
+            "href": "/",
+            "imageSrc": "/svg/btn-news.svg",
+            "imageW": 39,
+            "imageH": 34
+          }
+        ]
+      },
+      {
+        "title": "Oferta",
+        "href": "/products",
+        "option": [
+          {
+            "title": "Świadczone usługi",
+            "href": "/products",
+            "imageSrc": "/svg/btn-our-offer.svg",
+            "imageW": 40,
+            "imageH": 42
+          },
+          {
+            "title": "Dlaczego warto?",
+            "href": "/products",
+            "imageSrc": "/svg/btn-why-its-worth.svg",
+            "imageW": 42,
+            "imageH": 33
+          }
+        ]
+      },
+      {
+        "title": "Kontakt",
+        "href": "/",
+        "option": [
+          {
+            "title": "Skontaktuj się",
+            "href": "/",
+            "imageSrc": "/svg/btn-contact-us.svg",
+            "imageW": 47,
+            "imageH": 30
+          },
+          {
+            "title": "Gdzie nas znaleźć?",
+            "href": "/products",
+            "imageSrc": "/svg/btn-where-to-find-us.svg",
+            "imageW": 44,
+            "imageH": 36
+          }
+        ]
+      }
+    ]
   },
-  "footerLinks": [
-    {
-      "title": "Regulamin",
-      "href": "/"
-    },
-    {
-      "title": "Polityka prywatności",
-      "href": "/"
-    }
-  ],
-  "socialLinks": [
-    {
-      "title": "Facebook",
-      "href": "/",
-      "iconSrc": "/svg/facebook.svg",
-      "iconWidth": 24,
-      "iconHeight": 24
-    },
-    {
-      "title": "Instagram",
-      "href": "/",
-      "iconSrc": "/svg/instagram.svg",
-      "iconWidth": 24,
-      "iconHeight": 24
-    }
-  ],
+  "loginButton": {
+    "editable": false,
+    "buttonAlt": "Użytkownik",
+    "buttonContent": "Zaloguj się",
+    "tooltipContent": "Zaloguj się i odblokuj pełne możliwości naszej strony!",
+    "imageSrc": "/svg/tooltip-login-girl.svg",
+    "imageAlt": "Login icon",
+    "imageW": 48,
+    "imageH": 48
+  },
+  "logoutButton": {
+    "editable": false,
+    "tooltipContent": "Wyloguj się"
+  },
+  "loginDialog": {
+    "editable": false,
+    "dialogTitle": "Logowanie",
+    "dialogDescription": "Zaloguj się, używając którejś z poniższych metod:",
+    "cardTitle": "Opcje logowania",
+    "loginButton": "Zaloguj przez Google",
+    "cancelButton": "Anuluj",
+    "imageSrc": "/svg/google.svg",
+    "imageAlt": "Zaloguj się za pomocą Google",
+    "imageW": 24,
+    "imageH": 24
+  },
+  "footerLinks": {
+    "editable": false,
+    "items": [
+      {
+        "title": "Regulamin",
+        "href": "/"
+      },
+      {
+        "title": "Polityka prywatności",
+        "href": "/"
+      }
+    ]
+  },
+  "socialLinks": {
+    "editable": false,
+    "items": [
+      {
+        "title": "Facebook",
+        "href": "/",
+        "iconSrc": "/svg/facebook.svg",
+        "iconWidth": 24,
+        "iconHeight": 24
+      },
+      {
+        "title": "Instagram",
+        "href": "/",
+        "iconSrc": "/svg/instagram.svg",
+        "iconWidth": 24,
+        "iconHeight": 24
+      }
+    ]
+  },
   "allRightsReserved": {
+    "editable": false,
     "imageSrc": "/svg/footer-page-designer.svg",
     "imageAlt": "Programista",
     "imageW": 50,
@@ -134,8 +159,9 @@
     "content1": "All rights reserved"
   },
   "devgonWatermark": {
+    "editable": false,
     "content": "Designed & built by",
-    "content1" : "devgon",
+    "content1": "devgon",
     "href": "https://devgon.site",
     "imageSrc": "/logo/logo_black.svg",
     "imageAlt": "Mini logo devgon",

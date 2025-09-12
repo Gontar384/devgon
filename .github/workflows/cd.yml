@@ -71,9 +71,13 @@ jobs:
             
             echo "Writing environment variables to .env..."
             {
-              echo "NODE_ENV=prod"
-              echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+              echo "NODE_ENV=production"
               echo "FRONTEND_URL=https://devgon.site"
+              echo "BACKEND_URL=https://api.devgon.site"
+              echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+              echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
+              echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
+              echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
             } > .env
             
             echo "Running database migrations..."

@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { MenubarItem } from '@/components/ui/menubar';
 import { DropdownOptionProps } from '@/app/layout-ui/types';
 
-export const DropdownOption: React.FC<DropdownOptionProps> = ({
+export function DropdownOption({
   title,
   href,
   imageSrc,
   imageW,
   imageH,
-}) => {
+}: DropdownOptionProps) {
   return (
     <MenubarItem asChild className="text-base">
       <Link
@@ -28,4 +28,4 @@ export const DropdownOption: React.FC<DropdownOptionProps> = ({
       </Link>
     </MenubarItem>
   );
-};
+}

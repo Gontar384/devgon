@@ -9,11 +9,7 @@ import { SideHero } from '@/app/page-ui/side-card/SideHero';
 import React from 'react';
 import { SideCardProps } from '@/app/page-ui/types';
 
-export const SideCard: React.FC<SideCardProps> = ({
-  sideHero,
-  description,
-  content,
-}) => {
+export function SideCard({ sideHero, description, content }: SideCardProps) {
   return (
     <Card
       className="card-animate bg-background/80 backdrop-blur border shadow-xl hover:scale-105 transition-transform duration-300 wrap-break-word"
@@ -28,4 +24,4 @@ export const SideCard: React.FC<SideCardProps> = ({
       <CardContent>{content}</CardContent>
     </Card>
   );
-};
+}

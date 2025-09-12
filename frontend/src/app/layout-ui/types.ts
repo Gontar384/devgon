@@ -1,4 +1,9 @@
 import React from 'react';
+import { AuthUser } from '@/lib/types/auth-types';
+
+export interface NavbarData {
+  authUser: AuthUser;
+}
 
 export interface SiteLogoData {
   href: string;
@@ -31,19 +36,49 @@ export interface DropdownWrapperProps {
 export interface LoginButtonData {
   buttonContent: string;
   tooltipContent: string;
-  tooltipContent1: string;
   imageSrc: string;
   imageAlt: string;
   imageW: number;
   imageH: number;
-  image1Src: string;
-  image1Alt: string;
-  image1W: number;
-  image1H: number;
+  buttonAlt: string;
 }
 
-export interface LoginButtonProps {
+export interface LogoutButtonData {
+  tooltipContent: string;
+}
+
+export interface LoginDialogData {
+  dialogTitle: string;
+  dialogDescription: string;
+  cardTitle: string;
+  loginButton: string;
+  cancelButton: string;
+  imageSrc: string;
+  imageAlt: string;
+  imageW: number;
+  imageH: number;
+}
+
+export interface AuthButtonProps {
   isMobileBar: boolean;
+  authUser: AuthUser;
+}
+
+export interface LoginButtonProps extends AuthButtonProps {
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LogoutButtonProps {
+  authUser: AuthUser;
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LoginDialogProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FooterLinkData {

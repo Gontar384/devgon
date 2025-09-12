@@ -3,13 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DropdownOptionProps } from '@/app/layout-ui/types';
 
-export const MobileDropdownOption: React.FC<DropdownOptionProps> = ({
+export function MobileDropdownOption({
   title,
   href,
   imageSrc,
   imageW,
   imageH,
-}) => {
+}: DropdownOptionProps) {
   return (
     <Link
       href={href}
@@ -25,4 +25,4 @@ export const MobileDropdownOption: React.FC<DropdownOptionProps> = ({
       />
     </Link>
   );
-};
+}

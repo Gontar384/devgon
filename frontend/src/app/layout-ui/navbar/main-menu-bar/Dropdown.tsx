@@ -5,11 +5,7 @@ import { CircleChevronDown } from 'lucide-react';
 import { MenubarMenu } from '@radix-ui/react-menubar';
 import { DropdownWrapperProps } from '@/app/layout-ui/types';
 
-export const Dropdown: React.FC<DropdownWrapperProps> = ({
-  title,
-  href,
-  children,
-}) => {
+export function Dropdown({ title, href, children }: DropdownWrapperProps) {
   return (
     <MenubarMenu>
       <div className="flex items-center">
@@ -24,8 +20,15 @@ export const Dropdown: React.FC<DropdownWrapperProps> = ({
         </MenubarTrigger>
       </div>
       <MenubarContent className="bg-background p-0 border border-foreground/50 hidden md:block">
-        {children}
+        {React.Children.map(children, (child, index) => (
+          <>
+            {child}
+            {index < React.Children.count(children) - 1 && (
+              <div className="h-px bg-foreground/50" />
+            )}
+          </>
+        ))}
       </MenubarContent>
     </MenubarMenu>
   );
-};
+}
