@@ -4,9 +4,17 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { createSwaggerConfig } from './config/swagger/swagger.config';
 import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  if (process.env.NODE_ENV === 'production') {
+    (app.getHttpAdapter().getInstance() as express.Express).set(
+      'trust proxy',
+      1,
+    );
+  }
 
   app.use(cookieParser());
 
