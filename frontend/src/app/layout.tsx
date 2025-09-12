@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata';
 import MobileBar from '@/app/layout-ui/navbar/MobileBar';
 import layoutData from '@/app/layout-ui/layoutData.json';
-import { getAuthUser } from '@/lib/checkUser';
+import { fetchUser } from '@/lib/auth/fetchUser';
 
 export const metadata: Metadata = {
   ...createMetadata(layoutData.metaData),
@@ -19,7 +19,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const authUser = await getAuthUser();
+  const authUser = await fetchUser();
   return (
     <html lang="pl">
       <body>

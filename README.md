@@ -9,7 +9,7 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 NEXT_PUBLIC_DOMAIN=test.site
 
 ### Backend (.env & .env.test)
-NODE_ENV=dev/test/prod
+NODE_ENV=development/testing/production
 FRONTEND_URL=http://localhost:3000
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
 GOOGLE_CLIENT_ID=

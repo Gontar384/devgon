@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { AuthUser } from '@/lib/types/auth-types';
 
-export async function getAuthUser(): Promise<AuthUser> {
+export async function fetchUser(): Promise<AuthUser> {
   const token = (await cookies()).get('auth_token')?.value;
   let user: AuthUser = { userId: '', email: '', role: 'guest' };
 

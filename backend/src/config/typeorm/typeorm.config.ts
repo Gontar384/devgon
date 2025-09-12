@@ -9,6 +9,6 @@ export const getTypeOrmConfig = (
   type: 'postgres',
   url: configService.get<string>('DATABASE_URL'),
   entities: [Product, User],
-  synchronize: configService.get<string>('NODE_ENV') !== 'prod',
+  synchronize: configService.get<string>('NODE_ENV') !== 'production',
   migrationsRun: true,
 });

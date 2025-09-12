@@ -12,7 +12,7 @@ export function HomeManager() {
   return (
     <section className="w-full min-h-screen relative select-none">
       <ParticlesBackground />
-      <div className="relative flex flex-col items-center px-4 z-40">
+      <div className="relative flex flex-col items-center px-4 z-30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full mt-14">
           <div className="md:col-span-3">
             <MainCard

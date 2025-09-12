@@ -3,7 +3,7 @@ import api from '@/lib/axios';
 import { ProductsManager } from '@/app/products/ProductsManager';
 import { Metadata } from 'next';
 import fallbackProducts from '@/app/products/products-fallback.json';
-import { checkAuth } from '@/lib/checkAuth';
+import { verifyAuth } from '@/lib/auth/verifyAuth';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -23,7 +23,7 @@ async function getProducts() {
 }
 
 export default async function ProductsPage() {
-  await checkAuth('/products');
+  await verifyAuth('/products');
   const products = await getProducts();
   return <ProductsManager initialProducts={products} />;
 }

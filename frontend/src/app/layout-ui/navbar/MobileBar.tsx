@@ -7,11 +7,12 @@ import { DropdownData, NavbarData } from '@/app/layout-ui/types';
 import layoutData from '@/app/layout-ui/layoutData.json';
 import { MobileDropdown } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout-ui/navbar/mobile-bar/MobileDropdownOption';
-import { LoginButton } from '@/app/layout-ui/navbar/parts/LoginButton';
+import { AuthButton } from '@/app/layout-ui/navbar/auth-button/AuthButton';
 
 export default function MobileBar({ authUser }: NavbarData) {
   const { open, close } = useMobileBarStore();
   const pathname = usePathname();
+  const typedMenuData: DropdownData[] = layoutData.menu.items;
 
   useEffect(() => {
     if (open) {
@@ -34,8 +35,6 @@ export default function MobileBar({ authUser }: NavbarData) {
     }
   }, [open]);
 
-  const typedMenuData: DropdownData[] = layoutData.menu.items;
-
   return (
     <AnimatePresence>
       {open && (
@@ -45,7 +44,7 @@ export default function MobileBar({ authUser }: NavbarData) {
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-45 bg-background/90 p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
+          className="fixed inset-0 top-16 z-40 bg-background/90 p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
           role="dialog"
           aria-modal="true"
           aria-label="Menu mobilne"
@@ -70,7 +69,7 @@ export default function MobileBar({ authUser }: NavbarData) {
               </MobileDropdown>
             ))}
           </div>
-          <LoginButton isMobileBar={true} authUser={authUser} />
+          <AuthButton isMobileBar={true} authUser={authUser} />
         </motion.nav>
       )}
     </AnimatePresence>

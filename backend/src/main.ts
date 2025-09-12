@@ -23,7 +23,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  if (process.env.NODE_ENV === 'dev') {
+  if (process.env.NODE_ENV === 'development') {
     const config = createSwaggerConfig();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);

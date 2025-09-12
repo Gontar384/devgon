@@ -10,7 +10,7 @@ import Image from 'next/image';
 import React from 'react';
 import { MainCardProps } from '@/app/page-ui/types';
 
-export const MainCard: React.FC<MainCardProps> = ({
+export function MainCard({
   mainHero,
   description,
   content,
@@ -18,7 +18,7 @@ export const MainCard: React.FC<MainCardProps> = ({
   imageAlt,
   imageW,
   imageH,
-}) => {
+}: MainCardProps) {
   return (
     <Card
       className="card-animate bg-background/80 backdrop-blur border hover:scale-105 transition-transform duration-300 wrap-break-word px-6"
@@ -53,4 +53,4 @@ export const MainCard: React.FC<MainCardProps> = ({
       </div>
     </Card>
   );
-};
+}

@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
   url: process.env.DATABASE_URL,
   entities: [Product, User],
   migrations: [
-    process.env.NODE_ENV === 'prod'
+    process.env.NODE_ENV === 'production'
       ? 'dist/migrations/*.js'
       : 'migrations/*.ts',
   ],

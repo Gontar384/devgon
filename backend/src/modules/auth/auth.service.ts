@@ -2,14 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../user/user.repository';
 import { User } from '../user/user.entity';
-import { JwtPayload, UserRole } from './auth.types';
+import { GoogleProfile, JwtPayload, UserRole } from './auth.types';
 import { Response } from 'express';
-
-interface GoogleProfile {
-  id: string;
-  displayName?: string;
-  emails?: { value: string }[];
-}
 
 @Injectable()
 export class AuthService {
@@ -51,7 +45,7 @@ export class AuthService {
     const token = this.jwtService.sign(jwtPayload);
     res.cookie('auth_token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'prod',
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -61,11 +55,27 @@ export class AuthService {
   logout(res: Response) {
     res.cookie('auth_token', '', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'prod',
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       maxAge: 0,
     });
-    return { message: 'Logged out' };
+  }
+
+  refreshJwtCookie(
+    user: JwtPayload & { exp?: number; iat?: number },
+    res: Response,
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { exp, iat, ...payload } = user;
+    const token = this.jwtService.sign(payload, { expiresIn: '7d' });
+
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
   }
 }

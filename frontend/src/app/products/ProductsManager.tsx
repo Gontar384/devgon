@@ -33,9 +33,7 @@ interface Props {
   initialProducts: Product[];
 }
 
-export const ProductsManager: React.FC<Props> = ({
-  initialProducts,
-}: Props) => {
+export function ProductsManager({ initialProducts }: Props) {
   const { data: products, mutate } = useSWR<Product[]>(
     '/api/products',
     fetcher,
@@ -110,7 +108,7 @@ export const ProductsManager: React.FC<Props> = ({
               }
             />
           </TooltipTrigger>
-          <TooltipContent side="top" className="!z-40">
+          <TooltipContent side="top" className="!z-35">
             <p>Tytuł jest wymagany</p>
           </TooltipContent>
         </Tooltip>
@@ -139,7 +137,7 @@ export const ProductsManager: React.FC<Props> = ({
               className="resize-none h-24 md:text-base"
             />
           </TooltipTrigger>
-          <TooltipContent side="bottom" className="!z-40">
+          <TooltipContent side="bottom" className="!z-35">
             <p>Opis jest wymagany</p>
           </TooltipContent>
         </Tooltip>
@@ -189,4 +187,4 @@ export const ProductsManager: React.FC<Props> = ({
       </Table>
     </section>
   );
-};
+}

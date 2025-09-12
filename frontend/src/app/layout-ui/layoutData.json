@@ -93,19 +93,29 @@
   },
   "loginButton": {
     "editable": false,
-    "buttonContent": "Zaloguj się",
-    "tooltipContent": "Zaloguj się za pomocą Google",
-    "tooltipContent1": "i odblokuj pełne możliwości naszej strony!",
-    "imageSrc": "/svg/google.svg",
-    "imageAlt": "Google icon",
-    "imageW": 16,
-    "imageH": 16,
-    "image1Src": "/svg/tooltip-login-girl.svg",
-    "image1Alt": "Login icon",
-    "image1W": 64,
-    "image1H": 64,
     "buttonAlt": "Użytkownik",
-    "tooltipContent3": "Wyloguj się"
+    "buttonContent": "Zaloguj się",
+    "tooltipContent": "Zaloguj się i odblokuj pełne możliwości naszej strony!",
+    "imageSrc": "/svg/tooltip-login-girl.svg",
+    "imageAlt": "Login icon",
+    "imageW": 48,
+    "imageH": 48
+  },
+  "logoutButton": {
+    "editable": false,
+    "tooltipContent": "Wyloguj się"
+  },
+  "loginDialog": {
+    "editable": false,
+    "dialogTitle": "Logowanie",
+    "dialogDescription": "Zaloguj się, używając którejś z poniższych metod:",
+    "cardTitle": "Opcje logowania",
+    "loginButton": "Zaloguj przez Google",
+    "cancelButton": "Anuluj",
+    "imageSrc": "/svg/google.svg",
+    "imageAlt": "Zaloguj się za pomocą Google",
+    "imageW": 24,
+    "imageH": 24
   },
   "footerLinks": {
     "editable": false,

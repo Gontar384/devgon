@@ -1,14 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-
-interface MobileBarState {
-  open: boolean;
-  toggle: () => void;
-  close: () => void;
-  mobileBarOpened: boolean;
-  setMobileBarOpened: (opened: boolean) => void;
-}
+import { MobileBarState } from '@/store/types/mobilebar-types';
 
 export const useMobileBarStore = create<MobileBarState>((set) => ({
   open: false,

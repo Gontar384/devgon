@@ -1,16 +1,15 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AuthUser, ProtectedRoute } from '@/lib/types/auth-types';
+import { cookies } from 'next/headers';
 
 export const protectedRoutes: ProtectedRoute[] = [
   { path: '/products', roles: ['user', 'admin'] },
 ];
 
-export async function checkAuth(currentPath: string): Promise<AuthUser> {
+export async function verifyAuth(currentPath: string) {
   const route = protectedRoutes.find((r) => currentPath.startsWith(r.path));
 
   const token = (await cookies()).get('auth_token')?.value;
-
   let user: AuthUser = { userId: '', email: '', role: 'guest' };
 
   if (token) {
@@ -27,13 +26,11 @@ export async function checkAuth(currentPath: string): Promise<AuthUser> {
         user = (await res.json()) as AuthUser;
       }
     } catch {
-      console.error('Error while checking auth');
+      console.error('Error verifying auth');
     }
   }
 
   if (route && !route.roles.includes(user.role)) {
     redirect('/');
   }
-
-  return user;
 }

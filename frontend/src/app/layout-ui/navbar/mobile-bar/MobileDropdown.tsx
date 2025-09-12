@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleChevronUp } from 'lucide-react';
 
-export const MobileDropdown: React.FC<DropdownWrapperProps> = ({
+export function MobileDropdown({
   title,
   href,
   children,
-}) => {
+}: DropdownWrapperProps) {
   const [accordionActive, setAccordionActive] = useState<boolean>(false);
 
   const handleAccordionToggle = () => {
@@ -58,4 +58,4 @@ export const MobileDropdown: React.FC<DropdownWrapperProps> = ({
       </AnimatePresence>
     </div>
   );
-};
+}

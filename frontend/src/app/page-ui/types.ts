@@ -26,3 +26,11 @@ export interface MainCardProps {
   imageW: number;
   imageH: number;
 }
+
+export interface TypingEffectProps {
+  text: string;
+  speed?: number;
+  deleteSpeed?: number;
+  pause?: number;
+  mode?: string;
+}

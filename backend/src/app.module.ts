@@ -15,7 +15,7 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     ProductModule,
     UserModule,
-    ...(process.env.NODE_ENV === 'test' ? [TestModule] : []),
+    ...(process.env.NODE_ENV === 'testing' ? [TestModule] : []),
   ],
 })
 export class AppModule {}
