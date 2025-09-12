@@ -3,7 +3,7 @@ import { AuthUser, ProtectedRoute } from '@/lib/types/auth-types';
 import { cookies } from 'next/headers';
 
 export const protectedRoutes: ProtectedRoute[] = [
-  { path: '/products', roles: ['user', 'admin'] },
+  { path: '/products', roles: ['guest', 'user', 'admin'] },
 ];
 
 export async function verifyAuth(currentPath: string) {
