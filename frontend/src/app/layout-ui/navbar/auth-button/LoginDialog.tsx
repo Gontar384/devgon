@@ -8,13 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { LoginDialogData, LoginDialogProps } from '@/app/layout-ui/types';
 import { loginDialog } from '@/app/layout-ui/layoutData.json';
@@ -38,11 +32,6 @@ export function LoginDialog({ open, setOpen }: LoginDialogProps) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Card className="shadow-none bg-background">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold">
-              {typedLoginDialogData.cardTitle}
-            </CardTitle>
-          </CardHeader>
           <CardContent className="space-y-3">
             <Button
               className="w-full flex items-center cursor-pointer hover:scale-105 active:scale-105 hover:bg-primary"

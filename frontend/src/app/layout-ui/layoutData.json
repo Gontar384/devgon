@@ -108,8 +108,7 @@
   "loginDialog": {
     "editable": false,
     "dialogTitle": "Logowanie",
-    "dialogDescription": "Zaloguj się, używając którejś z poniższych metod:",
-    "cardTitle": "Opcje logowania",
+    "dialogDescription": "Zaloguj się, używając którejś z poniższych metod",
     "loginButton": "Zaloguj przez Google",
     "cancelButton": "Anuluj",
     "imageSrc": "/svg/google.svg",
