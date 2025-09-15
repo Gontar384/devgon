@@ -47,7 +47,9 @@ export class AuthService {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       domain:
-        process.env.NODE_ENV === 'production' ? process.env.DOMAIN : undefined,
+        process.env.NODE_ENV === 'production'
+          ? process.env.COOKIE_DOMAIN
+          : undefined,
       path: '/',
       maxAge,
     });

@@ -51,20 +51,24 @@ jobs:
 
       - name: Create .env.test
         run: |
-          echo "NODE_ENV=testing" > .env.test
-          echo "FRONTEND_URL=http://localhost:3000" >> .env.test
-          echo "BACKEND_URL=http://localhost:4000" >> .env.test
-          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.test
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env.test
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env.test
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env.test
-          echo "COOKIE_DOMAIN=.test.site" >> .env.test
+          {
+            echo "NODE_ENV=testing"
+            echo "FRONTEND_URL=http://localhost:3000"
+            echo "BACKEND_URL=http://localhost:4000"
+            echo "DATABASE_URL=${{ env.DATABASE_URL }}"
+            echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
+            echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
+            echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
+            echo "COOKIE_DOMAIN=.test.site"
+          } > .env.test
         working-directory: backend
 
       - name: Create frontend .env
         run: |
-          echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:4000" > .env
-          echo "NEXT_PUBLIC_DOMAIN=test.site" >> .env
+          {
+            echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:4000"
+            echo "NEXT_PUBLIC_DOMAIN=test.site"
+          } > .env
         working-directory: frontend
 
       - name: Run Tests and Lint
