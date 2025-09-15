@@ -31,7 +31,7 @@ export function LoginDialog({ open, setOpen }: LoginDialogProps) {
             {typedLoginDialogData.dialogDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <Card className="shadow-none bg-background">
+        <Card className="shadow-none bg-background border-border/50">
           <CardContent className="space-y-3">
             <Button
               className="w-full flex items-center cursor-pointer hover:scale-105 active:scale-105 hover:bg-primary"

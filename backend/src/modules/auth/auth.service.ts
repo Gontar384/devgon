@@ -45,7 +45,7 @@ export class AuthService {
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      sameSite: 'lax',
       domain:
         process.env.NODE_ENV === 'production'
           ? process.env.COOKIE_DOMAIN
