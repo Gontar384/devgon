@@ -14,7 +14,11 @@ import layoutData from '@/app/layout-ui/layoutData.json';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { toast } from 'sonner';
 
-export function LogoutButton({ authUser, show, setShow }: LogoutButtonProps) {
+export function LogoutButton({
+  authUser,
+  showTooltip,
+  setShowTooltip,
+}: LogoutButtonProps) {
   const typedAuthButton: LogoutButtonData = layoutData.logoutButton;
   const router = useRouter();
   const { isMobile } = useDeviceStore();
@@ -29,14 +33,14 @@ export function LogoutButton({ authUser, show, setShow }: LogoutButtonProps) {
       if (open) close();
       toast.success('Zostałeś wylogowany👋');
     } catch {
-      console.error('Unable to log in');
+      console.error('Unable to log out');
     }
   };
 
   return (
     <>
       {isAuthenticated && (
-        <Tooltip open={!isMobile && show} onOpenChange={setShow}>
+        <Tooltip open={!isMobile && showTooltip} onOpenChange={setShowTooltip}>
           <TooltipTrigger asChild>
             <Button
               variant="default"

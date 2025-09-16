@@ -1,4 +1,3 @@
-import { ParticlesBackground } from '@/app/page-ui/parts/ParticlesBackground';
 import { MainCard } from '@/app/page-ui/main-card/MainCard';
 import { SideCard } from '@/app/page-ui/side-card/SideCard';
 import React from 'react';
@@ -10,9 +9,8 @@ export function HomeManager() {
   const typedSideCardData: SideCardProps[] = pageData.sideCard.items;
 
   return (
-    <section className="w-full min-h-screen relative select-none">
-      <ParticlesBackground />
-      <div className="relative flex flex-col items-center px-4 z-30">
+    <section className="w-full min-h-screen relative">
+      <div className="relative flex flex-col items-center px-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full mt-14">
           <div className="md:col-span-3">
             <MainCard

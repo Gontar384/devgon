@@ -34,11 +34,11 @@
 
 @keyframes appear1 {
   0% {
-    transform: translateY(-5%) scale(1.05);
+    transform: translateY(-5%);
   }
   100% {
     opacity: 1;
-    transform: translateY(0%) scale(1);
+    transform: translateY(0%);
   }
 }
 

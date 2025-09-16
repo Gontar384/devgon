@@ -7,8 +7,8 @@ import { LoginDialog } from '@/app/layout-ui/navbar/auth-button/LoginDialog';
 import { refreshAuth } from '@/lib/auth/refreshAuth';
 
 export function AuthButton({ isMobileBar, authUser }: AuthButtonProps) {
-  const [show, setShow] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -36,14 +36,18 @@ export function AuthButton({ isMobileBar, authUser }: AuthButtonProps) {
       aria-label="Akcje użytkownika"
     >
       <LoginButton
-        authUser={authUser}
         isMobileBar={isMobileBar}
-        show={show}
-        setShow={setShow}
-        setOpen={setOpen}
+        setDialogOpen={setDialogOpen}
+        authUser={authUser}
+        showTooltip={showTooltip}
+        setShowTooltip={setShowTooltip}
       />
-      <LogoutButton authUser={authUser} show={show} setShow={setShow} />
-      <LoginDialog open={open} setOpen={setOpen} />
+      <LogoutButton
+        authUser={authUser}
+        showTooltip={showTooltip}
+        setShowTooltip={setShowTooltip}
+      />
+      <LoginDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
     </div>
   );
 }
