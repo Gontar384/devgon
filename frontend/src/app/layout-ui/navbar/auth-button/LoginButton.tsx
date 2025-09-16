@@ -14,44 +14,44 @@ import { useMobileBarStore } from '@/store/mobileBarStore';
 export function LoginButton({
   authUser,
   isMobileBar,
-  show,
-  setShow,
-  setOpen,
+  showTooltip,
+  setShowTooltip,
+  setDialogOpen,
 }: LoginButtonProps) {
   const typedAuthButton: LoginButtonData = layoutData.loginButton;
   const { isMobile } = useDeviceStore();
+  const { mobileBarOpened, setMobileBarOpened, open } = useMobileBarStore();
   const isAuthenticated = authUser.role !== 'guest';
-  const [display, setDisplay] = useState(false);
-  const { mobileBarOpened, setMobileBarOpened } = useMobileBarStore();
+  const [showTooltipOnMobile, setShowTooltipOnMobile] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated || !isMobile || mobileBarOpened || !isMobileBar) return;
+    if (!isMobileBar || isAuthenticated || !isMobile || mobileBarOpened) return;
     setMobileBarOpened(true);
     const timeout = setTimeout(() => {
-      setDisplay(true);
+      setShowTooltipOnMobile(true);
     }, 2000);
 
     return () => {
       clearTimeout(timeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile]);
+  }, []);
 
   const handleOpenDialog = async () => {
     if (isAuthenticated) return;
-    setDisplay(false);
+    setShowTooltipOnMobile(false);
     const active = document.activeElement as HTMLElement | null;
     if (active) active.blur();
-    setOpen(true);
+    setDialogOpen(true);
   };
 
   return (
     <Tooltip
       open={
-        (!isAuthenticated && !isMobile && show) ||
-        (!isAuthenticated && isMobile && display)
+        (!isAuthenticated && !isMobile && showTooltip) ||
+        (!isAuthenticated && isMobile && showTooltipOnMobile && open)
       }
-      onOpenChange={setShow}
+      onOpenChange={setShowTooltip}
     >
       <TooltipTrigger asChild>
         <Button
@@ -70,7 +70,7 @@ export function LoginButton({
       <TooltipContent
         className="w-60 flex select-none !z-45"
         side="bottom"
-        onClick={() => setDisplay(false)}
+        onClick={() => setShowTooltipOnMobile(false)}
       >
         <span>{typedAuthButton.tooltipContent}</span>
         <Image

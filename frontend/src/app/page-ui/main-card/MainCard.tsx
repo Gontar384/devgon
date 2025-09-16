@@ -9,6 +9,7 @@ import { MainHero } from '@/app/page-ui/main-card/MainHero';
 import Image from 'next/image';
 import React from 'react';
 import { MainCardProps } from '@/app/page-ui/types';
+import { CursorGlow } from '@/app/page-ui/parts/CursorGlow';
 
 export function MainCard({
   mainHero,
@@ -21,9 +22,10 @@ export function MainCard({
 }: MainCardProps) {
   return (
     <Card
-      className="card-animate bg-background/80 backdrop-blur border hover:scale-105 transition-transform duration-300 wrap-break-word px-6"
+      className="card-animate bg-background/90 backdrop-blur border shadow-xl wrap-break-word px-2 md:px-6 relative overflow-hidden"
       aria-label="Główna karta informacyjna"
     >
+      <CursorGlow />
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4">
         <div className="flex-1">
           <CardHeader>

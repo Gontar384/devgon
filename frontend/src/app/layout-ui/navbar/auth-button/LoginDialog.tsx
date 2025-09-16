@@ -14,14 +14,14 @@ import { LoginDialogData, LoginDialogProps } from '@/app/layout-ui/types';
 import { loginDialog } from '@/app/layout-ui/layoutData.json';
 import Image from 'next/image';
 
-export function LoginDialog({ open, setOpen }: LoginDialogProps) {
+export function LoginDialog({ dialogOpen, setDialogOpen }: LoginDialogProps) {
   const typedLoginDialogData: LoginDialogData = loginDialog;
   const handleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/oauth`;
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <AlertDialogContent className="max-w-md rounded-[1.2rem] select-none">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-3xl">
@@ -34,6 +34,7 @@ export function LoginDialog({ open, setOpen }: LoginDialogProps) {
         <Card className="shadow-none bg-background border-border/50">
           <CardContent className="space-y-3">
             <Button
+              autoFocus
               className="w-full flex items-center cursor-pointer hover:scale-105 active:scale-105 hover:bg-primary"
               onClick={handleLogin}
             >
@@ -51,7 +52,7 @@ export function LoginDialog({ open, setOpen }: LoginDialogProps) {
             <Button
               variant="secondary"
               className="cursor-pointer text-primary-foreground hover:scale-105 active:scale-105 hover:bg-secondary"
-              onClick={() => setOpen(false)}
+              onClick={() => setDialogOpen(false)}
             >
               {typedLoginDialogData.cancelButton}
             </Button>

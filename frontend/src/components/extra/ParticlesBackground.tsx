@@ -8,7 +8,7 @@ import {
 } from '@tsparticles/engine';
 import { loadSlim } from '@tsparticles/slim';
 
-export const ParticlesBackground = () => {
+export const ParticlesBackground = ({ id }: { id?: string }) => {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
@@ -90,9 +90,9 @@ export const ParticlesBackground = () => {
   if (init) {
     return (
       <Particles
-        id="tsparticles"
+        id={id ?? crypto.randomUUID()}
         options={{ ...options, fullScreen: { enable: false } }}
-        className="absolute inset-0 pointer-events-none z-30"
+        className="absolute inset-0 pointer-events-none z-10"
       />
     );
   }

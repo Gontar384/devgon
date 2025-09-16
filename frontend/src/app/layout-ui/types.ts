@@ -13,24 +13,10 @@ export interface SiteLogoData {
   imageH: number;
 }
 
-export interface DropdownOptionProps {
-  title: string;
-  href: string;
-  imageSrc: string;
-  imageW: number;
-  imageH: number;
-}
-
 export interface DropdownData {
   title: string;
   href: string;
   option: DropdownOptionProps[];
-}
-
-export interface DropdownWrapperProps {
-  title: string;
-  href: string;
-  children?: React.ReactNode;
 }
 
 export interface LoginButtonData {
@@ -56,28 +42,6 @@ export interface LoginDialogData {
   imageAlt: string;
   imageW: number;
   imageH: number;
-}
-
-export interface AuthButtonProps {
-  isMobileBar: boolean;
-  authUser: AuthUser;
-}
-
-export interface LoginButtonProps extends AuthButtonProps {
-  show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export interface LogoutButtonProps {
-  authUser: AuthUser;
-  show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export interface LoginDialogProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FooterLinkData {
@@ -108,4 +72,40 @@ export interface DevgonWatermarkData {
   imageAlt: string;
   imageW: number;
   imageH: number;
+}
+
+export interface DropdownOptionProps {
+  title: string;
+  href: string;
+  imageSrc: string;
+  imageW: number;
+  imageH: number;
+}
+
+export interface DropdownWrapperProps {
+  title: string;
+  href: string;
+  children?: React.ReactNode;
+}
+
+export interface AuthButtonProps {
+  isMobileBar: boolean;
+  authUser: AuthUser;
+}
+
+export interface LoginButtonProps extends AuthButtonProps {
+  showTooltip: boolean;
+  setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
+  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LogoutButtonProps {
+  authUser: AuthUser;
+  showTooltip: boolean;
+  setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LoginDialogProps {
+  dialogOpen: boolean;
+  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

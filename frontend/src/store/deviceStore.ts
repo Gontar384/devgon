@@ -8,6 +8,9 @@ export const useDeviceStore = create<DeviceState>((set) => ({
   detectDevice: () => {
     if (typeof window === 'undefined') return;
 
+    const initialIsMobile = window.innerWidth <= 768;
+    set({ isMobile: initialIsMobile });
+
     const handleTouch = () => {
       set({ isMobile: true });
       cleanup();
