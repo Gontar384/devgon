@@ -11,11 +11,11 @@ export function Dropdown({ title, href, children }: DropdownWrapperProps) {
       <div className="flex items-center">
         <Link
           href={href}
-          className="animate-menubar text-lg py-1 px-2 rounded-xl hover:bg-accent/50 action:bg-accent/50"
+          className="text-lg py-1 px-2 rounded-xl hover:bg-accent/50 active:bg-accent/50 touch-manipulation"
         >
           {title}
         </Link>
-        <MenubarTrigger className="p-0.5 data-[state=open]:bg-background data-[state=open]:rotate-180 focus:bg-background animate-menubar hover:bg-accent/50 action:bg-accent/50">
+        <MenubarTrigger className="p-0.5 data-[state=open]:bg-accent/50 data-[state=open]:rotate-180 data-[state=open]:duration-100 focus:bg-background hover:bg-accent/50 active:bg-accent/50 touch-manipulation">
           <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
         </MenubarTrigger>
       </div>

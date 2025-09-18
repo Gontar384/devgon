@@ -45,7 +45,7 @@ export function LogoutButton({
             <Button
               variant="default"
               size="lg"
-              className={`hover:scale-105 active:scale-105 cursor-pointer`}
+              className={`hover:scale-105 active:scale-105 touch-manipulation cursor-pointer`}
               onClick={handleLogout}
             >
               <DoorOpen className="!w-7 !h-7" />
