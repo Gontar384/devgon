@@ -35,7 +35,7 @@ export function LoginDialog({ dialogOpen, setDialogOpen }: LoginDialogProps) {
           <CardContent className="space-y-3">
             <Button
               autoFocus
-              className="w-full flex items-center cursor-pointer hover:scale-105 active:scale-105 hover:bg-primary"
+              className="w-full flex items-center cursor-pointer hover:scale-105 active:scale-105 touch-manipulation hover:bg-primary"
               onClick={handleLogin}
             >
               <Image
@@ -51,7 +51,7 @@ export function LoginDialog({ dialogOpen, setDialogOpen }: LoginDialogProps) {
           <CardFooter className="flex justify-end">
             <Button
               variant="secondary"
-              className="cursor-pointer text-primary-foreground hover:scale-105 active:scale-105 hover:bg-secondary"
+              className="cursor-pointer text-primary-foreground hover:scale-105 active:scale-105 touch-manipulation hover:bg-secondary"
               onClick={() => setDialogOpen(false)}
             >
               {typedLoginDialogData.cancelButton}

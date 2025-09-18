@@ -17,21 +17,6 @@
   animation: appear 0.4s ease-in-out forwards;
 }
 
-@keyframes trigger {
-  0% {
-    transform: translateY(0%) scale(1);
-  }
-  50% {
-    transform: translateY(-10%) scale(1.1)
-  }
-  100% {
-    transform: translateY(0%) scale(1);
-  }
-}
-.animate-menubar:hover {
-  animation: trigger 0.4s ease-in-out forwards;
-}
-
 @keyframes appear1 {
   0% {
     transform: translateY(-5%);
@@ -104,7 +89,7 @@
 
   --accent: oklch(0.967 0.003 264.542);
 
-  --accent-foreground: oklch(0.21 0.034 264.665);
+  --accent-foreground: oklch(0 0 0);
 
   --radius: 1.2rem;
 

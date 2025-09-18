@@ -57,7 +57,7 @@ export function LoginButton({
         <Button
           variant="default"
           size="lg"
-          className={`w-36 ${isAuthenticated ? 'pointer-events-none bg-secondary' : 'hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary'}`}
+          className={`w-36 ${isAuthenticated ? 'pointer-events-none bg-secondary' : 'hover:scale-105 active:scale-105 touch-manipulation cursor-pointer hover:bg-primary'}`}
           onClick={!isAuthenticated ? handleOpenDialog : undefined}
         >
           <span className="truncate min-w-0 flex-1 text-center">
