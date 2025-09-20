@@ -8,7 +8,7 @@ import { NavbarData } from '@/app/layout-ui/types';
 export default function Navbar({ authUser }: NavbarData) {
   return (
     <nav
-      className="fixed md:w-[100vw] top-0 left-0 right-0 z-45 h-16 flex items-center justify-between bg-background/90 shadow-md"
+      className="w-full h-16 flex items-center justify-between bg-background shadow-md"
       aria-label="Główna nawigacja"
     >
       <SiteLogo />

@@ -24,7 +24,7 @@ export function Footer() {
               <Link
                 key={link.title}
                 href={link.href}
-                className="cursor-pointer hover:underline active:underline touch-manipulation"
+                className="cursor-pointer hover:underline active:underline"
               >
                 {link.title}
               </Link>
@@ -38,7 +38,7 @@ export function Footer() {
               <Link
                 href={link.href}
                 key={link.title}
-                className="flex items-center gap-1 cursor-pointer hover:underline active:underline touch-manipulation"
+                className="flex items-center gap-1 cursor-pointer hover:underline active:underline"
               >
                 <Image
                   src={link.iconSrc}

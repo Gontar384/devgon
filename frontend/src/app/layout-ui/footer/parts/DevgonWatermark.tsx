@@ -15,7 +15,7 @@ export function DevgonWatermark() {
         target="_blank"
         rel="noopener noreferrer"
         href={typedDevgonWatermarkData.href}
-        className="font-bold hover:underline active:underline touch-manipulation"
+        className="font-bold underline"
       >
         {typedDevgonWatermarkData.content1}
       </Link>

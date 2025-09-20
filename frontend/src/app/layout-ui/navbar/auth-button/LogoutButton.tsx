@@ -18,19 +18,21 @@ export function LogoutButton({
   authUser,
   showTooltip,
   setShowTooltip,
+  setLogoutCooldown,
 }: LogoutButtonProps) {
   const typedAuthButton: LogoutButtonData = layoutData.logoutButton;
   const router = useRouter();
   const { isMobile } = useDeviceStore();
   const isAuthenticated = authUser.role !== 'guest';
-  const { open, close } = useMobileBarStore();
+  const { openedBar, closeBar } = useMobileBarStore();
 
   const handleLogout = async () => {
     if (!isAuthenticated) return;
     try {
       await api.get('/api/auth/logout');
       router.refresh();
-      if (open) close();
+      if (openedBar) closeBar();
+      setLogoutCooldown(true);
       toast.success('Zostałeś wylogowany👋');
     } catch {
       console.error('Unable to log out');
@@ -45,7 +47,7 @@ export function LogoutButton({
             <Button
               variant="default"
               size="lg"
-              className={`hover:scale-105 active:scale-105 touch-manipulation cursor-pointer`}
+              className={`hover:scale-105 active:scale-105 cursor-pointer`}
               onClick={handleLogout}
             >
               <DoorOpen className="!w-7 !h-7" />

@@ -56,6 +56,10 @@
   }
 }
 
+html {
+  overflow-y: scroll;
+}
+
 :root {
   --font-sans: 'Fira Code', monospace;
 
