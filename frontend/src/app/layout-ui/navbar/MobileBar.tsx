@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
@@ -10,44 +10,63 @@ import { MobileDropdownOption } from '@/app/layout-ui/navbar/mobile-bar/MobileDr
 import { AuthButton } from '@/app/layout-ui/navbar/auth-button/AuthButton';
 
 export default function MobileBar({ authUser }: NavbarData) {
-  const { open, close } = useMobileBarStore();
+  const { openedBar, closeBar, setProgrammaticScroll } = useMobileBarStore();
   const pathname = usePathname();
+  const scrollYRef = useRef(0);
   const typedMenuData: DropdownData[] = layoutData.menu.items;
+  const openedBarRef = useRef(openedBar);
+  openedBarRef.current = openedBar;
 
   useEffect(() => {
-    if (open) {
-      close();
+    if (openedBar) {
+      closeBar();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [close, pathname]);
+  }, [closeBar, pathname]);
 
   useEffect(() => {
-    if (open) {
-      const scrollY = window.scrollY;
+    if (openedBar) {
+      scrollYRef.current = window.scrollY;
       document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = '100%';
-      document.body.style.overflowY = 'scroll';
     } else {
-      const scrollY = document.body.style.top;
+      setProgrammaticScroll(true);
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      document.body.style.overflowY = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      window.scrollTo(0, scrollYRef.current);
+      setTimeout(() => setProgrammaticScroll(false), 50);
     }
-  }, [open]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openedBar]);
+
+  useEffect(() => {
+    const checkWidth = () => {
+      requestAnimationFrame(() => {
+        const isDesktop = window.innerWidth >= 768;
+        if (openedBarRef.current && isDesktop) {
+          closeBar();
+        }
+      });
+    };
+    checkWidth();
+
+    window.addEventListener('resize', checkWidth);
+    return () => window.removeEventListener('resize', checkWidth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence>
-      {open && (
+      {openedBar && (
         <motion.nav
           key="sidebar"
           initial={{ y: '-100%' }}
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-40 bg-background/90 p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
+          className="fixed inset-0 top-16 z-40 bg-background p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
           role="dialog"
           aria-modal="true"
           aria-label="Menu mobilne"

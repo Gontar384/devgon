@@ -96,16 +96,13 @@ export interface AuthButtonProps {
 export interface LoginButtonProps extends AuthButtonProps {
   showTooltip: boolean;
   setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
-  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  logoutCooldown: boolean;
+  setLogoutCooldown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface LogoutButtonProps {
   authUser: AuthUser;
   showTooltip: boolean;
   setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export interface LoginDialogProps {
-  dialogOpen: boolean;
-  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setLogoutCooldown: React.Dispatch<React.SetStateAction<boolean>>;
 }

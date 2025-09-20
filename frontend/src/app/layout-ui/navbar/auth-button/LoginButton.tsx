@@ -10,22 +10,33 @@ import { LoginButtonData, LoginButtonProps } from '@/app/layout-ui/types';
 import layoutData from '@/app/layout-ui/layoutData.json';
 import { useDeviceStore } from '@/store/deviceStore';
 import { useMobileBarStore } from '@/store/mobileBarStore';
+import { useLoginDialogStore } from '@/store/loginDialogStore';
 
 export function LoginButton({
   authUser,
   isMobileBar,
   showTooltip,
   setShowTooltip,
-  setDialogOpen,
+  logoutCooldown,
+  setLogoutCooldown,
 }: LoginButtonProps) {
   const typedAuthButton: LoginButtonData = layoutData.loginButton;
   const { isMobile } = useDeviceStore();
-  const { mobileBarOpened, setMobileBarOpened, open } = useMobileBarStore();
+  const { mobileBarOpened, setMobileBarOpened, openedBar } =
+    useMobileBarStore();
+  const { dialogOpen, setDialogOpen } = useLoginDialogStore();
   const isAuthenticated = authUser.role !== 'guest';
   const [showTooltipOnMobile, setShowTooltipOnMobile] = useState(false);
 
   useEffect(() => {
-    if (!isMobileBar || isAuthenticated || !isMobile || mobileBarOpened) return;
+    if (
+      dialogOpen ||
+      !isMobileBar ||
+      isAuthenticated ||
+      !isMobile ||
+      mobileBarOpened
+    )
+      return;
     setMobileBarOpened(true);
     const timeout = setTimeout(() => {
       setShowTooltipOnMobile(true);
@@ -35,21 +46,31 @@ export function LoginButton({
       clearTimeout(timeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dialogOpen]);
 
   const handleOpenDialog = async () => {
     if (isAuthenticated) return;
     setShowTooltipOnMobile(false);
-    const active = document.activeElement as HTMLElement | null;
-    if (active) active.blur();
     setDialogOpen(true);
   };
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (logoutCooldown) {
+      timeout = setTimeout(() => {
+        setLogoutCooldown(false);
+      }, 2000);
+    }
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [logoutCooldown]);
 
   return (
     <Tooltip
       open={
-        (!isAuthenticated && !isMobile && showTooltip) ||
-        (!isAuthenticated && isMobile && showTooltipOnMobile && open)
+        (!isAuthenticated && !isMobile && showTooltip && !logoutCooldown) ||
+        (!isAuthenticated && isMobile && showTooltipOnMobile && openedBar)
       }
       onOpenChange={setShowTooltip}
     >
@@ -57,7 +78,7 @@ export function LoginButton({
         <Button
           variant="default"
           size="lg"
-          className={`w-36 ${isAuthenticated ? 'pointer-events-none bg-secondary' : 'hover:scale-105 active:scale-105 touch-manipulation cursor-pointer hover:bg-primary'}`}
+          className={`w-36 ${isAuthenticated ? 'pointer-events-none bg-secondary' : 'hover:scale-105 active:scale-105 cursor-pointer hover:bg-primary'}`}
           onClick={!isAuthenticated ? handleOpenDialog : undefined}
         >
           <span className="truncate min-w-0 flex-1 text-center">
