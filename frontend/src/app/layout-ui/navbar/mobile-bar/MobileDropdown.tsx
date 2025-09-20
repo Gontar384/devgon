@@ -29,7 +29,6 @@ export function MobileDropdown({
           variant="ghost"
           onClick={handleAccordionToggle}
           className="cursor-pointer h-12 !p-1.5 active:bg-accent/50"
-          onTouchEnd={(e) => e.currentTarget.blur()}
           aria-expanded={accordionActive}
           aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
         >

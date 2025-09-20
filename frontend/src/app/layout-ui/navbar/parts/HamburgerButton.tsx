@@ -18,7 +18,6 @@ export function HamburgerButton() {
     <Button
       variant="ghost"
       className="mr-3 h-12 p-3 md:hidden cursor-pointer active:bg-accent/50"
-      onTouchEnd={(e) => e.currentTarget.blur()}
       aria-label="Otwórz menu nawigacji mobilnej"
       onClick={toggleBar}
     >
