@@ -5,6 +5,10 @@ import { TestModule } from '../test/test-utils/test.module';
 import { TypeOrmConfigModule } from './config/typeorm/typeorm.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { ContentModule } from './modules/content/content.module';
 
 @Module({
   imports: [
@@ -15,6 +19,14 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     ProductModule,
     UserModule,
+    ContentModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      playground: process.env.NODE_ENV !== 'production',
+      context: ({ req }: { req: Request }) => ({ req }),
+    }),
     ...(process.env.NODE_ENV === 'testing' ? [TestModule] : []),
   ],
 })

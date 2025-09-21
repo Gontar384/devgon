@@ -1,12 +1,9 @@
 import { redirect } from 'next/navigation';
-import { AuthUser, ProtectedRoute } from '@/lib/types/auth-types';
+import { AuthUser } from '@/lib/types/auth-types';
 import { cookies } from 'next/headers';
+import { protectedRoutes } from '@/lib/auth/protectedRoutes';
 
-export const protectedRoutes: ProtectedRoute[] = [
-  { path: '/products', roles: ['guest', 'user', 'admin'] },
-];
-
-export async function verifyAuth(currentPath: string) {
+export async function verifyAuth(currentPath: string): Promise<AuthUser> {
   const route = protectedRoutes.find((r) => currentPath.startsWith(r.path));
 
   const token = (await cookies()).get('auth_token')?.value;
@@ -33,4 +30,6 @@ export async function verifyAuth(currentPath: string) {
   if (route && !route.roles.includes(user.role)) {
     redirect('/');
   }
+
+  return user;
 }

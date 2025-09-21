@@ -21,11 +21,11 @@ BACKEND_URL=http://localhost:4000
 DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon
 
 JWT_SECRET_KEY=
-
 - to generate (Powershell):
   -join ((1..32 | ForEach-Object { "{0:X2}" -f (Get-Random -Maximum 256) })).ToLower()
+
 GOOGLE_CLIENT_ID=
-- 
+ 
 GOOGLE_CLIENT_SECRET=
 
 COOKIE_DOMAIN=.test.site
