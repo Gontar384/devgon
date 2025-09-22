@@ -21,6 +21,7 @@
     "migrate": "npm run migration:generate -- migrations/migration",
     "migration:prod": "npx typeorm migration:run -d dist/data-source.js",
     "migration:dev": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./data-source.ts",
+    "migration:dev:test": "dotenv -e .env.test -- ts-node ./node_modules/typeorm/cli.js migration:run -d ./data-source.ts",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d ./data-source.ts",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./data-source.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",

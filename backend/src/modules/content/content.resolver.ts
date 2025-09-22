@@ -1,33 +1,36 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ContentService } from './content.service';
-import { Content } from './content.model';
-import { UpsertContentInput } from './content.input';
 import { UseGuards } from '@nestjs/common';
 import { Roles, RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../auth/auth.types';
-import { AuthGuard } from '@nestjs/passport';
+import { ContentModel } from './graphql/content.model';
+import { UpsertContentInput } from './graphql/content.input';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 
-@Resolver(() => Content)
+@Resolver(() => ContentModel)
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
-  @Query(() => [Content])
-  getAllContent() {
-    return this.contentService.getAll();
+  @Query(() => [ContentModel])
+  async getAllContent() {
+    const entities = await this.contentService.getAll();
+    return entities.map((e) => ({ ...e }));
   }
 
-  @Query(() => Content, { nullable: true })
-  getContent(@Args('key') key: string) {
-    return this.contentService.getByKey(key);
+  @Query(() => ContentModel, { nullable: true })
+  async getContent(@Args('key') key: string) {
+    const entity = await this.contentService.getByKey(key);
+    return entity ? { ...entity } : null;
   }
 
-  @Mutation(() => Content)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  upsertContent(
+  @Mutation(() => ContentModel)
+  async upsertContent(
     @Args('key') key: string,
     @Args('input') input: UpsertContentInput,
   ) {
-    return this.contentService.upsert(key, input);
+    const entity = await this.contentService.upsert(key, input);
+    return { ...entity };
   }
 }

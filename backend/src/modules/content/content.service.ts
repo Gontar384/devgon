@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Content } from './content.model';
-import { UpsertContentInput } from './content.input';
+import { Content } from './content.entity';
+import { UpsertContentInput } from './graphql/content.input';
 
 @Injectable()
 export class ContentService {

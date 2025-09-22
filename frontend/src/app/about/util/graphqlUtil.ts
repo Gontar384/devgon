@@ -8,6 +8,14 @@ const ssrClient = new ApolloClient({
     fetch,
   }),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'network-only',
+    },
+    query: {
+      fetchPolicy: 'network-only',
+    },
+  },
 });
 
 const GET_CONTENT = gql`
@@ -36,7 +44,7 @@ export async function getContent(key: string) {
       query: GET_CONTENT,
       variables: { key },
     });
-    return data.getContent;
+    return data?.getContent ?? null;
   } catch (err) {
     console.error(err);
     return null;
@@ -51,6 +59,13 @@ export async function upsertContent(
     const { data } = await ssrClient.mutate<UpsertContentData>({
       mutation: UPSERT_CONTENT,
       variables: { key, input },
+      refetchQueries: [
+        {
+          query: GET_CONTENT,
+          variables: { key },
+        },
+      ],
+      awaitRefetchQueries: true,
     });
     return data?.upsertContent ?? null;
   } catch (err) {
