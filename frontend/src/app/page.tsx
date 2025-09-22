@@ -1,11 +1,11 @@
 import { createMetadata } from '@/lib/metadata';
 import { Metadata } from 'next';
-import pageData from '@/app/page-ui/pageData.json';
-import { HomeManager } from '@/app/page-ui/HomeManager';
+import homeData from '@/app/home/util/homeData.json';
+import { HomeManager } from '@/app/home/util/HomeManager';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 
 export const generateMetadata = (): Metadata =>
-  createMetadata(pageData.metaData);
+  createMetadata(homeData.metaData);
 
 async function getContent() {
   try {

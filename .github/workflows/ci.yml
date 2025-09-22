@@ -36,6 +36,7 @@ jobs:
           npm ci
           npm ci --prefix backend
           npm ci --prefix frontend
+
       - name: Install Playwright Browser
         run: npx playwright install chromium
         working-directory: frontend
@@ -70,6 +71,10 @@ jobs:
             echo "NEXT_PUBLIC_DOMAIN=test.site"
           } > .env
         working-directory: frontend
+
+      - name: Run database migrations
+        run: npm run migration:dev
+        working-directory: backend
 
       - name: Run Tests and Lint
         run: |
