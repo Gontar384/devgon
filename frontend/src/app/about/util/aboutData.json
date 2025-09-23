@@ -6,8 +6,9 @@
     "path": "/about"
   },
   "aboutMainCard": {
-    "editable": true,
+    "key": "about-main-card",
     "title": "test",
-    "description": "TestTestTest TestTestTest TestTestTest TestTestTestTestTestTest TestTestTest"
+    "description": "TestTestTest TestTestTest TestTestTest TestTestTestTestTestTest TestTestTest",
+    "editable": true
   }
 }

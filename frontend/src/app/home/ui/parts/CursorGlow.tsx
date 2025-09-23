@@ -53,7 +53,7 @@ export function CursorGlow() {
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none z-30">
       <div
         ref={glowRef}
         className="absolute w-16 h-16 bg-primary rounded-full pointer-events-none blur-xl transition-opacity duration-150"

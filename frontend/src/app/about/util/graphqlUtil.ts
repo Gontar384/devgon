@@ -1,21 +1,11 @@
-import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client';
+import { GraphQLClient, gql } from 'graphql-request';
 import { GetContentData, UpsertContentData } from '@/app/about/util/types';
 
-const ssrClient = new ApolloClient({
-  link: new HttpLink({
-    uri: `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`,
-    credentials: 'include',
-    fetch,
-  }),
-  cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'network-only',
-    },
-    query: {
-      fetchPolicy: 'network-only',
-    },
-  },
+const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`;
+
+const client = new GraphQLClient(endpoint, {
+  credentials: 'include',
+  fetch,
 });
 
 const GET_CONTENT = gql`
@@ -40,10 +30,7 @@ const UPSERT_CONTENT = gql`
 
 export async function getContent(key: string) {
   try {
-    const { data } = await ssrClient.query<GetContentData>({
-      query: GET_CONTENT,
-      variables: { key },
-    });
+    const data = await client.request<GetContentData>(GET_CONTENT, { key });
     return data?.getContent ?? null;
   } catch (err) {
     console.error(err);
@@ -56,16 +43,9 @@ export async function upsertContent(
   input: { title?: string; description?: string },
 ) {
   try {
-    const { data } = await ssrClient.mutate<UpsertContentData>({
-      mutation: UPSERT_CONTENT,
-      variables: { key, input },
-      refetchQueries: [
-        {
-          query: GET_CONTENT,
-          variables: { key },
-        },
-      ],
-      awaitRefetchQueries: true,
+    const data = await client.request<UpsertContentData>(UPSERT_CONTENT, {
+      key,
+      input,
     });
     return data?.upsertContent ?? null;
   } catch (err) {

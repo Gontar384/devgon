@@ -1,18 +1,31 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
+import useSWR from 'swr';
 import { AboutMainCard } from '@/app/about/ui/main-card/AboutMainCard';
-import { upsertContent } from '@/app/about/util/graphqlUtil';
+import { getContent, upsertContent } from '@/app/about/util/graphqlUtil';
 import { AboutManagerProps } from '@/app/about/util/types';
 
+const fetcher = (key: string) => getContent(key);
+
 export function AboutManager({ mainCardContent, authUser }: AboutManagerProps) {
-  const [content, setContent] = useState(mainCardContent);
+  const { data: content, mutate } = useSWR(mainCardContent.key, fetcher, {
+    fallbackData: mainCardContent,
+    revalidateOnFocus: true,
+  });
 
   const handleSave = async (title: string, description: string) => {
     if (!content) return;
 
-    const updated = await upsertContent(content.key, { title, description });
-    if (updated) {
-      setContent({ ...content, ...updated });
+    mutate({ ...content, title, description }, false);
+
+    try {
+      const updated = await upsertContent(content.key, { title, description });
+      if (updated) {
+        mutate();
+      }
+    } catch (err) {
+      console.error('Update failed:', err);
+      mutate(content, false);
     }
   };
 
