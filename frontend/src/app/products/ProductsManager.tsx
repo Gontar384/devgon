@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import useSWR from 'swr';
-import { fetcher } from '@/lib/fetcher';
 import {
   Tooltip,
   TooltipContent,
@@ -32,6 +31,8 @@ interface Product {
 interface Props {
   initialProducts: Product[];
 }
+
+const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 export function ProductsManager({ initialProducts }: Props) {
   const { data: products, mutate } = useSWR<Product[]>(

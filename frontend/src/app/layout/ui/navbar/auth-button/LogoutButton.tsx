@@ -9,8 +9,7 @@ import React from 'react';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import { useDeviceStore } from '@/store/deviceStore';
-import { LogoutButtonData, LogoutButtonProps } from '@/app/layout/util/types';
-import layoutData from '@/app/layout/util/layoutData.json';
+import { LogoutButtonProps } from '@/app/layout/util/types';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { toast } from 'sonner';
 
@@ -20,7 +19,6 @@ export function LogoutButton({
   setShowTooltip,
   setLogoutCooldown,
 }: LogoutButtonProps) {
-  const typedAuthButton: LogoutButtonData = layoutData.logoutButton;
   const router = useRouter();
   const { isMobile } = useDeviceStore();
   const isAuthenticated = authUser.role !== 'guest';
@@ -54,7 +52,7 @@ export function LogoutButton({
             </Button>
           </TooltipTrigger>
           <TooltipContent className="select-none" side="bottom">
-            <span>{typedAuthButton.tooltipContent}</span>
+            <span>Wyloguj się</span>
           </TooltipContent>
         </Tooltip>
       )}

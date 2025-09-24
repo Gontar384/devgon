@@ -4,13 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AllRightsReserved } from '@/app/layout/ui/footer/parts/AllRightsReserved';
 import { DevgonWatermark } from '@/app/layout/ui/footer/parts/DevgonWatermark';
-import { FooterLinkData, SocialLinkData } from '@/app/layout/util/types';
-import layoutData from '@/app/layout/util/layoutData.json';
+import { footerLinks, socialLinks } from '@/app/layout/ui/footer/links';
 
 export function Footer() {
-  const footerLinks: FooterLinkData[] = layoutData.footerLinks.items;
-  const socialLinks: SocialLinkData[] = layoutData.socialLinks.items;
-
   return (
     <footer className="px-2 select-none mt-16" aria-label="Stopka strony">
       <Card>

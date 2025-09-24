@@ -1,20 +1,17 @@
 import { Menubar } from '@radix-ui/react-menubar';
 import React from 'react';
 import { Dropdown } from '@/app/layout/ui/navbar/main-menu-bar/Dropdown';
-import layoutData from '@/app/layout/util/layoutData.json';
 import { DropdownOption } from '@/app/layout/ui/navbar/main-menu-bar/DropdownOption';
-import { DropdownData } from '@/app/layout/util/types';
+import { dropdownData } from '@/app/layout/ui/navbar/main-menu-bar/dropdownData';
 
 export function MainMenuBar() {
-  const typedMenuData: DropdownData[] = layoutData.menu.items;
-
   return (
     <div
       className="hidden md:flex select-none"
       aria-label="Główne opcje nawigacji"
     >
       <Menubar className="flex gap-1">
-        {typedMenuData.map((dropdown) => (
+        {dropdownData.map((dropdown) => (
           <Dropdown
             title={dropdown.title}
             href={dropdown.href}

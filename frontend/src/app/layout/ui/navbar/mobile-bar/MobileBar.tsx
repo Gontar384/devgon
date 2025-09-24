@@ -3,17 +3,16 @@ import React, { useEffect, useRef } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { DropdownData, NavbarData } from '@/app/layout/util/types';
-import layoutData from '@/app/layout/util/layoutData.json';
+import { NavbarProps } from '@/app/layout/util/types';
 import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
+import { dropdownData } from '@/app/layout/ui/navbar/main-menu-bar/dropdownData';
 
-export default function MobileBar({ authUser }: NavbarData) {
+export default function MobileBar({ authUser }: NavbarProps) {
   const { openedBar, closeBar, setProgrammaticScroll } = useMobileBarStore();
   const pathname = usePathname();
   const scrollYRef = useRef(0);
-  const typedMenuData: DropdownData[] = layoutData.menu.items;
   const openedBarRef = useRef(openedBar);
   openedBarRef.current = openedBar;
 
@@ -25,6 +24,7 @@ export default function MobileBar({ authUser }: NavbarData) {
   }, [closeBar, pathname]);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (openedBar) {
       scrollYRef.current = window.scrollY;
       document.body.style.position = 'fixed';
@@ -36,8 +36,11 @@ export default function MobileBar({ authUser }: NavbarData) {
       document.body.style.top = '';
       document.body.style.width = '';
       window.scrollTo(0, scrollYRef.current);
-      setTimeout(() => setProgrammaticScroll(false), 50);
+      timeout = setTimeout(() => setProgrammaticScroll(false), 50);
     }
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openedBar]);
 
@@ -72,7 +75,7 @@ export default function MobileBar({ authUser }: NavbarData) {
           aria-label="Menu mobilne"
         >
           <div className="md:hidden flex flex-col justify-center gap-6 mt-8">
-            {typedMenuData.map((dropdown) => (
+            {dropdownData.map((dropdown) => (
               <MobileDropdown
                 title={dropdown.title}
                 href={dropdown.href}
