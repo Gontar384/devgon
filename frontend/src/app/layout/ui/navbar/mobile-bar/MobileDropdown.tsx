@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { DropdownWrapperProps } from '@/app/layout/util/types';
 import Link from 'next/link';

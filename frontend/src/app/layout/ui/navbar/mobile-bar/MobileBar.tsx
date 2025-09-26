@@ -69,7 +69,7 @@ export default function MobileBar({ authUser }: NavbarProps) {
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'tween', duration: 0.4 }}
-          className="fixed inset-0 top-16 z-40 bg-background p-8 md:hidden flex flex-col items-center overflow-y-auto select-none"
+          className="fixed inset-0 top-16 z-40 bg-background p-8 md:hidden flex flex-col items-center overflow-y-auto overflow-x-hidden select-none"
           role="dialog"
           aria-modal="true"
           aria-label="Menu mobilne"
