@@ -58,7 +58,8 @@ export function LoginButton({
     if (logoutCooldown) {
       timeout = setTimeout(() => {
         setLogoutCooldown(false);
-      }, 2000);
+        setShowTooltip(false);
+      }, 1000);
     }
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps

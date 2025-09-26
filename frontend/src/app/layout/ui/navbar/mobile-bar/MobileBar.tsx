@@ -73,6 +73,12 @@ export default function MobileBar({ authUser }: NavbarProps) {
           role="dialog"
           aria-modal="true"
           aria-label="Menu mobilne"
+          style={{
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain',
+          }}
         >
           <div className="md:hidden flex flex-col justify-center gap-6 mt-8">
             {dropdownData.map((dropdown) => (

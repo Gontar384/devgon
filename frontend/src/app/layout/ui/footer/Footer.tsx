@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AllRightsReserved } from '@/app/layout/ui/footer/parts/AllRightsReserved';
 import { DevgonWatermark } from '@/app/layout/ui/footer/parts/DevgonWatermark';
-import { footerLinks, socialLinks } from '@/app/layout/ui/footer/links';
+import { footerLinks, socialLinks } from '@/app/layout/ui/footer/linksData';
 
 export function Footer() {
   return (

@@ -8,6 +8,5 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Content]), AuthModule],
   providers: [ContentService, ContentResolver],
-  exports: [ContentService],
 })
 export class ContentModule {}

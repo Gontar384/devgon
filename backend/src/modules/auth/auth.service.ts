@@ -41,6 +41,22 @@ export class AuthService {
     };
   }
 
+  setJwtCookie(jwtPayload: JwtPayload, res: Response) {
+    const token = this.jwtService.sign(jwtPayload);
+    this.createCookie(res, token, JWT_COOKIE_MAX_AGE);
+  }
+
+  refreshJwtCookie(user: JwtPayload, res: Response) {
+    const { userId, email, role } = user;
+    const payload = { userId, email, role };
+    const token = this.jwtService.sign(payload, { expiresIn: '7d' });
+    this.createCookie(res, token, JWT_COOKIE_MAX_AGE);
+  }
+
+  logout(res: Response) {
+    this.createCookie(res, '', 0);
+  }
+
   private createCookie(res: Response, token: string, maxAge: number) {
     res.cookie('auth_token', token, {
       httpOnly: true,
@@ -54,24 +70,6 @@ export class AuthService {
       maxAge,
     });
   }
-
-  setJwtCookie(jwtPayload: JwtPayload, res: Response) {
-    const token = this.jwtService.sign(jwtPayload);
-    this.createCookie(res, token, 7 * 24 * 60 * 60 * 1000);
-  }
-
-  refreshJwtCookie(
-    user: JwtPayload & { exp?: number; iat?: number },
-    res: Response,
-  ) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { exp, iat, ...payload } = user;
-    const token = this.jwtService.sign(payload, { expiresIn: '7d' });
-
-    this.createCookie(res, token, 7 * 24 * 60 * 60 * 1000);
-  }
-
-  logout(res: Response) {
-    this.createCookie(res, '', 0);
-  }
 }
+
+const JWT_COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
