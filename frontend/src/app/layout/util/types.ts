@@ -1,77 +1,8 @@
 import React from 'react';
 import { AuthUser } from '@/lib/types/auth-types';
 
-export interface NavbarData {
+export interface NavbarProps {
   authUser: AuthUser;
-}
-
-export interface SiteLogoData {
-  href: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageW: number;
-  imageH: number;
-}
-
-export interface DropdownData {
-  title: string;
-  href: string;
-  option: DropdownOptionProps[];
-}
-
-export interface LoginButtonData {
-  buttonContent: string;
-  tooltipContent: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageW: number;
-  imageH: number;
-  buttonAlt: string;
-}
-
-export interface LogoutButtonData {
-  tooltipContent: string;
-}
-
-export interface LoginDialogData {
-  dialogTitle: string;
-  dialogDescription: string;
-  loginButton: string;
-  cancelButton: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageW: number;
-  imageH: number;
-}
-
-export interface FooterLinkData {
-  title: string;
-  href: string;
-}
-
-export interface SocialLinkData extends FooterLinkData {
-  iconSrc: string;
-  iconWidth: number;
-  iconHeight: number;
-}
-
-export interface AllRightsReservedData {
-  imageSrc: string;
-  imageAlt: string;
-  imageW: number;
-  imageH: number;
-  content: string;
-  content1: string;
-}
-
-export interface DevgonWatermarkData {
-  content: string;
-  content1: string;
-  href: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageW: number;
-  imageH: number;
 }
 
 export interface DropdownOptionProps {
@@ -105,4 +36,21 @@ export interface LogoutButtonProps {
   showTooltip: boolean;
   setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
   setLogoutCooldown: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface DropdownData {
+  title: string;
+  href: string;
+  option: DropdownOptionProps[];
+}
+
+export interface FooterLinkData {
+  title: string;
+  href: string;
+}
+
+export interface SocialLinkData extends FooterLinkData {
+  iconSrc: string;
+  iconWidth: number;
+  iconHeight: number;
 }

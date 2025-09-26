@@ -3,8 +3,6 @@
 import * as React from 'react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LoginDialogData } from '@/app/layout/util/types';
-import { loginDialog } from '@/app/layout/util/layoutData.json';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
@@ -14,7 +12,6 @@ export function LoginDialog() {
   const { dialogOpen, setDialogOpen } = useLoginDialogStore();
   const { openedBar, setProgrammaticScroll } = useMobileBarStore();
   const scrollYRef = useRef(0);
-  const typedLoginDialogData: LoginDialogData = loginDialog;
   const [animateState, setAnimateState] = useState<'closed' | 'open'>('closed');
   const [mounted, setMounted] = useState(false);
 
@@ -74,11 +71,9 @@ export function LoginDialog() {
           ${animateState === 'open' ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
       >
         <div className="flex flex-col space-y-2 text-center md:text-left mb-4">
-          <h2 className="text-3xl font-semibold">
-            {typedLoginDialogData.dialogTitle}
-          </h2>
+          <h2 className="text-3xl font-semibold">Logowanie</h2>
           <p className="text-sm text-muted-foreground">
-            {typedLoginDialogData.dialogDescription}
+            Zaloguj się, używając którejś z poniższych metod
           </p>
         </div>
         <Card className="shadow-none bg-background border-border/50">
@@ -89,13 +84,13 @@ export function LoginDialog() {
               onClick={handleLogin}
             >
               <Image
-                src={typedLoginDialogData.imageSrc}
-                alt={typedLoginDialogData.imageAlt}
-                width={typedLoginDialogData.imageW}
-                height={typedLoginDialogData.imageH}
+                src="/svg/google.svg"
+                alt="Zaloguj się za pomocą Google"
+                width={24}
+                height={24}
                 priority
               />
-              {typedLoginDialogData.loginButton}
+              Zaloguj przez Google
             </Button>
           </CardContent>
           <CardFooter className="flex justify-end">
@@ -104,7 +99,7 @@ export function LoginDialog() {
               className="cursor-pointer text-primary-foreground hover:scale-105 active:scale-105 hover:bg-secondary"
               onClick={() => setDialogOpen(false)}
             >
-              {typedLoginDialogData.cancelButton}
+              Anuluj
             </Button>
           </CardFooter>
         </Card>

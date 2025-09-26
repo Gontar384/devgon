@@ -31,17 +31,17 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('logout')
-  logout(@Res() res: Response) {
-    this.authService.logout(res);
-    return res.status(200).json({ message: 'Logged out' });
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get('refresh')
   refresh(@Req() req: RequestWithUser, @Res() res: Response) {
     const user = req.user as JwtPayload;
     this.authService.refreshJwtCookie(user, res);
     return res.status(200).json({ message: 'Token refreshed' });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('logout')
+  logout(@Res() res: Response) {
+    this.authService.logout(res);
+    return res.status(200).json({ message: 'Logged out' });
   }
 }

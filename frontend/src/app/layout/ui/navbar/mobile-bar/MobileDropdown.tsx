@@ -21,14 +21,14 @@ export function MobileDropdown({
       <div className="flex gap-1 items-center">
         <Link
           href={href}
-          className="rounded-xl flex items-center justify-between border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md hover:bg-accent/50 active:scale-[0.98] active:bg-accent/50"
+          className="rounded-xl flex items-center justify-center border border-foreground/40 w-72 px-4 h-12 text-lg font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md hover:bg-accent active:scale-[0.98] active:bg-accent"
         >
           {title}
         </Link>
         <Button
           variant="ghost"
           onClick={handleAccordionToggle}
-          className="cursor-pointer h-12 !p-1.5 active:bg-accent/50"
+          className="cursor-pointer h-12 !p-1.5 active:bg-accent"
           aria-expanded={accordionActive}
           aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
         >

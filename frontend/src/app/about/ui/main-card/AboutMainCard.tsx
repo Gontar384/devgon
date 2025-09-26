@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 import { AboutMainCardProps } from '@/app/about/util/types';
 import { Pencil } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export function AboutMainCard({
   title,
@@ -14,6 +15,11 @@ export function AboutMainCard({
   const [isEditing, setIsEditing] = useState(false);
   const [localTitle, setLocalTitle] = useState(title);
   const [localDescription, setLocalDescription] = useState(description);
+
+  useEffect(() => {
+    setLocalTitle(title);
+    setLocalDescription(description);
+  }, [title, description]);
 
   const canEdit = editable && role === 'admin';
 
@@ -36,7 +42,6 @@ export function AboutMainCard({
       aria-label={title}
     >
       <CursorGlow />
-
       <CardHeader className="flex items-center justify-between">
         {isEditing ? (
           <input
@@ -48,7 +53,6 @@ export function AboutMainCard({
         ) : (
           <CardTitle>{localTitle}</CardTitle>
         )}
-
         {canEdit && !isEditing && (
           <button
             onClick={() => setIsEditing(true)}
@@ -59,7 +63,6 @@ export function AboutMainCard({
           </button>
         )}
       </CardHeader>
-
       <CardContent>
         {isEditing ? (
           <textarea
@@ -74,18 +77,20 @@ export function AboutMainCard({
         )}
         {isEditing && (
           <div className="mt-2 flex gap-2">
-            <button
+            <Button
+              variant="default"
               onClick={handleSave}
-              className="bg-blue-500 text-white px-3 py-1 rounded"
+              className="cursor-pointer hover:scale-105 hover:bg-primary active:scale-105"
             >
-              Save
-            </button>
-            <button
+              Zapisz
+            </Button>
+            <Button
+              variant="outline"
               onClick={handleCancel}
-              className="bg-gray-300 px-3 py-1 rounded"
+              className="cursor-pointer hover:scale-105 hover:bg-background active:scale-105"
             >
-              Cancel
-            </button>
+              Anuluj
+            </Button>
           </div>
         )}
       </CardContent>

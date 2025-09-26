@@ -1,29 +1,24 @@
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
-import layoutData from '@/app/layout/util/layoutData.json';
-import { DevgonWatermarkData } from '@/app/layout/util/types';
 
 export function DevgonWatermark() {
-  const typedDevgonWatermarkData: DevgonWatermarkData =
-    layoutData.devgonWatermark;
-
   return (
     <div className="flex gap-1.5 items-center justify-center text-xs py-2">
-      <span>{typedDevgonWatermarkData.content}</span>
+      <span>Designed & built by</span>
       <Link
         target="_blank"
         rel="noopener noreferrer"
-        href={typedDevgonWatermarkData.href}
+        href="https://devgon.site"
         className="font-bold underline"
       >
-        {typedDevgonWatermarkData.content1}
+        devgon
       </Link>
       <Image
-        src={typedDevgonWatermarkData.imageSrc}
-        alt={typedDevgonWatermarkData.imageAlt}
-        width={typedDevgonWatermarkData.imageW}
-        height={typedDevgonWatermarkData.imageH}
+        src="/logo/logo-black.svg"
+        alt="Mini logo devgon"
+        width={16}
+        height={12}
         priority
       />
     </div>

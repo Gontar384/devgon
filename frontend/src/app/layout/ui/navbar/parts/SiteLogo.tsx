@@ -1,22 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import layoutData from '@/app/layout/util/layoutData.json';
-import { SiteLogoData } from '@/app/layout/util/types';
 
 export function SiteLogo() {
-  const typedLayoutData: SiteLogoData = layoutData.siteLogo;
-
   return (
-    <Link
-      href={typedLayoutData.href}
-      className="ml-4 select-none flex-shrink-0 animate-logo"
-    >
+    <Link href="/" className="ml-4 select-none flex-shrink-0">
       <Image
-        src={typedLayoutData.imageSrc}
-        alt={typedLayoutData.imageAlt}
-        width={typedLayoutData.imageW}
-        height={typedLayoutData.imageH}
+        src="/logo/logo-caption-black.svg"
+        alt="Logo strony głównej"
+        width={80}
+        height={60}
         priority
       />
     </Link>

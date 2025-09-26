@@ -15,9 +15,7 @@ async function bootstrap() {
       1,
     );
   }
-
   app.use(cookieParser());
-
   app.enableCors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
@@ -29,13 +27,13 @@ async function bootstrap() {
     }),
   );
 
-  app.setGlobalPrefix('api');
-
   if (process.env.NODE_ENV === 'development') {
     const config = createSwaggerConfig();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
   }
+
+  app.setGlobalPrefix('api');
 
   await app.listen(4000);
 }

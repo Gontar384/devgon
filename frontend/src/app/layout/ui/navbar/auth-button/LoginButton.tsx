@@ -6,8 +6,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { LoginButtonData, LoginButtonProps } from '@/app/layout/util/types';
-import layoutData from '@/app/layout/util/layoutData.json';
+import { LoginButtonProps } from '@/app/layout/util/types';
 import { useDeviceStore } from '@/store/deviceStore';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useLoginDialogStore } from '@/store/loginDialogStore';
@@ -20,7 +19,6 @@ export function LoginButton({
   logoutCooldown,
   setLogoutCooldown,
 }: LoginButtonProps) {
-  const typedAuthButton: LoginButtonData = layoutData.loginButton;
   const { isMobile } = useDeviceStore();
   const { mobileBarOpened, setMobileBarOpened, openedBar } =
     useMobileBarStore();
@@ -60,7 +58,8 @@ export function LoginButton({
     if (logoutCooldown) {
       timeout = setTimeout(() => {
         setLogoutCooldown(false);
-      }, 2000);
+        setShowTooltip(false);
+      }, 1000);
     }
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,8 +82,8 @@ export function LoginButton({
         >
           <span className="truncate min-w-0 flex-1 text-center">
             {isAuthenticated
-              ? (authUser.email?.split('@')[0] ?? typedAuthButton.buttonAlt)
-              : typedAuthButton.buttonContent}
+              ? (authUser.email?.split('@')[0] ?? 'Użytkownik')
+              : 'Zaloguj się'}
           </span>
         </Button>
       </TooltipTrigger>
@@ -93,12 +92,12 @@ export function LoginButton({
         side="bottom"
         onClick={() => setShowTooltipOnMobile(false)}
       >
-        <span>{typedAuthButton.tooltipContent}</span>
+        <span>Zaloguj się i odblokuj pełne możliwości naszej strony!</span>
         <Image
-          src={typedAuthButton.imageSrc}
-          alt={typedAuthButton.imageAlt}
-          width={typedAuthButton.imageW}
-          height={typedAuthButton.imageH}
+          src="/svg/tooltip-login-girl.svg"
+          alt="Login icon"
+          width={48}
+          height={48}
           priority
         />
       </TooltipContent>
