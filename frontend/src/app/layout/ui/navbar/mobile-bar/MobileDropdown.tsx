@@ -12,6 +12,7 @@ export function MobileDropdown({
   children,
 }: DropdownWrapperProps) {
   const [accordionActive, setAccordionActive] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(false);
 
   const handleAccordionToggle = () => {
     setAccordionActive((prev) => !prev);
@@ -29,7 +30,9 @@ export function MobileDropdown({
         <Button
           variant="ghost"
           onClick={handleAccordionToggle}
-          className="cursor-pointer h-12 !p-1.5 active:bg-accent"
+          className={`cursor-pointer h-12 !p-1.5 ${active ? 'bg-accent' : 'bg-background'}`}
+          onTouchStart={() => setActive(true)}
+          onTouchEnd={() => setActive(false)}
           aria-expanded={accordionActive}
           aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
         >
