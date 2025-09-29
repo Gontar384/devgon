@@ -1,9 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useState, useEffect } from 'react';
+'use client';
+import React, { useState } from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 import { AboutMainCardProps } from '@/app/about/util/types';
 import { Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EditorContent } from '@tiptap/react';
+import { TiptapToolbar } from '@/components/tiptap/TiptapToolbar';
+import { useSmallEditor } from '@/components/tiptap/useSmallEditor';
+import { useBigEditor } from '@/components/tiptap/useBigEditor';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export function AboutMainCard({
   title,
@@ -13,83 +18,87 @@ export function AboutMainCard({
   onSave,
 }: AboutMainCardProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [localTitle, setLocalTitle] = useState(title);
-  const [localDescription, setLocalDescription] = useState(description);
-
-  useEffect(() => {
-    setLocalTitle(title);
-    setLocalDescription(description);
-  }, [title, description]);
+  const smallEditor = useSmallEditor({ initialContent: title });
+  const bigEditor = useBigEditor({ initialContent: description });
 
   const canEdit = editable && role === 'admin';
 
   const handleSave = () => {
-    if (onSave) {
-      onSave(localTitle, localDescription);
+    if (onSave && smallEditor && bigEditor) {
+      const updatedTitle = smallEditor.getHTML();
+      const updatedDescription = bigEditor.getHTML();
+
+      onSave(updatedTitle, updatedDescription);
     }
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setLocalTitle(title);
-    setLocalDescription(description);
+    smallEditor?.commands.setContent(title);
+    bigEditor?.commands.setContent(description);
     setIsEditing(false);
   };
 
   return (
     <Card
-      className="card-animate bg-background/95 backdrop-blur border shadow-xl wrap-break-word relative overflow-hidden"
+      className="bg-background/95 backdrop-blur wrap-break-word relative overflow-hidden shadow-xl"
       aria-label={title}
     >
       <CursorGlow />
-      <CardHeader className="flex items-center justify-between">
-        {isEditing ? (
-          <input
-            className="border rounded px-2 py-1 w-full max-w-xs"
-            value={localTitle}
-            onChange={(e) => setLocalTitle(e.target.value)}
-            maxLength={50}
-          />
-        ) : (
-          <CardTitle>{localTitle}</CardTitle>
-        )}
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <div className="flex-1 min-w-0 pr-4">
+          {isEditing ? (
+            <div className="p-2 border rounded border-gray-300">
+              {smallEditor && (
+                <TiptapToolbar editor={smallEditor} size="small" />
+              )}
+              {smallEditor && <EditorContent editor={smallEditor} />}
+            </div>
+          ) : (
+            <h2
+              className="text-2xl font-semibold break-words"
+              dangerouslySetInnerHTML={{ __html: title ?? '' }}
+            />
+          )}
+        </div>
         {canEdit && !isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="ml-2 p-1 hover:bg-gray-200 rounded"
+            className="ml-2 p-2 hover:bg-gray-100 rounded-full transition-colors"
             aria-label="Edit"
+            type="button"
           >
-            <Pencil className="w-4 h-4" />
+            <Pencil className="w-5 h-5" />
           </button>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-2">
         {isEditing ? (
-          <textarea
-            className="border rounded px-2 py-1 w-full max-w-full resize-none"
-            value={localDescription}
-            onChange={(e) => setLocalDescription(e.target.value)}
-            rows={4}
-            maxLength={200}
-          />
+          <div className="p-2 border rounded border-gray-300 min-h-[150px]">
+            {bigEditor && <TiptapToolbar editor={bigEditor} size="big" />}
+            {bigEditor && <EditorContent editor={bigEditor} />}
+          </div>
         ) : (
-          localDescription
+          <div
+            className="leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: description ?? '' }}
+          />
         )}
         {isEditing && (
-          <div className="mt-2 flex gap-2">
-            <Button
-              variant="default"
-              onClick={handleSave}
-              className="cursor-pointer hover:scale-105 hover:bg-primary active:scale-105"
-            >
-              Zapisz
-            </Button>
+          <div className="mt-6 flex gap-3 justify-end">
             <Button
               variant="outline"
               onClick={handleCancel}
-              className="cursor-pointer hover:scale-105 hover:bg-background active:scale-105"
+              className="hover:bg-gray-50 transition-transform duration-100"
             >
               Anuluj
+            </Button>
+            <Button
+              variant="default"
+              onClick={handleSave}
+              className="bg-primary hover:bg-primary/90 transition-transform duration-100"
+            >
+              Zapisz
             </Button>
           </div>
         )}
