@@ -3,8 +3,8 @@ import { ContentService } from './content.service';
 import { UseGuards } from '@nestjs/common';
 import { Roles, RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../auth/auth.types';
-import { ContentModel } from './graphql/content.model';
-import { UpsertContentInput } from './graphql/content.input';
+import { ContentModel } from './content.model';
+import { ContentInput } from './content.input';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @Resolver(() => ContentModel)
@@ -12,15 +12,13 @@ export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
   @Query(() => [ContentModel])
-  async getAllContent() {
-    const entities = await this.contentService.getAll();
-    return entities.map((e) => ({ ...e }));
+  async getAllContentByKey(@Args('key') key: string) {
+    return this.contentService.getAllByKey(key);
   }
 
   @Query(() => ContentModel, { nullable: true })
   async getContent(@Args('key') key: string) {
-    const entity = await this.contentService.getByKey(key);
-    return entity ? { ...entity } : null;
+    return this.contentService.getByKey(key);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -28,9 +26,38 @@ export class ContentResolver {
   @Mutation(() => ContentModel)
   async upsertContent(
     @Args('key') key: string,
-    @Args('input') input: UpsertContentInput,
+    @Args('input') input: ContentInput,
   ) {
-    const entity = await this.contentService.upsert(key, input);
-    return { ...entity };
+    return this.contentService.upsert(key, input);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => ContentModel)
+  async addImageToContent(
+    @Args('key') key: string,
+    @Args('image') image: string,
+  ) {
+    return this.contentService.addImage(key, image);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => ContentModel, { nullable: true })
+  async removeImageFromContent(
+    @Args('key') key: string,
+    @Args('index') index: number,
+  ) {
+    return this.contentService.removeImage(key, index);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => ContentModel)
+  async setVideoForContent(
+    @Args('key') key: string,
+    @Args('video') video: string,
+  ) {
+    return this.contentService.setVideo(key, video);
   }
 }

@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class ContentModel {
@@ -13,6 +13,12 @@ export class ContentModel {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field(() => [String], { nullable: true })
+  images?: string[];
+
+  @Field({ nullable: true })
+  video?: string;
 
   @Field()
   editable: boolean;

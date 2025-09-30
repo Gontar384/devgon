@@ -20,6 +20,12 @@ export class Content {
   @Column({ nullable: true })
   description?: string;
 
+  @Column('simple-array', { nullable: true })
+  images?: string[];
+
+  @Column({ nullable: true })
+  video?: string;
+
   @Column({ default: true })
   editable: boolean;
 

@@ -18,8 +18,14 @@ export function AboutMainCard({
   onSave,
 }: AboutMainCardProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const smallEditor = useSmallEditor({ initialContent: title });
-  const bigEditor = useBigEditor({ initialContent: description });
+  const smallEditor = useSmallEditor({
+    initialContent: title,
+    contentLength: 100,
+  });
+  const bigEditor = useBigEditor({
+    initialContent: description,
+    contentLength: 500,
+  });
 
   const canEdit = editable && role === 'admin';
 
@@ -49,9 +55,7 @@ export function AboutMainCard({
         <div className="flex-1 min-w-0 pr-4">
           {isEditing ? (
             <div className="p-2 border rounded border-gray-300">
-              {smallEditor && (
-                <TiptapToolbar editor={smallEditor} size="small" />
-              )}
+              {smallEditor && <TiptapToolbar editor={smallEditor} />}
               {smallEditor && <EditorContent editor={smallEditor} />}
             </div>
           ) : (
@@ -75,7 +79,7 @@ export function AboutMainCard({
       <CardContent className="pt-2">
         {isEditing ? (
           <div className="p-2 border rounded border-gray-300 min-h-[150px]">
-            {bigEditor && <TiptapToolbar editor={bigEditor} size="big" />}
+            {bigEditor && <TiptapToolbar editor={bigEditor} />}
             {bigEditor && <EditorContent editor={bigEditor} />}
           </div>
         ) : (

@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { RequestWithUser } from './auth.types';
 import { JwtPayload } from './auth.types';
-import { UserResponseDto } from '../user/dto/read-user.dto';
+import { UserResponseDto } from '../user/read-user.dto';
 import { JwtAuthGuard } from './jwt.guard';
 
 @Controller('auth')

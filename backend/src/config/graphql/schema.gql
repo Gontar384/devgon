@@ -2,14 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ContentInput {
+  description: String
+  editable: Boolean
+  images: [String!]
+  key: String
+  title: String
+  video: String
+}
+
 type ContentModel {
   createdAt: DateTime!
   description: String
   editable: Boolean!
   id: ID!
+  images: [String!]
   key: String!
   title: String
   updatedAt: DateTime!
+  video: String
 }
 
 """
@@ -18,15 +29,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  upsertContent(input: UpsertContentInput!, key: String!): ContentModel!
+  addImageToContent(image: String!, key: String!): ContentModel!
+  removeImageFromContent(index: Float!, key: String!): ContentModel
+  setVideoForContent(key: String!, video: String!): ContentModel!
+  upsertContent(input: ContentInput!, key: String!): ContentModel!
 }
 
 type Query {
-  getAllContent: [ContentModel!]!
+  getAllContentByKey(key: String!): [ContentModel!]!
   getContent(key: String!): ContentModel
-}
-
-input UpsertContentInput {
-  description: String
-  title: String
 }

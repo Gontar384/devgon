@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import { UserRole } from '../auth/auth.types';
 
-@Entity('user')
+@Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;

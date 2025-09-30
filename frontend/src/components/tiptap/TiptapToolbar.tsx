@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { ToolbarButton } from '@/components/tiptap/ToolbarButton';
 import { TiptapToolbarProps } from '@/components/tiptap/types';
 
-export function TiptapToolbar({ editor, size }: TiptapToolbarProps) {
+export function TiptapToolbar({ editor }: TiptapToolbarProps) {
   const [, setUpdateCounter] = useState(0);
 
   useEffect(() => {
@@ -21,6 +21,15 @@ export function TiptapToolbar({ editor, size }: TiptapToolbarProps) {
   }, [editor]);
 
   if (!editor) return null;
+
+  const isBig =
+    (editor.storage as unknown as Record<string, string>).type === 'big';
+
+  const charCount = editor.storage.characterCount?.characters?.() ?? 0;
+  const limit =
+    editor.extensionManager.extensions.find(
+      (ext) => ext.name === 'characterCount',
+    )?.options.limit ?? 1000;
 
   return (
     <div className="flex flex-wrap gap-1 p-1 border-b mb-2">
@@ -42,7 +51,7 @@ export function TiptapToolbar({ editor, size }: TiptapToolbarProps) {
         isActive={editor.isActive('underline')}
         title="Podkreślenie"
       />
-      {size === 'big' && (
+      {isBig && (
         <>
           <ToolbarButton
             icon={List}
@@ -58,6 +67,9 @@ export function TiptapToolbar({ editor, size }: TiptapToolbarProps) {
           />
         </>
       )}
+      <div className="text-xs text-gray-500 ml-auto">
+        {charCount}/{limit}
+      </div>
     </div>
   );
 }
