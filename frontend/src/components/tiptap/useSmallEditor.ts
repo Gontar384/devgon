@@ -4,6 +4,7 @@ import Underline from '@tiptap/extension-underline';
 import { Editor } from '@tiptap/core';
 import { EditorOptions } from '@/components/tiptap/types';
 import { CharacterCount } from '@tiptap/extensions';
+import Link from '@tiptap/extension-link';
 
 export const useSmallEditor = (options: EditorOptions): Editor | null => {
   const { initialContent, contentLength } = options;
@@ -17,6 +18,13 @@ export const useSmallEditor = (options: EditorOptions): Editor | null => {
         listItem: false,
       }),
       Underline,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        HTMLAttributes: {
+          class: 'text-secondary underline',
+        },
+      }),
       CharacterCount.configure({
         limit: contentLength,
       }),

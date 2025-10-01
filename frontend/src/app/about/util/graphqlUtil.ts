@@ -20,7 +20,7 @@ const GET_CONTENT = gql`
 `;
 
 const UPSERT_CONTENT = gql`
-  mutation UpsertContent($key: String!, $input: UpsertContentInput!) {
+  mutation UpsertContent($key: String!, $input: ContentInput!) {
     upsertContent(key: $key, input: $input) {
       title
       description

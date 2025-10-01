@@ -93,14 +93,14 @@ export function AboutMainCard({
             <Button
               variant="outline"
               onClick={handleCancel}
-              className="hover:bg-gray-50 transition-transform duration-100"
+              className="hover:bg-background hover:scale-105 cursor-pointer"
             >
               Anuluj
             </Button>
             <Button
               variant="default"
               onClick={handleSave}
-              className="bg-primary hover:bg-primary/90 transition-transform duration-100"
+              className="hover:bg-primary hover:scale-105 cursor-pointer"
             >
               Zapisz
             </Button>

@@ -1,11 +1,21 @@
 'use client';
-import { Bold, Italic, List, ListOrdered, Underline } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import {
+  Bold,
+  Italic,
+  LinkIcon,
+  List,
+  ListOrdered,
+  Underline,
+} from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ToolbarButton } from '@/components/tiptap/ToolbarButton';
 import { TiptapToolbarProps } from '@/components/tiptap/types';
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
   const [, setUpdateCounter] = useState(0);
+  const [showLinkInput, setShowLinkInput] = useState(false);
+  const [url, setUrl] = useState('');
+  const linkRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!editor) return;
@@ -19,6 +29,34 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
       editor.off('selectionUpdate', forceUpdate);
     };
   }, [editor]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (linkRef.current && !linkRef.current.contains(event.target as Node)) {
+        setShowLinkInput(false);
+        setUrl('');
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowLinkInput(false);
+        setUrl('');
+      }
+    };
+
+    if (showLinkInput) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchend', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchend', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showLinkInput]);
 
   if (!editor) return null;
 
@@ -51,6 +89,41 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
         isActive={editor.isActive('underline')}
         title="Podkreślenie"
       />
+      <ToolbarButton
+        icon={LinkIcon}
+        onClick={() => setShowLinkInput((prev) => !prev)}
+        isActive={editor.isActive('link')}
+        title="Dodaj link"
+      />
+      {showLinkInput && (
+        <div
+          className="absolute z-35 mt-2 mr-1 p-2 bg-accent border rounded-sm shadow flex flex-wrap gap-1"
+          ref={linkRef}
+        >
+          <input
+            type="text"
+            placeholder="https://example.com"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="border px-2 py-1 rounded text-sm w-60"
+          />
+          <button
+            className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-sm"
+            onClick={() => {
+              editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .setLink({ href: url })
+                .run();
+              setShowLinkInput(false);
+              setUrl('');
+            }}
+          >
+            OK
+          </button>
+        </div>
+      )}
       {isBig && (
         <>
           <ToolbarButton
