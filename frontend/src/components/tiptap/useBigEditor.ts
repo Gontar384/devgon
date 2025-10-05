@@ -15,10 +15,11 @@ export const useBigEditor = (options: EditorOptions): Editor | null => {
   return useEditor({
     extensions: [
       StarterKit.configure({
+        underline: false,
         bulletList: false,
         orderedList: false,
         listItem: false,
-        underline: false,
+        link: false,
       }),
       BulletList.configure({
         HTMLAttributes: {

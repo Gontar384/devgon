@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { AuthUser } from '@/lib/types/auth-types';
+import { AuthUser } from '@/lib/auth/auth-types';
 
 export async function fetchUser(): Promise<AuthUser> {
   const token = (await cookies()).get('auth_token')?.value;

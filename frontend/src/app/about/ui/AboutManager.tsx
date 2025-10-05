@@ -2,7 +2,7 @@
 import React from 'react';
 import useSWR from 'swr';
 import { AboutMainCard } from '@/app/about/ui/main-card/AboutMainCard';
-import { getContent, upsertContent } from '@/app/about/util/graphqlUtil';
+import { getContent, upsertContent } from '@/lib/graphql/graphqlUtil';
 import { AboutManagerProps } from '@/app/about/util/types';
 
 const fetcher = (key: string) => getContent(key);

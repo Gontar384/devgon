@@ -1,4 +1,4 @@
-import { createMetadata } from '@/lib/metadata';
+import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import homeData from '@/app/home/util/homeData.json';
 import { HomeManager } from '@/app/home/util/HomeManager';

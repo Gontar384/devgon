@@ -3,11 +3,12 @@ import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { Footer } from '@/app/layout/ui/footer/Footer';
 import { Metadata } from 'next';
-import { createMetadata } from '@/lib/metadata';
+import { createMetadata } from '@/lib/metaData/metadata';
 import MobileBar from '@/app/layout/ui/navbar/mobile-bar/MobileBar';
 import { fetchUser } from '@/lib/auth/fetchUser';
 import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
+import { AuthProvider } from '@/app/layout/ui/navbar/auth-button/AuthProvider';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -35,6 +36,7 @@ export default async function RootLayout({
       <body>
         <NavbarClient authUser={authUser} />
         <MobileBar authUser={authUser} />
+        <AuthProvider authUser={authUser} />
         <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <LoginDialog />

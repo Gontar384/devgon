@@ -18,6 +18,9 @@ export class Content {
   title?: string;
 
   @Column({ nullable: true })
+  header?: string;
+
+  @Column({ nullable: true })
   description?: string;
 
   @Column('simple-array', { nullable: true })
@@ -25,6 +28,9 @@ export class Content {
 
   @Column({ nullable: true })
   video?: string;
+
+  @Column({ default: 0 })
+  order: number;
 
   @Column({ default: true })
   editable: boolean;

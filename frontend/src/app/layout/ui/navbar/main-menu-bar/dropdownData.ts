@@ -1,4 +1,4 @@
-import { DropdownData } from '@/app/layout/util/types';
+import { DropdownData } from '@/app/layout/types';
 
 export const dropdownData: DropdownData[] = [
   {

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MenubarItem } from '@/components/ui/menubar';
-import { DropdownOptionProps } from '@/app/layout/util/types';
+import { DropdownOptionProps } from '@/app/layout/types';
 
 export function DropdownOption({
   title,

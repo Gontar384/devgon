@@ -1,9 +1,9 @@
-import { createMetadata } from '@/lib/metadata';
+import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import aboutData from '@/app/home/util/homeData.json';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AboutManager } from '@/app/about/ui/AboutManager';
-import { getContent } from '@/app/about/util/graphqlUtil';
+import { getContent } from '@/lib/graphql/graphqlUtil';
 import { MainCardContentData } from '@/app/about/util/types';
 import { aboutMainCard } from '@/app/about/util/aboutData.json';
 

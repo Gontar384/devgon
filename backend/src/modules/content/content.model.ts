@@ -12,6 +12,9 @@ export class ContentModel {
   title?: string;
 
   @Field({ nullable: true })
+  header?: string;
+
+  @Field({ nullable: true })
   description?: string;
 
   @Field(() => [String], { nullable: true })
@@ -19,6 +22,9 @@ export class ContentModel {
 
   @Field({ nullable: true })
   video?: string;
+
+  @Field()
+  order: number;
 
   @Field()
   editable: boolean;

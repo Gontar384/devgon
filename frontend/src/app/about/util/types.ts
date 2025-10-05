@@ -1,4 +1,4 @@
-import { AuthUser } from '@/lib/types/auth-types';
+import { AuthUser } from '@/lib/auth/auth-types';
 
 export interface AboutMainCardProps {
   title: string;

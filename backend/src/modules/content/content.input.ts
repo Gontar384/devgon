@@ -9,6 +9,9 @@ export class ContentInput {
   title?: string;
 
   @Field({ nullable: true })
+  header?: string;
+
+  @Field({ nullable: true })
   description?: string;
 
   @Field(() => [String], { nullable: true })
@@ -18,5 +21,5 @@ export class ContentInput {
   video?: string;
 
   @Field({ nullable: true })
-  editable?: boolean;
+  order?: number;
 }

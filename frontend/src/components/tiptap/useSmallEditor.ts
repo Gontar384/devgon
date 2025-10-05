@@ -16,6 +16,7 @@ export const useSmallEditor = (options: EditorOptions): Editor | null => {
         bulletList: false,
         orderedList: false,
         listItem: false,
+        link: false,
       }),
       Underline,
       Link.configure({

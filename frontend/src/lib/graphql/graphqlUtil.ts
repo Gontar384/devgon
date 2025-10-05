@@ -1,12 +1,6 @@
-import { GraphQLClient, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import { GetContentData, UpsertContentData } from '@/app/about/util/types';
-
-const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`;
-
-const client = new GraphQLClient(endpoint, {
-  credentials: 'include',
-  fetch,
-});
+import { client } from '@/lib/graphql/graphqlClient';
 
 const GET_CONTENT = gql`
   query GetContent($key: String!) {

@@ -4,9 +4,10 @@
 
 input ContentInput {
   description: String
-  editable: Boolean
+  header: String
   images: [String!]
   key: String
+  order: Float
   title: String
   video: String
 }
@@ -15,9 +16,11 @@ type ContentModel {
   createdAt: DateTime!
   description: String
   editable: Boolean!
+  header: String
   id: ID!
   images: [String!]
   key: String!
+  order: Float!
   title: String
   updatedAt: DateTime!
   video: String
@@ -30,7 +33,9 @@ scalar DateTime
 
 type Mutation {
   addImageToContent(image: String!, key: String!): ContentModel!
+  createContent(input: ContentInput!, key: String!): ContentModel!
   removeImageFromContent(index: Float!, key: String!): ContentModel
+  reorderContent(key: String!, orderedIds: [String!]!): [ContentModel!]!
   setVideoForContent(key: String!, video: String!): ContentModel!
   upsertContent(input: ContentInput!, key: String!): ContentModel!
 }

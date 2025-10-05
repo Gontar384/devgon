@@ -11,14 +11,34 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
+  @Query(() => ContentModel, { nullable: true })
+  async getContent(@Args('key') key: string) {
+    return this.contentService.getByKey(key);
+  }
+
   @Query(() => [ContentModel])
   async getAllContentByKey(@Args('key') key: string) {
     return this.contentService.getAllByKey(key);
   }
 
-  @Query(() => ContentModel, { nullable: true })
-  async getContent(@Args('key') key: string) {
-    return this.contentService.getByKey(key);
+  @Mutation(() => ContentModel)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => ContentModel)
+  async createContent(
+    @Args('key') key: string,
+    @Args('input') input: ContentInput,
+  ) {
+    return this.contentService.create(key, input);
+  }
+
+  @Mutation(() => [ContentModel])
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => ContentModel)
+  async reorderContent(
+    @Args('key') key: string,
+    @Args({ name: 'orderedIds', type: () => [String] }) orderedIds: string[],
+  ) {
+    return this.contentService.reorder(key, orderedIds);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
