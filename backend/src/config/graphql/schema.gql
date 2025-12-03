@@ -15,12 +15,11 @@ input ContentInput {
 type ContentModel {
   createdAt: DateTime!
   description: String
-  editable: Boolean!
   header: String
   id: ID!
   images: [String!]
   key: String!
-  order: Float!
+  order: Float
   title: String
   updatedAt: DateTime!
   video: String

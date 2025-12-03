@@ -29,11 +29,8 @@ export class Content {
   @Column({ nullable: true })
   video?: string;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, nullable: true })
   order: number;
-
-  @Column({ default: true })
-  editable: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

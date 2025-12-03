@@ -23,11 +23,8 @@ export class ContentModel {
   @Field({ nullable: true })
   video?: string;
 
-  @Field()
+  @Field({ nullable: true })
   order: number;
-
-  @Field()
-  editable: boolean;
 
   @Field()
   createdAt: Date;

@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
-import { AboutMainCardProps } from '@/app/about/util/types';
 import { Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { EditorContent } from '@tiptap/react';
@@ -9,14 +8,14 @@ import { TiptapToolbar } from '@/components/tiptap/TiptapToolbar';
 import { useSmallEditor } from '@/components/tiptap/useSmallEditor';
 import { useBigEditor } from '@/components/tiptap/useBigEditor';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { AdminMainCardProps } from '@/app/admin/types';
 
-export function AboutMainCard({
+export function AdminMainCard({
   title,
   description,
-  editable,
   role,
   onSave,
-}: AboutMainCardProps) {
+}: AdminMainCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const smallEditor = useSmallEditor({
     initialContent: title,
@@ -27,7 +26,7 @@ export function AboutMainCard({
     contentLength: 500,
   });
 
-  const canEdit = editable && role === 'admin';
+  const canEdit = role === 'admin';
 
   const handleSave = () => {
     if (onSave && smallEditor && bigEditor) {

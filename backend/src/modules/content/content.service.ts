@@ -24,8 +24,13 @@ export class ContentService {
     if (!content) {
       content = this.repo.create({ key, ...input });
     } else {
-      Object.assign(content, input);
+      Object.assign(content, {
+        ...input,
+        key: content.key,
+      });
     }
+
+    console.log('Upsert returned:', content);
     return this.repo.save(content);
   }
 

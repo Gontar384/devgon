@@ -1,22 +1,21 @@
 import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
-import aboutData from '@/app/home/util/homeData.json';
-import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AboutManager } from '@/app/about/ui/AboutManager';
 import { getContent } from '@/lib/graphql/graphqlUtil';
-import { MainCardContentData } from '@/app/about/util/types';
-import { aboutMainCard } from '@/app/about/util/aboutData.json';
+import { Content } from '@/lib/graphql/types';
 
 export const generateMetadata = (): Metadata =>
-  createMetadata(aboutData.metaData);
+  createMetadata({
+    title: 'devgon - O nas',
+    description:
+      'Poznaj naszą działalność: o devgon, naszych projektach, zespole. Wszystko co musisz wiedzieć, aby podjąć z nami współpracę!',
+    path: '/about',
+  });
 
 export default async function AboutPage() {
-  const authUser = await verifyAuth('/about');
+  const content: Content | null = await getContent('about-main-card');
 
-  const aboutMainCardData: MainCardContentData = aboutMainCard;
-
-  const mainCardContent: MainCardContentData =
-    (await getContent('about-main-card')) ?? aboutMainCardData;
-
-  return <AboutManager mainCardContent={mainCardContent} authUser={authUser} />;
+  return (
+    <AboutManager title={content?.title} description={content?.description} />
+  );
 }
