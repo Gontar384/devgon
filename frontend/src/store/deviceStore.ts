@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-import { DeviceState } from '@/store/types';
+import { DeviceState } from '@/store/store-types';
 
 export const useDeviceStore = create<DeviceState>((set) => ({
   isMobile: false,

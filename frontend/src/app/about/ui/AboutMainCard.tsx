@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
-import { AboutMainCardProps } from '@/app/about/types';
+import { AboutMainCardProps } from '@/app/about/about-types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export function AboutMainCard({ title, description }: AboutMainCardProps) {

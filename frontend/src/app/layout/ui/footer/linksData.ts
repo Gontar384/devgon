@@ -1,4 +1,4 @@
-import { FooterLinkData, SocialLinkData } from '@/app/layout/types';
+import { FooterLinkData, SocialLinkData } from '@/app/layout/layout-types';
 
 export const footerLinks: FooterLinkData[] = [
   {

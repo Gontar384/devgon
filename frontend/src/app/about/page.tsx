@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import { AboutManager } from '@/app/about/ui/AboutManager';
 import { getContent } from '@/lib/graphql/graphqlUtil';
-import { Content } from '@/lib/graphql/types';
+import { Content } from '@/lib/graphql/graphql-types';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 import { client } from '@/lib/graphql/graphqlClient';
-import { Content } from '@/lib/graphql/types';
+import { Content } from '@/lib/graphql/graphql-types';
 
 const GET_CONTENT = gql`
   query GetContent($key: String!) {

@@ -1,4 +1,4 @@
-import { Content } from '@/lib/graphql/types';
+import { Content } from '@/lib/graphql/graphql-types';
 import { AuthUser } from '@/lib/auth/auth-types';
 
 export interface AdminManagerProps {

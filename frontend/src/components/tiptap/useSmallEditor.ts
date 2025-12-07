@@ -2,7 +2,7 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import { Editor } from '@tiptap/core';
-import { EditorOptions } from '@/components/tiptap/types';
+import { EditorOptions } from '@/components/tiptap/tiptap-types';
 import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
 

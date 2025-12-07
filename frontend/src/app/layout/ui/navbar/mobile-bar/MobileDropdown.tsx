@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { DropdownWrapperProps } from '@/app/layout/types';
+import { DropdownWrapperProps } from '@/app/layout/layout-types';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';

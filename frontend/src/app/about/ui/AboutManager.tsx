@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Content } from '@/lib/graphql/types';
+import { Content } from '@/lib/graphql/graphql-types';
 import { AboutMainCard } from '@/app/about/ui/AboutMainCard';
 
 export function AboutManager({ title, description }: Content) {

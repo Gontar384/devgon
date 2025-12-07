@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import { refreshAuth } from '@/lib/auth/refreshAuth';
-import { NavbarProps } from '@/app/layout/types';
+import { NavbarProps } from '@/app/layout/layout-types';
 
 export function AuthProvider({ authUser }: NavbarProps) {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);

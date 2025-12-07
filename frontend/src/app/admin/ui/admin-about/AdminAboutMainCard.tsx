@@ -8,9 +8,9 @@ import { TiptapToolbar } from '@/components/tiptap/TiptapToolbar';
 import { useSmallEditor } from '@/components/tiptap/useSmallEditor';
 import { useBigEditor } from '@/components/tiptap/useBigEditor';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { AdminMainCardProps } from '@/app/admin/types';
+import { AdminMainCardProps } from '@/app/admin/admin-types';
 
-export function AdminMainCard({
+export function AdminAboutMainCard({
   title,
   description,
   role,

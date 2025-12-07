@@ -5,7 +5,7 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import Underline from '@tiptap/extension-underline';
 import { Editor } from '@tiptap/core';
-import { EditorOptions } from '@/components/tiptap/types';
+import { EditorOptions } from '@/components/tiptap/tiptap-types';
 import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
 

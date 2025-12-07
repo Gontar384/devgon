@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { getContent } from '@/lib/graphql/graphqlUtil';
 import { AdminManager } from '@/app/admin/ui/AdminManager';
-import { Content } from '@/lib/graphql/types';
+import { Content } from '@/lib/graphql/graphql-types';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({

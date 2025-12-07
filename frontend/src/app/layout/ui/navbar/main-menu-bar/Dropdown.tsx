@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { MenubarContent, MenubarTrigger } from '@/components/ui/menubar';
 import { CircleChevronDown } from 'lucide-react';
 import { MenubarMenu } from '@radix-ui/react-menubar';
-import { DropdownWrapperProps } from '@/app/layout/types';
+import { DropdownWrapperProps } from '@/app/layout/layout-types';
 
 export function Dropdown({ title, href, children }: DropdownWrapperProps) {
   return (

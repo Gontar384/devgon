@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-import { MobileBarState } from '@/store/types';
+import { MobileBarState } from '@/store/store-types';
 
 export const useMobileBarStore = create<MobileBarState>((set) => ({
   openedBar: false,

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { ToolbarButton } from '@/components/tiptap/ToolbarButton';
-import { TiptapToolbarProps } from '@/components/tiptap/types';
+import { TiptapToolbarProps } from '@/components/tiptap/tiptap-types';
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
   const [, setUpdateCounter] = useState(0);

@@ -3,7 +3,7 @@ import React from 'react';
 import { SiteLogo } from '@/app/layout/ui/navbar/parts/SiteLogo';
 import { MainMenuBar } from '@/app/layout/ui/navbar/main-menu-bar/MainMenuBar';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
-import { NavbarProps } from '@/app/layout/types';
+import { NavbarProps } from '@/app/layout/layout-types';
 
 export default function Navbar({ authUser }: NavbarProps) {
   return (
