@@ -13,7 +13,7 @@ export function AdminButton() {
       <TooltipTrigger asChild>
         <Link
           href="/admin"
-          className="hover:scale-105 active:scale-105 cursor-pointer flex items-center justify-center"
+          className="hover:scale-105 active:scale-105 cursor-pointer flex items-center justify-center px-0.5"
         >
           <UserStar className="!w-7 !h-7" />
         </Link>

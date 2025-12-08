@@ -15,4 +15,5 @@ export interface TiptapToolbarProps {
 export interface EditorOptions {
   initialContent: string;
   contentLength: number;
+  enabled?: boolean;
 }

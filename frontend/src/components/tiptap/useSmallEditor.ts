@@ -7,9 +7,9 @@ import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
 
 export const useSmallEditor = (options: EditorOptions): Editor | null => {
-  const { initialContent, contentLength } = options;
+  const { initialContent, contentLength, enabled = true } = options;
 
-  return useEditor({
+  const editor = useEditor({
     extensions: [
       StarterKit.configure({
         underline: false,
@@ -37,4 +37,6 @@ export const useSmallEditor = (options: EditorOptions): Editor | null => {
       (editor.storage as unknown as Record<string, string>).type = 'small';
     },
   });
+
+  return enabled ? editor : null;
 };

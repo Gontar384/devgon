@@ -2,7 +2,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { AdminAbout } from '@/app/admin/ui/admin-about/AdminAbout';
+import { AdminAboutManager } from '@/app/admin/ui/admin-about/AdminAboutManager';
 
 export function AdminManager({ mainCardContent, authUser }: AdminManagerProps) {
   return (
@@ -23,7 +23,10 @@ export function AdminManager({ mainCardContent, authUser }: AdminManagerProps) {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="about">
-          <AdminAbout mainCardContent={mainCardContent} authUser={authUser} />
+          <AdminAboutManager
+            mainCardContent={mainCardContent}
+            authUser={authUser}
+          />
         </TabsContent>
         <TabsContent value="about"></TabsContent>
       </Tabs>

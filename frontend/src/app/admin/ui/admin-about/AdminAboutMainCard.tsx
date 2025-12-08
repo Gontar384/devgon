@@ -50,6 +50,10 @@ export function AdminAboutMainCard({
       aria-label={title}
     >
       <CursorGlow />
+
+
+
+
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex-1 min-w-0 pr-4">
           {isEditing ? (
@@ -106,6 +110,11 @@ export function AdminAboutMainCard({
           </div>
         )}
       </CardContent>
+
+
+
+
+
     </Card>
   );
 }
