@@ -27,8 +27,5 @@ export class ContentModel {
   order: number;
 
   @Field()
-  createdAt: Date;
-
-  @Field()
   updatedAt: Date;
 }

@@ -6,14 +6,12 @@ input ContentInput {
   description: String
   header: String
   images: [String!]
-  key: String
   order: Float
   title: String
   video: String
 }
 
 type ContentModel {
-  createdAt: DateTime!
   description: String
   header: String
   id: ID!
@@ -31,15 +29,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
-  addImageToContent(image: String!, key: String!): ContentModel!
   createContent(input: ContentInput!, key: String!): ContentModel!
-  removeImageFromContent(index: Float!, key: String!): ContentModel
-  reorderContent(key: String!, orderedIds: [String!]!): [ContentModel!]!
-  setVideoForContent(key: String!, video: String!): ContentModel!
+  deleteContent(id: String!): Boolean!
+  reorderContents(ids: [String!]!, key: String!): Boolean!
+  updateContent(id: String!, input: ContentInput!): ContentModel!
   upsertContent(input: ContentInput!, key: String!): ContentModel!
 }
 
 type Query {
-  getAllContentByKey(key: String!): [ContentModel!]!
   getContent(key: String!): ContentModel
+  getContentById(id: String!): ContentModel
+  getContents(key: String!): [ContentModel!]!
 }

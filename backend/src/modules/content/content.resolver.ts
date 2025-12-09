@@ -11,34 +11,10 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
+  //SINGLE CONTENT
   @Query(() => ContentModel, { nullable: true })
   async getContent(@Args('key') key: string) {
-    return this.contentService.getByKey(key);
-  }
-
-  @Query(() => [ContentModel])
-  async getAllContentByKey(@Args('key') key: string) {
-    return this.contentService.getAllByKey(key);
-  }
-
-  @Mutation(() => ContentModel)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async createContent(
-    @Args('key') key: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return this.contentService.create(key, input);
-  }
-
-  @Mutation(() => [ContentModel])
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async reorderContent(
-    @Args('key') key: string,
-    @Args({ name: 'orderedIds', type: () => [String] }) orderedIds: string[],
-  ) {
-    return this.contentService.reorder(key, orderedIds);
+    return await this.contentService.getByKey(key);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -48,36 +24,54 @@ export class ContentResolver {
     @Args('key') key: string,
     @Args('input') input: ContentInput,
   ) {
-    return this.contentService.upsert(key, input);
+    return await this.contentService.upsertByKey(key, input);
+  }
+
+  //MULTIPLE CONTENT
+  @Query(() => ContentModel, { nullable: true })
+  async getContentById(@Args('id') id: string) {
+    return await this.contentService.getById(id);
+  }
+
+  @Query(() => [ContentModel])
+  async getContents(@Args('key') key: string) {
+    return await this.contentService.getMany(key);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => ContentModel)
-  async addImageToContent(
+  async createContent(
     @Args('key') key: string,
-    @Args('image') image: string,
+    @Args('input') input: ContentInput,
   ) {
-    return this.contentService.addImage(key, image);
-  }
-
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel, { nullable: true })
-  async removeImageFromContent(
-    @Args('key') key: string,
-    @Args('index') index: number,
-  ) {
-    return this.contentService.removeImage(key, index);
+    return await this.contentService.create(key, input);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => ContentModel)
-  async setVideoForContent(
-    @Args('key') key: string,
-    @Args('video') video: string,
+  async updateContent(
+    @Args('id') id: string,
+    @Args('input') input: ContentInput,
   ) {
-    return this.contentService.setVideo(key, video);
+    return await this.contentService.update(id, input);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => Boolean)
+  async deleteContent(@Args('id') id: string) {
+    return await this.contentService.delete(id);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => Boolean)
+  async reorderContents(
+    @Args('key') key: string,
+    @Args({ name: 'ids', type: () => [String] }) ids: string[],
+  ) {
+    return await this.contentService.reorder(key, ids);
   }
 }

@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -31,9 +30,6 @@ export class Content {
 
   @Column({ default: 0, nullable: true })
   order: number;
-
-  @CreateDateColumn()
-  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;

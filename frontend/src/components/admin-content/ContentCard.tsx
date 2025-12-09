@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 import { Card } from '@/components/ui/card';
 import { ContentCardProps } from '@/components/admin-content/admin-content-types';
-import { upsertContent } from '@/lib/graphql/graphqlUtil';
+import { upsertContent } from '@/lib/graphql/contentService';
 import { EditButtons } from '@/components/admin-content/atomic/EditButtons';
 import { EditableField } from '@/components/admin-content/atomic/EditableField';
 

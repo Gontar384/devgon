@@ -11,76 +11,61 @@ export class ContentService {
     private readonly repo: Repository<Content>,
   ) {}
 
-  async getByKey(key: string): Promise<Content | null> {
-    return this.repo.findOne({ where: { key } });
+  //SINGLE CONTENT
+  async getByKey(key: string) {
+    return await this.repo.findOne({ where: { key } });
   }
 
-  async getAllByKey(key: string): Promise<Content[]> {
-    return this.repo.find({ where: { key } });
-  }
-
-  async upsert(key: string, input: ContentInput): Promise<Content> {
+  async upsertByKey(key: string, input: ContentInput) {
     let content = await this.repo.findOne({ where: { key } });
+
     if (!content) {
       content = this.repo.create({ key, ...input });
     } else {
-      Object.assign(content, {
-        ...input,
-        key: content.key,
-      });
+      Object.assign(content, input);
     }
 
-    console.log('Upsert returned:', content);
-    return this.repo.save(content);
+    return await this.repo.save(content);
   }
 
-  async create(key: string, input: ContentInput): Promise<Content> {
-    const count = await this.repo.count({ where: { key } });
-    const content = this.repo.create({
-      key,
-      order: count,
-      ...input,
+  //MULTIPLE CONTENT
+  async getById(id: string) {
+    return await this.repo.findOne({ where: { id } });
+  }
+
+  async getMany(key: string) {
+    return await this.repo.find({
+      where: { key },
+      order: { order: 'ASC' },
     });
-    return this.repo.save(content);
   }
 
-  async reorder(key: string, orderedIds: string[]): Promise<Content[]> {
-    const contents = await this.repo.find({ where: { key } });
+  async create(key: string, input: ContentInput) {
+    const content = this.repo.create({ key, ...input });
+    return await this.repo.save(content);
+  }
 
-    const updated = contents.map((c) => {
-      const newOrder = orderedIds.indexOf(c.id);
-      if (newOrder !== -1) c.order = newOrder;
-      return c;
+  async update(id: string, input: ContentInput) {
+    await this.repo.update({ id }, input);
+    return await this.repo.findOne({ where: { id } });
+  }
+
+  async delete(id: string) {
+    await this.repo.delete({ id });
+    return true;
+  }
+
+  async reorder(key: string, ids: string[]) {
+    const contents = await this.getMany(key);
+
+    ids.forEach((id, index) => {
+      const item = contents.find((c) => c.id === id);
+      if (item) {
+        item.order = index;
+      }
     });
 
-    await this.repo.save(updated);
-    return updated.sort((a, b) => a.order - b.order);
-  }
-
-  async addImage(key: string, imageUrl: string): Promise<Content> {
-    let content = await this.repo.findOne({ where: { key } });
-    if (!content) {
-      content = this.repo.create({ key, images: [imageUrl] });
-    } else {
-      content.images = [...(content.images || []), imageUrl];
-    }
-    return this.repo.save(content);
-  }
-
-  async removeImage(key: string, index: number): Promise<Content | null> {
-    const content = await this.repo.findOne({ where: { key } });
-    if (!content || !content.images?.length) return null;
-    content.images.splice(index, 1);
-    return this.repo.save(content);
-  }
-
-  async setVideo(key: string, videoUrl: string): Promise<Content> {
-    let content = await this.repo.findOne({ where: { key } });
-    if (!content) {
-      content = this.repo.create({ key, video: videoUrl });
-    } else {
-      content.video = videoUrl;
-    }
-    return this.repo.save(content);
+    await this.repo.save(contents);
+    return true;
   }
 }
