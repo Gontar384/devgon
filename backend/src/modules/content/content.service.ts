@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Content } from './content.entity';
 import { ContentInput } from './content.input';
 
@@ -10,6 +10,28 @@ export class ContentService {
     @InjectRepository(Content)
     private readonly repo: Repository<Content>,
   ) {}
+
+  async getManyByKeys(keys: string[]) {
+    const contents = await this.repo.find({
+      where: { key: In(keys) },
+      order: { order: 'ASC' },
+    });
+
+    const grouped = new Map<string, Content[]>();
+
+    for (const key of keys) {
+      grouped.set(key, []);
+    }
+
+    for (const content of contents) {
+      grouped.get(content.key)?.push(content);
+    }
+
+    return Array.from(grouped.entries()).map(([key, items]) => ({
+      key,
+      items,
+    }));
+  }
 
   //SINGLE CONTENT
   async getByKey(key: string) {

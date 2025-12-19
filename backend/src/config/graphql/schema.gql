@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ContentGroupModel {
+  items: [ContentModel!]!
+  key: String!
+}
+
 input ContentInput {
   description: String
   header: String
@@ -40,4 +45,5 @@ type Query {
   getContent(key: String!): ContentModel
   getContentById(id: String!): ContentModel
   getContents(key: String!): [ContentModel!]!
+  getContentsByKeys(keys: [String!]!): [ContentGroupModel!]!
 }

@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AdminLayout } from '@/app/admin/AdminLayout';
-import { getContent } from '@/lib/graphql/contentService';
+import { getPageContents } from '@/lib/graphql/contentService';
 import { AdminAboutManager } from '@/app/admin/about/AdminAboutManager';
 
 export const generateMetadata = (): Metadata =>
@@ -14,15 +14,11 @@ export const generateMetadata = (): Metadata =>
 
 export default async function AdminAboutPage() {
   const authUser = await verifyAuth('/admin/about');
-
-  const mainCardContent = await getContent('about-main-card');
+  const contents = await getPageContents(['about-main-card']);
 
   return (
     <AdminLayout>
-      <AdminAboutManager
-        mainCardContent={mainCardContent}
-        authUser={authUser}
-      />
+      {authUser.role === 'admin' && <AdminAboutManager contents={contents} />}
     </AdminLayout>
   );
 }

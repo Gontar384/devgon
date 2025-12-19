@@ -6,10 +6,32 @@ import {
   GET_CONTENT,
   GET_CONTENT_BY_ID,
   GET_CONTENTS,
+  GET_CONTENTS_BY_KEYS,
   REORDER_CONTENTS,
   UPDATE_CONTENT,
   UPSERT_CONTENT,
 } from '@/lib/graphql/contentGraphql';
+
+//CUSTOM QUERY
+export async function getPageContents(
+  keys: string[],
+): Promise<Record<string, Content[]>> {
+  try {
+    const res = await client.request<{
+      getContentsByKeys: {
+        key: string;
+        items: Content[];
+      }[];
+    }>(GET_CONTENTS_BY_KEYS, { keys });
+
+    return Object.fromEntries(
+      res.getContentsByKeys.map((group) => [group.key, group.items]),
+    );
+  } catch (err) {
+    console.error('GraphQL getPageContents error:', err);
+    return {};
+  }
+}
 
 //SINGLE CONTENT
 export async function getContent(key: string): Promise<Content | null> {

@@ -3,14 +3,14 @@ import { EditorContent } from '@tiptap/react';
 import React, { useEffect } from 'react';
 import { useSmallEditor } from '@/components/tiptap/useSmallEditor';
 import { useBigEditor } from '@/components/tiptap/useBigEditor';
-import { EditableFieldProps } from '@/components/admin-content/admin-content-types';
+import { EditableFieldProps } from '@/app/admin/admin-types';
 
 export function EditableField({
   value,
-  isEditing,
+  setValue,
   type,
   contentLength,
-  onChange,
+  isEditing,
 }: EditableFieldProps) {
   const smallEditor = useSmallEditor({
     initialContent: value,
@@ -29,14 +29,14 @@ export function EditableField({
   useEffect(() => {
     if (!isEditing || !editor) return;
 
-    const handleUpdate = () => onChange(editor.getHTML());
+    const handleUpdate = () => setValue(editor.getHTML());
 
     editor.on('update', handleUpdate);
 
     return () => {
       editor.off('update', handleUpdate);
     };
-  }, [isEditing, editor, onChange]);
+  }, [isEditing, editor, setValue]);
 
   return (
     <div className="flex-1 min-w-0 pr-4">

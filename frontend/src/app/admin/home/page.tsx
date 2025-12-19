@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AdminLayout } from '@/app/admin/AdminLayout';
-import { getContent } from '@/lib/graphql/contentService';
+import { getPageContents } from '@/lib/graphql/contentService';
 import { AdminHomeManager } from '@/app/admin/home/AdminHomeManager';
 
 export const generateMetadata = (): Metadata =>
@@ -14,12 +14,11 @@ export const generateMetadata = (): Metadata =>
 
 export default async function AdminHomePage() {
   const authUser = await verifyAuth('/admin/home');
-
-  const mainCardContent = await getContent('about-main-card');
+  const contents = await getPageContents(['about-main-card']);
 
   return (
     <AdminLayout>
-      <AdminHomeManager mainCardContent={mainCardContent} authUser={authUser} />
+      {authUser.role === 'admin' && <AdminHomeManager contents={contents} />}
     </AdminLayout>
   );
 }

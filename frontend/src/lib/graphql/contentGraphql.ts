@@ -1,5 +1,25 @@
 import { gql } from 'graphql-request';
 
+//CUSTOM QUERY
+export const GET_CONTENTS_BY_KEYS = gql`
+  query GetContentsByKeys($keys: [String!]!) {
+    getContentsByKeys(keys: $keys) {
+      key
+      items {
+        id
+        key
+        title
+        header
+        description
+        images
+        video
+        order
+        updatedAt
+      }
+    }
+  }
+`;
+
 //SINGLE CONTENT
 export const GET_CONTENT = gql`
   query GetContent($key: String!) {

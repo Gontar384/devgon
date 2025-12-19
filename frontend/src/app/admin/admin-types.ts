@@ -1,12 +1,25 @@
+import React from 'react';
 import { Content } from '@/lib/graphql/graphql-types';
-import { AuthUser } from '@/lib/auth/auth-types';
 
-export interface AdminAboutManagerProps {
-  mainCardContent: Content | null;
-  authUser: AuthUser;
+export interface AdminManagerProps {
+  contents: Record<string, Content[]>;
 }
 
-export interface AdminHomeManagerProps {
-  mainCardContent: Content | null;
-  authUser: AuthUser;
+export interface ContentCardProps {
+  content: Content;
+}
+
+export interface EditableFieldProps {
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  type: 'small' | 'big';
+  contentLength: number;
+  isEditing: boolean;
+}
+
+export interface EditButtonsProps {
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSave: () => void;
+  handleCancel: () => void;
 }

@@ -6,10 +6,19 @@ import { UserRole } from '../auth/auth.types';
 import { ContentModel } from './content.model';
 import { ContentInput } from './content.input';
 import { JwtAuthGuard } from '../auth/jwt.guard';
+import { ContentGroupModel } from './content-group.model';
 
 @Resolver(() => ContentModel)
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
+
+  //CUSTOM QUERY
+  @Query(() => [ContentGroupModel])
+  async getContentsByKeys(
+    @Args({ name: 'keys', type: () => [String] }) keys: string[],
+  ) {
+    return this.contentService.getManyByKeys(keys);
+  }
 
   //SINGLE CONTENT
   @Query(() => ContentModel, { nullable: true })
