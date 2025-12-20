@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -18,13 +17,19 @@ export class Content {
   title?: string;
 
   @Column({ nullable: true })
+  header?: string;
+
+  @Column({ nullable: true })
   description?: string;
 
-  @Column({ default: true })
-  editable: boolean;
+  @Column('simple-array', { nullable: true })
+  images?: string[];
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ nullable: true })
+  video?: string;
+
+  @Column({ default: 0, nullable: true })
+  order: number;
 
   @UpdateDateColumn()
   updatedAt: Date;

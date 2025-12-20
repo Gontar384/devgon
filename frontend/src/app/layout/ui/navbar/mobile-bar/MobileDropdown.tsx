@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { DropdownWrapperProps } from '@/app/layout/util/types';
+import { DropdownWrapperProps } from '@/app/layout/layout-types';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -12,7 +12,6 @@ export function MobileDropdown({
   children,
 }: DropdownWrapperProps) {
   const [accordionActive, setAccordionActive] = useState<boolean>(false);
-  const [active, setActive] = useState<boolean>(false);
 
   const handleAccordionToggle = () => {
     setAccordionActive((prev) => !prev);
@@ -30,9 +29,7 @@ export function MobileDropdown({
         <Button
           variant="ghost"
           onClick={handleAccordionToggle}
-          className={`cursor-pointer h-12 !p-1.5 ${active ? 'bg-accent' : 'bg-background'}`}
-          onTouchStart={() => setActive(true)}
-          onTouchEnd={() => setActive(false)}
+          className="cursor-pointer h-12 !p-1.5 active:bg-accent"
           aria-expanded={accordionActive}
           aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
         >

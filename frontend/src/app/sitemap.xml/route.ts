@@ -22,6 +22,24 @@ export const GET = () => {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `https://${siteName}/admin`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.2,
+    },
+    {
+      url: `https://${siteName}/admin/home`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.2,
+    },
+    {
+      url: `https://${siteName}/admin/about`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.2,
+    },
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

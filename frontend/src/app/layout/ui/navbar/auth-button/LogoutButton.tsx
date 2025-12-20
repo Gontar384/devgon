@@ -9,7 +9,7 @@ import React from 'react';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import { useDeviceStore } from '@/store/deviceStore';
-import { LogoutButtonProps } from '@/app/layout/util/types';
+import { LogoutButtonProps } from '@/app/layout/layout-types';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { toast } from 'sonner';
 

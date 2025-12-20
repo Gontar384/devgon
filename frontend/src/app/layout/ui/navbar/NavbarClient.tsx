@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
-import { NavbarProps } from '@/app/layout/util/types';
+import { NavbarProps } from '@/app/layout/layout-types';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 
 export default function NavbarClient({ authUser }: NavbarProps) {
@@ -11,8 +11,11 @@ export default function NavbarClient({ authUser }: NavbarProps) {
   const { openedBar, programmaticScroll } = useMobileBarStore();
   const openedBarRef = useRef(openedBar);
   const programmaticScrollRef = useRef(programmaticScroll);
-  openedBarRef.current = openedBar;
-  programmaticScrollRef.current = programmaticScroll;
+
+  useEffect(() => {
+    openedBarRef.current = openedBar;
+    programmaticScrollRef.current = programmaticScroll;
+  }, [openedBar, programmaticScroll]);
 
   useEffect(() => {
     lastY.current = window.scrollY || 0;

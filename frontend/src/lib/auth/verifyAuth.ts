@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { AuthUser } from '@/lib/types/auth-types';
+import { AuthUser } from '@/lib/auth/auth-types';
 import { cookies } from 'next/headers';
 import { protectedRoutes } from '@/lib/auth/protectedRoutes';
 

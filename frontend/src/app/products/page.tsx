@@ -1,4 +1,4 @@
-import { createMetadata } from '@/lib/metadata';
+import { createMetadata } from '@/lib/metaData/metadata';
 import api from '@/lib/axios';
 import { ProductsManager } from '@/app/products/ProductsManager';
 import { Metadata } from 'next';

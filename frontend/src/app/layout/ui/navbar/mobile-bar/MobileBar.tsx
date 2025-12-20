@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { NavbarProps } from '@/app/layout/util/types';
+import { NavbarProps } from '@/app/layout/layout-types';
 import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';

@@ -8,13 +8,12 @@ export interface ToolbarButtonProps {
   title: string;
 }
 
-type ToolbarSize = 'small' | 'big';
-
 export interface TiptapToolbarProps {
   editor: Editor | null;
-  size: ToolbarSize;
 }
 
 export interface EditorOptions {
   initialContent: string;
+  contentLength: number;
+  enabled?: boolean;
 }

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { MetadataOptions } from '@/lib/types/metadata-types';
+import { MetadataOptions } from '@/lib/metaData/metadata-types';
 
 const siteName = process.env.NEXT_PUBLIC_DOMAIN;
 const siteUrl = `https://${siteName}`;

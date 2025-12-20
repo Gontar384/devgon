@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthUser } from '@/lib/types/auth-types';
+import { AuthUser } from '@/lib/auth/auth-types';
 
 export interface NavbarProps {
   authUser: AuthUser;

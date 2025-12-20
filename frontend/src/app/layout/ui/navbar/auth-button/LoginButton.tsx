@@ -6,7 +6,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { LoginButtonProps } from '@/app/layout/util/types';
+import { LoginButtonProps } from '@/app/layout/layout-types';
 import { useDeviceStore } from '@/store/deviceStore';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useLoginDialogStore } from '@/store/loginDialogStore';

@@ -1,7 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
-import { LoginDialogState } from '@/store/types/types';
+import { LoginDialogState } from '@/store/store-types';
 
 export const useLoginDialogStore = create<LoginDialogState>((set) => ({
   dialogOpen: false,
