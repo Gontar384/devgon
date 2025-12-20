@@ -16,6 +16,9 @@ export default async function AboutPage() {
   const content: Content | null = await getContent('about-main-card');
 
   return (
-    <AboutManager title={content?.title} description={content?.description} />
+    <AboutManager
+      title={content?.title ?? ''}
+      description={content?.description ?? ''}
+    />
   );
 }
