@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Content } from '@/lib/graphql/graphql-types';
 import { AboutMainCard } from '@/app/about/ui/AboutMainCard';
+import { AboutMainCardProps } from '@/app/about/about-types';
 
-export function AboutManager({ title, description }: Content) {
+export function AboutManager({ title, description }: AboutMainCardProps) {
   return (
     <section className="w-full min-h-screen relative">
       <div className="flex flex-col items-center px-2">
