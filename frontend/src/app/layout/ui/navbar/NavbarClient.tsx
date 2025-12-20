@@ -11,8 +11,11 @@ export default function NavbarClient({ authUser }: NavbarProps) {
   const { openedBar, programmaticScroll } = useMobileBarStore();
   const openedBarRef = useRef(openedBar);
   const programmaticScrollRef = useRef(programmaticScroll);
-  openedBarRef.current = openedBar;
-  programmaticScrollRef.current = programmaticScroll;
+
+  useEffect(() => {
+    openedBarRef.current = openedBar;
+    programmaticScrollRef.current = programmaticScroll;
+  }, [openedBar, programmaticScroll]);
 
   useEffect(() => {
     lastY.current = window.scrollY || 0;
