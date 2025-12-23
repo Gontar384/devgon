@@ -14,7 +14,10 @@ export const generateMetadata = (): Metadata =>
 
 export default async function AdminAboutPage() {
   const authUser = await verifyAuth('/admin/about');
-  const contents = await getPageContents(['about-main-card']);
+  const contents = await getPageContents([
+    'about-main-card',
+    'about-side-cards',
+  ]);
 
   return (
     <AdminLayout>

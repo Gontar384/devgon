@@ -14,12 +14,16 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <TabsTrigger
             value="/admin/home"
             className="cursor-pointer bg-background data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+            id={undefined} //hydration mismatch error occurred
+            aria-controls={undefined}
           >
             <Link href="/admin/home">Strona główna</Link>
           </TabsTrigger>
           <TabsTrigger
             value="/admin/about"
             className="cursor-pointer bg-background data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+            id={undefined}
+            aria-controls={undefined}
           >
             <Link href="/admin/about">O nas</Link>
           </TabsTrigger>

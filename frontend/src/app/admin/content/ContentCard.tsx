@@ -9,10 +9,16 @@ import { ContentCardProps } from '@/app/admin/admin-types';
 import useSWR from 'swr';
 import { Content } from '@/lib/graphql/graphql-types';
 
-export function ContentCard({ content }: ContentCardProps) {
+export function ContentCard({
+  content,
+  contentKey,
+  isTitle,
+  isDescription,
+  isHeader,
+}: ContentCardProps) {
   const { data, mutate } = useSWR<Content | null>(
-    ['content', content.key],
-    async (): Promise<Content | null> => getContent(content.key),
+    ['content', contentKey],
+    async (): Promise<Content | null> => getContent(contentKey),
     {
       fallbackData: content,
       revalidateOnFocus: false,
@@ -40,7 +46,7 @@ export function ContentCard({ content }: ContentCardProps) {
     setIsEditing(false);
 
     try {
-      await upsertContent(safeData.key, {
+      await upsertContent(contentKey, {
         title: draftTitle,
         header: draftHeader,
         description: draftDescription,
@@ -50,70 +56,70 @@ export function ContentCard({ content }: ContentCardProps) {
 
       await fetch('/api/revalidate', {
         method: 'POST',
-        body: JSON.stringify({ tag: safeData.key }),
+        body: JSON.stringify({ tag: contentKey }),
       });
     } catch (err) {
       console.error('Update failed:', err);
     }
   };
 
-  if (!safeData) return null;
-
   return (
-    <Card className="bg-background/95 backdrop-blur relative overflow-hidden shadow-xl">
-      <CursorGlow />
-      <div className="p-6">
-        <div className="underline">{safeData.key}</div>
-        <div className="space-y-6 my-12">
-          {safeData.title && (
-            <EditableField
-              value={draftTitle}
-              setValue={setDraftTitle}
-              type="small"
-              contentLength={100}
-              isEditing={isEditing}
-            />
-          )}
-          {safeData.header && (
-            <EditableField
-              value={draftHeader}
-              setValue={setDraftHeader}
-              type="small"
-              contentLength={100}
-              isEditing={isEditing}
-            />
-          )}
-          {safeData.description && (
-            <EditableField
-              value={draftDescription}
-              setValue={setDraftDescription}
-              type="big"
-              contentLength={500}
-              isEditing={isEditing}
-            />
-          )}
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="underline">
-            {`Ostatnia edycja: ${new Date(safeData.updatedAt).toLocaleString(
-              'pl-PL',
-              {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-              },
-            )}`}
+    <>
+      <div className="underline">{contentKey}</div>
+      <Card className="bg-background/95 backdrop-blur relative overflow-hidden shadow-xl min-w-[500px]">
+        <CursorGlow />
+        <div className="p-6">
+          <div className="space-y-6 mb-10">
+            {isTitle && (
+              <EditableField
+                value={draftTitle}
+                setValue={setDraftTitle}
+                type="small"
+                contentLength={100}
+                isEditing={isEditing}
+              />
+            )}
+            {isHeader && (
+              <EditableField
+                value={draftHeader}
+                setValue={setDraftHeader}
+                type="small"
+                contentLength={100}
+                isEditing={isEditing}
+              />
+            )}
+            {isDescription && (
+              <EditableField
+                value={draftDescription}
+                setValue={setDraftDescription}
+                type="big"
+                contentLength={500}
+                isEditing={isEditing}
+              />
+            )}
           </div>
-          <EditButtons
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            handleSave={handleSave}
-            handleCancel={handleCancel}
-          />
+          <div className="flex justify-between items-center">
+            <div className="underline">
+              {`Ostatnia edycja: ${new Date(safeData.updatedAt).toLocaleString(
+                'pl-PL',
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                },
+              )}`}
+            </div>
+            <EditButtons
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              handleSave={handleSave}
+              handleCancel={handleCancel}
+            />
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 }

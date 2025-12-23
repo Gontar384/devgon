@@ -5,8 +5,23 @@ export interface AdminManagerProps {
   contents: Record<string, Content[]>;
 }
 
-export interface ContentCardProps {
+interface BaseContentProps {
+  contentKey: string;
+  isTitle?: boolean;
+  isHeader?: boolean;
+  isDescription?: boolean;
+}
+
+export interface ContentCardProps extends BaseContentProps {
   content: Content;
+}
+
+export interface ContentCardListProps extends BaseContentProps {
+  contents: Content[];
+}
+
+export interface SortableCardProps extends ContentCardProps {
+  onDelete: (id: string) => void;
 }
 
 export interface EditableFieldProps {
