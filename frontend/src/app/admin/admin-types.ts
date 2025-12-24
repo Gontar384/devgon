@@ -14,13 +14,17 @@ interface BaseContentProps {
 
 export interface ContentCardProps extends BaseContentProps {
   content: Content;
+  contentKeyHeader?: boolean;
+  hoverable?: boolean;
+  upsertById?: boolean;
 }
 
 export interface ContentCardListProps extends BaseContentProps {
   contents: Content[];
 }
 
-export interface SortableCardProps extends ContentCardProps {
+export interface SortableCardProps extends BaseContentProps {
+  content: Content;
   onDelete: (id: string) => void;
 }
 

@@ -17,7 +17,9 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             id={undefined} //hydration mismatch error occurred
             aria-controls={undefined}
           >
-            <Link href="/admin/home">Strona główna</Link>
+            <Link href="/admin/home" className="text-xl">
+              Strona główna
+            </Link>
           </TabsTrigger>
           <TabsTrigger
             value="/admin/about"
@@ -25,7 +27,9 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             id={undefined}
             aria-controls={undefined}
           >
-            <Link href="/admin/about">O nas</Link>
+            <Link href="/admin/about" className="text-xl">
+              O nas
+            </Link>
           </TabsTrigger>
         </TabsList>
       </Tabs>

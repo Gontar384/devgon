@@ -19,6 +19,7 @@ import {
 } from '@/lib/graphql/contentService';
 import { SortableCard } from '@/app/admin/content/SortableCard';
 import { ContentCardListProps } from '@/app/admin/admin-types';
+import { toast } from 'sonner';
 
 export function ContentCardList({
   contents,
@@ -44,6 +45,7 @@ export function ContentCardList({
         contentKey,
         newItems.map((c) => c.id),
       );
+      toast.success('Zmieniono kolejność treści ➡️');
     }
   };
 
@@ -53,25 +55,38 @@ export function ContentCardList({
       header: '',
       description: '',
     });
-    if (newContent) setItems((prev) => [...prev, newContent]);
+    if (newContent) {
+      setItems((prev) => [...prev, newContent]);
+      toast.success('Nowa treść została dodana ✅');
+    }
   };
 
   const handleDelete = async (id: string) => {
     const success = await deleteContent(id);
-    if (success) setItems((prev) => prev.filter((c) => c.id !== id));
+    if (success) {
+      setItems((prev) => prev.filter((c) => c.id !== id));
+      toast.success('Wybrana treść została usunięta ❌');
+    }
   };
 
   return (
-    <div className="flex flex-col items-center w-full px-2">
-      <div className="flex justify-end mb-4">
-        <Button onClick={handleAdd}>Dodaj nowy</Button>
+    <div className="flex flex-col w-full">
+      <div className="flex flex-row gap-4 items-center">
+        <div className="underline">{contentKey}</div>
+        <Button
+          onClick={handleAdd}
+          variant="default"
+          className="hover:bg-primary hover:scale-105 active:bg-primary active:scale-105 cursor-pointer w-fit"
+        >
+          Dodaj nowy
+        </Button>
       </div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
         <SortableContext
           items={items.map((c) => c.id)}
           strategy={horizontalListSortingStrategy}
         >
-          <div className="flex space-x-4 overflow-x-auto py-2">
+          <div className="flex gap-4 overflow-x-auto overflow-y-hidden py-3">
             {items.map((content) => (
               <SortableCard
                 key={content.id}

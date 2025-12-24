@@ -2,12 +2,17 @@
 import React, { useState } from 'react';
 import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 import { Card } from '@/components/ui/card';
-import { getContent, upsertContent } from '@/lib/graphql/contentService';
+import {
+  getContent,
+  updateContent,
+  upsertContent,
+} from '@/lib/graphql/contentService';
 import { EditButtons } from '@/app/admin/content/EditButtons';
 import { EditableField } from '@/app/admin/content/EditableField';
 import { ContentCardProps } from '@/app/admin/admin-types';
 import useSWR from 'swr';
 import { Content } from '@/lib/graphql/graphql-types';
+import { toast } from 'sonner';
 
 export function ContentCard({
   content,
@@ -15,6 +20,9 @@ export function ContentCard({
   isTitle,
   isDescription,
   isHeader,
+  contentKeyHeader,
+  hoverable,
+  upsertById,
 }: ContentCardProps) {
   const { data, mutate } = useSWR<Content | null>(
     ['content', contentKey],
@@ -25,7 +33,7 @@ export function ContentCard({
     },
   );
 
-  const safeData = data ?? content;
+  const safeData = data ?? content ?? '';
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -46,11 +54,19 @@ export function ContentCard({
     setIsEditing(false);
 
     try {
-      await upsertContent(contentKey, {
-        title: draftTitle,
-        header: draftHeader,
-        description: draftDescription,
-      });
+      if (upsertById) {
+        await updateContent(content.id, {
+          title: draftTitle,
+          header: draftHeader,
+          description: draftDescription,
+        });
+      } else {
+        await upsertContent(contentKey, {
+          title: draftTitle,
+          header: draftHeader,
+          description: draftDescription,
+        });
+      }
 
       await mutate();
 
@@ -58,15 +74,20 @@ export function ContentCard({
         method: 'POST',
         body: JSON.stringify({ tag: contentKey }),
       });
+      toast.success('Treść została edytowana ✏️');
     } catch (err) {
       console.error('Update failed:', err);
     }
   };
 
   return (
-    <>
-      <div className="underline">{contentKey}</div>
-      <Card className="bg-background/95 backdrop-blur relative overflow-hidden shadow-xl min-w-[500px]">
+    <div className="flex flex-col w-full gap-4">
+      {contentKeyHeader !== false && (
+        <div className="underline">{contentKey}</div>
+      )}
+      <Card
+        className={`bg-background/95 backdrop-blur relative overflow-hidden shadow-lg min-w-xl ${hoverable && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
+      >
         <CursorGlow />
         <div className="p-6">
           <div className="space-y-6 mb-10">
@@ -120,6 +141,6 @@ export function ContentCard({
           </div>
         </div>
       </Card>
-    </>
+    </div>
   );
 }

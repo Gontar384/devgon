@@ -1,8 +1,7 @@
 import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import { AboutManager } from '@/app/about/ui/AboutManager';
-import { getContent } from '@/lib/graphql/contentService';
-import { Content } from '@/lib/graphql/graphql-types';
+import { getPageContents } from '@/lib/graphql/contentService';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -13,12 +12,10 @@ export const generateMetadata = (): Metadata =>
   });
 
 export default async function AboutPage() {
-  const content: Content | null = await getContent('about-main-card');
+  const contents = await getPageContents([
+    'about-main-card',
+    'about-side-cards',
+  ]);
 
-  return (
-    <AboutManager
-      title={content?.title ?? ''}
-      description={content?.description ?? ''}
-    />
-  );
+  return <AboutManager contents={contents} />;
 }
