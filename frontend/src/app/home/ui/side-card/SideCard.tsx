@@ -8,7 +8,6 @@ import {
 import { SideHero } from '@/app/home/ui/side-card/SideHero';
 import React from 'react';
 import { SideCardProps } from '@/app/home/util/types';
-import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 
 export function SideCard({ sideHero, description, content }: SideCardProps) {
   return (
@@ -16,7 +15,6 @@ export function SideCard({ sideHero, description, content }: SideCardProps) {
       className="card-animate bg-background/95 backdrop-blur border shadow-xl wrap-break-word relative overflow-hidden"
       aria-label="Mniejsza karta informacyjna"
     >
-      <CursorGlow />
       <CardHeader>
         <CardTitle>
           <SideHero text={sideHero.text} mode={sideHero.mode} />

@@ -1,16 +1,30 @@
-'use client';
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { ContentCard } from '@/app/admin/content/ContentCard';
+import { ContentCard } from '@/app/admin/content-util/ContentCard';
+import { ContentCardList } from '@/app/admin/content-util/ContentCardList';
 
 export function AdminAboutManager({ contents }: AdminManagerProps) {
   const aboutMainCard = contents['about-main-card']?.[0];
+  const aboutSideCards = contents['about-side-cards'] ?? [];
 
   return (
     <div className="flex flex-col items-center px-2">
       <h1 className="sr-only">O nas</h1>
-      <div className="grid grid-cols-1 gap-8 max-w-7xl w-full mt-14">
-        <ContentCard content={aboutMainCard} />
+      <div className="flex flex-col gap-12 max-w-7xl w-full mt-5">
+        <ContentCard
+          content={aboutMainCard}
+          contentKey="about-main-card"
+          isTitle={true}
+          isHeader={true}
+          isDescription={true}
+        />
+        <ContentCardList
+          contents={aboutSideCards}
+          contentKey="about-side-cards"
+          isTitle={true}
+          isHeader={true}
+          isDescription={true}
+        />
       </div>
     </div>
   );

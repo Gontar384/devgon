@@ -1,9 +1,9 @@
 # devgon
 
-This is a modular and innovative fullstack web application designed as a commercial and profitable project.
-Its main goal is to provide a flexible app framework that’s easy to customize and extend,
-saving development time and enabling the creation of impressive products repeatedly. 
-Including custom CMS, external storage, OAuth2 integration and more. With the potential for extensive expansion.
+This is a modular fullstack web application, designed as a constantly expandable project.
+Its main goal is to provide a flexible app framework that’s easy to customize and develop,
+enabling the creation of impressive products repeatedly. Including custom CMS, build with GraphQL,
+OAuth2 integration and more.
 
 ### /devgon/frontend & /devgon/backend
 > npm install

@@ -1,10 +1,13 @@
 'use client';
 
 import React from 'react';
-import { AboutMainCard } from '@/app/about/ui/AboutMainCard';
-import { AboutMainCardProps } from '@/app/about/about-types';
+import { AboutCard } from '@/app/about/ui/AboutCard';
+import { AboutManagerProps } from '@/app/about/about-types';
 
-export function AboutManager({ title, description }: AboutMainCardProps) {
+export function AboutManager({ contents }: AboutManagerProps) {
+  const aboutMainCard = contents['about-main-card']?.[0];
+  const aboutSideCards = contents['about-side-cards'] ?? [];
+
   return (
     <section className="w-full min-h-screen relative">
       <div className="flex flex-col items-center px-2">
@@ -12,7 +15,10 @@ export function AboutManager({ title, description }: AboutMainCardProps) {
           O nas
         </h1>
         <div className="grid grid-cols-1 gap-8 max-w-7xl w-full mt-14">
-          <AboutMainCard title={title ?? ''} description={description ?? ''} />
+          <AboutCard content={aboutMainCard} />
+          {aboutSideCards.map((cardContent) => (
+            <AboutCard key={cardContent.id} content={cardContent} />
+          ))}
         </div>
       </div>
     </section>

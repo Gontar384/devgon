@@ -5,8 +5,25 @@ export interface AdminManagerProps {
   contents: Record<string, Content[]>;
 }
 
-export interface ContentCardProps {
+interface BaseContentProps {
+  contentKey: string;
+  isTitle?: boolean;
+  isHeader?: boolean;
+  isDescription?: boolean;
+}
+
+export interface ContentCardProps extends BaseContentProps {
   content: Content;
+  contentKeyHeader?: boolean;
+  hoverable?: boolean;
+  upsertById?: boolean;
+  onDelete?: (id: string) => void;
+  sortable?: boolean;
+  sortableId?: string;
+}
+
+export interface ContentCardListProps extends BaseContentProps {
+  contents: Content[];
 }
 
 export interface EditableFieldProps {
@@ -22,4 +39,17 @@ export interface EditButtonsProps {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   handleSave: () => void;
   handleCancel: () => void;
+  updatedAt: string;
+  isLoading: boolean;
+}
+
+export interface DeleteCardButtonProps {
+  onDelete: (id: string) => void;
+  contentId: string;
+}
+
+export interface EditPopupUtilProps {
+  isEditing: boolean;
+  placeholderHeight: number;
+  placeholderWidth: number;
 }
