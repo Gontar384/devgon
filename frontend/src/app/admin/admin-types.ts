@@ -17,15 +17,13 @@ export interface ContentCardProps extends BaseContentProps {
   contentKeyHeader?: boolean;
   hoverable?: boolean;
   upsertById?: boolean;
+  onDelete?: (id: string) => void;
+  sortable?: boolean;
+  sortableId?: string;
 }
 
 export interface ContentCardListProps extends BaseContentProps {
   contents: Content[];
-}
-
-export interface SortableCardProps extends BaseContentProps {
-  content: Content;
-  onDelete: (id: string) => void;
 }
 
 export interface EditableFieldProps {
@@ -41,4 +39,17 @@ export interface EditButtonsProps {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   handleSave: () => void;
   handleCancel: () => void;
+  updatedAt: string;
+  isLoading: boolean;
+}
+
+export interface DeleteCardButtonProps {
+  onDelete: (id: string) => void;
+  contentId: string;
+}
+
+export interface EditPopupUtilProps {
+  isEditing: boolean;
+  placeholderHeight: number;
+  placeholderWidth: number;
 }

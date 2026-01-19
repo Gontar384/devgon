@@ -9,6 +9,7 @@ import { fetchUser } from '@/lib/auth/fetchUser';
 import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
 import { AuthProvider } from '@/app/layout/ui/navbar/auth-button/AuthProvider';
+import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -41,6 +42,7 @@ export default async function RootLayout({
         <Footer />
         <LoginDialog />
         <Toaster position="bottom-center" />
+        <CursorGlow />
       </body>
     </html>
   );

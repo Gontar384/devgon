@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { ContentCard } from '@/app/admin/content/ContentCard';
+import { ContentCard } from '@/app/admin/content-util/ContentCard';
 
 export function AdminHomeManager({ contents }: AdminManagerProps) {
   const aboutMainCard = contents['about-main-card']?.[0];

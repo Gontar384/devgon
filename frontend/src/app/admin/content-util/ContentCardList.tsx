@@ -17,9 +17,9 @@ import {
   deleteContent,
   reorderContents,
 } from '@/lib/graphql/contentService';
-import { SortableCard } from '@/app/admin/content/SortableCard';
 import { ContentCardListProps } from '@/app/admin/admin-types';
 import { toast } from 'sonner';
+import { ContentCard } from '@/app/admin/content-util/ContentCard';
 
 export function ContentCardList({
   contents,
@@ -78,7 +78,7 @@ export function ContentCardList({
           variant="default"
           className="hover:bg-primary hover:scale-105 active:bg-primary active:scale-105 cursor-pointer w-fit"
         >
-          Dodaj nowy
+          Dodaj następny
         </Button>
       </div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
@@ -88,14 +88,19 @@ export function ContentCardList({
         >
           <div className="flex gap-4 overflow-x-auto overflow-y-hidden py-3">
             {items.map((content) => (
-              <SortableCard
+              <ContentCard
                 key={content.id}
                 content={content}
                 contentKey={contentKey}
                 isTitle={isTitle}
                 isHeader={isHeader}
                 isDescription={isDescription}
+                contentKeyHeader={false}
+                hoverable={true}
+                upsertById={true}
                 onDelete={handleDelete}
+                sortable={true}
+                sortableId={content.id}
               />
             ))}
           </div>

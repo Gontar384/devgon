@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { ContentCard } from '@/app/admin/content/ContentCard';
-import { ContentCardList } from '@/app/admin/content/ContentCardList';
+import { ContentCard } from '@/app/admin/content-util/ContentCard';
+import { ContentCardList } from '@/app/admin/content-util/ContentCardList';
 
 export function AdminAboutManager({ contents }: AdminManagerProps) {
   const aboutMainCard = contents['about-main-card']?.[0];
