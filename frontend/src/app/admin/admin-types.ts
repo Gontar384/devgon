@@ -20,6 +20,7 @@ export interface ContentCardProps extends BaseContentProps {
   onDelete?: (id: string) => void;
   sortable?: boolean;
   sortableId?: string;
+  moveCard?: (id: string, direction: 'left' | 'right') => Promise<void>;
 }
 
 export interface ContentCardListProps extends BaseContentProps {
@@ -52,4 +53,9 @@ export interface EditPopupUtilProps {
   isEditing: boolean;
   placeholderHeight: number;
   placeholderWidth: number;
+}
+
+export interface MoveCardButtonsProps {
+  moveCard: (id: string, direction: 'left' | 'right') => Promise<void>;
+  contentId: string;
 }

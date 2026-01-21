@@ -1,8 +1,8 @@
 'use client';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import {
-  getContent,
+  getContentById,
   updateContent,
   upsertContent,
 } from '@/lib/graphql/contentService';
@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { DeleteCardButton } from '@/app/admin/content-util/atomic/DeleteCardButton';
 import { useSortable } from '@dnd-kit/sortable';
 import { EditPopupUtil } from '@/app/admin/content-util/atomic/EditPopupUtil';
+import { MoveCardButtons } from '@/app/admin/content-util/atomic/MoveCardButtons';
 
 export function ContentCard({
   content,
@@ -28,10 +29,11 @@ export function ContentCard({
   onDelete,
   sortable,
   sortableId,
+  moveCard,
 }: ContentCardProps) {
   const { data, mutate } = useSWR<Content | null>(
-    ['content', contentKey],
-    async (): Promise<Content | null> => getContent(contentKey),
+    ['content', content.id],
+    async (): Promise<Content | null> => getContentById(content.id),
     {
       fallbackData: content,
       revalidateOnFocus: false,
@@ -46,6 +48,14 @@ export function ContentCard({
   const [isEditing, setIsEditing] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setDraftTitle(safeData.title ?? '');
+      setDraftHeader(safeData.header ?? '');
+      setDraftDescription(safeData.description ?? '');
+    }
+  }, [safeData.title, safeData.header, safeData.description, isEditing]);
 
   const sortableHook = useSortable({
     id: sortableId || content.id,
@@ -66,7 +76,7 @@ export function ContentCard({
           ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
           : undefined,
         transition,
-        cursor: isEditing ? 'default' : 'grab',
+        cursor: isEditing ? 'auto' : 'grab',
       }
     : {};
 
@@ -105,22 +115,32 @@ export function ContentCard({
     closeEditor();
   };
 
+  const stripEmptyHtml = (html?: string | null): string => {
+    if (!html) return '';
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html.trim();
+
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+
+    return textContent.trim() === '' ? '' : html.trim();
+  };
+
   const handleSave = async () => {
     try {
       setIsLoading(true);
       setIsClosing(true);
+
+      const payload = {
+        title: stripEmptyHtml(draftTitle),
+        header: stripEmptyHtml(draftHeader),
+        description: stripEmptyHtml(draftDescription),
+      };
+
       if (upsertById) {
-        await updateContent(content.id, {
-          title: draftTitle,
-          header: draftHeader,
-          description: draftDescription,
-        });
+        await updateContent(content.id, payload);
       } else {
-        await upsertContent(contentKey, {
-          title: draftTitle,
-          header: draftHeader,
-          description: draftDescription,
-        });
+        await upsertContent(contentKey, payload);
       }
 
       await mutate();
@@ -139,7 +159,7 @@ export function ContentCard({
   };
 
   return (
-    <div>
+    <div className="w-full max-w-[1280px]">
       {contentKeyHeader !== false && (
         <div className="underline mb-4">{contentKey}</div>
       )}
@@ -150,8 +170,8 @@ export function ContentCard({
       />
       <div
         className={`flex flex-col
-        ${isEditing && !isClosing ? 'fixed z-50 m-auto w-fit inset-0 h-fit content-card-animate' : ''}
-        ${isClosing ? 'fixed z-50 m-auto w-fit inset-0 h-fit transition-all duration-200 scale-95' : ''}`}
+        ${isEditing && !isClosing ? 'fixed z-50 m-auto w-full items-center inset-0 h-fit content-card-animate' : ''}
+        ${isClosing ? 'fixed z-50 m-auto w-full items-center inset-0 h-fit transition-all duration-200 scale-95' : ''}`}
         ref={combinedRef}
         style={sortableStyle}
         {...(sortable && !isEditing ? attributes : {})}
@@ -159,9 +179,12 @@ export function ContentCard({
         aria-describedby={undefined}
       >
         <Card
-          className={`bg-background p-6 backdrop-blur relative overflow-hidden shadow-lg ${hoverable && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
+          className={`bg-background p-6 relative overflow-x-hidden shadow-lg max-h-screen ${isEditing ? 'w-full max-w-[1000px]' : 'min-w-[300px] md:min-w-[600px] max-w-full'} ${hoverable && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
         >
-          <div className="space-y-6 mb-2">
+          <p className="absolute right-4 underline">
+            {(content.order ?? 0) + 1}
+          </p>
+          <div className="space-y-6">
             {isTitle && (
               <EditableField
                 value={draftTitle}
@@ -185,7 +208,7 @@ export function ContentCard({
                 value={draftDescription}
                 setValue={setDraftDescription}
                 type="big"
-                contentLength={500}
+                contentLength={10000}
                 isEditing={isEditing}
               />
             )}
@@ -199,8 +222,17 @@ export function ContentCard({
             isLoading={isLoading}
           />
         </Card>
-        {onDelete && (
-          <DeleteCardButton onDelete={onDelete} contentId={content.id} />
+        {contentKeyHeader === false && (
+          <div
+            className={`flex justify-between ${isEditing && 'justify-center mt-1'}`}
+          >
+            {onDelete && (
+              <DeleteCardButton onDelete={onDelete} contentId={content.id} />
+            )}
+            {moveCard && !isEditing && (
+              <MoveCardButtons contentId={content.id} moveCard={moveCard} />
+            )}
+          </div>
         )}
       </div>
     </div>

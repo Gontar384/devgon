@@ -10,7 +10,7 @@ export function AdminAboutManager({ contents }: AdminManagerProps) {
   return (
     <div className="flex flex-col items-center px-2">
       <h1 className="sr-only">O nas</h1>
-      <div className="flex flex-col gap-12 max-w-7xl w-full mt-5">
+      <div className="flex flex-col items-center gap-12 w-full mt-5">
         <ContentCard
           content={aboutMainCard}
           contentKey="about-main-card"

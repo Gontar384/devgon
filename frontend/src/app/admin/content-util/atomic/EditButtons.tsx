@@ -12,15 +12,18 @@ export function EditButtons({
   isLoading,
 }: EditButtonsProps) {
   return (
-    <div className="flex justify-between items-center gap-6 text-sm relative">
+    <div className="flex justify-between items-center gap-6 text-xs relative">
       <div className="underline">
-        {`Ostatnia edycja: ${new Date(updatedAt).toLocaleString('pl-PL', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`}
+        <p>Ostatnia edycja:</p>
+        <p>
+          {new Date(updatedAt).toLocaleString('pl-PL', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </p>
       </div>
       <div className="flex justify-end gap-3">
         {!isEditing ? (
@@ -33,7 +36,7 @@ export function EditButtons({
             <Pencil className="w-6 h-6" />
           </button>
         ) : (
-          <div className="flex gap-3 justify-end">
+          <div className="flex flex-wrap-reverse justify-center gap-3 ">
             <Button
               variant="outline"
               onClick={handleCancel}
@@ -51,7 +54,9 @@ export function EditButtons({
           </div>
         )}
       </div>
-      {isEditing && isLoading && <Loader2Icon className="animate-spin absolute top-7" />}
+      {isEditing && isLoading && (
+        <Loader2Icon className="animate-spin absolute top-7" />
+      )}
     </div>
   );
 }

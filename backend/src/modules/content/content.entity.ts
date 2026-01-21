@@ -10,25 +10,25 @@ export class Content {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   key: string;
 
-  @Column({ nullable: true })
-  title?: string;
+  @Column({ type: 'varchar', nullable: true })
+  title?: string | null;
 
-  @Column({ nullable: true })
-  header?: string;
+  @Column({ type: 'varchar', nullable: true })
+  header?: string | null;
 
-  @Column({ nullable: true })
-  description?: string;
+  @Column({ type: 'varchar', nullable: true })
+  description?: string | null;
 
-  @Column('simple-array', { nullable: true })
-  images?: string[];
+  @Column('text', { array: true, nullable: true })
+  images?: string[] | null;
 
-  @Column({ nullable: true })
-  video?: string;
+  @Column({ type: 'varchar', nullable: true })
+  video?: string | null;
 
-  @Column({ default: 0, nullable: true })
+  @Column({ type: 'integer' })
   order: number;
 
   @UpdateDateColumn()

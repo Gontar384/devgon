@@ -47,7 +47,7 @@ export function EditableField({
         </div>
       ) : (
         <h2
-          className="text-2xl font-semibold break-words"
+          className="text-2xl break-words"
           dangerouslySetInnerHTML={{
             __html: value !== '' ? value : '<...>',
           }}

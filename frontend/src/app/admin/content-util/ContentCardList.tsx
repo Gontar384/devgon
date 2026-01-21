@@ -34,21 +34,6 @@ export function ContentCardList({
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
 
-  const handleDragEnd = async (event: any) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const oldIndex = items.findIndex((c) => c.id === active.id);
-      const newIndex = items.findIndex((c) => c.id === over.id);
-      const newItems = arrayMoveImmutable(items, oldIndex, newIndex);
-      setItems(newItems);
-      await reorderContents(
-        contentKey,
-        newItems.map((c) => c.id),
-      );
-      toast.success('Zmieniono kolejność treści ➡️');
-    }
-  };
-
   const handleAdd = async () => {
     const newContent = await createContent(contentKey, {
       title: '',
@@ -69,8 +54,41 @@ export function ContentCardList({
     }
   };
 
+  const handleDragEnd = async (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = items.findIndex((c) => c.id === active.id);
+      const newIndex = items.findIndex((c) => c.id === over.id);
+      const newItems = arrayMoveImmutable(items, oldIndex, newIndex);
+      setItems(newItems);
+      await reorderContents(
+        contentKey,
+        newItems.map((c) => c.id),
+      );
+      toast.success('Zmieniono kolejność treści ➡️');
+    }
+  };
+
+  const moveCard = async (id: string, direction: 'left' | 'right') => {
+    const index = items.findIndex((c) => c.id === id);
+    if (index === -1) return;
+
+    let newIndex = direction === 'left' ? index - 1 : index + 1;
+
+    if (newIndex < 0 || newIndex >= items.length) return;
+
+    const newItems = arrayMoveImmutable(items, index, newIndex);
+    setItems(newItems);
+
+    await reorderContents(
+      contentKey,
+      newItems.map((c) => c.id),
+    );
+    toast.success('Zmieniono kolejność treści ➡️');
+  };
+
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full max-w-[1280px]">
       <div className="flex flex-row gap-4 items-center">
         <div className="underline">{contentKey}</div>
         <Button
@@ -101,6 +119,7 @@ export function ContentCardList({
                 onDelete={handleDelete}
                 sortable={true}
                 sortableId={content.id}
+                moveCard={moveCard}
               />
             ))}
           </div>
