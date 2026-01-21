@@ -33,6 +33,7 @@ export interface EditableFieldProps {
   type: 'small' | 'big';
   contentLength: number;
   isEditing: boolean;
+  header: 'Title' | 'Header' | 'Description';
 }
 
 export interface EditButtonsProps {

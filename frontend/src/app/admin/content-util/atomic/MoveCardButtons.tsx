@@ -7,7 +7,7 @@ export function MoveCardButtons({ contentId, moveCard }: MoveCardButtonsProps) {
     <div className="flex items-center justify-center">
       <button
         onClick={() => moveCard(contentId, 'left')}
-        className="p-1 hover:bg-gray-100 hover:cursor-pointer rounded-full transition-colors"
+        className="p-1 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
         aria-label="Move left"
         type="button"
       >
@@ -15,7 +15,7 @@ export function MoveCardButtons({ contentId, moveCard }: MoveCardButtonsProps) {
       </button>
       <button
         onClick={() => moveCard(contentId, 'right')}
-        className="p-1 hover:bg-gray-100 hover:cursor-pointer rounded-full transition-colors"
+        className="p-1 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
         aria-label="Move right"
         type="button"
       >

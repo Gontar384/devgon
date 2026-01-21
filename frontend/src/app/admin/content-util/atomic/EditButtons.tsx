@@ -12,7 +12,7 @@ export function EditButtons({
   isLoading,
 }: EditButtonsProps) {
   return (
-    <div className="flex justify-between items-center gap-6 text-xs relative">
+    <div className="flex justify-between items-center gap-6 text-xs w-full sticky bottom-0 bg-background border p-3 rounded-md">
       <div className="underline">
         <p>Ostatnia edycja:</p>
         <p>
@@ -29,7 +29,7 @@ export function EditButtons({
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="p-3 hover:bg-gray-100 hover:cursor-pointer rounded-full transition-colors"
+            className="p-3 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
             aria-label="Edit"
             type="button"
           >

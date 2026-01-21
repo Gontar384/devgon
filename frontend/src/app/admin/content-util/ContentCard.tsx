@@ -179,7 +179,8 @@ export function ContentCard({
         aria-describedby={undefined}
       >
         <Card
-          className={`bg-background p-6 relative overflow-x-hidden shadow-lg max-h-screen ${isEditing ? 'w-full max-w-[1000px]' : 'min-w-[300px] md:min-w-[600px] max-w-full'} ${hoverable && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
+          className={`flex flex-col justify-between bg-background p-6 relative overflow-x-hidden shadow-lg ${isEditing ? 'w-full max-w-[1000px] max-h-[90vh]' : `min-w-[300px] "md:min-w-[600px]" ${hoverable && 'w-[600px]'} max-w-full h-[350px]`} ${hoverable && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
+          key={isEditing ? 'editing' : 'view'}
         >
           <p className="absolute right-4 underline">
             {(content.order ?? 0) + 1}
@@ -192,6 +193,7 @@ export function ContentCard({
                 type="small"
                 contentLength={100}
                 isEditing={isEditing}
+                header={'Title'}
               />
             )}
             {isHeader && (
@@ -201,6 +203,7 @@ export function ContentCard({
                 type="small"
                 contentLength={100}
                 isEditing={isEditing}
+                header={'Header'}
               />
             )}
             {isDescription && (
@@ -208,8 +211,9 @@ export function ContentCard({
                 value={draftDescription}
                 setValue={setDraftDescription}
                 type="big"
-                contentLength={10000}
+                contentLength={500}
                 isEditing={isEditing}
+                header={'Description'}
               />
             )}
           </div>
