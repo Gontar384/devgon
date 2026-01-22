@@ -9,9 +9,7 @@ export function AddCardButton({
   singleMode,
 }: AddCardButtonProps) {
   return (
-    <div
-      className={`flex flex-row gap-4 items-center ${singleMode && 'mb-4'}`}
-    >
+    <div className={`flex flex-row gap-4 items-center ${singleMode && 'mb-4'}`}>
       <div className="underline">{contentKey}</div>
       {isAvailable && (
         <Button
