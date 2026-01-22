@@ -5,26 +5,44 @@ export interface AdminManagerProps {
   contents: Record<string, Content[]>;
 }
 
-interface BaseContentProps {
-  contentKey: string;
-  isTitle?: boolean;
-  isHeader?: boolean;
-  isDescription?: boolean;
-}
-
-export interface ContentCardProps extends BaseContentProps {
-  content: Content;
-  contentKeyHeader?: boolean;
-  hoverable?: boolean;
-  upsertById?: boolean;
-  onDelete?: (id: string) => void;
-  sortable?: boolean;
-  sortableId?: string;
-  moveCard?: (id: string, direction: 'left' | 'right') => Promise<void>;
-}
-
-export interface ContentCardListProps extends BaseContentProps {
+export interface ContentCardManagerProps {
   contents: Content[];
+  contentKey: string;
+  mode: 'single' | 'multiple';
+  fields: {
+    title: number;
+    header: number;
+    description: number;
+  };
+}
+
+export interface ContentCardProps {
+  content: Content;
+  contentKey: string;
+  singleMode: boolean;
+  fields: {
+    title: number;
+    header: number;
+    description: number;
+  };
+  handleRevalidate: () => Promise<void>;
+  handleReorderMobile: (
+    id: string,
+    direction: 'left' | 'right',
+  ) => Promise<void>;
+}
+
+export interface AddCardButtonProps {
+  contentKey: string;
+  isAvailable: boolean;
+  handleAdd: () => Promise<void>;
+  singleMode: boolean;
+}
+
+export interface EditPopupUtilProps {
+  isEditing: boolean;
+  placeholderHeight: number;
+  placeholderWidth: number;
 }
 
 export interface EditableFieldProps {
@@ -46,17 +64,14 @@ export interface EditButtonsProps {
 }
 
 export interface DeleteCardButtonProps {
-  onDelete: (id: string) => void;
+  handleDelete: (id: string) => Promise<void>;
   contentId: string;
 }
 
-export interface EditPopupUtilProps {
-  isEditing: boolean;
-  placeholderHeight: number;
-  placeholderWidth: number;
-}
-
 export interface MoveCardButtonsProps {
-  moveCard: (id: string, direction: 'left' | 'right') => Promise<void>;
+  handleReorderMobile: (
+    id: string,
+    direction: 'left' | 'right',
+  ) => Promise<void>;
   contentId: string;
 }

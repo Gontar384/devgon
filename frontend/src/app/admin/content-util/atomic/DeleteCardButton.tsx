@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DeleteCardButtonProps } from '@/app/admin/admin-types';
 
 export function DeleteCardButton({
-  onDelete,
+  handleDelete,
   contentId,
 }: DeleteCardButtonProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -36,7 +36,7 @@ export function DeleteCardButton({
                 variant="destructive"
                 size="sm"
                 className="hover:scale-105 active:scale-105 cursor-pointer"
-                onClick={() => onDelete(contentId)}
+                onClick={() => handleDelete(contentId)}
               >
                 Potwierdź
               </Button>

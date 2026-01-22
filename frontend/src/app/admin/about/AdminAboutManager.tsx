@@ -1,29 +1,26 @@
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { ContentCard } from '@/app/admin/content-util/ContentCard';
-import { ContentCardList } from '@/app/admin/content-util/ContentCardList';
+import { ContentCardManager } from '@/app/admin/content-util/ContentCardManager';
 
 export function AdminAboutManager({ contents }: AdminManagerProps) {
-  const aboutMainCard = contents['about-main-card']?.[0];
+  const aboutMainCard = contents['about-main-card'] ?? [];
   const aboutSideCards = contents['about-side-cards'] ?? [];
 
   return (
     <div className="flex flex-col items-center px-2">
       <h1 className="sr-only">O nas</h1>
       <div className="flex flex-col items-center gap-12 w-full mt-5">
-        <ContentCard
-          content={aboutMainCard}
-          contentKey="about-main-card"
-          isTitle={true}
-          isHeader={true}
-          isDescription={true}
+        <ContentCardManager
+          contents={aboutMainCard}
+          contentKey={'about-main-card'}
+          mode={'single'}
+          fields={{ title: 100, header: 100, description: 500 }}
         />
-        <ContentCardList
+        <ContentCardManager
           contents={aboutSideCards}
-          contentKey="about-side-cards"
-          isTitle={true}
-          isHeader={true}
-          isDescription={true}
+          contentKey={'about-side-cards'}
+          mode={'multiple'}
+          fields={{ title: 100, header: 100, description: 500 }}
         />
       </div>
     </div>
