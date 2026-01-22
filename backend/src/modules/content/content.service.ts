@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, In, Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Content } from './content.entity';
 import { ContentInput } from './content.input';
 
@@ -10,54 +10,6 @@ export class ContentService {
     @InjectRepository(Content)
     private readonly repo: Repository<Content>,
   ) {}
-
-  async getManyByKeys(keys: string[]) {
-    const contents = await this.repo.find({
-      where: { key: In(keys) },
-      order: { order: 'ASC' },
-    });
-
-    const grouped = new Map<string, Content[]>();
-
-    for (const key of keys) {
-      grouped.set(key, []);
-    }
-
-    for (const content of contents) {
-      grouped.get(content.key)?.push(content);
-    }
-
-    return Array.from(grouped.entries()).map(([key, items]) => ({
-      key,
-      items,
-    }));
-  }
-
-  //SINGLE CONTENT
-  async getByKey(key: string) {
-    return await this.repo.findOne({ where: { key } });
-  }
-
-  async upsertByKey(key: string, input: ContentInput) {
-    const normalized = this.normalizeInput(input);
-    let content = await this.repo.findOne({ where: { key } });
-
-    if (!content) {
-      content = this.repo.create({
-        key,
-        ...normalized,
-      });
-    } else {
-      Object.assign(content, normalized);
-    }
-
-    return await this.repo.save(content);
-  }
-
-  //MULTIPLE CONTENT
-  async getById(id: string) {
-    return await this.repo.findOne({ where: { id } });
-  }
 
   async getMany(key: string) {
     return await this.repo.find({
@@ -108,7 +60,6 @@ export class ContentService {
     });
 
     await this.repo.save(contents);
-
     return true;
   }
 
@@ -116,17 +67,21 @@ export class ContentService {
     const contents = await this.repo.find({
       where: { key },
     });
-
     const map = new Map(contents.map((c) => [c.id, c]));
+
+    const toSave: Content[] = [];
 
     ids.forEach((id, index) => {
       const item = map.get(id);
-      if (item) {
+      if (item && item.order !== index) {
         item.order = index;
+        toSave.push(item);
       }
     });
 
-    await this.repo.save([...map.values()]);
+    if (toSave.length > 0) {
+      await this.repo.save(toSave);
+    }
     return true;
   }
 

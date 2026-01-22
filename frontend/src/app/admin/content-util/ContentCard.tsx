@@ -1,11 +1,7 @@
 'use client';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
-import {
-  deleteContent,
-  updateContent,
-  upsertContent,
-} from '@/lib/graphql/contentService';
+import { deleteContent, updateContent } from '@/lib/graphql/contentService';
 import { EditButtons } from '@/app/admin/content-util/atomic/EditButtons';
 import { EditableField } from '@/app/admin/content-util/atomic/EditableField';
 import { ContentCardProps } from '@/app/admin/admin-types';
@@ -17,7 +13,6 @@ import { MoveCardButtons } from '@/app/admin/content-util/atomic/MoveCardButtons
 
 export function ContentCard({
   content,
-  contentKey,
   singleMode,
   fields,
   handleRevalidate,
@@ -118,25 +113,21 @@ export function ContentCard({
   };
 
   const handleSave = async () => {
+    if (!content) return;
+    setIsLoading(true);
+    setIsClosing(true);
+
+    const payload = {
+      title: stripEmptyHtml(draftTitle),
+      header: stripEmptyHtml(draftHeader),
+      description: stripEmptyHtml(draftDescription),
+    };
     try {
-      setIsLoading(true);
-      setIsClosing(true);
-
-      const payload = {
-        title: stripEmptyHtml(draftTitle),
-        header: stripEmptyHtml(draftHeader),
-        description: stripEmptyHtml(draftDescription),
-      };
-
-      if (!singleMode) {
-        await updateContent(content.id, payload);
-      } else {
-        await upsertContent(contentKey, payload);
-      }
-
+      await updateContent(content.id, payload);
       await handleRevalidate();
       toast.success('Treść została edytowana ✏️');
     } catch (err) {
+      toast.error('Coś poszło nie tak... ⚙️');
       console.error('Update failed:', err);
     } finally {
       setIsLoading(false);
@@ -145,10 +136,14 @@ export function ContentCard({
   };
 
   const handleDelete = async (id: string) => {
-    const success = await deleteContent(id);
-    if (success) {
+    if (!content) return;
+    try {
+      await deleteContent(id);
       await handleRevalidate();
       toast.success('Wybrana treść została usunięta ❌');
+    } catch (err) {
+      toast.error('Coś poszło nie tak... ⚙️');
+      console.error('Delete failed:', err);
     }
   };
 
@@ -220,7 +215,7 @@ export function ContentCard({
         <div
           className={`flex justify-between ${isEditing && 'justify-center mt-1'}`}
         >
-          {((singleMode && content) || !singleMode) && (
+          {content && (
             <DeleteCardButton
               handleDelete={handleDelete}
               contentId={content.id}

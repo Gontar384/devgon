@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ContentGroupModel {
-  items: [ContentModel!]!
-  key: String!
-}
-
 input ContentInput {
   description: String
   header: String
@@ -38,12 +33,8 @@ type Mutation {
   deleteContent(id: String!): Boolean!
   reorderContents(ids: [String!]!, key: String!): Boolean!
   updateContent(id: String!, input: ContentInput!): ContentModel!
-  upsertContent(input: ContentInput!, key: String!): ContentModel!
 }
 
 type Query {
-  getContent(key: String!): ContentModel
-  getContentById(id: String!): ContentModel
   getContents(key: String!): [ContentModel!]!
-  getContentsByKeys(keys: [String!]!): [ContentGroupModel!]!
 }

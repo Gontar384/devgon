@@ -3,6 +3,8 @@ import { Content } from '@/lib/graphql/graphql-types';
 
 export interface AdminManagerProps {
   contents: Record<string, Content[]>;
+  error: Error | null;
+  failedKeys: string[];
 }
 
 export interface ContentCardManagerProps {
@@ -18,7 +20,6 @@ export interface ContentCardManagerProps {
 
 export interface ContentCardProps {
   content: Content;
-  contentKey: string;
   singleMode: boolean;
   fields: {
     title: number;
@@ -74,4 +75,8 @@ export interface MoveCardButtonsProps {
     direction: 'left' | 'right',
   ) => Promise<void>;
   contentId: string;
+}
+
+export interface AdminContentErrorBannerProps {
+  failedKeys: string[];
 }

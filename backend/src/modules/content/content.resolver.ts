@@ -6,41 +6,10 @@ import { UserRole } from '../auth/auth.types';
 import { ContentModel } from './content.model';
 import { ContentInput } from './content.input';
 import { JwtAuthGuard } from '../auth/jwt.guard';
-import { ContentGroupModel } from './content-group.model';
 
 @Resolver(() => ContentModel)
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
-
-  //CUSTOM QUERY
-  @Query(() => [ContentGroupModel])
-  async getContentsByKeys(
-    @Args({ name: 'keys', type: () => [String] }) keys: string[],
-  ) {
-    return this.contentService.getManyByKeys(keys);
-  }
-
-  //SINGLE CONTENT
-  @Query(() => ContentModel, { nullable: true })
-  async getContent(@Args('key') key: string) {
-    return await this.contentService.getByKey(key);
-  }
-
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async upsertContent(
-    @Args('key') key: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.upsertByKey(key, input);
-  }
-
-  //MULTIPLE CONTENT
-  @Query(() => ContentModel, { nullable: true })
-  async getContentById(@Args('id') id: string) {
-    return await this.contentService.getById(id);
-  }
 
   @Query(() => [ContentModel])
   async getContents(@Args('key') key: string) {

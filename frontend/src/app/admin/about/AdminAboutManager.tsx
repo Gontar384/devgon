@@ -1,13 +1,19 @@
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
 import { ContentCardManager } from '@/app/admin/content-util/ContentCardManager';
+import { AdminContentErrorBanner } from '@/app/admin/content-util/atomic/AdminContentErrorBanner';
 
-export function AdminAboutManager({ contents }: AdminManagerProps) {
+export function AdminAboutManager({
+  contents,
+  error,
+  failedKeys,
+}: AdminManagerProps) {
   const aboutMainCard = contents['about-main-card'] ?? [];
   const aboutSideCards = contents['about-side-cards'] ?? [];
 
   return (
     <div className="flex flex-col items-center px-2">
+      {error && <AdminContentErrorBanner failedKeys={failedKeys} />}
       <h1 className="sr-only">O nas</h1>
       <div className="flex flex-col items-center gap-12 w-full mt-5">
         <ContentCardManager

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { arrayMoveImmutable } from 'array-move';
 import {
   DndContext,
+  DragEndEvent,
   PointerSensor,
   useSensor,
   useSensors,
@@ -63,31 +64,47 @@ export function ContentCardManager({
 
   const handleAdd = async () => {
     if (!canAddContent) return;
-    const newContent = await createContent(contentKey, {
-      title: '',
-      header: '',
-      description: '',
-    });
-    if (newContent) {
-      await handleRevalidate();
-      toast.success('Nowa treść została dodana ✅');
+    try {
+      const newContent = await createContent(contentKey, {
+        title: '',
+        header: '',
+        description: '',
+      });
+      if (newContent) {
+        await handleRevalidate();
+        toast.success('Nowa treść została dodana ✅');
+      }
+    } catch (err) {
+      toast.error('Coś poszło nie tak... ⚙️');
+      console.error('Create failed:', err);
     }
   };
 
-  const handleReorder = async (event: any) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const oldIndex = items.findIndex((c) => c.id === active.id);
-      const newIndex = items.findIndex((c) => c.id === over.id);
-      const newItems = arrayMoveImmutable(items, oldIndex, newIndex);
-
-      setItems(newItems);
+  const reorderHelper = async (newItems: Content[]) => {
+    setItems(newItems);
+    try {
       await reorderContents(
         contentKey,
         newItems.map((c) => c.id),
       );
       await handleRevalidate();
       toast.success('Zmieniono kolejność treści ➡️');
+    } catch (err) {
+      setItems(items);
+      toast.error('Coś poszło nie tak... ⚙️');
+      console.error('Reorder failed:', err);
+    }
+  };
+
+  const handleReorder = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+    if (active.id !== over.id) {
+      const oldIndex = items.findIndex((c) => c.id === active.id);
+      const newIndex = items.findIndex((c) => c.id === over.id);
+      const newItems = arrayMoveImmutable(items, oldIndex, newIndex);
+
+      await reorderHelper(newItems);
     }
   };
 
@@ -101,13 +118,7 @@ export function ContentCardManager({
     if (newIndex < 0 || newIndex >= items.length) return;
     const newItems = arrayMoveImmutable(items, index, newIndex);
 
-    setItems(newItems);
-    await reorderContents(
-      contentKey,
-      newItems.map((c) => c.id),
-    );
-    await handleRevalidate();
-    toast.success('Zmieniono kolejność treści ➡️');
+    await reorderHelper(newItems);
   };
 
   return (
@@ -123,7 +134,6 @@ export function ContentCardManager({
           {hasContent && (
             <ContentCard
               content={contents[0]}
-              contentKey={contentKey}
               singleMode={true}
               fields={fields}
               handleRevalidate={handleRevalidate}
@@ -143,7 +153,6 @@ export function ContentCardManager({
                   <ContentCard
                     key={content.id}
                     content={content}
-                    contentKey={contentKey}
                     singleMode={false}
                     fields={fields}
                     handleRevalidate={handleRevalidate}

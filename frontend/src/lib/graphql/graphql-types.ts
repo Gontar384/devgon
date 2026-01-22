@@ -9,3 +9,9 @@ export interface Content {
   order?: number;
   updatedAt: string;
 }
+
+export interface UsePageContentsResult {
+  contents: Record<string, Content[]>;
+  error: Error | null;
+  failedKeys: string[];
+}

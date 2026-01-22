@@ -1,7 +1,7 @@
 import { createMetadata } from '@/lib/metaData/metadata';
 import { Metadata } from 'next';
 import { AboutManager } from '@/app/about/ui/AboutManager';
-import { getPageContents } from '@/lib/graphql/contentService';
+import { loadPageContents } from '@/lib/graphql/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -11,8 +11,10 @@ export const generateMetadata = (): Metadata =>
     path: '/about',
   });
 
+export const revalidate = 3600;
+
 export default async function AboutPage() {
-  const contents = await getPageContents([
+  const { contents } = await loadPageContents([
     'about-main-card',
     'about-side-cards',
   ]);
