@@ -59,7 +59,7 @@ export function ContentCard({
 
   const sortableHook = useSortable({
     id: content?.id || 'placeholder-id',
-    disabled: singleMode || !content?.id,
+    disabled: singleMode || !content?.id || isEditing,
   });
   const { attributes, listeners, setNodeRef, transform, transition } =
     !singleMode

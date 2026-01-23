@@ -144,31 +144,33 @@ export function ContentCardManager({
           )}
         </div>
       ) : (
-        items.length > 0 && (
-          <DndContext sensors={sensors} onDragEnd={handleReorder}>
-            <SortableContext
-              items={items.map((c) => c.id)}
-              strategy={horizontalListSortingStrategy}
-            >
-              <div className="w-full flex gap-4 p-1 overflow-x-auto overflow-y-hidden">
-                {items.map((content) => (
-                  <div
-                    key={content.id}
-                    className="flex-shrink-0 max-w-[600px] w-full"
-                  >
-                    <ContentCard
-                      content={content}
-                      singleMode={false}
-                      fields={fields}
-                      handleRevalidate={handleRevalidate}
-                      handleReorderMobile={handleReorderMobile}
-                    />
-                  </div>
-                ))}
-              </div>
-            </SortableContext>
-          </DndContext>
-        )
+        <div className={`w-full ${!hasContent && 'h-[450px]'}`}>
+          {items.length > 0 && (
+            <DndContext sensors={sensors} onDragEnd={handleReorder}>
+              <SortableContext
+                items={items.map((c) => c.id)}
+                strategy={horizontalListSortingStrategy}
+              >
+                <div className="w-full flex gap-4 p-1 overflow-x-auto overflow-y-hidden">
+                  {items.map((content) => (
+                    <div
+                      key={content.id}
+                      className="flex-shrink-0 max-w-[600px] w-full"
+                    >
+                      <ContentCard
+                        content={content}
+                        singleMode={false}
+                        fields={fields}
+                        handleRevalidate={handleRevalidate}
+                        handleReorderMobile={handleReorderMobile}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          )}
+        </div>
       )}
     </div>
   );
