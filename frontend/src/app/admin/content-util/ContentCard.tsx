@@ -155,9 +155,10 @@ export function ContentCard({
         placeholderWidth={placeholderDimensions?.[1] ?? 0}
       />
       <div
-        className={`flex flex-col
-        ${isEditing && !isClosing ? 'fixed z-50 m-auto w-full items-center inset-0 h-fit content-card-animate' : ''}
-        ${isClosing ? 'fixed z-50 m-auto w-full items-center inset-0 h-fit transition-all duration-200 scale-95' : ''}`}
+        className={`flex flex-col flex-shrink-0 w-full
+        ${isEditing && 'fixed z-50 m-auto items-center inset-0 h-fit content-card-animate'}
+        ${isClosing && 'transition-all duration-200 scale-95'} 
+        ${!singleMode && !isEditing && 'max-w-[600px]'}`}
         ref={combinedRef}
         style={sortableStyle}
         {...(!singleMode && !isEditing ? attributes : {})}
@@ -165,13 +166,17 @@ export function ContentCard({
         aria-describedby={undefined}
       >
         <Card
-          className={`flex flex-col justify-between bg-background p-6 relative overflow-x-hidden shadow-lg ${isEditing ? 'w-full max-w-[1000px] max-h-[90vh]' : `min-w-[300px] "md:min-w-[600px]" ${!singleMode && 'w-[600px]'} max-w-full h-[350px]`} ${!singleMode && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
+          className={`flex flex-col p-0 gap-0 relative overflow-x-hidden bg-background shadow-lg w-full
+          ${isEditing ? 'max-w-[1000px] h-[min(80vh,700px)]' : 'h-[450px]'}
+           ${!singleMode && !isEditing && 'hover:scale-99 active:scale-99 transition-transform duration-200'}`}
           key={isEditing ? 'editing' : 'view'}
         >
-          <p className="absolute right-4 underline">
-            {(content?.order ?? 0) + 1}
-          </p>
-          <div className="space-y-6">
+          {!singleMode && (
+            <p className="absolute right-6 top-4 underline">
+              {(content?.order ?? 0) + 1}
+            </p>
+          )}
+          <div className="space-y-6 flex-1 overflow-y-auto pt-6 px-6">
             {fieldsToDisplay.title && (
               <EditableField
                 value={draftTitle}
@@ -221,7 +226,7 @@ export function ContentCard({
               contentId={content.id}
             />
           )}
-          {!singleMode && (
+          {!singleMode && !isEditing && (
             <MoveCardButtons
               handleReorderMobile={handleReorderMobile}
               contentId={content.id}

@@ -97,6 +97,7 @@ export function ContentCardManager({
   };
 
   const handleReorder = async (event: DragEndEvent) => {
+    if (singleMode) return;
     const { active, over } = event;
     if (!over) return;
     if (active.id !== over.id) {
@@ -112,6 +113,7 @@ export function ContentCardManager({
     id: string,
     direction: 'left' | 'right',
   ) => {
+    if (singleMode) return;
     const index = items.findIndex((c) => c.id === id);
     if (index === -1) return;
     const newIndex = direction === 'left' ? index - 1 : index + 1;
@@ -130,7 +132,7 @@ export function ContentCardManager({
         singleMode={singleMode}
       />
       {singleMode ? (
-        <div className="w-full max-w-[1280px] min-h-[350px]">
+        <div className={`w-full ${!hasContent && 'h-[450px]'}`}>
           {hasContent && (
             <ContentCard
               content={contents[0]}
@@ -148,16 +150,20 @@ export function ContentCardManager({
               items={items.map((c) => c.id)}
               strategy={horizontalListSortingStrategy}
             >
-              <div className="flex gap-4 overflow-x-auto overflow-y-hidden py-3">
+              <div className="w-full flex gap-4 p-1 overflow-x-auto overflow-y-hidden">
                 {items.map((content) => (
-                  <ContentCard
+                  <div
                     key={content.id}
-                    content={content}
-                    singleMode={false}
-                    fields={fields}
-                    handleRevalidate={handleRevalidate}
-                    handleReorderMobile={handleReorderMobile}
-                  />
+                    className="flex-shrink-0 max-w-[600px] w-full"
+                  >
+                    <ContentCard
+                      content={content}
+                      singleMode={false}
+                      fields={fields}
+                      handleRevalidate={handleRevalidate}
+                      handleReorderMobile={handleReorderMobile}
+                    />
+                  </div>
                 ))}
               </div>
             </SortableContext>
