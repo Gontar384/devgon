@@ -1,4 +1,4 @@
-import { createMetadata } from '@/lib/metaData/metadata';
+import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
 import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AdminLayout } from '@/app/admin/AdminLayout';
@@ -15,7 +15,7 @@ export const generateMetadata = (): Metadata =>
 export const revalidate = 3600;
 
 export default async function AdminHomePage() {
-  const authUser = await verifyAuth('/admin/home');
+  await verifyAuth('/admin/home');
 
   const { contents, error, failedKeys } = await loadPageContents([
     'about-main-card',
@@ -23,13 +23,11 @@ export default async function AdminHomePage() {
 
   return (
     <AdminLayout>
-      {authUser.role === 'admin' && (
-        <AdminHomeManager
-          contents={contents}
-          error={error}
-          failedKeys={failedKeys}
-        />
-      )}
+      <AdminHomeManager
+        contents={contents}
+        error={error}
+        failedKeys={failedKeys}
+      />
     </AdminLayout>
   );
 }

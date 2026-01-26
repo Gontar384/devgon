@@ -1,5 +1,5 @@
-import { createMetadata } from '@/lib/metaData/metadata';
-import api from '@/lib/axios';
+import { createMetadata } from '@/lib/metadata/metadata';
+import api from '@/lib/auth/axios';
 import { ProductsManager } from '@/app/products/ProductsManager';
 import { Metadata } from 'next';
 import fallbackProducts from '@/app/products/products-fallback.json';

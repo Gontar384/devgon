@@ -3,13 +3,12 @@ import React from 'react';
 import { Toaster } from '@/components/ui/sonner';
 import { Footer } from '@/app/layout/ui/footer/Footer';
 import { Metadata } from 'next';
-import { createMetadata } from '@/lib/metaData/metadata';
+import { createMetadata } from '@/lib/metadata/metadata';
 import MobileBar from '@/app/layout/ui/navbar/mobile-bar/MobileBar';
-import { fetchUser } from '@/lib/auth/fetchUser';
+import { getAuthUser } from '@/lib/auth/getAuthUser';
 import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
-import { AuthProvider } from '@/app/layout/ui/navbar/auth-button/AuthProvider';
-import { CursorGlow } from '@/app/home/ui/parts/CursorGlow';
+import { CursorGlow } from '@/components/extra/CursorGlow';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -31,13 +30,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const authUser = await fetchUser();
+  const authUser = await getAuthUser();
   return (
     <html lang="pl">
       <body>
         <NavbarClient authUser={authUser} />
         <MobileBar authUser={authUser} />
-        <AuthProvider authUser={authUser} />
         <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <LoginDialog />

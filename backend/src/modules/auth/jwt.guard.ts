@@ -7,6 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtPayload, RequestWithUser } from './auth.types';
+import { AUTH_POLICY } from './auth.policy';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -14,18 +15,21 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const req = this.getRequest(context);
+    const token = req.cookies[AUTH_POLICY.cookies.access.name] as string;
 
-    const token = req.cookies?.['auth_token'];
-    if (!token) throw new UnauthorizedException('No JWT token found');
+    if (!token) throw new UnauthorizedException();
 
+    let payload: JwtPayload;
     try {
-      req.user = this.jwtService.verify<JwtPayload>(token, {
+      payload = this.jwtService.verify<JwtPayload>(token, {
         secret: process.env.JWT_SECRET_KEY,
       });
-      return true;
     } catch {
       throw new UnauthorizedException('Invalid or expired JWT token');
     }
+
+    req.user = payload;
+    return true;
   }
 
   private getRequest(context: ExecutionContext): RequestWithUser {

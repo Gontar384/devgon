@@ -1,15 +1,22 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../user/user.repository';
 import { User } from '../user/user.entity';
 import { GoogleProfile, JwtPayload, UserRole } from './auth.types';
-import { Response } from 'express';
+import { Response, Request } from 'express';
+import { randomBytes } from 'crypto';
+import { RefreshTokenRepository } from './refresh-token.repository';
+import { AUTH_POLICY } from './auth.policy';
+import { clearAuthCookie, setAuthCookie } from './auth.cookies';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private jwtService: JwtService,
     private userRepo: UserRepository,
+    private refreshTokenRepo: RefreshTokenRepository,
   ) {}
 
   async validateOAuthLogin(profile: GoogleProfile): Promise<JwtPayload> {
@@ -32,6 +39,7 @@ export class AuthService {
         username,
         role: UserRole.USER,
       });
+      this.logger.log(`New user created: ${email}`);
     }
 
     return {
@@ -41,35 +49,117 @@ export class AuthService {
     };
   }
 
-  setJwtCookie(jwtPayload: JwtPayload, res: Response) {
-    const token = this.jwtService.sign(jwtPayload);
-    this.createCookie(res, token, JWT_COOKIE_MAX_AGE);
-  }
+  async setAuthCookies(
+    jwtPayload: JwtPayload,
+    res: Response,
+    req?: Request,
+  ): Promise<void> {
+    const refreshToken = this.generateSecureToken();
+    const expiresAt = new Date(Date.now() + AUTH_POLICY.tokens.refresh.ttlMs);
 
-  refreshJwtCookie(user: JwtPayload, res: Response) {
-    const { userId, email, role } = user;
-    const payload = { userId, email, role };
-    const token = this.jwtService.sign(payload, { expiresIn: '7d' });
-    this.createCookie(res, token, JWT_COOKIE_MAX_AGE);
-  }
+    const userAgent = req?.headers['user-agent'];
+    const ipAddress = this.getClientIp(req);
 
-  logout(res: Response) {
-    this.createCookie(res, '', 0);
-  }
+    await this.refreshTokenRepo.enforceMaxTokensPerUser(
+      jwtPayload.userId,
+      AUTH_POLICY.devices.maxPerUser,
+    );
 
-  private createCookie(res: Response, token: string, maxAge: number) {
-    res.cookie('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      domain:
-        process.env.NODE_ENV === 'production'
-          ? process.env.COOKIE_DOMAIN
-          : undefined,
-      path: '/',
-      maxAge,
+    await this.refreshTokenRepo.create({
+      userId: jwtPayload.userId,
+      token: refreshToken,
+      expiresAt,
+      userAgent,
+      ipAddress,
     });
+
+    const accessToken = this.jwtService.sign(jwtPayload, {
+      expiresIn: AUTH_POLICY.tokens.access.jwtExpiry,
+    });
+
+    this.logger.log(`Auth cookies set for user: ${jwtPayload.email}`);
+
+    setAuthCookie(res, 'access', accessToken);
+    setAuthCookie(res, 'refresh', refreshToken);
+  }
+
+  async refreshAccessToken(
+    oldRefreshToken: string,
+    res: Response,
+    req?: Request,
+  ): Promise<JwtPayload> {
+    const storedToken =
+      await this.refreshTokenRepo.findByToken(oldRefreshToken);
+    if (!storedToken) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+    if (storedToken.expiresAt < new Date()) {
+      await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
+      throw new UnauthorizedException('Refresh token expired');
+    }
+
+    const user = await this.userRepo.findById(storedToken.userId);
+    if (!user) {
+      await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
+      throw new UnauthorizedException('User not found');
+    }
+
+    const newRefreshToken = this.generateSecureToken();
+    const newExpiresAt = new Date(
+      Date.now() + AUTH_POLICY.tokens.refresh.ttlMs,
+    );
+
+    const userAgent = req?.headers['user-agent'];
+    const ipAddress = this.getClientIp(req);
+
+    await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
+
+    await this.refreshTokenRepo.create({
+      userId: user.id,
+      token: newRefreshToken,
+      expiresAt: newExpiresAt,
+      userAgent,
+      ipAddress,
+    });
+
+    const newPayload: JwtPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const newAccessToken = this.jwtService.sign(newPayload, {
+      expiresIn: AUTH_POLICY.tokens.access.jwtExpiry,
+    });
+
+    setAuthCookie(res, 'access', newAccessToken);
+    setAuthCookie(res, 'refresh', newRefreshToken);
+
+    return newPayload;
+  }
+
+  async logout(refreshToken: string | undefined, res: Response): Promise<void> {
+    if (refreshToken) {
+      await this.refreshTokenRepo.deleteByToken(refreshToken);
+      this.logger.log('User logged out');
+    }
+
+    clearAuthCookie(res, 'access');
+    clearAuthCookie(res, 'refresh');
+  }
+
+  private generateSecureToken(): string {
+    return randomBytes(64).toString('hex');
+  }
+
+  private getClientIp(req?: Request): string | undefined {
+    if (!req) return undefined;
+
+    return (
+      (req.headers['x-forwarded-for'] as string)?.split(',')[0] ||
+      (req.headers['x-real-ip'] as string) ||
+      req.ip ||
+      req.socket.remoteAddress
+    );
   }
 }
-
-const JWT_COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
