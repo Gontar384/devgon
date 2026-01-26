@@ -1,6 +1,5 @@
 import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
-import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AdminLayout } from '@/app/admin/AdminLayout';
 import { AdminHomeManager } from '@/app/admin/home/AdminHomeManager';
 import { loadPageContents } from '@/lib/graphql/loadPageContents';
@@ -15,8 +14,6 @@ export const generateMetadata = (): Metadata =>
 export const revalidate = 3600;
 
 export default async function AdminHomePage() {
-  await verifyAuth('/admin/home');
-
   const { contents, error, failedKeys } = await loadPageContents([
     'about-main-card',
   ]);

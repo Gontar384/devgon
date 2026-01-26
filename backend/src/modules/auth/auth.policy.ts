@@ -16,8 +16,8 @@ export const AUTH_POLICY = {
 
   tokens: {
     access: {
-      ttlMs: 20 * 1000,
-      jwtExpiry: '15m',
+      ttlMs: 15 * 60 * 1000,
+      jwtExpiry: '20s',
     },
     refresh: {
       ttlMs: 7 * 24 * 60 * 60 * 1000,
