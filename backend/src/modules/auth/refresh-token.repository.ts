@@ -10,13 +10,6 @@ export class RefreshTokenRepository {
     private repo: Repository<RefreshToken>,
   ) {}
 
-  async findByToken(token: string): Promise<RefreshToken | null> {
-    return this.repo.findOne({
-      where: { token },
-      relations: ['user'],
-    });
-  }
-
   async create(data: {
     userId: string;
     token: string;
@@ -47,5 +40,17 @@ export class RefreshTokenRepository {
         await this.repo.remove(tokensToDelete);
       }
     }
+  }
+
+  async deleteByTokenReturning(token: string): Promise<RefreshToken | null> {
+    const deletedToken = await this.repo
+      .createQueryBuilder()
+      .delete()
+      .from(RefreshToken)
+      .where('token = :token', { token })
+      .returning(['userId', 'expiresAt', 'userAgent', 'ipAddress'])
+      .execute();
+
+    return (deletedToken.raw as RefreshToken[])[0] ?? null;
   }
 }

@@ -5,12 +5,12 @@ import { RolesGuard } from './roles.guard';
 import { AuthService } from './auth.service';
 import { GoogleStrategy } from './oauth.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtAuthGuard } from './jwt.guard';
 import { UserModule } from '../user/user.module';
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RefreshToken } from './refresh-token.entity';
 import { AUTH_POLICY } from './auth.policy';
+import { AuthSessionGuard } from './auth-session.guard';
 
 @Module({
   imports: [
@@ -29,10 +29,10 @@ import { AUTH_POLICY } from './auth.policy';
   providers: [
     AuthService,
     GoogleStrategy,
-    JwtAuthGuard,
     RolesGuard,
     RefreshTokenRepository,
+    AuthSessionGuard,
   ],
-  exports: [RolesGuard, JwtAuthGuard, JwtModule],
+  exports: [RolesGuard, AuthSessionGuard, JwtModule, AuthService],
 })
 export class AuthModule {}

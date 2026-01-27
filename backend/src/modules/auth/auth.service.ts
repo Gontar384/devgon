@@ -88,19 +88,19 @@ export class AuthService {
     res: Response,
     req?: Request,
   ): Promise<JwtPayload> {
-    const storedToken =
-      await this.refreshTokenRepo.findByToken(oldRefreshToken);
-    if (!storedToken) {
+    const consumed =
+      await this.refreshTokenRepo.deleteByTokenReturning(oldRefreshToken);
+
+    if (!consumed) {
       throw new UnauthorizedException('Invalid refresh token');
     }
-    if (storedToken.expiresAt < new Date()) {
-      await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
+
+    if (consumed.expiresAt < new Date()) {
       throw new UnauthorizedException('Refresh token expired');
     }
 
-    const user = await this.userRepo.findById(storedToken.userId);
+    const user = await this.userRepo.findById(consumed.userId);
     if (!user) {
-      await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
       throw new UnauthorizedException('User not found');
     }
 
@@ -109,33 +109,71 @@ export class AuthService {
       Date.now() + AUTH_POLICY.tokens.refresh.ttlMs,
     );
 
-    const userAgent = req?.headers['user-agent'];
-    const ipAddress = this.getClientIp(req);
-
-    await this.refreshTokenRepo.deleteByToken(oldRefreshToken);
-
     await this.refreshTokenRepo.create({
       userId: user.id,
       token: newRefreshToken,
       expiresAt: newExpiresAt,
-      userAgent,
-      ipAddress,
+      userAgent: req?.headers['user-agent'],
+      ipAddress: this.getClientIp(req),
     });
 
-    const newPayload: JwtPayload = {
+    const payload: JwtPayload = {
       userId: user.id,
       email: user.email,
       role: user.role,
     };
 
-    const newAccessToken = this.jwtService.sign(newPayload, {
+    const accessToken = this.jwtService.sign(payload, {
       expiresIn: AUTH_POLICY.tokens.access.jwtExpiry,
     });
 
-    setAuthCookie(res, 'access', newAccessToken);
+    setAuthCookie(res, 'access', accessToken);
     setAuthCookie(res, 'refresh', newRefreshToken);
 
-    return newPayload;
+    return payload;
+  }
+
+  async getCurrentUser(req: Request, res: Response) {
+    const accessToken = req?.cookies?.[
+      AUTH_POLICY.cookies.access.name
+    ] as string;
+    const refreshToken = req?.cookies?.[
+      AUTH_POLICY.cookies.refresh.name
+    ] as string;
+
+    if (!accessToken && !refreshToken) {
+      return { userId: '', email: '', role: 'guest' };
+    }
+
+    if (accessToken) {
+      try {
+        const payload = this.jwtService.verify<JwtPayload>(accessToken, {
+          secret: process.env.JWT_SECRET_KEY,
+        });
+        return {
+          userId: payload.userId,
+          email: payload.email,
+          role: payload.role,
+        };
+      } catch {
+        /* empty */
+      }
+    }
+
+    if (refreshToken) {
+      try {
+        const payload = await this.refreshAccessToken(refreshToken, res, req);
+        return {
+          userId: payload.userId,
+          email: payload.email,
+          role: payload.role,
+        };
+      } catch {
+        /* empty */
+      }
+    }
+
+    return { userId: '', email: '', role: 'guest' };
   }
 
   async logout(refreshToken: string | undefined, res: Response): Promise<void> {
@@ -144,6 +182,7 @@ export class AuthService {
       this.logger.log('User logged out');
     }
 
+    this.logger.log(`Session cleared`);
     clearAuthCookie(res, 'access');
     clearAuthCookie(res, 'refresh');
   }

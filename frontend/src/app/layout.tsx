@@ -5,10 +5,9 @@ import { Footer } from '@/app/layout/ui/footer/Footer';
 import { Metadata } from 'next';
 import { createMetadata } from '@/lib/metadata/metadata';
 import MobileBar from '@/app/layout/ui/navbar/mobile-bar/MobileBar';
-import { getAuthUser } from '@/lib/auth/getAuthUser';
 import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
-import { CursorGlow } from '@/components/extra/CursorGlow';
+import { AuthInitializer } from '@/lib/auth/AuthInitializer';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -30,17 +29,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const authUser = await getAuthUser();
   return (
     <html lang="pl">
       <body>
-        <NavbarClient authUser={authUser} />
-        <MobileBar authUser={authUser} />
+        <AuthInitializer />
+        <NavbarClient />
+        <MobileBar />
         <main className="min-h-screen mt-16">{children}</main>
         <Footer />
         <LoginDialog />
         <Toaster position="bottom-center" />
-        <CursorGlow />
+        {/*<CursorGlow />*/}
       </body>
     </html>
   );

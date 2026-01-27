@@ -8,12 +8,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { RequestWithUser } from './auth.types';
 import { UserResponseDto } from '../user/read-user.dto';
-import { JwtAuthGuard } from './jwt.guard';
 import { AUTH_POLICY } from './auth.policy';
+import { AuthSessionGuard } from './auth-session.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -36,7 +36,7 @@ export class AuthController {
     return res.redirect(`${process.env.FRONTEND_URL}`);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthSessionGuard)
   @Get('verify')
   verifyAuth(@Req() req: RequestWithUser): UserResponseDto {
     if (!req.user) {
@@ -51,41 +51,12 @@ export class AuthController {
     };
   }
 
-  @Post('refresh')
-  async refresh(@Req() req: RequestWithUser, @Res() res: Response) {
-    const refreshToken = req.cookies[
-      AUTH_POLICY.cookies.refresh.name
-    ] as unknown;
-
-    if (!refreshToken || typeof refreshToken !== 'string') {
-      throw new UnauthorizedException('No refresh token provided');
-    }
-
-    try {
-      const user = await this.authService.refreshAccessToken(
-        refreshToken,
-        res,
-        req,
-      );
-
-      return res.status(200).json({
-        message: 'Tokens refreshed successfully',
-        user: {
-          userId: user.userId,
-          email: user.email,
-          role: user.role,
-        },
-      });
-    } catch (error) {
-      if (error instanceof UnauthorizedException) {
-        return res.status(401).json({
-          error: error.message,
-        });
-      }
-      return res.status(500).json({
-        error: 'Internal server error',
-      });
-    }
+  @Get('me')
+  async getCurrentUser(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<UserResponseDto> {
+    return await this.authService.getCurrentUser(req, res);
   }
 
   @Post('logout')

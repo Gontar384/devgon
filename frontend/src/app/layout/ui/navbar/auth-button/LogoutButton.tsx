@@ -34,7 +34,9 @@ export function LogoutButton({
       setLogoutCooldown(true);
       toast.success('Zostałeś wylogowany👋');
     } catch {
+      toast.error('Coś poszło nie tak... ⚙️');
       console.error('Unable to log out');
+      window.location.href = '/';
     }
   };
 

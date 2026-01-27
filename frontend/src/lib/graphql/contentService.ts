@@ -9,9 +9,12 @@ import {
 } from '@/lib/graphql/contentGraphql';
 
 export async function getContents(key: string): Promise<Content[]> {
-  const res = await client.request<{ getContents: Content[] }>(GET_CONTENTS, {
-    key,
-  });
+  const res = await client.requestWithRedirect<{ getContents: Content[] }>(
+    GET_CONTENTS,
+    {
+      key,
+    },
+  );
   return res.getContents ?? [];
 }
 
@@ -19,10 +22,13 @@ export async function createContent(
   key: string,
   input: Partial<Content>,
 ): Promise<Content | null> {
-  const res = await client.request<{ createContent: Content }>(CREATE_CONTENT, {
-    key,
-    input,
-  });
+  const res = await client.requestWithRedirect<{ createContent: Content }>(
+    CREATE_CONTENT,
+    {
+      key,
+      input,
+    },
+  );
   return res.createContent ?? null;
 }
 
@@ -30,17 +36,23 @@ export async function updateContent(
   id: string,
   input: Partial<Content>,
 ): Promise<Content | null> {
-  const res = await client.request<{ updateContent: Content }>(UPDATE_CONTENT, {
-    id,
-    input,
-  });
+  const res = await client.requestWithRedirect<{ updateContent: Content }>(
+    UPDATE_CONTENT,
+    {
+      id,
+      input,
+    },
+  );
   return res.updateContent ?? null;
 }
 
 export async function deleteContent(id: string): Promise<boolean> {
-  const res = await client.request<{ deleteContent: boolean }>(DELETE_CONTENT, {
-    id,
-  });
+  const res = await client.requestWithRedirect<{ deleteContent: boolean }>(
+    DELETE_CONTENT,
+    {
+      id,
+    },
+  );
   return res.deleteContent;
 }
 
@@ -48,7 +60,7 @@ export async function reorderContents(
   key: string,
   ids: string[],
 ): Promise<boolean> {
-  const res = await client.request<{ reorderContents: boolean }>(
+  const res = await client.requestWithRedirect<{ reorderContents: boolean }>(
     REORDER_CONTENTS,
     { key, ids },
   );

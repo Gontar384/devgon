@@ -10,6 +10,5 @@ export async function logout(): Promise<void> {
 
 export const AUTH_ENDPOINTS = {
   verify: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify`,
-  refresh: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`,
   graphql: `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`,
 };

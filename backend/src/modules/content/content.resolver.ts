@@ -5,7 +5,7 @@ import { Roles, RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../auth/auth.types';
 import { ContentModel } from './content.model';
 import { ContentInput } from './content.input';
-import { JwtAuthGuard } from '../auth/jwt.guard';
+import { AuthSessionGuard } from '../auth/auth-session.guard';
 
 @Resolver(() => ContentModel)
 export class ContentResolver {
@@ -16,7 +16,7 @@ export class ContentResolver {
     return await this.contentService.getMany(key);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => ContentModel)
   async createContent(
@@ -26,7 +26,7 @@ export class ContentResolver {
     return await this.contentService.create(key, input);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => ContentModel)
   async updateContent(
@@ -36,14 +36,14 @@ export class ContentResolver {
     return await this.contentService.update(id, input);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   async deleteContent(@Args('id') id: string) {
     return await this.contentService.delete(id);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   async reorderContents(

@@ -1,21 +1,30 @@
-import { GraphQLClient } from 'graphql-request';
-import { refreshAccessToken } from '@/lib/auth/refresh-manager';
+import { GraphQLClient, ClientError } from 'graphql-request';
 import { AUTH_ENDPOINTS } from '@/lib/auth/authActions';
 
-export class AuthGraphQLClient extends GraphQLClient {
-  async request(query: any, variables?: any) {
+export class AppGraphQLClient extends GraphQLClient {
+  async requestWithRedirect<T = any>(
+    query: string,
+    variables?: Record<string, any>,
+  ): Promise<T> {
     try {
-      return await super.request(query, variables);
-    } catch (err: any) {
-      if (err.response?.status !== 401) throw err;
-
-      await refreshAccessToken(fetch);
-      return super.request(query, variables);
+      return await this.request<T>(query, variables);
+    } catch (err) {
+      if (err instanceof ClientError) {
+        if (
+          err.response.errors?.some(
+            (e) => e.extensions?.code === 'UNAUTHENTICATED',
+          )
+        ) {
+          window.location.href = '/';
+          return Promise.reject('Unauthorized');
+        }
+      }
+      throw err;
     }
   }
 }
 
-export const client = new AuthGraphQLClient(AUTH_ENDPOINTS.graphql, {
+export const client = new AppGraphQLClient(AUTH_ENDPOINTS.graphql, {
   credentials: 'include',
   fetch,
 });

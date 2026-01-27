@@ -8,7 +8,7 @@ export const AUTH_POLICY = {
     },
     refresh: {
       name: 'refresh_token',
-      path: '/api/auth',
+      path: '/',
       sameSite: 'lax' as const,
       httpOnly: true,
     },
@@ -17,7 +17,7 @@ export const AUTH_POLICY = {
   tokens: {
     access: {
       ttlMs: 15 * 60 * 1000,
-      jwtExpiry: '20s',
+      jwtExpiry: '15m',
     },
     refresh: {
       ttlMs: 7 * 24 * 60 * 60 * 1000,

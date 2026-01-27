@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ProtectedRoute } from '@/lib/auth/auth-types';
 import { AUTH_ENDPOINTS } from '@/lib/auth/authActions';
-import { fetchWithRefresh } from '@/lib/auth/refresh-manager';
 
 export async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
@@ -11,22 +10,14 @@ export async function proxy(req: NextRequest) {
   ];
 
   const route = protectedRoutes.find((r) => pathname.startsWith(r.path));
-  if (!route) {
-    return NextResponse.next();
-  }
+  if (!route) return NextResponse.next();
 
   const cookieHeader = req.headers.get('cookie') ?? '';
-  if (!cookieHeader.includes('access_token')) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
 
-  let user;
   try {
-    const verifyRes = await fetchWithRefresh(AUTH_ENDPOINTS.verify, {
+    const verifyRes = await fetch(AUTH_ENDPOINTS.verify, {
       method: 'GET',
-      headers: {
-        cookie: cookieHeader,
-      },
+      headers: { cookie: cookieHeader },
       cache: 'no-store',
     });
 
@@ -34,16 +25,23 @@ export async function proxy(req: NextRequest) {
       return NextResponse.redirect(new URL('/', req.url));
     }
 
-    user = await verifyRes.json();
+    const user = await verifyRes.json();
+
+    if (!route.roles.includes(user.role)) {
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    const response = NextResponse.next();
+
+    const setCookieHeaders = verifyRes.headers.getSetCookie();
+    setCookieHeaders.forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
+
+    return response;
   } catch {
     return NextResponse.redirect(new URL('/', req.url));
   }
-
-  if (!route.roles.includes(user.role)) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
