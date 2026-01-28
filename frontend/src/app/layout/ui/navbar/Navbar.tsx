@@ -3,6 +3,7 @@ import React from 'react';
 import { SiteLogo } from '@/app/layout/ui/navbar/parts/SiteLogo';
 import { MainMenuBar } from '@/app/layout/ui/navbar/main-menu-bar/MainMenuBar';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
+import { AuthButtonWrapper } from '@/app/layout/ui/navbar/auth-button/AuthButtonWrapper';
 
 export default function Navbar() {
   return (
@@ -12,7 +13,9 @@ export default function Navbar() {
     >
       <SiteLogo />
       <MainMenuBar />
-      <AuthButton isMobileBar={false} />
+      <AuthButtonWrapper>
+        <AuthButton isMobileBar={false} />
+      </AuthButtonWrapper>
       <HamburgerButton />
     </nav>
   );

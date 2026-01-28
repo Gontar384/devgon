@@ -18,14 +18,14 @@ export function AuthButton({ isMobileBar }: AuthButtonProps) {
   if (isLoading) {
     return (
       <Skeleton
-        className={`h-10 w-36 bg-primary/40 ${isMobileBar ? 'mt-8' : 'hidden md:flex mr-5'}`}
+        className={`h-10 w-36 bg-primary/40 ${isMobileBar ? 'mt-8' : 'hidden md:flex'}`}
       />
     );
   }
 
   return (
     <div
-      className={`gap-2 select-none ${isMobileBar ? 'flex mt-8' : 'hidden md:flex mr-5'}`}
+      className={`gap-2 select-none ${isMobileBar ? 'flex mt-8' : 'hidden md:flex'}`}
       aria-label="Akcje użytkownika"
     >
       {isAdmin && <AdminButton />}
