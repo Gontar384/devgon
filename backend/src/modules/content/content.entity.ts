@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Media } from './media/media.entity';
 
 @Entity({ name: 'content' })
 export class Content {
@@ -22,11 +24,8 @@ export class Content {
   @Column({ type: 'varchar', nullable: true })
   description?: string | null;
 
-  @Column('text', { array: true, nullable: true })
-  images?: string[] | null;
-
-  @Column({ type: 'varchar', nullable: true })
-  video?: string | null;
+  @OneToMany(() => Media, (media) => media.content, { cascade: true })
+  media: Media[];
 
   @Column({ type: 'integer' })
   order: number;

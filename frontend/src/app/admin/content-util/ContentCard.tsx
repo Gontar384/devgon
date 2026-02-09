@@ -10,6 +10,7 @@ import { DeleteCardButton } from '@/app/admin/content-util/atomic/DeleteCardButt
 import { useSortable } from '@dnd-kit/sortable';
 import { EditPopupUtil } from '@/app/admin/content-util/atomic/EditPopupUtil';
 import { MoveCardButtons } from '@/app/admin/content-util/atomic/MoveCardButtons';
+import { MediaUploader } from '@/app/admin/content-util/atomic/MediaUploader';
 
 export function ContentCard({
   content,
@@ -24,6 +25,17 @@ export function ContentCard({
   const [draftDescription, setDraftDescription] = useState(
     safeData.description ?? '',
   );
+
+  const [mediaState, setMediaState] = useState<{
+    newFiles: File[];
+    existingIds: string[];
+    deleteIds: string[];
+  }>({
+    newFiles: [],
+    existingIds: content?.media?.map((m) => m.id) || [],
+    deleteIds: [],
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -121,6 +133,10 @@ export function ContentCard({
       title: stripEmptyHtml(draftTitle),
       header: stripEmptyHtml(draftHeader),
       description: stripEmptyHtml(draftDescription),
+
+      newMedia: mediaState.newFiles,
+      existingMediaIds: mediaState.existingIds,
+      deleteMediaIds: mediaState.deleteIds,
     };
     try {
       await updateContent(content.id, payload);
@@ -207,6 +223,18 @@ export function ContentCard({
                 header={'Description'}
               />
             )}
+
+
+            <div>
+              <h3 className="text-sm font-medium mb-2">Media</h3>
+              <MediaUploader
+                media={content.media || []}
+                onMediaChange={setMediaState}
+                isEditing={isEditing}
+              />
+            </div>
+
+
           </div>
           <EditButtons
             isEditing={isEditing}
@@ -218,12 +246,13 @@ export function ContentCard({
           />
         </Card>
         <div
-          className={`flex justify-between ${isEditing && 'justify-center mt-1'}`}
+          className={`flex justify-between ${isEditing && 'justify-center mt-1 w-full'}`}
         >
           {content && (
             <DeleteCardButton
               handleDelete={handleDelete}
               contentId={content.id}
+              isEditing={isEditing}
             />
           )}
           {!singleMode && !isEditing && (

@@ -8,10 +8,20 @@ export const GET_CONTENTS = gql`
       title
       header
       description
-      images
-      video
       order
       updatedAt
+      media {
+        id
+        filename
+        mimeType
+        type
+        size
+        alt
+        order
+        url
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -24,10 +34,15 @@ export const CREATE_CONTENT = gql`
       title
       header
       description
-      images
-      video
       order
       updatedAt
+      media {
+        id
+        filename
+        url
+        type
+        order
+      }
     }
   }
 `;
@@ -40,10 +55,15 @@ export const UPDATE_CONTENT = gql`
       title
       header
       description
-      images
-      video
       order
       updatedAt
+      media {
+        id
+        filename
+        url
+        type
+        order
+      }
     }
   }
 `;

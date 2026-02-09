@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { createSwaggerConfig } from './config/swagger/swagger.config';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
+import { graphqlUploadExpress } from 'graphql-upload-minimal';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,6 +35,14 @@ async function bootstrap() {
   }
 
   app.setGlobalPrefix('api');
+
+  app.use(
+    '/graphql',
+    graphqlUploadExpress({
+      maxFileSize: 50000000, // 50MB
+      maxFiles: 10,
+    }),
+  );
 
   await app.listen(4000);
 }

@@ -12,7 +12,7 @@ export function EditButtons({
   isLoading,
 }: EditButtonsProps) {
   return (
-    <div className="w-full flex justify-between items-center gap-4 text-xs bg-background border-t p-3">
+    <div className="w-full flex justify-between items-center gap-2 text-xs bg-background border-t p-3">
       <div className="underline">
         <p>Ostatnia edycja:</p>
         <p>
@@ -55,7 +55,7 @@ export function EditButtons({
         )}
       </div>
       {isEditing && isLoading && (
-        <Loader2Icon className="animate-spin absolute right-6 bottom-19" />
+        <Loader2Icon className="animate-spin absolute left-6 bottom-20" />
       )}
     </div>
   );

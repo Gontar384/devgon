@@ -67,6 +67,7 @@ export interface EditButtonsProps {
 export interface DeleteCardButtonProps {
   handleDelete: (id: string) => Promise<void>;
   contentId: string;
+  isEditing: boolean;
 }
 
 export interface MoveCardButtonsProps {

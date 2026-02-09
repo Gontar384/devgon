@@ -5,11 +5,14 @@ import { DeleteCardButtonProps } from '@/app/admin/admin-types';
 export function DeleteCardButton({
   handleDelete,
   contentId,
+  isEditing,
 }: DeleteCardButtonProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
-    <div className="flex justify-center items-center">
+    <div
+      className={`flex items-center justify-start ${isEditing && 'w-full max-w-[1000px]'}`}
+    >
       <div className="rounded-md py-2 px-6 bg-background w-fit">
         {!confirmOpen ? (
           <Button
