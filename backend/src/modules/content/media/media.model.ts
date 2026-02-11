@@ -36,7 +36,7 @@ export class MediaModel {
   contentId: string;
 
   @Field()
-  url: string;
+  url?: string;
 
   @Field()
   createdAt: Date;

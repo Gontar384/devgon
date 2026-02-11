@@ -1,6 +1,17 @@
 export enum MediaType {
-  IMAGE = 'image',
-  VIDEO = 'video',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+}
+
+export interface Content {
+  id: string;
+  key: string;
+  title?: string;
+  header?: string;
+  description?: string;
+  media?: Media[];
+  order?: number;
+  updatedAt: string;
 }
 
 export interface Media {
@@ -14,17 +25,6 @@ export interface Media {
   contentId: string;
   url: string;
   createdAt: string;
-  updatedAt: string;
-}
-
-export interface Content {
-  id: string;
-  key: string;
-  title?: string;
-  header?: string;
-  description?: string;
-  media?: Media[];
-  order?: number;
   updatedAt: string;
 }
 

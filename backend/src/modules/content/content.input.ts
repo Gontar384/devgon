@@ -1,5 +1,4 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { FileUpload, GraphQLUpload } from 'graphql-upload-minimal';
 
 @InputType()
 export class ContentInput {
@@ -11,9 +10,6 @@ export class ContentInput {
 
   @Field({ nullable: true })
   description?: string;
-
-  @Field(() => [GraphQLUpload], { nullable: true })
-  newMedia?: FileUpload[];
 
   @Field(() => [String], { nullable: true })
   existingMediaIds?: string[];

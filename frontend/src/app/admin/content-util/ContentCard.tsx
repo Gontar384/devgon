@@ -10,7 +10,7 @@ import { DeleteCardButton } from '@/app/admin/content-util/atomic/DeleteCardButt
 import { useSortable } from '@dnd-kit/sortable';
 import { EditPopupUtil } from '@/app/admin/content-util/atomic/EditPopupUtil';
 import { MoveCardButtons } from '@/app/admin/content-util/atomic/MoveCardButtons';
-import { MediaUploader } from '@/app/admin/content-util/atomic/MediaUploader';
+import { MediaUploader } from '@/app/admin/content-util/atomic/media-uploader/MediaUploader';
 
 export function ContentCard({
   content,
@@ -18,6 +18,7 @@ export function ContentCard({
   fields,
   handleRevalidate,
   handleReorderMobile,
+  maxMedia,
 }: ContentCardProps) {
   const safeData = content ?? {};
   const [draftTitle, setDraftTitle] = useState(safeData.title ?? '');
@@ -139,7 +140,7 @@ export function ContentCard({
       deleteMediaIds: mediaState.deleteIds,
     };
     try {
-      await updateContent(content.id, payload);
+      await updateContent(content.id, payload, maxMedia);
       await handleRevalidate();
       toast.success('Treść została edytowana ✏️');
     } catch (err) {
@@ -223,18 +224,14 @@ export function ContentCard({
                 header={'Description'}
               />
             )}
-
-
-            <div>
-              <h3 className="text-sm font-medium mb-2">Media</h3>
+            {(maxMedia ?? 0) > 0 && (
               <MediaUploader
                 media={content.media || []}
                 onMediaChange={setMediaState}
                 isEditing={isEditing}
+                maxMedia={maxMedia}
               />
-            </div>
-
-
+            )}
           </div>
           <EditButtons
             isEditing={isEditing}

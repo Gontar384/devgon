@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content } from '@/lib/graphql/graphql-types';
+import { Content, Media } from '@/lib/graphql/graphql-types';
 
 export interface AdminManagerProps {
   contents: Record<string, Content[]>;
@@ -16,6 +16,7 @@ export interface ContentCardManagerProps {
     header: number;
     description: number;
   };
+  maxMedia?: number;
 }
 
 export interface ContentCardProps {
@@ -31,6 +32,7 @@ export interface ContentCardProps {
     id: string,
     direction: 'left' | 'right',
   ) => Promise<void>;
+  maxMedia?: number;
 }
 
 export interface AddCardButtonProps {
@@ -80,4 +82,21 @@ export interface MoveCardButtonsProps {
 
 export interface AdminContentErrorBannerProps {
   failedKeys: string[];
+}
+
+export interface MediaUploaderProps {
+  media: Media[];
+  onMediaChange: (params: {
+    newFiles: File[];
+    existingIds: string[];
+    deleteIds: string[];
+  }) => void;
+  isEditing: boolean;
+  maxMedia?: number;
+}
+
+export interface MediaItem {
+  id: string;
+  type: 'existing' | 'new';
+  data: Media | File;
 }

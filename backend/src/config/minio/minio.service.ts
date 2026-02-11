@@ -1,13 +1,7 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as Minio from 'minio';
-
-interface MulterFile {
-  buffer: Buffer;
-  originalname: string;
-  mimetype: string;
-  size: number;
-}
+import { MulterFile } from './minio-types';
 
 @Injectable()
 export class MinioService implements OnModuleInit {
@@ -44,7 +38,7 @@ export class MinioService implements OnModuleInit {
     try {
       const exists = await this.minioClient.bucketExists(this.bucketName);
       if (!exists) {
-        await this.minioClient.makeBucket(this.bucketName, 'us-east -1');
+        await this.minioClient.makeBucket(this.bucketName, 'eu-central-1');
         this.logger.log(`✅ Bucket ${this.bucketName} created`);
       } else {
         this.logger.log(`✅ Bucket ${this.bucketName} already exists`);

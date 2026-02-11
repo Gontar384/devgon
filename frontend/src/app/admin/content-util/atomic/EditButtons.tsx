@@ -55,7 +55,7 @@ export function EditButtons({
         )}
       </div>
       {isEditing && isLoading && (
-        <Loader2Icon className="animate-spin absolute left-6 bottom-20" />
+        <Loader2Icon className="h-20 w-20 text-primary/70 animate-spin absolute inset-0 m-auto" />
       )}
     </div>
   );

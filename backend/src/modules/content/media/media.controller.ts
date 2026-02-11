@@ -1,0 +1,70 @@
+import {
+  Controller,
+  Post,
+  Delete,
+  UseGuards,
+  Param,
+  UseInterceptors,
+  UploadedFiles,
+  Body,
+  Logger,
+} from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { AuthSessionGuard } from '../../auth/auth-session.guard';
+import { RolesGuard, Roles } from '../../auth/roles.guard';
+import { UserRole } from '../../auth/auth.types';
+import { MediaService } from './media.service';
+import {
+  UploadedFileType,
+  UploadMediaResponse,
+  DeleteMediaResponse,
+} from './media-types';
+
+@Controller('media')
+@UseGuards(AuthSessionGuard, RolesGuard)
+@Roles(UserRole.ADMIN)
+export class MediaController {
+  private readonly logger = new Logger(MediaController.name);
+
+  constructor(private readonly mediaService: MediaService) {}
+
+  /**
+   * Upload mediów dla contentu
+   */
+  @Post('upload/:contentId')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
+    }),
+  )
+  async uploadMedia(
+    @Param('contentId') contentId: string,
+    @UploadedFiles() files: UploadedFileType[],
+    @Body('maxMedia') maxMediaStr?: string,
+  ): Promise<UploadMediaResponse> {
+    const maxMedia = maxMediaStr ? parseInt(maxMediaStr, 10) : undefined;
+
+    const uploadedMedia = await this.mediaService.uploadMany(
+      contentId,
+      files,
+      maxMedia,
+    );
+
+    return {
+      success: true,
+      media: uploadedMedia,
+    };
+  }
+
+  /**
+   * Usuwa pojedyncze media
+   */
+  @Delete(':mediaId')
+  async deleteMedia(
+    @Param('mediaId') mediaId: string,
+  ): Promise<DeleteMediaResponse> {
+    await this.mediaService.delete(mediaId);
+
+    return { success: true };
+  }
+}

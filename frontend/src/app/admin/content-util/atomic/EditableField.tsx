@@ -41,14 +41,14 @@ export function EditableField({
 
   return (
     <div className="flex-1 min-w-0 pr-4">
-      <p className="text-xs underline">{header}</p>
+      <h2 className="text-xs underline">{header}</h2>
       {isEditing ? (
         <div className="p-2 border rounded border-gray-300">
           {editor && <TiptapToolbar editor={editor} />}
           {editor && <EditorContent editor={editor} />}
         </div>
       ) : (
-        <h2
+        <h3
           className="text-2xl break-words"
           dangerouslySetInnerHTML={{
             __html: value !== '' ? value : '<...>',

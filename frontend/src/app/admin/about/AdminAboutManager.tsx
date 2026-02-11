@@ -21,12 +21,14 @@ export function AdminAboutManager({
           contentKey={'about-main-card'}
           mode={'single'}
           fields={{ title: 100, header: 100, description: 500 }}
+          maxMedia={5}
         />
         <ContentCardManager
           contents={aboutSideCards}
           contentKey={'about-side-cards'}
           mode={'multiple'}
           fields={{ title: 100, header: 100, description: 500 }}
+          maxMedia={3}
         />
       </div>
     </div>

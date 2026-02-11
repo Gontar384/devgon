@@ -29,6 +29,7 @@ export function ContentCardManager({
   contentKey,
   mode,
   fields,
+  maxMedia,
 }: ContentCardManagerProps) {
   const { data, mutate } = useSWR<Content[]>(
     ['contents', contentKey],
@@ -140,6 +141,7 @@ export function ContentCardManager({
               fields={fields}
               handleRevalidate={handleRevalidate}
               handleReorderMobile={handleReorderMobile}
+              maxMedia={maxMedia}
             />
           )}
         </div>
@@ -163,6 +165,7 @@ export function ContentCardManager({
                         fields={fields}
                         handleRevalidate={handleRevalidate}
                         handleReorderMobile={handleReorderMobile}
+                        maxMedia={maxMedia}
                       />
                     </div>
                   ))}

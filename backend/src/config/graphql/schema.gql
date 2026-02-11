@@ -7,7 +7,6 @@ input ContentInput {
   description: String
   existingMediaIds: [String!]
   header: String
-  newMedia: [Upload!]
   order: Float
   title: String
 }
@@ -50,15 +49,12 @@ enum MediaType {
 }
 
 type Mutation {
-  createContent(input: ContentInput!, key: String!): ContentModel!
+  createContent(key: String!): Boolean!
   deleteContent(id: String!): Boolean!
   reorderContents(ids: [String!]!, key: String!): Boolean!
-  updateContent(id: String!, input: ContentInput!): ContentModel!
+  updateContent(id: String!, input: ContentInput!): Boolean!
 }
 
 type Query {
   getContents(key: String!): [ContentModel!]!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload

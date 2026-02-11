@@ -1,233 +1,207 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { Content } from './content.entity';
 import { ContentInput } from './content.input';
-import { Media, MediaType } from './media/media.entity';
 import { MinioService } from '../../config/minio/minio.service';
-import { FileUpload } from 'graphql-upload-minimal';
-import { v4 as uuidv4 } from 'uuid';
+import { MediaService } from './media/media.service';
 
 @Injectable()
 export class ContentService {
+  private readonly logger = new Logger(ContentService.name);
+
   constructor(
     @InjectRepository(Content)
     private readonly contentRepo: Repository<Content>,
-    @InjectRepository(Media)
-    private readonly mediaRepo: Repository<Media>,
     private readonly minioService: MinioService,
+    private readonly mediaService: MediaService,
   ) {}
 
-  async getMany(key: string) {
-    return await this.contentRepo.find({
+  /**
+   * Pobiera wszystkie contenty dla danego klucza wraz z podpisanymi URL mediów
+   */
+  async getMany(key: string): Promise<Content[]> {
+    const contents = await this.contentRepo.find({
       where: { key },
       relations: ['media'],
       order: { order: 'ASC' },
     });
+
+    // Generuj signed URLs dla wszystkich mediów
+    await this.enrichMediaWithUrls(contents);
+
+    return contents;
   }
 
-  async create(key: string, input: ContentInput) {
-    const normalized = this.normalizeInput(input);
+  /**
+   * Tworzy pusty content - NIE zwraca danych (klient zrobi revalidate)
+   */
+  async create(key: string): Promise<void> {
+    this.logger.log(`📝 Creating empty content for key: ${key}`);
 
-    const last = await this.contentRepo.findOne({
+    const lastContent = await this.contentRepo.findOne({
       where: { key },
       order: { order: 'DESC' },
     });
 
-    const nextOrder = last ? last.order + 1 : 0;
-
     const content = this.contentRepo.create({
       key,
-      order: nextOrder,
-      ...normalized,
+      order: lastContent ? lastContent.order + 1 : 0,
+      title: null,
+      header: null,
+      description: null,
     });
 
-    const savedContent = await this.contentRepo.save(content);
-
-    if (input.newMedia && input.newMedia.length > 0) {
-      await this.uploadMediaFiles(savedContent.id, input.newMedia);
-    }
-
-    return await this.contentRepo.findOne({
-      where: { id: savedContent.id },
-      relations: ['media'],
-    });
+    await this.contentRepo.save(content);
+    this.logger.log(`✅ Empty content created`);
   }
 
-  async update(id: string, input: ContentInput) {
-    const normalized = this.normalizeInput(input);
+  /**
+   * Aktualizuje content - obsługuje tylko pola tekstowe i zarządzanie mediami
+   * Upload nowych mediów odbywa się przez MediaController
+   */
+  async update(id: string, input: ContentInput): Promise<void> {
+    this.logger.log(`🔄 Updating content ID: ${id}`);
 
-    await this.contentRepo.update({ id }, normalized);
+    const content = await this.contentRepo.findOne({
+      where: { id },
+    });
 
-    if (input.deleteMediaIds && input.deleteMediaIds.length > 0) {
-      for (const mediaId of input.deleteMediaIds) {
-        await this.deleteMedia(mediaId);
-      }
+    if (!content) {
+      throw new BadRequestException('Content nie istnieje');
     }
 
-    if (input.newMedia && input.newMedia.length > 0) {
-      await this.uploadMediaFiles(id, input.newMedia);
+    // 1. Aktualizuj pola tekstowe
+    const updateData = this.normalizeInput(input);
+    if (Object.keys(updateData).length > 0) {
+      await this.contentRepo.update({ id }, updateData);
     }
 
-    if (input.existingMediaIds && input.existingMediaIds.length > 0) {
-      await this.reorderMedia(id, input.existingMediaIds);
+    // 2. Usuń media (jeśli podano) - deleguj do MediaService
+    if (input.deleteMediaIds?.length) {
+      await this.mediaService.deleteMany(input.deleteMediaIds);
     }
 
-    return await this.contentRepo.findOne({
+    // 3. Zmień kolejność media (jeśli podano) - deleguj do MediaService
+    if (input.existingMediaIds?.length) {
+      await this.mediaService.reorder(id, input.existingMediaIds);
+    }
+
+    this.logger.log(`✅ Content updated`);
+  }
+
+  /**
+   * Usuwa content wraz z powiązanymi mediami i plikami
+   */
+  async delete(id: string): Promise<boolean> {
+    const content = await this.contentRepo.findOne({
       where: { id },
       relations: ['media'],
     });
-  }
 
-  async delete(id: string) {
-    const item = await this.contentRepo.findOne({
-      where: { id },
-      relations: ['media'],
-    });
-    if (!item) return false;
-
-    for (const media of item.media) {
-      await this.minioService.deleteFile(media.storageKey);
+    if (!content) {
+      return false;
     }
 
+    // Usuń wszystkie media (MediaService zajmie się plikami)
+    if (content.media?.length) {
+      const mediaIds = content.media.map((m) => m.id);
+      await this.mediaService.deleteMany(mediaIds);
+    }
+
+    // Usuń content z DB (cascade może już być ustawiony, ale lepiej być pewnym)
     await this.contentRepo.delete({ id });
 
-    const contents = await this.contentRepo.find({
-      where: { key: item.key },
-      order: { order: 'ASC' },
-    });
+    // Przenumeruj pozostałe contenty
+    await this.reindexContents(content.key);
 
-    contents.forEach((c, index) => {
-      c.order = index;
-    });
-
-    await this.contentRepo.save(contents);
+    this.logger.log(`✅ Content ${id} deleted`);
     return true;
   }
 
-  async reorder(key: string, ids: string[]) {
-    const contents = await this.contentRepo.find({
-      where: { key },
-    });
-    const map = new Map(contents.map((c) => [c.id, c]));
+  /**
+   * Zmienia kolejność contentów
+   */
+  async reorder(key: string, ids: string[]): Promise<boolean> {
+    const contents = await this.contentRepo.find({ where: { key } });
+    const contentMap = new Map(contents.map((c) => [c.id, c]));
 
-    const toSave: Content[] = [];
+    const updates: Content[] = [];
 
     ids.forEach((id, index) => {
-      const item = map.get(id);
-      if (item && item.order !== index) {
-        item.order = index;
-        toSave.push(item);
+      const content = contentMap.get(id);
+      if (content && content.order !== index) {
+        content.order = index;
+        updates.push(content);
       }
     });
 
-    if (toSave.length > 0) {
-      await this.contentRepo.save(toSave);
+    if (updates.length > 0) {
+      await this.contentRepo.save(updates);
+      this.logger.log(`✅ Reordered ${updates.length} contents`);
     }
+
     return true;
   }
 
-  private async uploadMediaFiles(
-    contentId: string,
-    files: FileUpload[],
-  ): Promise<void> {
-    for (const fileUpload of files) {
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      const { createReadStream, filename, mimetype } = fileUpload;
+  // ========== PRYWATNE POMOCNICZE METODY ==========
 
-      const stream = createReadStream();
-      const chunks: Buffer[] = [];
+  /**
+   * Generuje signed URLs dla wszystkich mediów w contentach
+   */
+  private async enrichMediaWithUrls(contents: Content[]): Promise<void> {
+    for (const content of contents) {
+      if (!content.media?.length) continue;
 
-      for await (const chunk of stream) {
-        chunks.push(chunk as Buffer);
+      for (const media of content.media) {
+        // TypeScript workaround: Media entity nie ma 'url', ale GraphQL Model tak
+        Object.assign(media, {
+          url: await this.minioService.getSignedUrl(media.storageKey),
+        });
       }
-
-      const buffer = Buffer.concat(chunks);
-
-      const ext = filename.split('.').pop() ?? 'bin';
-      const storageKey = `${uuidv4()}-${Date.now()}.${ext}`;
-
-      await this.minioService.uploadFile(
-        {
-          buffer,
-          originalname: filename,
-          mimetype,
-          size: buffer.length,
-        },
-        storageKey,
-      );
-
-      const type = mimetype.startsWith('video/')
-        ? MediaType.VIDEO
-        : MediaType.IMAGE;
-
-      const lastMedia = await this.mediaRepo.findOne({
-        where: { contentId },
-        order: { order: 'DESC' },
-      });
-      const nextOrder = lastMedia ? lastMedia.order + 1 : 0;
-
-      const media = this.mediaRepo.create({
-        filename,
-        storageKey,
-        mimeType: mimetype,
-        type,
-        size: buffer.length,
-        contentId,
-        order: nextOrder,
-      });
-
-      await this.mediaRepo.save(media);
     }
   }
 
-  private async deleteMedia(mediaId: string): Promise<void> {
-    const media = await this.mediaRepo.findOne({ where: { id: mediaId } });
-    if (!media) return;
-
-    await this.minioService.deleteFile(media.storageKey);
-
-    await this.mediaRepo.delete({ id: mediaId });
-
-    const remainingMedia = await this.mediaRepo.find({
-      where: { contentId: media.contentId },
+  /**
+   * Przenumerowuje contenty (po usunięciu)
+   */
+  private async reindexContents(key: string): Promise<void> {
+    const contents = await this.contentRepo.find({
+      where: { key },
       order: { order: 'ASC' },
     });
 
-    remainingMedia.forEach((m, index) => {
-      m.order = index;
-    });
+    const updates = contents
+      .map((c, index) => {
+        if (c.order !== index) {
+          c.order = index;
+          return c;
+        }
+        return null;
+      })
+      .filter((c): c is Content => c !== null);
 
-    await this.mediaRepo.save(remainingMedia);
-  }
-
-  private async reorderMedia(
-    contentId: string,
-    mediaIds: string[],
-  ): Promise<void> {
-    const media = await this.mediaRepo.find({ where: { contentId } });
-    const map = new Map(media.map((m) => [m.id, m]));
-
-    const toSave: Media[] = [];
-
-    mediaIds.forEach((id, index) => {
-      const item = map.get(id);
-      if (item && item.order !== index) {
-        item.order = index;
-        toSave.push(item);
-      }
-    });
-
-    if (toSave.length > 0) {
-      await this.mediaRepo.save(toSave);
+    if (updates.length > 0) {
+      await this.contentRepo.save(updates);
     }
   }
 
-  normalizeInput(input: ContentInput): DeepPartial<Content> {
-    return {
-      title: input.title?.trim() || null,
-      header: input.header?.trim() || null,
-      description: input.description?.trim() || null,
-    };
+  /**
+   * Normalizuje input - usuwa puste stringi i trimuje
+   */
+  private normalizeInput(input: ContentInput): DeepPartial<Content> {
+    const data: DeepPartial<Content> = {};
+
+    if (input.title !== undefined) {
+      data.title = input.title?.trim() || null;
+    }
+    if (input.header !== undefined) {
+      data.header = input.header?.trim() || null;
+    }
+    if (input.description !== undefined) {
+      data.description = input.description?.trim() || null;
+    }
+
+    return data;
   }
 }

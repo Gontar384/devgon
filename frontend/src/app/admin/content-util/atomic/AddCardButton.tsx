@@ -12,7 +12,7 @@ export function AddCardButton({
     <div
       className={`flex flex-row gap-4 items-center ${singleMode ? 'mb-4' : 'mb-2'}`}
     >
-      <div className="underline">{contentKey}</div>
+      <h1 className="underline">{contentKey}</h1>
       {isAvailable && (
         <Button
           onClick={handleAdd}

@@ -1,12 +1,4 @@
-// src/modules/content/content.resolver.ts
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  ResolveField,
-  Parent,
-} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ContentService } from './content.service';
 import { UseGuards } from '@nestjs/common';
 import { Roles, RolesGuard } from '../auth/roles.guard';
@@ -14,69 +6,66 @@ import { UserRole } from '../auth/auth.types';
 import { ContentModel } from './content.model';
 import { ContentInput } from './content.input';
 import { AuthSessionGuard } from '../auth/auth-session.guard';
-import { MediaModel } from './media/media.model';
-import { MinioService } from '../../config/minio/minio.service';
 
 @Resolver(() => ContentModel)
 export class ContentResolver {
-  constructor(
-    private readonly contentService: ContentService,
-    private readonly minioService: MinioService,
-  ) {}
+  constructor(private readonly contentService: ContentService) {}
 
   @Query(() => [ContentModel])
-  async getContents(@Args('key') key: string) {
-    return await this.contentService.getMany(key);
+  async getContents(@Args('key') key: string): Promise<ContentModel[]> {
+    const data = await this.contentService.getMany(key);
+    return data as unknown as ContentModel[]; // "Zaufaj mi, dodałem tam te adresy URL"
   }
 
-  @UseGuards(AuthSessionGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async createContent(
-    @Args('key') key: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.create(key, input);
-  }
-
-  @UseGuards(AuthSessionGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async updateContent(
-    @Args('id') id: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.update(id, input);
-  }
-
+  /**
+   * Tworzy pusty content - klient robi revalidate
+   * Zwraca Boolean zamiast pełnego obiektu
+   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
-  async deleteContent(@Args('id') id: string) {
+  async createContent(
+    @Args('key') key: string,
+  ): Promise<boolean> {
+    await this.contentService.create(key);
+    return true;
+  }
+
+  /**
+   * Aktualizuje content - klient robi revalidate
+   * Zwraca Boolean zamiast pełnego obiektu
+   */
+  @UseGuards(AuthSessionGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => Boolean)
+  async updateContent(
+    @Args('id') id: string,
+    @Args('input') input: ContentInput,
+  ): Promise<boolean> {
+    await this.contentService.update(id, input);
+    return true;
+  }
+
+  /**
+   * Usuwa content wraz z mediami
+   */
+  @UseGuards(AuthSessionGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Mutation(() => Boolean)
+  async deleteContent(@Args('id') id: string): Promise<boolean> {
     return await this.contentService.delete(id);
   }
 
+  /**
+   * Zmienia kolejność contentów
+   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   async reorderContents(
     @Args('key') key: string,
     @Args({ name: 'ids', type: () => [String] }) ids: string[],
-  ) {
+  ): Promise<boolean> {
     return await this.contentService.reorder(key, ids);
-  }
-
-  @ResolveField(() => [MediaModel])
-  async media(@Parent() content: ContentModel): Promise<MediaModel[]> {
-    if (!content.media || content.media.length === 0) {
-      return [];
-    }
-
-    return await Promise.all(
-      content.media.map(async (m) => ({
-        ...m,
-        url: await this.minioService.getSignedUrl(m.storageKey, 3600),
-      })),
-    );
   }
 }
