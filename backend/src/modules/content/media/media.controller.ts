@@ -7,7 +7,6 @@ import {
   UseInterceptors,
   UploadedFiles,
   Body,
-  Logger,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthSessionGuard } from '../../auth/auth-session.guard';
@@ -24,7 +23,6 @@ import {
 @UseGuards(AuthSessionGuard, RolesGuard)
 @Roles(UserRole.ADMIN)
 export class MediaController {
-  private readonly logger = new Logger(MediaController.name);
 
   constructor(private readonly mediaService: MediaService) {}
 

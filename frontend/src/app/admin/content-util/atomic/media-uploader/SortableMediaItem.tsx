@@ -1,21 +1,26 @@
-import { MediaItem } from '@/app/admin/admin-types';
+import { SortableMediaItemProps } from '@/app/admin/admin-types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Media, MediaType } from '@/lib/graphql/graphql-types';
 import Image from 'next/image';
-import { GripVertical, X } from 'lucide-react';
+import {
+  CircleChevronDown,
+  CircleChevronLeft,
+  CircleChevronRight,
+  CircleChevronUp,
+  GripVertical,
+  X,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDeviceStore } from '@/store/deviceStore';
 
 export function SortableMediaItem({
   item,
   onDelete,
   isEditing,
-}: {
-  item: MediaItem;
-  onDelete: () => void;
-  isEditing: boolean;
-}) {
+  move,
+}: SortableMediaItemProps) {
   const {
     attributes,
     listeners,
@@ -25,7 +30,7 @@ export function SortableMediaItem({
     isDragging,
   } = useSortable({ id: item.id, disabled: !isEditing });
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { isMobile } = useDeviceStore();
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -37,21 +42,16 @@ export function SortableMediaItem({
   const media = isExisting ? (item.data as Media) : null;
   const file = !isExisting ? (item.data as File) : null;
 
-  // Create preview URL for new files
+  const [previewUrl] = React.useState<string | null>(() =>
+    file ? URL.createObjectURL(file) : null,
+  );
+
   useEffect(() => {
-    if (file) {
-      const url = URL.createObjectURL(file);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPreviewUrl(url);
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
-      // Cleanup: revoke URL when component unmounts
-      return () => {
-        URL.revokeObjectURL(url);
-      };
-    }
-  }, [file]);
-
-  // Determine if it's an image or video
   const isImage = isExisting
     ? media?.type === MediaType.IMAGE
     : file?.type.startsWith('image/');
@@ -64,48 +64,47 @@ export function SortableMediaItem({
     <div
       ref={setNodeRef}
       style={style}
-      className="relative aspect-square group"
+      className="relative aspect-square group w-[295px] h-[295px]"
     >
-      {/* Existing media from server */}
       {isExisting && media ? (
-        <div>
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
           {media.type === MediaType.IMAGE ? (
             <Image
               src={media.url}
               alt={media.alt || media.filename}
               fill
               unoptimized
-              className="object-cover rounded"
+              className="w-full h-full object-cover rounded"
             />
-          ) : (
+          ) : media.type === MediaType.VIDEO ? (
             <video
               src={media.url}
-              className="w-full h-full rounded object-cover"
-              muted
+              className="w-full h-full object-cover rounded"
+              autoPlay
+              loop
             />
-          )}
+          ) : null}
         </div>
       ) : null}
 
-      {/* New files from user's computer */}
       {!isExisting && file && previewUrl ? (
-        <div>
+        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
           {isImage ? (
             <Image
               src={previewUrl}
               alt={file.name}
               fill
               unoptimized
-              className="object-cover rounded"
+              className="w-full h-full object-cover rounded"
             />
           ) : isVideo ? (
             <video
               src={previewUrl}
-              className="w-full h-full rounded object-cover"
-              muted
+              className="w-full h-full object-cover rounded"
+              autoPlay
+              loop
             />
           ) : (
-            // Fallback for other file types
             <div className="w-full h-full border-2 border-dashed rounded flex items-center justify-center bg-gray-50">
               <div className="p-2 text-xs truncate text-center">
                 {file.name}
@@ -115,7 +114,6 @@ export function SortableMediaItem({
         </div>
       ) : null}
 
-      {/* Drag handle and delete button */}
       {isEditing && (
         <>
           <div
@@ -125,10 +123,38 @@ export function SortableMediaItem({
           >
             <GripVertical className="w-4 h-4 text-white" />
           </div>
+          <div
+            className={`absolute bottom-1 right-1 flex gap-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
+          >
+            <button
+              onClick={() => move(item.id, -1)}
+              className="p-1 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
+              aria-label="Move left"
+              type="button"
+            >
+              {isMobile ? (
+                <CircleChevronUp className="w-7 h-7" />
+              ) : (
+                <CircleChevronLeft className="w-7 h-7" />
+              )}
+            </button>
+            <button
+              onClick={() => move(item.id, 1)}
+              className="p-1 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
+              aria-label="Move right"
+              type="button"
+            >
+              {isMobile ? (
+                <CircleChevronDown className="w-7 h-7" />
+              ) : (
+                <CircleChevronRight className="w-7 h-7" />
+              )}
+            </button>
+          </div>
           <Button
             size="sm"
             variant="destructive"
-            className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 h-7 w-7 p-0"
+            className={`absolute top-1 right-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} hover:cursor-pointer transition-opacity z-10 h-7 w-7 p-0`}
             onClick={onDelete}
             type="button"
           >
@@ -137,9 +163,10 @@ export function SortableMediaItem({
         </>
       )}
 
-      {/* Optional: Show "new" badge for files not yet uploaded */}
       {!isExisting && (
-        <div className="absolute bottom-1 left-1 bg-blue-500 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        <div
+          className={`absolute bottom-1 left-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
+        >
           Nowy
         </div>
       )}

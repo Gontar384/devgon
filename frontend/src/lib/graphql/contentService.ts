@@ -52,8 +52,8 @@ export async function updateContent(
     header?: string;
     description?: string;
     existingMediaIds?: string[]; // Do zmiany kolejności
-    deleteMediaIds?: string[];   // Do usunięcia
-    newMedia?: File[];          // Do dodania
+    deleteMediaIds?: string[]; // Do usunięcia
+    newMedia?: File[]; // Do dodania
   },
   maxMedia?: number,
 ): Promise<boolean> {

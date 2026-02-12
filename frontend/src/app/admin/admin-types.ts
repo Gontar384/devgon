@@ -95,6 +95,13 @@ export interface MediaUploaderProps {
   maxMedia?: number;
 }
 
+export interface SortableMediaItemProps {
+  item: MediaItem;
+  onDelete: () => void;
+  isEditing: boolean;
+  move: (id: string, dir: -1 | 1) => void;
+}
+
 export interface MediaItem {
   id: string;
   type: 'existing' | 'new';

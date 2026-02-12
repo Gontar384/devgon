@@ -19,6 +19,9 @@ import {
 import { MediaItem, MediaUploaderProps } from '@/app/admin/admin-types';
 import { SortableMediaItem } from '@/app/admin/content-util/atomic/media-uploader/SortableMediaItem';
 import { MediaType } from '@/lib/graphql/graphql-types';
+import { toast } from 'sonner';
+
+const ALLOWED = ['image/', 'video/'];
 
 export function MediaUploader({
   media,
@@ -26,18 +29,9 @@ export function MediaUploader({
   isEditing,
   maxMedia,
 }: MediaUploaderProps) {
-  console.log(media);
-  const [items, setItems] = useState<MediaItem[]>([]);
-
-  useEffect(() => {
-    const existingItems: MediaItem[] = media.map((m) => ({
-      id: m.id,
-      type: 'existing' as const,
-      data: m,
-    }));
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setItems(existingItems);
-  }, [media]);
+  const [items, setItems] = useState<MediaItem[]>(() =>
+    media.map((m) => ({ id: m.id, type: 'existing', data: m })),
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -45,23 +39,33 @@ export function MediaUploader({
     }),
   );
 
+  const filterValidFiles = (files: File[]) => {
+    const valid = files.filter((f) =>
+      ALLOWED.some((t) => f.type.startsWith(t)),
+    );
+    if (valid.length !== files.length) {
+      toast.warning('Dozwolone są tylko zdjęcia i wideo');
+    }
+    return valid;
+  };
+
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    let files = Array.from(e.target.files || []);
+    files = filterValidFiles(files);
 
     if (maxMedia && items.length + files.length > maxMedia) {
-      alert(`Maksymalna liczba mediów to ${maxMedia}`);
+      toast.warning(`Maksymalna liczba mediów to ${maxMedia}`);
       return;
     }
 
     const newItems: MediaItem[] = files.map((file) => ({
-      id: `new-${Date.now()}-${Math.random()}`,
-      type: 'new' as const,
+      id: `new-${crypto.randomUUID()}`,
+      type: 'new',
       data: file,
     }));
 
     const updatedItems = [...items, ...newItems];
     setItems(updatedItems);
-    emitChange(updatedItems);
 
     e.target.value = '';
   };
@@ -69,7 +73,15 @@ export function MediaUploader({
   const handleDelete = (id: string) => {
     const updatedItems = items.filter((item) => item.id !== id);
     setItems(updatedItems);
-    emitChange(updatedItems);
+  };
+
+  const moveItem = (id: string, dir: -1 | 1) => {
+    setItems((items) => {
+      const i = items.findIndex((x) => x.id === id);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= items.length) return items;
+      return arrayMove(items, i, j);
+    });
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -81,21 +93,19 @@ export function MediaUploader({
 
     const reorderedItems = arrayMove(items, oldIndex, newIndex);
     setItems(reorderedItems);
-    emitChange(reorderedItems);
   };
 
-  const emitChange = (currentItems: MediaItem[]) => {
-    const newFiles = currentItems
-      .filter((item) => item.type === 'new')
-      .map((item) => item.data as File);
+  const emitChange = (current: MediaItem[]) => {
+    const newFiles = current
+      .filter((i) => i.type === 'new')
+      .map((i) => i.data as File);
 
-    const existingIds = currentItems
-      .filter((item) => item.type === 'existing')
-      .map((item) => item.id);
+    const existingIds = current
+      .filter((i) => i.type === 'existing')
+      .map((i) => i.id);
 
-    const currentExistingIds = new Set(existingIds);
     const deleteIds = media
-      .filter((m) => !currentExistingIds.has(m.id))
+      .filter((m) => !existingIds.includes(m.id))
       .map((m) => m.id);
 
     onMediaChange({ newFiles, existingIds, deleteIds });
@@ -103,29 +113,38 @@ export function MediaUploader({
 
   const canAddMore = !maxMedia || items.length < maxMedia;
 
+  useEffect(() => {
+    emitChange(items);
+  }, [items]);
+
   if (!isEditing) {
     return (
-      <div className="gap-0">
+      <div className="gap-0 space-y-2">
         <h2 className="text-xs underline">Media</h2>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="flex flex-wrap gap-2">
           {media.length > 0 ? (
             media.map((m) => (
-              <div key={m.id} className="relative aspect-square">
-                {m.type === MediaType.IMAGE ? (
-                  <Image
-                    src={m.url}
-                    alt={m.alt || m.filename}
-                    fill
-                    unoptimized
-                    className="object-cover rounded"
-                  />
-                ) : (
-                  <video
-                    src={m.url}
-                    className="w-full h-full rounded"
-                    controls
-                  />
-                )}
+              <div
+                key={m.id}
+                className="relative aspect-square group w-[295px] h-[295px]"
+              >
+                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                  {m.type === MediaType.IMAGE ? (
+                    <Image
+                      src={m.url}
+                      alt={m.alt || m.filename}
+                      fill
+                      unoptimized
+                      className="w-full h-full object-cover rounded"
+                    />
+                  ) : m.type === MediaType.VIDEO ? (
+                    <video
+                      src={m.url}
+                      className="w-full h-full object-cover rounded"
+                      controls
+                    />
+                  ) : null}
+                </div>
               </div>
             ))
           ) : (
@@ -137,47 +156,56 @@ export function MediaUploader({
   }
 
   return (
-    <div className="space-y-4">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={items.map((i) => i.id)}
-          strategy={rectSortingStrategy}
+    <div className="gap-0 space-y-2">
+      <h2 className="text-xs underline">Media</h2>
+      <div className="p-2 border rounded border-gray-300">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
         >
-          <div className="grid grid-cols-3 gap-2">
-            {items.map((item) => (
-              <SortableMediaItem
-                key={item.id}
-                item={item}
-                onDelete={() => handleDelete(item.id)}
-                isEditing={isEditing}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
-      <div className="flex items-center gap-2">
-        <input
-          type="file"
-          accept="image/*,video/*"
-          multiple
-          onChange={handleFileSelect}
-          className="hidden"
-          id="media-upload"
-          disabled={!canAddMore}
-        />
-        <label htmlFor="media-upload">
-          <Button asChild variant="outline" disabled={!canAddMore}>
-            <span>
-              <Upload className="w-4 h-4 mr-2" />
-              Dodaj media
-              {maxMedia && ` (${items.length}/${maxMedia})`}
-            </span>
-          </Button>
-        </label>
+          <SortableContext
+            items={items.map((i) => i.id)}
+            strategy={rectSortingStrategy}
+          >
+            <div className="flex flex-wrap gap-2">
+              {items.map((item) => (
+                <SortableMediaItem
+                  key={item.id}
+                  item={item}
+                  onDelete={() => handleDelete(item.id)}
+                  isEditing={isEditing}
+                  move={moveItem}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+        <div className="flex items-center justify-center p-5 gap-2">
+          <input
+            type="file"
+            accept="image/*,video/*"
+            multiple
+            onChange={handleFileSelect}
+            className="hidden"
+            id="media-upload"
+            disabled={!canAddMore}
+          />
+          <label htmlFor="media-upload">
+            <Button
+              asChild
+              variant="outline"
+              className="hover:cursor-pointer"
+              disabled={!canAddMore}
+            >
+              <span>
+                <Upload className="w-4 h-4 mr-2" />
+                Dodaj media
+                {maxMedia && ` (${items.length}/${maxMedia})`}
+              </span>
+            </Button>
+          </label>
+        </div>
       </div>
     </div>
   );

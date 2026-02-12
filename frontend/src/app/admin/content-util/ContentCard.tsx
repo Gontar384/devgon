@@ -193,7 +193,7 @@ export function ContentCard({
               {(content?.order ?? 0) + 1}
             </p>
           )}
-          <div className="space-y-6 flex-1 overflow-y-auto pt-6 px-6">
+          <div className="space-y-6 flex-1 overflow-y-auto p-6">
             {fieldsToDisplay.title && (
               <EditableField
                 value={draftTitle}
