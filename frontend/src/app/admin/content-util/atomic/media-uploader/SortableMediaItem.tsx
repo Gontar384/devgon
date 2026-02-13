@@ -55,7 +55,7 @@ export function SortableMediaItem({
     <div
       ref={setNodeRef}
       style={style}
-      className="relative aspect-square group w-[295px] h-[295px]"
+      className="relative aspect-square group w-[300px] h-[300px]"
     >
       {isExisting && media ? (
         <div className="relative w-full h-full overflow-hidden">
@@ -73,6 +73,7 @@ export function SortableMediaItem({
               className="w-full h-full object-cover rounded"
               autoPlay
               loop
+              muted
             />
           ) : (
             <div className="w-full h-full border-2 border-dashed rounded flex items-center justify-center bg-gray-50">
@@ -100,6 +101,7 @@ export function SortableMediaItem({
               className="w-full h-full object-cover rounded"
               autoPlay
               loop
+              muted
             />
           ) : (
             <div className="w-full h-full border-2 border-dashed rounded flex items-center justify-center bg-gray-50">

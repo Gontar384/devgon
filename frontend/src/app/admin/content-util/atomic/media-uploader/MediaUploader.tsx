@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
@@ -18,7 +18,7 @@ import {
 } from '@dnd-kit/sortable';
 import { MediaItem, MediaUploaderProps } from '@/app/admin/admin-types';
 import { SortableMediaItem } from '@/app/admin/content-util/atomic/media-uploader/SortableMediaItem';
-import { MediaType } from '@/lib/graphql/graphql-types';
+import { Media, MediaType } from '@/lib/graphql/graphql-types';
 import { toast } from 'sonner';
 
 const ALLOWED = ['image/', 'video/'];
@@ -29,10 +29,6 @@ export function MediaUploader({
   isEditing,
   maxMedia,
 }: MediaUploaderProps) {
-  const [items, setItems] = useState<MediaItem[]>(() =>
-    media.map((m) => ({ id: m.id, type: 'existing', data: m })),
-  );
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
@@ -53,7 +49,7 @@ export function MediaUploader({
     let files = Array.from(e.target.files || []);
     files = filterValidFiles(files);
 
-    if (maxMedia && items.length + files.length > maxMedia) {
+    if (maxMedia && media.length + files.length > maxMedia) {
       toast.warning(`Maksymalna liczba mediów to ${maxMedia}`);
       return;
     }
@@ -67,63 +63,42 @@ export function MediaUploader({
       },
     }));
 
-    const updatedItems = [...items, ...newItems];
-    setItems(updatedItems);
+    const updatedItems = [...media, ...newItems];
+    onMediaChange(updatedItems);
 
     e.target.value = '';
   };
 
   const handleDelete = (id: string) => {
-    setItems((items) => {
-      const item = items.find((i) => i.id === id);
-      if (item?.type === 'new') {
-        URL.revokeObjectURL(item.data.previewUrl);
-      }
-      return items.filter((i) => i.id !== id);
-    });
+    const item = media.find((i) => i.id === id);
+    if (item?.type === 'new') {
+      URL.revokeObjectURL(item.data.previewUrl);
+    }
+    const updatedItems = media.filter((i) => i.id !== id);
+    onMediaChange(updatedItems);
   };
 
   const moveItem = (id: string, dir: -1 | 1) => {
-    setItems((items) => {
-      const i = items.findIndex((x) => x.id === id);
-      const j = i + dir;
-      if (i < 0 || j < 0 || j >= items.length) return items;
-      return arrayMove(items, i, j);
-    });
+    const i = media.findIndex((x) => x.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= media.length) return;
+
+    const updatedItems = arrayMove(media, i, j);
+    onMediaChange(updatedItems);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = items.findIndex((item) => item.id === active.id);
-    const newIndex = items.findIndex((item) => item.id === over.id);
+    const oldIndex = media.findIndex((item) => item.id === active.id);
+    const newIndex = media.findIndex((item) => item.id === over.id);
 
-    const reorderedItems = arrayMove(items, oldIndex, newIndex);
-    setItems(reorderedItems);
+    const reorderedItems = arrayMove(media, oldIndex, newIndex);
+    onMediaChange(reorderedItems);
   };
 
-  const emitChange = (current: MediaItem[]) => {
-    const newFiles = current
-      .filter((i) => i.type === 'new')
-      .map((i) => i.data.file);
-
-    const existingIds = current
-      .filter((i) => i.type === 'existing')
-      .map((i) => i.id);
-
-    const deleteIds = media
-      .filter((m) => !existingIds.includes(m.id))
-      .map((m) => m.id);
-
-    onMediaChange({ newFiles, existingIds, deleteIds });
-  };
-
-  const canAddMore = !maxMedia || items.length < maxMedia;
-
-  useEffect(() => {
-    emitChange(items);
-  }, [items]);
+  const canAddMore = !maxMedia || media.length < maxMedia;
 
   if (!isEditing) {
     return (
@@ -131,30 +106,37 @@ export function MediaUploader({
         <h2 className="text-xs underline">Media</h2>
         <div className="flex flex-wrap gap-2">
           {media.length > 0 ? (
-            media.map((m) => (
-              <div
-                key={m.id}
-                className="relative aspect-square group w-[295px] h-[295px]"
-              >
-                <div className="relative w-full h-full overflow-hidden">
-                  {m.type === MediaType.IMAGE ? (
-                    <Image
-                      src={m.url}
-                      alt={m.alt || m.filename}
-                      fill
-                      unoptimized
-                      className="w-full h-full object-cover rounded"
-                    />
-                  ) : m.type === MediaType.VIDEO ? (
-                    <video
-                      src={m.url}
-                      className="w-full h-full object-cover rounded"
-                      controls
-                    />
-                  ) : null}
+            media
+              .filter(
+                (m): m is { id: string; type: 'existing'; data: Media } =>
+                  m.type === 'existing',
+              )
+              .map((m) => (
+                <div
+                  key={m.id}
+                  className="relative aspect-square group w-[235px] h-[235px]"
+                >
+                  <div className="relative w-full h-full overflow-hidden">
+                    {m.data.type === MediaType.IMAGE ? (
+                      <Image
+                        src={m.data.url}
+                        alt={m.data.alt || m.data.filename}
+                        fill
+                        unoptimized
+                        className="w-full h-full object-cover rounded"
+                      />
+                    ) : m.data.type === MediaType.VIDEO ? (
+                      <video
+                        src={m.data.url}
+                        className="w-full h-full object-cover rounded"
+                        autoPlay
+                        loop
+                        muted
+                      />
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            ))
+              ))
           ) : (
             <p className="text-2xl">{'<...>'}</p>
           )}
@@ -173,11 +155,11 @@ export function MediaUploader({
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={items.map((i) => i.id)}
+            items={media.map((i) => i.id)}
             strategy={rectSortingStrategy}
           >
             <div className="flex flex-wrap gap-2">
-              {items.map((item) => (
+              {media.map((item) => (
                 <SortableMediaItem
                   key={item.id}
                   item={item}
@@ -209,7 +191,7 @@ export function MediaUploader({
               <span>
                 <Upload className="w-4 h-4 mr-2" />
                 Dodaj media
-                {maxMedia && ` (${items.length}/${maxMedia})`}
+                {maxMedia && ` (${media.length}/${maxMedia})`}
               </span>
             </Button>
           </label>

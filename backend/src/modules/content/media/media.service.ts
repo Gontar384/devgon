@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import { Media, MediaType } from './media.entity';
 import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
-import { UploadedFileType, UploadedMediaInfo } from './media-types';
+import { UploadedFileType } from './media-types';
 
 @Injectable()
 export class MediaService {
@@ -33,13 +33,33 @@ export class MediaService {
     private readonly minioService: MinioService,
   ) {}
 
+
+
+
+
+
+
   async uploadMany(
     contentId: string,
     files: UploadedFileType[],
+    tempIds: string[],
     maxMedia?: number,
-  ): Promise<UploadedMediaInfo[]> {
+  ): Promise<
+    Array<{
+      id: string;
+      tempId: string;
+      filename: string;
+      type: MediaType;
+      order: number;
+    }>
+  > {
     if (!files?.length) {
-      throw new BadRequestException('Brak plików do uploadu');
+      throw new BadRequestException('No files to upload');
+    }
+    if (files.length !== tempIds.length) {
+      throw new BadRequestException(
+        `Mismatch: ${files.length} files, ${tempIds.length} tempIds`,
+      );
     }
 
     this.logger.log(
@@ -50,14 +70,18 @@ export class MediaService {
       await this.validateMediaLimit(contentId, files.length, maxMedia);
     }
 
-    const startOrder = await this.getNextOrder(contentId);
-
-    const uploadedMedia: UploadedMediaInfo[] = [];
+    const uploadedMedia: Array<{
+      id: string;
+      tempId: string;
+      filename: string;
+      type: MediaType;
+      order: number;
+    }> = [];
     const skippedFiles: string[] = [];
-    let orderOffset = 0;
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      const tempId = tempIds[i];
 
       if (!this.isValidFileType(file)) {
         this.logger.warn(
@@ -67,20 +91,22 @@ export class MediaService {
         continue;
       }
 
-      const order = startOrder + orderOffset;
-      orderOffset++;
-
       try {
-        const media = await this.uploadSingle(contentId, file, order);
+        const media = await this.uploadSingleWithTempId(
+          contentId,
+          file,
+          tempId,
+        );
+
         uploadedMedia.push({
           id: media.id,
+          tempId: media.uploadTempId!,
           filename: media.filename,
           type: media.type,
           order: media.order,
         });
       } catch (error) {
-        await this.rollbackUploads(uploadedMedia);
-
+        await this.rollbackUploads(uploadedMedia.map((m) => m.id));
         this.logger.error(
           `Upload failed for ${file.originalname}:`,
           error instanceof Error ? error.stack : String(error),
@@ -99,6 +125,54 @@ export class MediaService {
 
     this.logger.log(`✅ Successfully uploaded ${uploadedMedia.length} files`);
     return uploadedMedia;
+  }
+
+  private async uploadSingleWithTempId(
+    contentId: string,
+    file: UploadedFileType,
+    tempId: string,
+  ): Promise<Media> {
+    const ext = file.originalname.split('.').pop() ?? 'bin';
+    const storageKey = `${uuidv4()}-${Date.now()}.${ext}`;
+
+    this.logger.log(
+      `  → ${file.originalname} (tempId: ${tempId}) → ${storageKey}`,
+    );
+
+    await this.minioService.uploadFile(file, storageKey);
+
+    const type = file.mimetype.startsWith('video/')
+      ? MediaType.VIDEO
+      : MediaType.IMAGE;
+
+    const altText = this.generateAltText(file.originalname);
+
+    const media = this.mediaRepo.create({
+      filename: file.originalname,
+      storageKey,
+      mimeType: file.mimetype,
+      type,
+      size: file.size,
+      alt: altText,
+      contentId,
+      order: 0,
+      uploadTempId: tempId,
+    });
+
+    return await this.mediaRepo.save(media);
+  }
+
+
+
+
+
+
+
+
+  async findByTempId(tempId: string): Promise<Media | null> {
+    return await this.mediaRepo.findOne({
+      where: { uploadTempId: tempId },
+    });
   }
 
   async deleteMany(mediaIds: string[]): Promise<void> {
@@ -137,39 +211,6 @@ export class MediaService {
     this.logger.log(`🗑️ Deleted ${mediaList.length} media`);
   }
 
-  async reorder(contentId: string, orderedMediaIds: string[]): Promise<void> {
-    const allMedia = await this.mediaRepo.find({
-      where: { contentId },
-      order: { order: 'ASC' },
-    });
-
-    const mediaMap = new Map(allMedia.map((m) => [m.id, m]));
-    const reorderedSet = new Set(orderedMediaIds);
-    const updates: Media[] = [];
-
-    orderedMediaIds.forEach((id, index) => {
-      const media = mediaMap.get(id);
-      if (media && media.order !== index) {
-        media.order = index;
-        updates.push(media);
-      }
-    });
-
-    let nextOrder = orderedMediaIds.length;
-    allMedia.forEach((media) => {
-      if (!reorderedSet.has(media.id) && media.order !== nextOrder) {
-        media.order = nextOrder;
-        updates.push(media);
-        nextOrder++;
-      }
-    });
-
-    if (updates.length > 0) {
-      await this.mediaRepo.save(updates);
-      this.logger.log(`🔀 Reordered ${updates.length} media`);
-    }
-  }
-
   private isValidFileType(file: UploadedFileType): boolean {
     const allowedMimetypes = [
       ...this.ALLOWED_IMAGE_MIMETYPES,
@@ -191,38 +232,6 @@ export class MediaService {
     return alt || 'Media';
   }
 
-  private async uploadSingle(
-    contentId: string,
-    file: UploadedFileType,
-    order: number,
-  ): Promise<Media> {
-    const ext = file.originalname.split('.').pop() ?? 'bin';
-    const storageKey = `${uuidv4()}-${Date.now()}.${ext}`;
-
-    this.logger.log(`  → ${file.originalname} → ${storageKey}`);
-
-    await this.minioService.uploadFile(file, storageKey);
-
-    const type = file.mimetype.startsWith('video/')
-      ? MediaType.VIDEO
-      : MediaType.IMAGE;
-
-    const altText = this.generateAltText(file.originalname);
-
-    const media = this.mediaRepo.create({
-      filename: file.originalname,
-      storageKey,
-      mimeType: file.mimetype,
-      type,
-      size: file.size,
-      alt: altText,
-      contentId,
-      order,
-    });
-
-    return await this.mediaRepo.save(media);
-  }
-
   private async validateMediaLimit(
     contentId: string,
     newFilesCount: number,
@@ -238,15 +247,6 @@ export class MediaService {
           `Obecna: ${currentCount}, próbujesz dodać: ${newFilesCount}.`,
       );
     }
-  }
-
-  private async getNextOrder(contentId: string): Promise<number> {
-    const lastMedia = await this.mediaRepo.findOne({
-      where: { contentId },
-      order: { order: 'DESC' },
-    });
-
-    return lastMedia ? lastMedia.order + 1 : 0;
   }
 
   private async reindexMedia(contentId: string): Promise<void> {
@@ -273,14 +273,11 @@ export class MediaService {
     }
   }
 
-  private async rollbackUploads(
-    uploadedMedia: UploadedMediaInfo[],
-  ): Promise<void> {
-    if (!uploadedMedia.length) return;
+  private async rollbackUploads(mediaIds: string[]): Promise<void> {
+    if (!mediaIds.length) return;
 
-    this.logger.warn(`🔄 Rolling back ${uploadedMedia.length} uploads...`);
+    this.logger.warn(`🔄 Rolling back ${mediaIds.length} uploads...`);
 
-    const mediaIds = uploadedMedia.map((m) => m.id);
     const mediaList = await this.mediaRepo.find({
       where: { id: In(mediaIds) },
     });
@@ -299,5 +296,69 @@ export class MediaService {
     );
 
     await this.mediaRepo.delete(mediaIds);
+  }
+
+
+
+
+
+
+  async updateOrder(
+    updates: Array<{ id: string; order: number }>,
+  ): Promise<void> {
+    if (!updates.length) return;
+
+    // Użyj transakcji dla atomowości
+    await this.mediaRepo.manager.transaction(async (manager) => {
+      const mediaRepo = manager.getRepository(Media);
+
+      const mediaList = await mediaRepo.find({
+        where: { id: In(updates.map((u) => u.id)) },
+      });
+
+      if (mediaList.length !== updates.length) {
+        const foundIds = new Set(mediaList.map(m => m.id));
+        const missingIds = updates.filter(u => !foundIds.has(u.id)).map(u => u.id);
+        throw new BadRequestException(
+          `Media not found for IDs: ${missingIds.join(', ')}`
+        );
+      }
+
+      const mediaMap = new Map(mediaList.map((m) => [m.id, m]));
+
+      // KLUCZOWA ZMIANA: Najpierw ustaw wszystkie order na wartości tymczasowe
+      // aby uniknąć konfliktów unique constraint (jeśli taki istnieje)
+      const tempUpdates = updates.map(({ id }, idx) => {
+        const media = mediaMap.get(id)!;
+        media.order = -1000 - idx; // Tymczasowa wartość ujemna
+        return media;
+      });
+
+      await mediaRepo.save(tempUpdates);
+
+      // Teraz ustaw właściwe wartości
+      const finalUpdates = updates.map(({ id, order }) => {
+        const media = mediaMap.get(id)!;
+        media.order = order;
+        return media;
+      });
+
+      await mediaRepo.save(finalUpdates);
+
+      this.logger.log(`🔀 Updated order for ${finalUpdates.length} media`);
+    });
+  }
+
+
+
+
+
+
+  async clearTempIds(mediaIds: string[]): Promise<void> {
+    if (!mediaIds.length) return;
+
+    await this.mediaRepo.update({ id: In(mediaIds) }, { uploadTempId: null });
+
+    this.logger.log(`🧹 Cleared tempIds for ${mediaIds.length} media`);
   }
 }

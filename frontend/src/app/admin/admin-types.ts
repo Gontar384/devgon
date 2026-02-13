@@ -85,12 +85,8 @@ export interface AdminContentErrorBannerProps {
 }
 
 export interface MediaUploaderProps {
-  media: Media[];
-  onMediaChange: (params: {
-    newFiles: File[];
-    existingIds: string[];
-    deleteIds: string[];
-  }) => void;
+  media: MediaItem[];
+  onMediaChange: (mediaItems: MediaItem[]) => void;
   isEditing: boolean;
   maxMedia?: number;
 }

@@ -3,11 +3,9 @@
 # ------------------------------------------------------
 
 input ContentInput {
-  deleteMediaIds: [String!]
   description: String
-  existingMediaIds: [String!]
   header: String
-  order: Float
+  mediaOrder: [MediaOrderInput!]!
   title: String
 }
 
@@ -40,6 +38,13 @@ type MediaModel {
   type: MediaType!
   updatedAt: DateTime!
   url: String!
+}
+
+input MediaOrderInput {
+  id: ID
+  kind: String!
+  order: Float!
+  tempId: String
 }
 
 """Type of media (image or video)"""

@@ -49,32 +49,79 @@ export class ContentService {
     this.logger.log(`✅ Empty content created`);
   }
 
+
+
+
+
   async update(id: string, input: ContentInput): Promise<void> {
     this.logger.log(`🔄 Updating content ID: ${id}`);
 
-    const content = await this.contentRepo.findOne({
-      where: { id },
+    await this.contentRepo.manager.transaction(async (manager) => {
+      const contentRepo = manager.getRepository(Content);
+
+      const content = await contentRepo.findOne({
+        where: { id },
+        relations: ['media'],
+      });
+
+      if (!content) {
+        throw new BadRequestException('Content nie istnieje');
+      }
+
+      const updateData = this.normalizeInput(input);
+      if (Object.keys(updateData).length > 0) {
+        await contentRepo.update({ id }, updateData);
+      }
+
+      const mediaOrderMap = new Map<string, number>();
+
+      for (const item of input.mediaOrder) {
+        let mediaId: string | null = null;
+
+        if (item.kind === 'existing' && item.id) {
+          mediaId = item.id;
+        } else if (item.kind === 'new' && item.tempId) {
+          const media = await this.mediaService.findByTempId(item.tempId);
+          if (!media) {
+            this.logger.error(`❌ Media not found for tempId: ${item.tempId}`);
+            throw new BadRequestException(
+              `Uploaded media not found for tempId: ${item.tempId}`,
+            );
+          }
+          mediaId = media.id;
+        }
+
+        if (mediaId) {
+          mediaOrderMap.set(mediaId, item.order);
+        }
+      }
+
+      const currentMediaIds = content.media.map((m) => m.id);
+      const toDelete = currentMediaIds.filter((mediaId) => !mediaOrderMap.has(mediaId));
+
+      if (toDelete.length > 0) {
+        this.logger.log(`🗑️ Deleting ${toDelete.length} media`);
+        await this.mediaService.deleteMany(toDelete);
+      }
+
+      const updates = Array.from(mediaOrderMap.entries()).map(([mediaId, order]) => ({
+        id: mediaId,
+        order,
+      }));
+
+      if (updates.length > 0) {
+        await this.mediaService.updateOrder(updates);
+        await this.mediaService.clearTempIds(updates.map((u) => u.id));
+      }
+
+      this.logger.log(`✅ Content updated with ${updates.length} media`);
     });
-
-    if (!content) {
-      throw new BadRequestException('Content nie istnieje');
-    }
-
-    const updateData = this.normalizeInput(input);
-    if (Object.keys(updateData).length > 0) {
-      await this.contentRepo.update({ id }, updateData);
-    }
-
-    if (input.deleteMediaIds?.length) {
-      await this.mediaService.deleteMany(input.deleteMediaIds);
-    }
-
-    if (input.existingMediaIds?.length) {
-      await this.mediaService.reorder(id, input.existingMediaIds);
-    }
-
-    this.logger.log(`✅ Content updated`);
   }
+
+
+
+
+
 
   async delete(id: string): Promise<boolean> {
     const content = await this.contentRepo.findOne({

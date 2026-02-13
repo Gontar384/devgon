@@ -16,10 +16,3 @@ export interface UploadMediaResponse {
     order: number;
   }>;
 }
-
-export interface UploadedMediaInfo {
-  id: string;
-  filename: string;
-  type: MediaType;
-  order: number;
-}

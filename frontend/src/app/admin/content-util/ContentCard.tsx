@@ -1,10 +1,15 @@
 'use client';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { Card } from '@/components/ui/card';
 import { deleteContent, updateContent } from '@/lib/graphql/contentService';
 import { EditButtons } from '@/app/admin/content-util/atomic/EditButtons';
 import { EditableField } from '@/app/admin/content-util/atomic/EditableField';
-import { ContentCardProps } from '@/app/admin/admin-types';
+import { ContentCardProps, MediaItem } from '@/app/admin/admin-types';
 import { toast } from 'sonner';
 import { DeleteCardButton } from '@/app/admin/content-util/atomic/DeleteCardButton';
 import { useSortable } from '@dnd-kit/sortable';
@@ -27,15 +32,13 @@ export function ContentCard({
     safeData.description ?? '',
   );
 
-  const [mediaState, setMediaState] = useState<{
-    newFiles: File[];
-    existingIds: string[];
-    deleteIds: string[];
-  }>({
-    newFiles: [],
-    existingIds: content?.media?.map((m) => m.id) || [],
-    deleteIds: [],
-  });
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>(() =>
+    (content?.media || []).map<MediaItem>((m) => ({
+      id: m.id,
+      type: 'existing',
+      data: m,
+    })),
+  );
 
   const [isEditing, setIsEditing] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -46,8 +49,26 @@ export function ContentCard({
       setDraftTitle(safeData.title ?? '');
       setDraftHeader(safeData.header ?? '');
       setDraftDescription(safeData.description ?? '');
+
+      setMediaItems(
+        (content?.media || []).map<MediaItem>((m) => ({
+          id: m.id,
+          type: 'existing',
+          data: m,
+        })),
+      );
     }
-  }, [safeData.title, safeData.header, safeData.description, isEditing]);
+  }, [
+    safeData.title,
+    safeData.header,
+    safeData.description,
+    content?.media,
+    isEditing,
+  ]);
+
+  const handleMediaChange = useCallback((items: MediaItem[]) => {
+    setMediaItems(items);
+  }, []);
 
   const closeEditor = () => {
     setIsClosing(true);
@@ -58,9 +79,23 @@ export function ContentCard({
   };
 
   const handleCancel = () => {
+    mediaItems.forEach((item) => {
+      if (item.type === 'new') {
+        URL.revokeObjectURL(item.data.previewUrl);
+      }
+    });
+
     setDraftTitle(safeData.title ?? '');
     setDraftHeader(safeData.header ?? '');
     setDraftDescription(safeData.description ?? '');
+    setMediaItems(
+      (content?.media || []).map<MediaItem>((m) => ({
+        id: m.id,
+        type: 'existing',
+        data: m,
+      })),
+    );
+
     closeEditor();
   };
 
@@ -134,10 +169,7 @@ export function ContentCard({
       title: stripEmptyHtml(draftTitle),
       header: stripEmptyHtml(draftHeader),
       description: stripEmptyHtml(draftDescription),
-
-      newMedia: mediaState.newFiles,
-      existingMediaIds: mediaState.existingIds,
-      deleteMediaIds: mediaState.deleteIds,
+      mediaItems,
     };
     try {
       await updateContent(content.id, payload, maxMedia);
@@ -226,8 +258,8 @@ export function ContentCard({
             )}
             {(maxMedia ?? 0) > 0 && (
               <MediaUploader
-                media={content.media || []}
-                onMediaChange={setMediaState}
+                media={mediaItems || []}
+                onMediaChange={handleMediaChange}
                 isEditing={isEditing}
                 maxMedia={maxMedia}
               />

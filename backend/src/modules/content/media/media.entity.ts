@@ -25,6 +25,9 @@ export class Media {
   @Column({ type: 'varchar', unique: true })
   storageKey: string;
 
+  @Column({ type: 'varchar', nullable: true, unique: true })
+  uploadTempId?: string | null;
+
   @Column({ type: 'varchar' })
   mimeType: string;
 
