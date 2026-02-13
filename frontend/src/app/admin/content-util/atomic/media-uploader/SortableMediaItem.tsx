@@ -12,7 +12,7 @@ import {
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
 
 export function SortableMediaItem({
@@ -42,7 +42,7 @@ export function SortableMediaItem({
   const media = isExisting ? (item.data as Media) : null;
   const file = !isExisting ? (item.data as File) : null;
 
-  const [previewUrl] = React.useState<string | null>(() =>
+  const [previewUrl] = useState<string | null>(() =>
     file ? URL.createObjectURL(file) : null,
   );
 
@@ -67,7 +67,7 @@ export function SortableMediaItem({
       className="relative aspect-square group w-[295px] h-[295px]"
     >
       {isExisting && media ? (
-        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           {media.type === MediaType.IMAGE ? (
             <Image
               src={media.url}
@@ -83,12 +83,18 @@ export function SortableMediaItem({
               autoPlay
               loop
             />
-          ) : null}
+          ) : (
+            <div className="w-full h-full border-2 border-dashed rounded flex items-center justify-center bg-gray-50">
+              <div className="p-2 text-xs truncate text-center">
+                {media.filename}
+              </div>
+            </div>
+          )}
         </div>
       ) : null}
 
       {!isExisting && file && previewUrl ? (
-        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           {isImage ? (
             <Image
               src={previewUrl}

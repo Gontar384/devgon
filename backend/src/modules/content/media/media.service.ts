@@ -1,27 +1,31 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Media, MediaType } from './media.entity';
 import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface UploadedFile {
-  buffer: Buffer;
-  originalname: string;
-  mimetype: string;
-  size: number;
-}
-
-export interface UploadedMediaInfo {
-  id: string;
-  filename: string;
-  type: MediaType;
-  order: number;
-}
+import { UploadedFileType, UploadedMediaInfo } from './media-types';
 
 @Injectable()
 export class MediaService {
   private readonly logger = new Logger(MediaService.name);
+
+  private readonly ALLOWED_IMAGE_MIMETYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/svg+xml',
+  ];
+
+  private readonly ALLOWED_VIDEO_MIMETYPES = [
+    'video/mp4',
+    'video/mpeg',
+    'video/quicktime',
+    'video/x-msvideo',
+    'video/webm',
+  ];
 
   constructor(
     @InjectRepository(Media)
@@ -29,35 +33,42 @@ export class MediaService {
     private readonly minioService: MinioService,
   ) {}
 
-  /**
-   * Uploaduje wiele plików dla danego contentu
-   * Waliduje limit i wykonuje upload atomowo
-   */
   async uploadMany(
     contentId: string,
-    files: UploadedFile[],
+    files: UploadedFileType[],
     maxMedia?: number,
   ): Promise<UploadedMediaInfo[]> {
     if (!files?.length) {
       throw new BadRequestException('Brak plików do uploadu');
     }
 
-    this.logger.log(`📤 Uploading ${files.length} files for content ${contentId}`);
+    this.logger.log(
+      `📤 Uploading ${files.length} files for content ${contentId}`,
+    );
 
-    // Walidacja limitu
     if (maxMedia !== undefined) {
       await this.validateMediaLimit(contentId, files.length, maxMedia);
     }
 
-    // Pobierz następny order tylko raz
     const startOrder = await this.getNextOrder(contentId);
 
-    // Upload wszystkich plików
     const uploadedMedia: UploadedMediaInfo[] = [];
+    const skippedFiles: string[] = [];
+    let orderOffset = 0;
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const order = startOrder + i;
+
+      if (!this.isValidFileType(file)) {
+        this.logger.warn(
+          `⚠️ Skipping invalid file type: ${file.originalname} (${file.mimetype})`,
+        );
+        skippedFiles.push(file.originalname);
+        continue;
+      }
+
+      const order = startOrder + orderOffset;
+      orderOffset++;
 
       try {
         const media = await this.uploadSingle(contentId, file, order);
@@ -68,7 +79,6 @@ export class MediaService {
           order: media.order,
         });
       } catch (error) {
-        // Rollback: usuń już uploadowane pliki
         await this.rollbackUploads(uploadedMedia);
 
         this.logger.error(
@@ -81,56 +91,28 @@ export class MediaService {
       }
     }
 
+    if (skippedFiles.length > 0) {
+      this.logger.log(
+        `⚠️ Skipped ${skippedFiles.length} invalid files: ${skippedFiles.join(', ')}`,
+      );
+    }
+
     this.logger.log(`✅ Successfully uploaded ${uploadedMedia.length} files`);
     return uploadedMedia;
   }
 
-  /**
-   * Usuwa media i przenumerowuje pozostałe
-   */
-  async delete(mediaId: string): Promise<void> {
-    const media = await this.mediaRepo.findOne({ where: { id: mediaId } });
-
-    if (!media) {
-      throw new BadRequestException('Media nie znaleziono');
-    }
-
-    // Usuń plik z MinIO
-    try {
-      await this.minioService.deleteFile(media.storageKey);
-    } catch (error) {
-      this.logger.error(
-        `Failed to delete file ${media.storageKey}:`,
-        error instanceof Error ? error.stack : String(error),
-      );
-      // Kontynuuj - usuń z DB nawet jeśli MinIO fail
-    }
-
-    const contentId = media.contentId;
-
-    // Usuń z bazy
-    await this.mediaRepo.delete({ id: mediaId });
-
-    // Przenumeruj pozostałe
-    await this.reindexMedia(contentId);
-
-    this.logger.log(`🗑️ Deleted media ${mediaId}`);
-  }
-
-  /**
-   * Usuwa wiele mediów jednocześnie (batch)
-   */
   async deleteMany(mediaIds: string[]): Promise<void> {
     if (!mediaIds?.length) return;
 
-    const mediaList = await this.mediaRepo.findByIds(mediaIds);
+    const mediaList = await this.mediaRepo.find({
+      where: { id: In(mediaIds) },
+    });
 
     if (mediaList.length === 0) {
       this.logger.warn('No media found for deletion');
       return;
     }
 
-    // Usuń pliki z MinIO (równolegle)
     await Promise.all(
       mediaList.map(async (media) => {
         try {
@@ -144,10 +126,8 @@ export class MediaService {
       }),
     );
 
-    // Usuń z bazy
     await this.mediaRepo.delete(mediaIds);
 
-    // Przenumeruj dla każdego contentu
     const contentIds = [...new Set(mediaList.map((m) => m.contentId))];
 
     for (const contentId of contentIds) {
@@ -157,9 +137,6 @@ export class MediaService {
     this.logger.log(`🗑️ Deleted ${mediaList.length} media`);
   }
 
-  /**
-   * Zmienia kolejność mediów
-   */
   async reorder(contentId: string, orderedMediaIds: string[]): Promise<void> {
     const allMedia = await this.mediaRepo.find({
       where: { contentId },
@@ -170,7 +147,6 @@ export class MediaService {
     const reorderedSet = new Set(orderedMediaIds);
     const updates: Media[] = [];
 
-    // Ustaw nową kolejność dla wymienionych mediów
     orderedMediaIds.forEach((id, index) => {
       const media = mediaMap.get(id);
       if (media && media.order !== index) {
@@ -179,7 +155,6 @@ export class MediaService {
       }
     });
 
-    // Przesuń niewymienione media na koniec
     let nextOrder = orderedMediaIds.length;
     allMedia.forEach((media) => {
       if (!reorderedSet.has(media.id) && media.order !== nextOrder) {
@@ -195,37 +170,52 @@ export class MediaService {
     }
   }
 
-  // ========== PRYWATNE METODY ==========
+  private isValidFileType(file: UploadedFileType): boolean {
+    const allowedMimetypes = [
+      ...this.ALLOWED_IMAGE_MIMETYPES,
+      ...this.ALLOWED_VIDEO_MIMETYPES,
+    ];
 
-  /**
-   * Uploaduje pojedynczy plik
-   */
+    return allowedMimetypes.includes(file.mimetype);
+  }
+
+  private generateAltText(filename: string): string {
+    const nameWithoutExt = filename.replace(/\.[^/.]+$/, '');
+    let alt = nameWithoutExt.replace(/[_-]/g, ' ');
+    alt = alt.replace(/[^a-zA-Z0-9\s]/g, '');
+    alt = alt.replace(/\s+/g, ' ').trim();
+    if (alt.length > 0) {
+      alt = alt.charAt(0).toUpperCase() + alt.slice(1);
+    }
+
+    return alt || 'Media';
+  }
+
   private async uploadSingle(
     contentId: string,
-    file: UploadedFile,
+    file: UploadedFileType,
     order: number,
   ): Promise<Media> {
-    // Generuj unikalny klucz
     const ext = file.originalname.split('.').pop() ?? 'bin';
     const storageKey = `${uuidv4()}-${Date.now()}.${ext}`;
 
     this.logger.log(`  → ${file.originalname} → ${storageKey}`);
 
-    // Upload do MinIO
     await this.minioService.uploadFile(file, storageKey);
 
-    // Określ typ
     const type = file.mimetype.startsWith('video/')
       ? MediaType.VIDEO
       : MediaType.IMAGE;
 
-    // Zapisz w bazie
+    const altText = this.generateAltText(file.originalname);
+
     const media = this.mediaRepo.create({
       filename: file.originalname,
       storageKey,
       mimeType: file.mimetype,
       type,
       size: file.size,
+      alt: altText,
       contentId,
       order,
     });
@@ -233,9 +223,6 @@ export class MediaService {
     return await this.mediaRepo.save(media);
   }
 
-  /**
-   * Waliduje limit mediów
-   */
   private async validateMediaLimit(
     contentId: string,
     newFilesCount: number,
@@ -248,14 +235,11 @@ export class MediaService {
     if (currentCount + newFilesCount > maxMedia) {
       throw new BadRequestException(
         `Maksymalna liczba mediów: ${maxMedia}. ` +
-        `Obecna: ${currentCount}, próbujesz dodać: ${newFilesCount}.`,
+          `Obecna: ${currentCount}, próbujesz dodać: ${newFilesCount}.`,
       );
     }
   }
 
-  /**
-   * Pobiera następny dostępny order
-   */
   private async getNextOrder(contentId: string): Promise<number> {
     const lastMedia = await this.mediaRepo.findOne({
       where: { contentId },
@@ -265,9 +249,6 @@ export class MediaService {
     return lastMedia ? lastMedia.order + 1 : 0;
   }
 
-  /**
-   * Przenumerowuje media (po usunięciu)
-   */
   private async reindexMedia(contentId: string): Promise<void> {
     const media = await this.mediaRepo.find({
       where: { contentId },
@@ -286,12 +267,12 @@ export class MediaService {
 
     if (updates.length > 0) {
       await this.mediaRepo.save(updates);
+      this.logger.log(
+        `🔄 Reindexed ${updates.length} media for content ${contentId}`,
+      );
     }
   }
 
-  /**
-   * Rollback uploadów w przypadku błędu (usuwa już uploadowane pliki)
-   */
   private async rollbackUploads(
     uploadedMedia: UploadedMediaInfo[],
   ): Promise<void> {
@@ -300,9 +281,10 @@ export class MediaService {
     this.logger.warn(`🔄 Rolling back ${uploadedMedia.length} uploads...`);
 
     const mediaIds = uploadedMedia.map((m) => m.id);
-    const mediaList = await this.mediaRepo.findByIds(mediaIds);
+    const mediaList = await this.mediaRepo.find({
+      where: { id: In(mediaIds) },
+    });
 
-    // Usuń z MinIO
     await Promise.all(
       mediaList.map(async (media) => {
         try {
@@ -316,7 +298,6 @@ export class MediaService {
       }),
     );
 
-    // Usuń z DB
     await this.mediaRepo.delete(mediaIds);
   }
 }

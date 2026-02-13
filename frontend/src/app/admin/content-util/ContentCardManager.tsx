@@ -66,11 +66,7 @@ export function ContentCardManager({
   const handleAdd = async () => {
     if (!canAddContent) return;
     try {
-      const newContent = await createContent(contentKey, {
-        title: '',
-        header: '',
-        description: '',
-      });
+      const newContent = await createContent(contentKey);
       if (newContent) {
         await handleRevalidate();
         toast.success('Nowa treść została dodana ✅');

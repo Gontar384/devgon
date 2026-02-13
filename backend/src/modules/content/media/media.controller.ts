@@ -1,7 +1,6 @@
 import {
   Controller,
   Post,
-  Delete,
   UseGuards,
   Param,
   UseInterceptors,
@@ -13,25 +12,17 @@ import { AuthSessionGuard } from '../../auth/auth-session.guard';
 import { RolesGuard, Roles } from '../../auth/roles.guard';
 import { UserRole } from '../../auth/auth.types';
 import { MediaService } from './media.service';
-import {
-  UploadedFileType,
-  UploadMediaResponse,
-  DeleteMediaResponse,
-} from './media-types';
+import { UploadedFileType, UploadMediaResponse } from './media-types';
 
 @Controller('media')
 @UseGuards(AuthSessionGuard, RolesGuard)
 @Roles(UserRole.ADMIN)
 export class MediaController {
-
   constructor(private readonly mediaService: MediaService) {}
 
-  /**
-   * Upload mediów dla contentu
-   */
   @Post('upload/:contentId')
   @UseInterceptors(
-    FilesInterceptor('files', 10, {
+    FilesInterceptor('files', 20, {
       limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
     }),
   )
@@ -52,17 +43,5 @@ export class MediaController {
       success: true,
       media: uploadedMedia,
     };
-  }
-
-  /**
-   * Usuwa pojedyncze media
-   */
-  @Delete(':mediaId')
-  async deleteMedia(
-    @Param('mediaId') mediaId: string,
-  ): Promise<DeleteMediaResponse> {
-    await this.mediaService.delete(mediaId);
-
-    return { success: true };
   }
 }

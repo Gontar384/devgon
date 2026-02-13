@@ -9,10 +9,6 @@ import {
 } from '@/lib/graphql/contentGraphql';
 import api from '@/lib/auth/axios';
 
-/**
- * Pobiera wszystkie contenty dla klucza
- * Backend automatycznie generuje signed URLs
- */
 export async function getContents(key: string): Promise<Content[]> {
   const res = await client.requestWithRedirect<{ getContents: Content[] }>(
     GET_CONTENTS,
@@ -21,10 +17,6 @@ export async function getContents(key: string): Promise<Content[]> {
   return res.getContents ?? [];
 }
 
-/**
- * Tworzy pusty content
- * WAŻNE: Nie zwraca danych - wywołaj revalidate po tej operacji!
- */
 export async function createContent(key: string): Promise<boolean> {
   const res = await client.requestWithRedirect<{ createContent: boolean }>(
     CREATE_CONTENT,
@@ -33,32 +25,19 @@ export async function createContent(key: string): Promise<boolean> {
   return res.createContent ?? false;
 }
 
-/**
- * Główna metoda do aktualizacji contentu
- *
- * WORKFLOW:
- * 1. Aktualizuje pola tekstowe + usuwa media + zmienia kolejność (GraphQL)
- * 2. Uploaduje nowe media (REST) - jeśli są
- * 3. Nie zwraca danych - wywołaj revalidate!
- *
- * @param id - ID contentu
- * @param input - Dane do aktualizacji
- * @param maxMedia - Opcjonalny limit mediów
- */
 export async function updateContent(
   id: string,
   input: {
     title?: string;
     header?: string;
     description?: string;
-    existingMediaIds?: string[]; // Do zmiany kolejności
-    deleteMediaIds?: string[]; // Do usunięcia
-    newMedia?: File[]; // Do dodania
+    newMedia?: File[];
+    existingMediaIds?: string[];
+    deleteMediaIds?: string[];
   },
   maxMedia?: number,
 ): Promise<boolean> {
   try {
-    // KROK 1: Aktualizuj pola tekstowe i zarządzaj istniejącymi mediami
     const graphqlInput = {
       title: input.title,
       header: input.header,
@@ -72,7 +51,6 @@ export async function updateContent(
       { id, input: graphqlInput },
     );
 
-    // KROK 2: Upload nowych mediów (jeśli są)
     if (input.newMedia?.length) {
       await uploadMedia(id, input.newMedia, maxMedia);
     }
@@ -84,10 +62,6 @@ export async function updateContent(
   }
 }
 
-/**
- * Uploaduje media dla contentu przez REST endpoint
- * Prywatna funkcja - używana tylko przez updateContent
- */
 async function uploadMedia(
   contentId: string,
   files: File[],
@@ -111,9 +85,6 @@ async function uploadMedia(
   }
 }
 
-/**
- * Usuwa content wraz z mediami
- */
 export async function deleteContent(id: string): Promise<boolean> {
   const res = await client.requestWithRedirect<{ deleteContent: boolean }>(
     DELETE_CONTENT,
@@ -122,9 +93,6 @@ export async function deleteContent(id: string): Promise<boolean> {
   return res.deleteContent;
 }
 
-/**
- * Zmienia kolejność contentów
- */
 export async function reorderContents(
   key: string,
   ids: string[],

@@ -17,6 +17,9 @@ export interface UploadMediaResponse {
   }>;
 }
 
-export interface DeleteMediaResponse {
-  success: boolean;
+export interface UploadedMediaInfo {
+  id: string;
+  filename: string;
+  type: MediaType;
+  order: number;
 }

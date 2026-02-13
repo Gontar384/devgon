@@ -17,9 +17,6 @@ export class ContentService {
     private readonly mediaService: MediaService,
   ) {}
 
-  /**
-   * Pobiera wszystkie contenty dla danego klucza wraz z podpisanymi URL mediów
-   */
   async getMany(key: string): Promise<Content[]> {
     const contents = await this.contentRepo.find({
       where: { key },
@@ -27,15 +24,11 @@ export class ContentService {
       order: { order: 'ASC' },
     });
 
-    // Generuj signed URLs dla wszystkich mediów
     await this.enrichMediaWithUrls(contents);
 
     return contents;
   }
 
-  /**
-   * Tworzy pusty content - NIE zwraca danych (klient zrobi revalidate)
-   */
   async create(key: string): Promise<void> {
     this.logger.log(`📝 Creating empty content for key: ${key}`);
 
@@ -56,10 +49,6 @@ export class ContentService {
     this.logger.log(`✅ Empty content created`);
   }
 
-  /**
-   * Aktualizuje content - obsługuje tylko pola tekstowe i zarządzanie mediami
-   * Upload nowych mediów odbywa się przez MediaController
-   */
   async update(id: string, input: ContentInput): Promise<void> {
     this.logger.log(`🔄 Updating content ID: ${id}`);
 
@@ -71,18 +60,15 @@ export class ContentService {
       throw new BadRequestException('Content nie istnieje');
     }
 
-    // 1. Aktualizuj pola tekstowe
     const updateData = this.normalizeInput(input);
     if (Object.keys(updateData).length > 0) {
       await this.contentRepo.update({ id }, updateData);
     }
 
-    // 2. Usuń media (jeśli podano) - deleguj do MediaService
     if (input.deleteMediaIds?.length) {
       await this.mediaService.deleteMany(input.deleteMediaIds);
     }
 
-    // 3. Zmień kolejność media (jeśli podano) - deleguj do MediaService
     if (input.existingMediaIds?.length) {
       await this.mediaService.reorder(id, input.existingMediaIds);
     }
@@ -90,9 +76,6 @@ export class ContentService {
     this.logger.log(`✅ Content updated`);
   }
 
-  /**
-   * Usuwa content wraz z powiązanymi mediami i plikami
-   */
   async delete(id: string): Promise<boolean> {
     const content = await this.contentRepo.findOne({
       where: { id },
@@ -103,25 +86,19 @@ export class ContentService {
       return false;
     }
 
-    // Usuń wszystkie media (MediaService zajmie się plikami)
     if (content.media?.length) {
       const mediaIds = content.media.map((m) => m.id);
       await this.mediaService.deleteMany(mediaIds);
     }
 
-    // Usuń content z DB (cascade może już być ustawiony, ale lepiej być pewnym)
     await this.contentRepo.delete({ id });
 
-    // Przenumeruj pozostałe contenty
     await this.reindexContents(content.key);
 
     this.logger.log(`✅ Content ${id} deleted`);
     return true;
   }
 
-  /**
-   * Zmienia kolejność contentów
-   */
   async reorder(key: string, ids: string[]): Promise<boolean> {
     const contents = await this.contentRepo.find({ where: { key } });
     const contentMap = new Map(contents.map((c) => [c.id, c]));
@@ -144,17 +121,11 @@ export class ContentService {
     return true;
   }
 
-  // ========== PRYWATNE POMOCNICZE METODY ==========
-
-  /**
-   * Generuje signed URLs dla wszystkich mediów w contentach
-   */
   private async enrichMediaWithUrls(contents: Content[]): Promise<void> {
     for (const content of contents) {
       if (!content.media?.length) continue;
 
       for (const media of content.media) {
-        // TypeScript workaround: Media entity nie ma 'url', ale GraphQL Model tak
         Object.assign(media, {
           url: await this.minioService.getSignedUrl(media.storageKey),
         });
@@ -162,9 +133,6 @@ export class ContentService {
     }
   }
 
-  /**
-   * Przenumerowuje contenty (po usunięciu)
-   */
   private async reindexContents(key: string): Promise<void> {
     const contents = await this.contentRepo.find({
       where: { key },
@@ -183,12 +151,10 @@ export class ContentService {
 
     if (updates.length > 0) {
       await this.contentRepo.save(updates);
+      this.logger.log(`🔄 Reindexed ${updates.length} contents for key ${key}`);
     }
   }
 
-  /**
-   * Normalizuje input - usuwa puste stringi i trimuje
-   */
   private normalizeInput(input: ContentInput): DeepPartial<Content> {
     const data: DeepPartial<Content> = {};
 

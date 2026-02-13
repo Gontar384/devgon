@@ -128,7 +128,7 @@ export function MediaUploader({
                 key={m.id}
                 className="relative aspect-square group w-[295px] h-[295px]"
               >
-                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+                <div className="relative w-full h-full overflow-hidden">
                   {m.type === MediaType.IMAGE ? (
                     <Image
                       src={m.url}

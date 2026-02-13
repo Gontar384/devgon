@@ -14,27 +14,17 @@ export class ContentResolver {
   @Query(() => [ContentModel])
   async getContents(@Args('key') key: string): Promise<ContentModel[]> {
     const data = await this.contentService.getMany(key);
-    return data as unknown as ContentModel[]; // "Zaufaj mi, dodałem tam te adresy URL"
+    return data as unknown as ContentModel[];
   }
 
-  /**
-   * Tworzy pusty content - klient robi revalidate
-   * Zwraca Boolean zamiast pełnego obiektu
-   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
-  async createContent(
-    @Args('key') key: string,
-  ): Promise<boolean> {
+  async createContent(@Args('key') key: string): Promise<boolean> {
     await this.contentService.create(key);
     return true;
   }
 
-  /**
-   * Aktualizuje content - klient robi revalidate
-   * Zwraca Boolean zamiast pełnego obiektu
-   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
@@ -46,9 +36,6 @@ export class ContentResolver {
     return true;
   }
 
-  /**
-   * Usuwa content wraz z mediami
-   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
@@ -56,9 +43,6 @@ export class ContentResolver {
     return await this.contentService.delete(id);
   }
 
-  /**
-   * Zmienia kolejność contentów
-   */
   @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
