@@ -12,7 +12,7 @@ import {
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
 
 export function SortableMediaItem({
@@ -40,17 +40,8 @@ export function SortableMediaItem({
 
   const isExisting = item.type === 'existing';
   const media = isExisting ? (item.data as Media) : null;
-  const file = !isExisting ? (item.data as File) : null;
-
-  const [previewUrl] = useState<string | null>(() =>
-    file ? URL.createObjectURL(file) : null,
-  );
-
-  useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    };
-  }, [previewUrl]);
+  const file = item.type === 'new' ? item.data.file : null;
+  const previewUrl = item.type === 'new' ? item.data.previewUrl : null;
 
   const isImage = isExisting
     ? media?.type === MediaType.IMAGE

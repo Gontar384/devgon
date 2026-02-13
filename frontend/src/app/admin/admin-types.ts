@@ -102,8 +102,6 @@ export interface SortableMediaItemProps {
   move: (id: string, dir: -1 | 1) => void;
 }
 
-export interface MediaItem {
-  id: string;
-  type: 'existing' | 'new';
-  data: Media | File;
-}
+export type MediaItem =
+  | { id: string; type: 'existing'; data: Media }
+  | { id: string; type: 'new'; data: { file: File; previewUrl: string } };

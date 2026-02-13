@@ -61,7 +61,10 @@ export function MediaUploader({
     const newItems: MediaItem[] = files.map((file) => ({
       id: `new-${crypto.randomUUID()}`,
       type: 'new',
-      data: file,
+      data: {
+        file,
+        previewUrl: URL.createObjectURL(file),
+      },
     }));
 
     const updatedItems = [...items, ...newItems];
@@ -71,8 +74,13 @@ export function MediaUploader({
   };
 
   const handleDelete = (id: string) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
+    setItems((items) => {
+      const item = items.find((i) => i.id === id);
+      if (item?.type === 'new') {
+        URL.revokeObjectURL(item.data.previewUrl);
+      }
+      return items.filter((i) => i.id !== id);
+    });
   };
 
   const moveItem = (id: string, dir: -1 | 1) => {
@@ -98,7 +106,7 @@ export function MediaUploader({
   const emitChange = (current: MediaItem[]) => {
     const newFiles = current
       .filter((i) => i.type === 'new')
-      .map((i) => i.data as File);
+      .map((i) => i.data.file);
 
     const existingIds = current
       .filter((i) => i.type === 'existing')
