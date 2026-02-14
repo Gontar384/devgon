@@ -79,15 +79,15 @@ export function ContentCard({
   };
 
   const handleCancel = () => {
+    setDraftTitle(safeData.title ?? '');
+    setDraftHeader(safeData.header ?? '');
+    setDraftDescription(safeData.description ?? '');
+
     mediaItems.forEach((item) => {
       if (item.type === 'new') {
         URL.revokeObjectURL(item.data.previewUrl);
       }
     });
-
-    setDraftTitle(safeData.title ?? '');
-    setDraftHeader(safeData.header ?? '');
-    setDraftDescription(safeData.description ?? '');
     setMediaItems(
       (content?.media || []).map<MediaItem>((m) => ({
         id: m.id,

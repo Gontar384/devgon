@@ -7,12 +7,15 @@ export interface UploadedFileType {
   size: number;
 }
 
+export interface UploadedMediaItem {
+  id: string;
+  tempId: string;
+  filename: string;
+  type: MediaType;
+  order: number;
+}
+
 export interface UploadMediaResponse {
   success: boolean;
-  media: Array<{
-    id: string;
-    filename: string;
-    type: MediaType;
-    order: number;
-  }>;
+  media: UploadedMediaItem[];
 }

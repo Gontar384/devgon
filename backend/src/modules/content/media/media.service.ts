@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import { Media, MediaType } from './media.entity';
 import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
-import { UploadedFileType } from './media-types';
+import { UploadedFileType, UploadedMediaItem } from './media-types';
 
 @Injectable()
 export class MediaService {
@@ -33,26 +33,12 @@ export class MediaService {
     private readonly minioService: MinioService,
   ) {}
 
-
-
-
-
-
-
   async uploadMany(
     contentId: string,
     files: UploadedFileType[],
     tempIds: string[],
     maxMedia?: number,
-  ): Promise<
-    Array<{
-      id: string;
-      tempId: string;
-      filename: string;
-      type: MediaType;
-      order: number;
-    }>
-  > {
+  ): Promise<Array<UploadedMediaItem>> {
     if (!files?.length) {
       throw new BadRequestException('No files to upload');
     }
@@ -70,13 +56,7 @@ export class MediaService {
       await this.validateMediaLimit(contentId, files.length, maxMedia);
     }
 
-    const uploadedMedia: Array<{
-      id: string;
-      tempId: string;
-      filename: string;
-      type: MediaType;
-      order: number;
-    }> = [];
+    const uploadedMedia: Array<UploadedMediaItem> = [];
     const skippedFiles: string[] = [];
 
     for (let i = 0; i < files.length; i++) {
@@ -112,7 +92,7 @@ export class MediaService {
           error instanceof Error ? error.stack : String(error),
         );
         throw new BadRequestException(
-          `Nie udało się uploadować pliku: ${file.originalname}`,
+          `Could not upload file: ${file.originalname}`,
         );
       }
     }
@@ -161,13 +141,6 @@ export class MediaService {
 
     return await this.mediaRepo.save(media);
   }
-
-
-
-
-
-
-
 
   async findByTempId(tempId: string): Promise<Media | null> {
     return await this.mediaRepo.findOne({
@@ -243,8 +216,8 @@ export class MediaService {
 
     if (currentCount + newFilesCount > maxMedia) {
       throw new BadRequestException(
-        `Maksymalna liczba mediów: ${maxMedia}. ` +
-          `Obecna: ${currentCount}, próbujesz dodać: ${newFilesCount}.`,
+        `Max number of media: ${maxMedia}. ` +
+          `Current: ${currentCount}, you're trying to add: ${newFilesCount}.`,
       );
     }
   }
@@ -298,17 +271,11 @@ export class MediaService {
     await this.mediaRepo.delete(mediaIds);
   }
 
-
-
-
-
-
   async updateOrder(
     updates: Array<{ id: string; order: number }>,
   ): Promise<void> {
     if (!updates.length) return;
 
-    // Użyj transakcji dla atomowości
     await this.mediaRepo.manager.transaction(async (manager) => {
       const mediaRepo = manager.getRepository(Media);
 
@@ -317,26 +284,25 @@ export class MediaService {
       });
 
       if (mediaList.length !== updates.length) {
-        const foundIds = new Set(mediaList.map(m => m.id));
-        const missingIds = updates.filter(u => !foundIds.has(u.id)).map(u => u.id);
+        const foundIds = new Set(mediaList.map((m) => m.id));
+        const missingIds = updates
+          .filter((u) => !foundIds.has(u.id))
+          .map((u) => u.id);
         throw new BadRequestException(
-          `Media not found for IDs: ${missingIds.join(', ')}`
+          `Media not found for IDs: ${missingIds.join(', ')}`,
         );
       }
 
       const mediaMap = new Map(mediaList.map((m) => [m.id, m]));
 
-      // KLUCZOWA ZMIANA: Najpierw ustaw wszystkie order na wartości tymczasowe
-      // aby uniknąć konfliktów unique constraint (jeśli taki istnieje)
       const tempUpdates = updates.map(({ id }, idx) => {
         const media = mediaMap.get(id)!;
-        media.order = -1000 - idx; // Tymczasowa wartość ujemna
+        media.order = -1000 - idx;
         return media;
       });
 
       await mediaRepo.save(tempUpdates);
 
-      // Teraz ustaw właściwe wartości
       const finalUpdates = updates.map(({ id, order }) => {
         const media = mediaMap.get(id)!;
         media.order = order;
@@ -348,11 +314,6 @@ export class MediaService {
       this.logger.log(`🔀 Updated order for ${finalUpdates.length} media`);
     });
   }
-
-
-
-
-
 
   async clearTempIds(mediaIds: string[]): Promise<void> {
     if (!mediaIds.length) return;

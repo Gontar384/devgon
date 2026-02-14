@@ -27,11 +27,6 @@ export async function createContent(key: string): Promise<boolean> {
   return res.createContent ?? false;
 }
 
-
-
-
-
-
 export async function updateContent(
   id: string,
   payload: {
@@ -115,22 +110,15 @@ async function uploadMedia(
       map.set(m.tempId, m.id);
     });
 
-    console.log('✅ TempId -> RealId map:', Array.from(map.entries()));
-
     return map;
   } catch (error) {
     console.error('❌ Media upload failed:', error);
     if (axios.isAxiosError(error) && error.response) {
       console.error('❌ Response data:', error.response.data);
     }
-    throw new Error('Nie udało się uploadować mediów');
+    throw new Error('Could not upload Media');
   }
 }
-
-
-
-
-
 
 export async function deleteContent(id: string): Promise<boolean> {
   const res = await client.requestWithRedirect<{ deleteContent: boolean }>(

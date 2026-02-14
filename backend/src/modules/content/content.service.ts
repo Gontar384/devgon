@@ -49,10 +49,6 @@ export class ContentService {
     this.logger.log(`✅ Empty content created`);
   }
 
-
-
-
-
   async update(id: string, input: ContentInput): Promise<void> {
     this.logger.log(`🔄 Updating content ID: ${id}`);
 
@@ -65,7 +61,7 @@ export class ContentService {
       });
 
       if (!content) {
-        throw new BadRequestException('Content nie istnieje');
+        throw new BadRequestException('Content not found');
       }
 
       const updateData = this.normalizeInput(input);
@@ -97,17 +93,21 @@ export class ContentService {
       }
 
       const currentMediaIds = content.media.map((m) => m.id);
-      const toDelete = currentMediaIds.filter((mediaId) => !mediaOrderMap.has(mediaId));
+      const toDelete = currentMediaIds.filter(
+        (mediaId) => !mediaOrderMap.has(mediaId),
+      );
 
       if (toDelete.length > 0) {
         this.logger.log(`🗑️ Deleting ${toDelete.length} media`);
         await this.mediaService.deleteMany(toDelete);
       }
 
-      const updates = Array.from(mediaOrderMap.entries()).map(([mediaId, order]) => ({
-        id: mediaId,
-        order,
-      }));
+      const updates = Array.from(mediaOrderMap.entries()).map(
+        ([mediaId, order]) => ({
+          id: mediaId,
+          order,
+        }),
+      );
 
       if (updates.length > 0) {
         await this.mediaService.updateOrder(updates);
@@ -117,11 +117,6 @@ export class ContentService {
       this.logger.log(`✅ Content updated with ${updates.length} media`);
     });
   }
-
-
-
-
-
 
   async delete(id: string): Promise<boolean> {
     const content = await this.contentRepo.findOne({
