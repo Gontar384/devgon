@@ -9,10 +9,17 @@ export class MinioService implements OnModuleInit {
   private minioClient: Minio.Client;
   private readonly bucketName: string;
   private readonly publicUrl: string;
+  private readonly accessKey: string;
+  private readonly secretKey: string;
 
   constructor(private configService: ConfigService) {
     this.bucketName =
       this.configService.get<string>('MINIO_BUCKET_NAME') ?? 'media';
+    this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL') ?? '';
+
+    this.accessKey = this.configService.get<string>('MINIO_ROOT_USER') ?? '';
+    this.secretKey =
+      this.configService.get<string>('MINIO_ROOT_PASSWORD') ?? '';
 
     const endpoint =
       this.configService.get<string>('MINIO_ENDPOINT') ?? 'localhost';
@@ -21,23 +28,19 @@ export class MinioService implements OnModuleInit {
       10,
     );
     const useSSL = this.configService.get<string>('MINIO_USE_SSL') === 'true';
-    this.logger.log(
-      `🔧 Connecting to Minio at ${endpoint}:${port} (SSL: ${useSSL})`,
-    );
-
-    this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL') ?? '';
-
-    if (this.publicUrl) {
-      this.logger.log(`🌐 Public Minio URL: ${this.publicUrl}`);
-    }
 
     this.minioClient = new Minio.Client({
       endPoint: endpoint,
       port: port,
       useSSL: useSSL,
-      accessKey: this.configService.get<string>('MINIO_ROOT_USER') ?? '',
-      secretKey: this.configService.get<string>('MINIO_ROOT_PASSWORD') ?? '',
+      accessKey: this.accessKey,
+      secretKey: this.secretKey,
+      region: 'eu-central-1',
     });
+
+    this.logger.log(
+      `🔧 Minio initialized. Internal: ${endpoint}:${port}. Public URL: ${this.publicUrl || 'none'}`,
+    );
   }
 
   async onModuleInit() {
@@ -80,21 +83,32 @@ export class MinioService implements OnModuleInit {
     storageKey: string,
     expirySeconds = 3600,
   ): Promise<string> {
-    const internalUrl = await this.minioClient.presignedGetObject(
+    if (!this.publicUrl) {
+      return await this.minioClient.presignedGetObject(
+        this.bucketName,
+        storageKey,
+        expirySeconds,
+      );
+    }
+
+    const url = new URL(this.publicUrl);
+    const publicClient = new Minio.Client({
+      endPoint: url.hostname,
+      port: url.port
+        ? parseInt(url.port, 10)
+        : url.protocol === 'https:'
+          ? 443
+          : 80,
+      useSSL: url.protocol === 'https:',
+      accessKey: this.accessKey,
+      secretKey: this.secretKey,
+      region: 'eu-central-1',
+    });
+
+    return await publicClient.presignedGetObject(
       this.bucketName,
       storageKey,
       expirySeconds,
     );
-
-    if (!this.publicUrl) return internalUrl;
-
-    const signed = new URL(internalUrl);
-    const pub = new URL(this.publicUrl);
-
-    signed.protocol = pub.protocol;
-    signed.hostname = pub.hostname;
-    signed.port = pub.port;
-
-    return signed.toString();
   }
 }
