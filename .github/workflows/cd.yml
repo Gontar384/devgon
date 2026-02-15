@@ -76,9 +76,9 @@ jobs:
               echo "BACKEND_URL=https://api.devgon.site"
             
               # PostgreSQL credentials
-              echo "POSTGRES_USER=postgres"
+              echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
               echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
-              echo "DATABASE_URL=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/devgon"
+              echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/devgon"
             
               # App secrets
               echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
@@ -90,8 +90,8 @@ jobs:
               echo "MINIO_ENDPOINT=minio"
               echo "MINIO_PORT=9000"
               echo "MINIO_USE_SSL=false"
-              echo "MINIO_ROOT_USER=minioadmin"
-              echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_PASSWORD }}"
+              echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}"
+              echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}"
               echo "MINIO_BUCKET_NAME=media"
             } > .env
             
