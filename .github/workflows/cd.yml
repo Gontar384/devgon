@@ -63,6 +63,8 @@ jobs:
             
             cd /home/${{ secrets.VPS_USER }}/app
             
+            echo "client_max_body_size 1000M;" > client_max_body_size.conf
+            
             echo "Loading backend image..."
             gunzip -c backend.tar.gz | docker load
             
@@ -93,6 +95,7 @@ jobs:
               echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}"
               echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}"
               echo "MINIO_BUCKET_NAME=media"
+              echo "MINIO_PUBLIC_URL=https://minio.devgon.site"
             } > .env
             
             echo "Starting postgres and minio first..."

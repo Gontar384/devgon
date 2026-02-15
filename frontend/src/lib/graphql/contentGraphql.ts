@@ -33,8 +33,8 @@ export const CREATE_CONTENT = gql`
 `;
 
 export const UPDATE_CONTENT = gql`
-  mutation UpdateContent($id: String!, $input: ContentInput!) {
-    updateContent(id: $id, input: $input)
+  mutation UpdateContent($id: String!, $input: ContentInput!, $maxMedia: Int) {
+    updateContent(id: $id, input: $input, maxMedia: $maxMedia)
   }
 `;
 

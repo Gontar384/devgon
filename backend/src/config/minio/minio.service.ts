@@ -8,6 +8,7 @@ export class MinioService implements OnModuleInit {
   private readonly logger = new Logger(MinioService.name);
   private minioClient: Minio.Client;
   private readonly bucketName: string;
+  private readonly publicUrl: string;
 
   constructor(private configService: ConfigService) {
     this.bucketName =
@@ -20,10 +21,15 @@ export class MinioService implements OnModuleInit {
       10,
     );
     const useSSL = this.configService.get<string>('MINIO_USE_SSL') === 'true';
-
     this.logger.log(
       `🔧 Connecting to Minio at ${endpoint}:${port} (SSL: ${useSSL})`,
     );
+
+    this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL') ?? '';
+
+    if (this.publicUrl) {
+      this.logger.log(`🌐 Public Minio URL: ${this.publicUrl}`);
+    }
 
     this.minioClient = new Minio.Client({
       endPoint: endpoint,
@@ -74,10 +80,20 @@ export class MinioService implements OnModuleInit {
     storageKey: string,
     expirySeconds = 3600,
   ): Promise<string> {
-    return await this.minioClient.presignedGetObject(
+    const internalUrl = await this.minioClient.presignedGetObject(
       this.bucketName,
       storageKey,
       expirySeconds,
     );
+
+    if (!this.publicUrl) return internalUrl;
+
+    const signed = new URL(internalUrl);
+    const pub = new URL(this.publicUrl);
+
+    signed.protocol = pub.protocol;
+    signed.host = pub.host;
+
+    return signed.toString();
   }
 }

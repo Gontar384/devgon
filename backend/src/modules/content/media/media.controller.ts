@@ -31,7 +31,6 @@ export class MediaController {
     @Param('contentId') contentId: string,
     @UploadedFiles() files: UploadedFileType[],
     @Body('tempIds') tempIdsStr: string,
-    @Body('maxMedia') maxMediaStr?: string,
   ): Promise<UploadMediaResponse> {
     let tempIds: string[] = [];
     try {
@@ -41,12 +40,10 @@ export class MediaController {
     } catch {
       throw new BadRequestException('Invalid tempIds format');
     }
-    const maxMedia = maxMediaStr ? parseInt(maxMediaStr, 10) : undefined;
     const uploadedMedia = await this.mediaService.uploadMany(
       contentId,
       files,
       tempIds,
-      maxMedia,
     );
     return {
       success: true,
