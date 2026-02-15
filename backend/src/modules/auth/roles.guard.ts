@@ -16,6 +16,11 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
+    const req = this.getRequest(context);
+    if (req.method === 'OPTIONS') {
+      return true;
+    }
+
     const requiredRoles = this.reflector.get<UserRole[]>(
       ROLES_KEY,
       context.getHandler(),
@@ -23,7 +28,6 @@ export class RolesGuard implements CanActivate {
 
     if (!requiredRoles || requiredRoles.length === 0) return true;
 
-    const req = this.getRequest(context);
     const user = req.user;
 
     if (!user) throw new ForbiddenException('No user info attached');

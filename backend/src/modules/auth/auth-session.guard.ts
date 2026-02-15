@@ -20,6 +20,10 @@ export class AuthSessionGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = this.getRequest(context);
+    if (req.method === 'OPTIONS') {
+      return true;
+    }
+
     const res = this.getResponse(context);
 
     const accessToken = req.cookies?.[
