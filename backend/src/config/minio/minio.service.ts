@@ -80,31 +80,20 @@ export class MinioService implements OnModuleInit {
     storageKey: string,
     expirySeconds = 3600,
   ): Promise<string> {
-    const signedUrl = await this.minioClient.presignedGetObject(
+    const internalUrl = await this.minioClient.presignedGetObject(
       this.bucketName,
       storageKey,
       expirySeconds,
     );
 
-    if (this.publicUrl) {
-      try {
-        const url = new URL(signedUrl);
-        const publicUrlObj = new URL(this.publicUrl);
+    if (!this.publicUrl) return internalUrl;
 
-        url.protocol = publicUrlObj.protocol;
-        url.hostname = publicUrlObj.hostname;
-        url.port = publicUrlObj.port || '';
+    const signed = new URL(internalUrl);
+    const pub = new URL(this.publicUrl);
 
-        const transformedUrl = url.toString();
-        this.logger.debug(`🔗 Transformed URL: ${transformedUrl}`);
+    signed.protocol = pub.protocol;
+    signed.host = pub.host;
 
-        return transformedUrl;
-      } catch (error) {
-        this.logger.error('❌ Error transforming URL:', error);
-        return signedUrl;
-      }
-    }
-
-    return signedUrl;
+    return signed.toString();
   }
 }
