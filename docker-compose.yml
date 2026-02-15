@@ -1,4 +1,43 @@
 services:
+  postgres:
+    image: postgres:17.5-alpine
+    container_name: prod_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: devgon
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres || pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: prod_minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+      # VIRTUAL_HOST: minio.devgon.site
+      # VIRTUAL_PORT: 9001
+      # LETSENCRYPT_HOST: minio.devgon.site
+    volumes:
+      - minio_prod_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   backend:
     image: backend:latest
     container_name: backend
@@ -6,22 +45,27 @@ services:
     env_file:
       - .env
     environment:
-      - VIRTUAL_HOST=api.devgon.site
-      - LETSENCRYPT_HOST=api.devgon.site
+      VIRTUAL_HOST: api.devgon.site
+      LETSENCRYPT_HOST: api.devgon.site
     networks:
       - app-network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
 
   frontend:
     image: frontend:latest
     container_name: frontend
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=devgon.site
-      - LETSENCRYPT_HOST=devgon.site
+      VIRTUAL_HOST: devgon.site
+      LETSENCRYPT_HOST: devgon.site
     networks:
       - app-network
+    depends_on:
+      - backend
 
   nginx-proxy:
     image: nginxproxy/nginx-proxy:latest
@@ -43,8 +87,8 @@ services:
     container_name: nginx-proxy-acme
     restart: unless-stopped
     environment:
-      - DEFAULT_EMAIL=devgonteam@gmail.com
-      - NGINX_PROXY_CONTAINER=nginx-proxy
+      DEFAULT_EMAIL: devgonteam@gmail.com
+      NGINX_PROXY_CONTAINER: nginx-proxy
     volumes:
       - ./data/vhost.d:/etc/nginx/vhost.d
       - ./data/html:/usr/share/nginx/html
@@ -54,6 +98,10 @@ services:
       - nginx-proxy
     networks:
       - app-network
+
+volumes:
+  postgres_prod_data:
+  minio_prod_data:
 
 networks:
   app-network:

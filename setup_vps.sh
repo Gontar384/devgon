@@ -3,9 +3,6 @@ set -e
 
 DEPLOY_USER="deploy"
 APP_DIR="/home/$DEPLOY_USER/app"
-PG_VERSION="17"
-PG_DB="devgon"
-PG_PASSWORD="password"
 DOCKER_COMPOSE_VERSION="v2.29.1"
 
 echo "=== Creating user '$DEPLOY_USER' and catalogues ==="
@@ -44,33 +41,17 @@ sudo curl -SL "https://github.com/docker/compose/releases/download/${DOCKER_COMP
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 sudo chown $DEPLOY_USER:$DEPLOY_USER /usr/local/lib/docker/cli-plugins/docker-compose
 
-echo "=== PostgreSQL installation ${PG_VERSION} ==="
-curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | \
-  sudo tee /usr/share/keyrings/pgdg-keyring.gpg > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/pgdg-keyring.gpg] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" | \
-  sudo tee /etc/apt/sources.list.d/pgdg.list
-sudo apt update
-sudo apt install -y postgresql-${PG_VERSION}
-sudo systemctl enable --now postgresql
-
-echo "=== Creating database and password for postgres user ==="
-sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${PG_PASSWORD}';"
-sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='${PG_DB}'" | grep -q 1 || \
-  sudo -u postgres psql -c "CREATE DATABASE ${PG_DB};"
-
-echo "=== PostgreSQL configuration for Docker connection ==="
-PG_CONF="/etc/postgresql/${PG_VERSION}/main/postgresql.conf"
-PG_HBA="/etc/postgresql/${PG_VERSION}/main/pg_hba.conf"
-
-sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" $PG_CONF
-if ! grep -q "172.18.0.0/16" $PG_HBA; then
-  echo "host    all             all             172.18.0.0/16           md5" | sudo tee -a $PG_HBA
-fi
-
-sudo systemctl restart postgresql
-
 echo "=== Configuration finished! ==="
 echo "User: $DEPLOY_USER"
 echo "App catalogue: $APP_DIR"
-echo "Database: $PG_DB"
-echo "PostgreSQL password: $PG_PASSWORD"
+echo "PostgreSQL and MinIO will run in Docker containers"
+echo ""
+echo "IMPORTANT: Add these secrets to your GitHub repository:"
+echo "  - VPS_USER"
+echo "  - VPS_HOST"
+echo "  - VPS_SSH_KEY"
+echo "  - JWT_SECRET_KEY"
+echo "  - GOOGLE_CLIENT_ID"
+echo "  - GOOGLE_CLIENT_SECRET"
+echo "  - POSTGRES_PASSWORD"
+echo "  - MINIO_PASSWORD"

@@ -74,17 +74,37 @@ jobs:
               echo "NODE_ENV=production"
               echo "FRONTEND_URL=https://devgon.site"
               echo "BACKEND_URL=https://api.devgon.site"
-              echo "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+            
+              # PostgreSQL credentials
+              echo "POSTGRES_USER=postgres"
+              echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
+              echo "DATABASE_URL=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/devgon"
+            
+              # App secrets
               echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
               echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
               echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
               echo "COOKIE_DOMAIN=.devgon.site"
+            
+              # MinIO credentials
+              echo "MINIO_ENDPOINT=minio"
+              echo "MINIO_PORT=9000"
+              echo "MINIO_USE_SSL=false"
+              echo "MINIO_ROOT_USER=minioadmin"
+              echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_PASSWORD }}"
+              echo "MINIO_BUCKET_NAME=media"
             } > .env
+            
+            echo "Starting postgres and minio first..."
+            docker compose up -d postgres minio
+            
+            echo "Waiting for services to be healthy..."
+            sleep 10
             
             echo "Running database migrations..."
             docker compose run --rm --no-deps backend npm run migration:prod
             
-            echo "Restarting containers..."
+            echo "Starting all containers..."
             docker compose up -d --remove-orphans
             
             echo "Deleting old images..."
