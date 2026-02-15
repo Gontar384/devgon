@@ -37,7 +37,6 @@ export class MediaService {
     contentId: string,
     files: UploadedFileType[],
     tempIds: string[],
-    maxMedia?: number,
   ): Promise<Array<UploadedMediaItem>> {
     if (!files?.length) {
       throw new BadRequestException('No files to upload');
@@ -51,10 +50,6 @@ export class MediaService {
     this.logger.log(
       `📤 Uploading ${files.length} files for content ${contentId}`,
     );
-
-    if (maxMedia !== undefined) {
-      await this.validateMediaLimit(contentId, files.length, maxMedia);
-    }
 
     const uploadedMedia: Array<UploadedMediaItem> = [];
     const skippedFiles: string[] = [];
@@ -205,23 +200,6 @@ export class MediaService {
     return alt || 'Media';
   }
 
-  private async validateMediaLimit(
-    contentId: string,
-    newFilesCount: number,
-    maxMedia: number,
-  ): Promise<void> {
-    const currentCount = await this.mediaRepo.count({
-      where: { contentId },
-    });
-
-    if (currentCount + newFilesCount > maxMedia) {
-      throw new BadRequestException(
-        `Max number of media: ${maxMedia}. ` +
-          `Current: ${currentCount}, you're trying to add: ${newFilesCount}.`,
-      );
-    }
-  }
-
   private async reindexMedia(contentId: string): Promise<void> {
     const media = await this.mediaRepo.find({
       where: { contentId },
@@ -246,7 +224,7 @@ export class MediaService {
     }
   }
 
-  private async rollbackUploads(mediaIds: string[]): Promise<void> {
+  async rollbackUploads(mediaIds: string[]): Promise<void> {
     if (!mediaIds.length) return;
 
     this.logger.warn(`🔄 Rolling back ${mediaIds.length} uploads...`);
@@ -269,6 +247,8 @@ export class MediaService {
     );
 
     await this.mediaRepo.delete(mediaIds);
+
+    this.logger.log(`✅ Rollback complete: deleted ${mediaIds.length} media`);
   }
 
   async updateOrder(

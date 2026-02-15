@@ -93,6 +93,7 @@ jobs:
               echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}"
               echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}"
               echo "MINIO_BUCKET_NAME=media"
+              echo "MINIO_PUBLIC_URL=https://minio.devgon.site"
             } > .env
             
             echo "Starting postgres and minio first..."

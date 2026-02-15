@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ContentService } from './content.service';
 import { UseGuards } from '@nestjs/common';
 import { Roles, RolesGuard } from '../auth/roles.guard';
@@ -31,8 +31,9 @@ export class ContentResolver {
   async updateContent(
     @Args('id') id: string,
     @Args('input') input: ContentInput,
+    @Args('maxMedia', { type: () => Int, nullable: true }) maxMedia?: number,
   ): Promise<boolean> {
-    await this.contentService.update(id, input);
+    await this.contentService.update(id, input, maxMedia);
     return true;
   }
 

@@ -8,6 +8,7 @@ export class MinioService implements OnModuleInit {
   private readonly logger = new Logger(MinioService.name);
   private minioClient: Minio.Client;
   private readonly bucketName: string;
+  private readonly publicUrl: string;
 
   constructor(private configService: ConfigService) {
     this.bucketName =
@@ -20,10 +21,15 @@ export class MinioService implements OnModuleInit {
       10,
     );
     const useSSL = this.configService.get<string>('MINIO_USE_SSL') === 'true';
-
     this.logger.log(
       `🔧 Connecting to Minio at ${endpoint}:${port} (SSL: ${useSSL})`,
     );
+
+    this.publicUrl = this.configService.get<string>('MINIO_PUBLIC_URL') ?? '';
+
+    if (this.publicUrl) {
+      this.logger.log(`🌐 Public Minio URL: ${this.publicUrl}`);
+    }
 
     this.minioClient = new Minio.Client({
       endPoint: endpoint,
@@ -74,10 +80,31 @@ export class MinioService implements OnModuleInit {
     storageKey: string,
     expirySeconds = 3600,
   ): Promise<string> {
-    return await this.minioClient.presignedGetObject(
+    const signedUrl = await this.minioClient.presignedGetObject(
       this.bucketName,
       storageKey,
       expirySeconds,
     );
+
+    if (this.publicUrl) {
+      try {
+        const url = new URL(signedUrl);
+        const publicUrlObj = new URL(this.publicUrl);
+
+        url.protocol = publicUrlObj.protocol;
+        url.hostname = publicUrlObj.hostname;
+        url.port = publicUrlObj.port || '';
+
+        const transformedUrl = url.toString();
+        this.logger.debug(`🔗 Transformed URL: ${transformedUrl}`);
+
+        return transformedUrl;
+      } catch (error) {
+        this.logger.error('❌ Error transforming URL:', error);
+        return signedUrl;
+      }
+    }
+
+    return signedUrl;
   }
 }

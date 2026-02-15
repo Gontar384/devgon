@@ -38,11 +38,7 @@ export async function updateContent(
   maxMedia?: number,
 ) {
   try {
-    const uploadedMediaMap = await uploadMedia(
-      id,
-      payload.mediaItems,
-      maxMedia,
-    );
+    const uploadedMediaMap = await uploadMedia(id, payload.mediaItems);
 
     const mediaOrder = payload.mediaItems.map((item, index) => ({
       kind: item.type === 'existing' ? ('existing' as const) : ('new' as const),
@@ -59,6 +55,7 @@ export async function updateContent(
         description: payload.description,
         mediaOrder,
       },
+      maxMedia,
     });
 
     return true;
@@ -71,7 +68,6 @@ export async function updateContent(
 async function uploadMedia(
   contentId: string,
   mediaItems: MediaItem[],
-  maxMedia?: number,
 ): Promise<Map<string, string>> {
   const newItems = mediaItems.filter((item) => item.type === 'new');
 
@@ -86,10 +82,6 @@ async function uploadMedia(
   });
 
   formData.append('tempIds', JSON.stringify(newItems.map((item) => item.id)));
-
-  if (maxMedia !== undefined) {
-    formData.append('maxMedia', maxMedia.toString());
-  }
 
   try {
     const response = await api.post<{

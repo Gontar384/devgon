@@ -5,6 +5,7 @@ import { Content } from './content.entity';
 import { ContentInput } from './content.input';
 import { MinioService } from '../../config/minio/minio.service';
 import { MediaService } from './media/media.service';
+import { Media } from './media/media.entity';
 
 @Injectable()
 export class ContentService {
@@ -13,8 +14,10 @@ export class ContentService {
   constructor(
     @InjectRepository(Content)
     private readonly contentRepo: Repository<Content>,
-    private readonly minioService: MinioService,
+    @InjectRepository(Media)
+    private readonly mediaRepo: Repository<Media>,
     private readonly mediaService: MediaService,
+    private readonly minioService: MinioService,
   ) {}
 
   async getMany(key: string): Promise<Content[]> {
@@ -49,73 +52,103 @@ export class ContentService {
     this.logger.log(`✅ Empty content created`);
   }
 
-  async update(id: string, input: ContentInput): Promise<void> {
+  async update(
+    id: string,
+    input: ContentInput,
+    maxMedia?: number,
+  ): Promise<void> {
     this.logger.log(`🔄 Updating content ID: ${id}`);
 
-    await this.contentRepo.manager.transaction(async (manager) => {
-      const contentRepo = manager.getRepository(Content);
+    const content = await this.contentRepo.findOne({
+      where: { id },
+      relations: ['media'],
+    });
 
-      const content = await contentRepo.findOne({
-        where: { id },
-        relations: ['media'],
+    if (!content) {
+      throw new BadRequestException('Content not found');
+    }
+
+    const updateData = this.normalizeInput(input);
+    if (Object.keys(updateData).length > 0) {
+      await this.contentRepo.update({ id }, updateData);
+    }
+
+    const mediaOrderMap = new Map<string, number>();
+    const newMediaIds: string[] = [];
+
+    for (const item of input.mediaOrder) {
+      let mediaId: string | null = null;
+
+      if (item.kind === 'existing' && item.id) {
+        mediaId = item.id;
+      } else if (item.kind === 'new' && item.tempId) {
+        const media = await this.mediaService.findByTempId(item.tempId);
+        if (!media) {
+          this.logger.error(`❌ Media not found for tempId: ${item.tempId}`);
+          throw new BadRequestException(
+            `Uploaded media not found for tempId: ${item.tempId}`,
+          );
+        }
+        mediaId = media.id;
+        newMediaIds.push(media.id);
+      }
+
+      if (mediaId) {
+        mediaOrderMap.set(mediaId, item.order);
+      }
+    }
+
+    const currentMediaIds = content.media.map((m) => m.id);
+    const toDelete = currentMediaIds.filter(
+      (mediaId) => !mediaOrderMap.has(mediaId),
+    );
+
+    if (toDelete.length > 0) {
+      this.logger.log(`🗑️ Deleting ${toDelete.length} media`);
+      await this.mediaService.deleteMany(toDelete);
+    }
+
+    const updates = Array.from(mediaOrderMap.entries()).map(
+      ([mediaId, order]) => ({
+        id: mediaId,
+        order,
+      }),
+    );
+
+    if (updates.length > 0) {
+      await this.mediaService.updateOrder(updates);
+      await this.mediaService.clearTempIds(updates.map((u) => u.id));
+    }
+
+    if (maxMedia !== null && maxMedia !== undefined) {
+      const finalMediaCount = await this.mediaRepo.count({
+        where: { contentId: id },
       });
 
-      if (!content) {
-        throw new BadRequestException('Content not found');
-      }
+      if (finalMediaCount > maxMedia) {
+        this.logger.error(
+          `❌ Media limit exceeded: ${finalMediaCount} > ${maxMedia}`,
+        );
 
-      const updateData = this.normalizeInput(input);
-      if (Object.keys(updateData).length > 0) {
-        await contentRepo.update({ id }, updateData);
-      }
-
-      const mediaOrderMap = new Map<string, number>();
-
-      for (const item of input.mediaOrder) {
-        let mediaId: string | null = null;
-
-        if (item.kind === 'existing' && item.id) {
-          mediaId = item.id;
-        } else if (item.kind === 'new' && item.tempId) {
-          const media = await this.mediaService.findByTempId(item.tempId);
-          if (!media) {
-            this.logger.error(`❌ Media not found for tempId: ${item.tempId}`);
-            throw new BadRequestException(
-              `Uploaded media not found for tempId: ${item.tempId}`,
-            );
-          }
-          mediaId = media.id;
+        if (newMediaIds.length > 0) {
+          this.logger.warn(
+            `🔄 Rolling back ${newMediaIds.length} newly uploaded media...`,
+          );
+          await this.mediaService.rollbackUploads(newMediaIds);
         }
 
-        if (mediaId) {
-          mediaOrderMap.set(mediaId, item.order);
-        }
+        throw new BadRequestException(
+          `Maximum ${maxMedia} media file(s) allowed. ` +
+            `After your changes you would have ${finalMediaCount} file(s). ` +
+            `Please remove ${finalMediaCount - maxMedia} more file(s) before saving.`,
+        );
       }
 
-      const currentMediaIds = content.media.map((m) => m.id);
-      const toDelete = currentMediaIds.filter(
-        (mediaId) => !mediaOrderMap.has(mediaId),
+      this.logger.log(
+        `✅ Media limit check passed: ${finalMediaCount}/${maxMedia}`,
       );
-
-      if (toDelete.length > 0) {
-        this.logger.log(`🗑️ Deleting ${toDelete.length} media`);
-        await this.mediaService.deleteMany(toDelete);
-      }
-
-      const updates = Array.from(mediaOrderMap.entries()).map(
-        ([mediaId, order]) => ({
-          id: mediaId,
-          order,
-        }),
-      );
-
-      if (updates.length > 0) {
-        await this.mediaService.updateOrder(updates);
-        await this.mediaService.clearTempIds(updates.map((u) => u.id));
-      }
-
-      this.logger.log(`✅ Content updated with ${updates.length} media`);
-    });
+    }
+    this.logger.log(`✅ Content updated with ${updates.length} media`);
   }
 
   async delete(id: string): Promise<boolean> {

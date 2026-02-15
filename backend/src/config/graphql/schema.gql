@@ -57,7 +57,7 @@ type Mutation {
   createContent(key: String!): Boolean!
   deleteContent(id: String!): Boolean!
   reorderContents(ids: [String!]!, key: String!): Boolean!
-  updateContent(id: String!, input: ContentInput!): Boolean!
+  updateContent(id: String!, input: ContentInput!, maxMedia: Int): Boolean!
 }
 
 type Query {
