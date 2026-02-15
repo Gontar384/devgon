@@ -6,12 +6,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { DoorOpen } from 'lucide-react';
 import React from 'react';
-import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import { useDeviceStore } from '@/store/deviceStore';
 import { LogoutButtonProps } from '@/app/layout/layout-types';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { toast } from 'sonner';
+import { logout } from '@/lib/auth/authActions';
 
 export function LogoutButton({
   authUser,
@@ -27,13 +27,16 @@ export function LogoutButton({
   const handleLogout = async () => {
     if (!isAuthenticated) return;
     try {
-      await api.get('/api/auth/logout');
+      await logout();
+      window.location.href = '/';
       router.refresh();
       if (openedBar) closeBar();
       setLogoutCooldown(true);
       toast.success('Zostałeś wylogowany👋');
     } catch {
+      toast.error('Coś poszło nie tak... ⚙️');
       console.error('Unable to log out');
+      window.location.href = '/';
     }
   };
 

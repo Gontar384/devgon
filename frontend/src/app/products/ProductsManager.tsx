@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import api from '@/lib/axios';
+import api from '@/lib/auth/axios';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';

@@ -3,9 +3,9 @@ import React from 'react';
 import { SiteLogo } from '@/app/layout/ui/navbar/parts/SiteLogo';
 import { MainMenuBar } from '@/app/layout/ui/navbar/main-menu-bar/MainMenuBar';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
-import { NavbarProps } from '@/app/layout/layout-types';
+import { AuthButtonWrapper } from '@/app/layout/ui/navbar/auth-button/AuthButtonWrapper';
 
-export default function Navbar({ authUser }: NavbarProps) {
+export default function Navbar() {
   return (
     <nav
       className="w-full h-16 flex items-center justify-between bg-background shadow-md"
@@ -13,7 +13,9 @@ export default function Navbar({ authUser }: NavbarProps) {
     >
       <SiteLogo />
       <MainMenuBar />
-      <AuthButton isMobileBar={false} authUser={authUser} />
+      <AuthButtonWrapper>
+        <AuthButton isMobileBar={false} />
+      </AuthButtonWrapper>
       <HamburgerButton />
     </nav>
   );

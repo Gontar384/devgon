@@ -1,10 +1,9 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
-import { NavbarProps } from '@/app/layout/layout-types';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 
-export default function NavbarClient({ authUser }: NavbarProps) {
+export default function NavbarClient() {
   const [hidden, setHidden] = useState(false);
   const lastY = useRef<number>(0);
   const ticking = useRef(false);
@@ -57,7 +56,7 @@ export default function NavbarClient({ authUser }: NavbarProps) {
         hidden && !openedBar ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
-      <Navbar authUser={authUser} />
+      <Navbar />
     </div>
   );
 }

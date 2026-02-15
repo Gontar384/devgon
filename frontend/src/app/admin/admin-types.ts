@@ -1,29 +1,51 @@
 import React from 'react';
-import { Content } from '@/lib/graphql/graphql-types';
+import { Content, Media } from '@/lib/graphql/graphql-types';
 
 export interface AdminManagerProps {
   contents: Record<string, Content[]>;
+  error: Error | null;
+  failedKeys: string[];
 }
 
-interface BaseContentProps {
-  contentKey: string;
-  isTitle?: boolean;
-  isHeader?: boolean;
-  isDescription?: boolean;
-}
-
-export interface ContentCardProps extends BaseContentProps {
-  content: Content;
-  contentKeyHeader?: boolean;
-  hoverable?: boolean;
-  upsertById?: boolean;
-  onDelete?: (id: string) => void;
-  sortable?: boolean;
-  sortableId?: string;
-}
-
-export interface ContentCardListProps extends BaseContentProps {
+export interface ContentCardManagerProps {
   contents: Content[];
+  contentKey: string;
+  mode: 'single' | 'multiple';
+  fields: {
+    title: number;
+    header: number;
+    description: number;
+  };
+  maxMedia?: number;
+}
+
+export interface ContentCardProps {
+  content: Content;
+  singleMode: boolean;
+  fields: {
+    title: number;
+    header: number;
+    description: number;
+  };
+  handleRevalidate: () => Promise<void>;
+  handleReorderMobile: (
+    id: string,
+    direction: 'left' | 'right',
+  ) => Promise<void>;
+  maxMedia?: number;
+}
+
+export interface AddCardButtonProps {
+  contentKey: string;
+  isAvailable: boolean;
+  handleAdd: () => Promise<void>;
+  singleMode: boolean;
+}
+
+export interface EditPopupUtilProps {
+  isEditing: boolean;
+  placeholderHeight: number;
+  placeholderWidth: number;
 }
 
 export interface EditableFieldProps {
@@ -32,6 +54,7 @@ export interface EditableFieldProps {
   type: 'small' | 'big';
   contentLength: number;
   isEditing: boolean;
+  header: 'Title' | 'Header' | 'Description';
 }
 
 export interface EditButtonsProps {
@@ -44,12 +67,37 @@ export interface EditButtonsProps {
 }
 
 export interface DeleteCardButtonProps {
-  onDelete: (id: string) => void;
+  handleDelete: (id: string) => Promise<void>;
+  contentId: string;
+  isEditing: boolean;
+}
+
+export interface MoveCardButtonsProps {
+  handleReorderMobile: (
+    id: string,
+    direction: 'left' | 'right',
+  ) => Promise<void>;
   contentId: string;
 }
 
-export interface EditPopupUtilProps {
-  isEditing: boolean;
-  placeholderHeight: number;
-  placeholderWidth: number;
+export interface AdminContentErrorBannerProps {
+  failedKeys: string[];
 }
+
+export interface MediaUploaderProps {
+  media: MediaItem[];
+  onMediaChange: (mediaItems: MediaItem[]) => void;
+  isEditing: boolean;
+  maxMedia?: number;
+}
+
+export interface SortableMediaItemProps {
+  item: MediaItem;
+  onDelete: () => void;
+  isEditing: boolean;
+  move: (id: string, dir: -1 | 1) => void;
+}
+
+export type MediaItem =
+  | { id: string; type: 'existing'; data: Media }
+  | { id: string; type: 'new'; data: { file: File; previewUrl: string } };

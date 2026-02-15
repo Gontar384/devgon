@@ -5,82 +5,51 @@ import { Roles, RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../auth/auth.types';
 import { ContentModel } from './content.model';
 import { ContentInput } from './content.input';
-import { JwtAuthGuard } from '../auth/jwt.guard';
-import { ContentGroupModel } from './content-group.model';
+import { AuthSessionGuard } from '../auth/auth-session.guard';
 
 @Resolver(() => ContentModel)
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
-  //CUSTOM QUERY
-  @Query(() => [ContentGroupModel])
-  async getContentsByKeys(
-    @Args({ name: 'keys', type: () => [String] }) keys: string[],
-  ) {
-    return this.contentService.getManyByKeys(keys);
-  }
-
-  //SINGLE CONTENT
-  @Query(() => ContentModel, { nullable: true })
-  async getContent(@Args('key') key: string) {
-    return await this.contentService.getByKey(key);
-  }
-
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async upsertContent(
-    @Args('key') key: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.upsertByKey(key, input);
-  }
-
-  //MULTIPLE CONTENT
-  @Query(() => ContentModel, { nullable: true })
-  async getContentById(@Args('id') id: string) {
-    return await this.contentService.getById(id);
-  }
-
   @Query(() => [ContentModel])
-  async getContents(@Args('key') key: string) {
-    return await this.contentService.getMany(key);
+  async getContents(@Args('key') key: string): Promise<ContentModel[]> {
+    const data = await this.contentService.getMany(key);
+    return data as unknown as ContentModel[];
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
-  async createContent(
-    @Args('key') key: string,
-    @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.create(key, input);
+  @Mutation(() => Boolean)
+  async createContent(@Args('key') key: string): Promise<boolean> {
+    await this.contentService.create(key);
+    return true;
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  @Mutation(() => ContentModel)
+  @Mutation(() => Boolean)
   async updateContent(
     @Args('id') id: string,
     @Args('input') input: ContentInput,
-  ) {
-    return await this.contentService.update(id, input);
+  ): Promise<boolean> {
+    await this.contentService.update(id, input);
+    return true;
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
-  async deleteContent(@Args('id') id: string) {
+  async deleteContent(@Args('id') id: string): Promise<boolean> {
     return await this.contentService.delete(id);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(AuthSessionGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @Mutation(() => Boolean)
   async reorderContents(
     @Args('key') key: string,
     @Args({ name: 'ids', type: () => [String] }) ids: string[],
-  ) {
+  ): Promise<boolean> {
     return await this.contentService.reorder(key, ids);
   }
 }

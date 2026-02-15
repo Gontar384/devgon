@@ -3,13 +3,12 @@ import React, { useEffect, useRef } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { NavbarProps } from '@/app/layout/layout-types';
 import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
 import { dropdownData } from '@/app/layout/ui/navbar/main-menu-bar/dropdownData';
 
-export default function MobileBar({ authUser }: NavbarProps) {
+export default function MobileBar() {
   const { openedBar, closeBar, setProgrammaticScroll } = useMobileBarStore();
   const pathname = usePathname();
   const scrollYRef = useRef(0);
@@ -100,7 +99,7 @@ export default function MobileBar({ authUser }: NavbarProps) {
               </MobileDropdown>
             ))}
           </div>
-          <AuthButton isMobileBar={true} authUser={authUser} />
+          <AuthButton isMobileBar={true} />
         </motion.nav>
       )}
     </AnimatePresence>

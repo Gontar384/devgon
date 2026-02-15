@@ -1,150 +1,140 @@
 import { client } from '@/lib/graphql/graphqlClient';
-import { Content } from '@/lib/graphql/graphql-types';
+import { Content, MediaType } from '@/lib/graphql/graphql-types';
 import {
   CREATE_CONTENT,
   DELETE_CONTENT,
-  GET_CONTENT,
-  GET_CONTENT_BY_ID,
   GET_CONTENTS,
-  GET_CONTENTS_BY_KEYS,
   REORDER_CONTENTS,
   UPDATE_CONTENT,
-  UPSERT_CONTENT,
 } from '@/lib/graphql/contentGraphql';
-
-//CUSTOM QUERY
-export async function getPageContents(
-  keys: string[],
-): Promise<Record<string, Content[]>> {
-  try {
-    const res = await client.request<{
-      getContentsByKeys: {
-        key: string;
-        items: Content[];
-      }[];
-    }>(GET_CONTENTS_BY_KEYS, { keys });
-
-    return Object.fromEntries(
-      res.getContentsByKeys.map((group) => [group.key, group.items]),
-    );
-  } catch (err) {
-    console.error('GraphQL getPageContents error:', err);
-    return {};
-  }
-}
-
-//SINGLE CONTENT
-export async function getContent(key: string): Promise<Content | null> {
-  try {
-    const res = await client.request<{ getContent: Content }>(GET_CONTENT, {
-      key,
-    });
-    return res.getContent ?? null;
-  } catch (err) {
-    console.error('GraphQL getContent error:', err);
-    return null;
-  }
-}
-
-export async function upsertContent(
-  key: string,
-  input: Partial<Content>,
-): Promise<Content | null> {
-  try {
-    const res = await client.request<{ upsertContent: Content }>(
-      UPSERT_CONTENT,
-      { key, input },
-    );
-    return res.upsertContent ?? null;
-  } catch (err) {
-    console.error('GraphQL upsertContent error:', err);
-    return null;
-  }
-}
-
-//MULTIPLE CONTENT
-export async function getContentById(id: string): Promise<Content | null> {
-  try {
-    const res = await client.request<{ getContentById: Content }>(
-      GET_CONTENT_BY_ID,
-      { id },
-    );
-    return res.getContentById ?? null;
-  } catch (err) {
-    console.error('GraphQL getContentById error:', err);
-    return null;
-  }
-}
+import api from '@/lib/auth/axios';
+import { MediaItem } from '@/app/admin/admin-types';
+import axios from 'axios';
 
 export async function getContents(key: string): Promise<Content[]> {
-  try {
-    const res = await client.request<{ getContents: Content[] }>(GET_CONTENTS, {
-      key,
-    });
-    return res.getContents ?? [];
-  } catch (err) {
-    console.error('GraphQL getContents error:', err);
-    return [];
-  }
+  const res = await client.requestWithRedirect<{ getContents: Content[] }>(
+    GET_CONTENTS,
+    { key },
+  );
+  return res.getContents ?? [];
 }
 
-export async function createContent(
-  key: string,
-  input: Partial<Content>,
-): Promise<Content | null> {
-  try {
-    const res = await client.request<{ createContent: Content }>(
-      CREATE_CONTENT,
-      { key, input },
-    );
-    return res.createContent ?? null;
-  } catch (err) {
-    console.error('GraphQL createContent error:', err);
-    return null;
-  }
+export async function createContent(key: string): Promise<boolean> {
+  const res = await client.requestWithRedirect<{ createContent: boolean }>(
+    CREATE_CONTENT,
+    { key },
+  );
+  return res.createContent ?? false;
 }
 
 export async function updateContent(
   id: string,
-  input: Partial<Content>,
-): Promise<Content | null> {
+  payload: {
+    title?: string;
+    header?: string;
+    description?: string;
+    mediaItems: MediaItem[];
+  },
+  maxMedia?: number,
+) {
   try {
-    const res = await client.request<{ updateContent: Content }>(
-      UPDATE_CONTENT,
-      { id, input },
+    const uploadedMediaMap = await uploadMedia(
+      id,
+      payload.mediaItems,
+      maxMedia,
     );
-    return res.updateContent ?? null;
-  } catch (err) {
-    console.error('GraphQL updateContent error:', err);
-    return null;
+
+    const mediaOrder = payload.mediaItems.map((item, index) => ({
+      kind: item.type === 'existing' ? ('existing' as const) : ('new' as const),
+      id: item.type === 'existing' ? item.id : uploadedMediaMap.get(item.id),
+      tempId: item.type === 'new' ? item.id : undefined,
+      order: index,
+    }));
+
+    await client.requestWithRedirect(UPDATE_CONTENT, {
+      id,
+      input: {
+        title: payload.title,
+        header: payload.header,
+        description: payload.description,
+        mediaOrder,
+      },
+    });
+
+    return true;
+  } catch (error) {
+    console.error('❌ Update failed:', error);
+    throw error;
+  }
+}
+
+async function uploadMedia(
+  contentId: string,
+  mediaItems: MediaItem[],
+  maxMedia?: number,
+): Promise<Map<string, string>> {
+  const newItems = mediaItems.filter((item) => item.type === 'new');
+
+  if (newItems.length === 0) {
+    return new Map();
+  }
+
+  const formData = new FormData();
+
+  newItems.forEach((item) => {
+    formData.append('files', item.data.file);
+  });
+
+  formData.append('tempIds', JSON.stringify(newItems.map((item) => item.id)));
+
+  if (maxMedia !== undefined) {
+    formData.append('maxMedia', maxMedia.toString());
+  }
+
+  try {
+    const response = await api.post<{
+      success: boolean;
+      media: Array<{
+        id: string;
+        tempId: string;
+        filename: string;
+        type: MediaType;
+        order: number;
+      }>;
+    }>(`/api/media/upload/${contentId}`, formData);
+
+    console.log('✅ Upload response:', response.data);
+
+    const map = new Map<string, string>();
+    response.data.media.forEach((m) => {
+      map.set(m.tempId, m.id);
+    });
+
+    return map;
+  } catch (error) {
+    console.error('❌ Media upload failed:', error);
+    if (axios.isAxiosError(error) && error.response) {
+      console.error('❌ Response data:', error.response.data);
+    }
+    throw new Error('Could not upload Media');
   }
 }
 
 export async function deleteContent(id: string): Promise<boolean> {
-  try {
-    const res = await client.request<{ deleteContent: boolean }>(
-      DELETE_CONTENT,
-      { id },
-    );
-    return res.deleteContent;
-  } catch (err) {
-    console.error('GraphQL deleteContent error:', err);
-    return false;
-  }
+  const res = await client.requestWithRedirect<{ deleteContent: boolean }>(
+    DELETE_CONTENT,
+    { id },
+  );
+  return res.deleteContent;
 }
 
 export async function reorderContents(
   key: string,
   ids: string[],
 ): Promise<boolean> {
-  try {
-    const res = await client.request<{ reorderContents: boolean }>(
-      REORDER_CONTENTS,
-      { key, ids },
-    );
-    return res.reorderContents;
-  } catch (err) {
-    console.error('GraphQL reorderContents error:', err);
-    return false;
-  }
+  const res = await client.requestWithRedirect<{ reorderContents: boolean }>(
+    REORDER_CONTENTS,
+    { key, ids },
+  );
+  return res.reorderContents;
 }

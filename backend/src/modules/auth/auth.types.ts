@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export enum UserRole {
   GUEST = 'guest',
   USER = 'user',
@@ -11,9 +13,10 @@ export interface JwtPayload {
 }
 
 export interface RequestWithUser extends Request {
-  cookies?: Record<string, string>;
-  user?: JwtPayload;
+  user: JwtPayload;
 }
+
+export type CookieKind = 'access' | 'refresh';
 
 export interface GoogleProfile {
   id: string;

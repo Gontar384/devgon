@@ -1,9 +1,8 @@
-import { createMetadata } from '@/lib/metaData/metadata';
+import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
-import { verifyAuth } from '@/lib/auth/verifyAuth';
 import { AdminLayout } from '@/app/admin/AdminLayout';
-import { getPageContents } from '@/lib/graphql/contentService';
 import { AdminHomeManager } from '@/app/admin/home/AdminHomeManager';
+import { loadPageContents } from '@/lib/graphql/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -12,13 +11,20 @@ export const generateMetadata = (): Metadata =>
     path: '/admin/home',
   });
 
+export const revalidate = 3600;
+
 export default async function AdminHomePage() {
-  const authUser = await verifyAuth('/admin/home');
-  const contents = await getPageContents(['about-main-card']);
+  const { contents, error, failedKeys } = await loadPageContents([
+    'about-main-card',
+  ]);
 
   return (
     <AdminLayout>
-      {authUser.role === 'admin' && <AdminHomeManager contents={contents} />}
+      <AdminHomeManager
+        contents={contents}
+        error={error}
+        failedKeys={failedKeys}
+      />
     </AdminLayout>
   );
 }

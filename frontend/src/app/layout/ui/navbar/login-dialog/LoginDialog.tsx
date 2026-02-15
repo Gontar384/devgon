@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useLoginDialogStore } from '@/store/loginDialogStore';
+import { loginWithGoogle } from '@/lib/auth/authActions';
 
 export function LoginDialog() {
   const { dialogOpen, setDialogOpen } = useLoginDialogStore();
@@ -16,7 +17,7 @@ export function LoginDialog() {
   const [mounted, setMounted] = useState(false);
 
   const handleLogin = () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/oauth`;
+    loginWithGoogle();
   };
 
   useEffect(() => {

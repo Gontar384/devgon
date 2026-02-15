@@ -2,30 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ContentGroupModel {
-  items: [ContentModel!]!
-  key: String!
-}
-
 input ContentInput {
   description: String
   header: String
-  images: [String!]
-  order: Float
+  mediaOrder: [MediaOrderInput!]!
   title: String
-  video: String
 }
 
 type ContentModel {
   description: String
   header: String
   id: ID!
-  images: [String!]
   key: String!
+  media: [MediaModel!]
   order: Float
   title: String
   updatedAt: DateTime!
-  video: String
 }
 
 """
@@ -33,17 +25,41 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type MediaModel {
+  alt: String
+  contentId: String!
+  createdAt: DateTime!
+  filename: String!
+  id: String!
+  mimeType: String!
+  order: Int!
+  size: Int!
+  storageKey: String!
+  type: MediaType!
+  updatedAt: DateTime!
+  url: String!
+}
+
+input MediaOrderInput {
+  id: ID
+  kind: String!
+  order: Float!
+  tempId: String
+}
+
+"""Type of media (image or video)"""
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
 type Mutation {
-  createContent(input: ContentInput!, key: String!): ContentModel!
+  createContent(key: String!): Boolean!
   deleteContent(id: String!): Boolean!
   reorderContents(ids: [String!]!, key: String!): Boolean!
-  updateContent(id: String!, input: ContentInput!): ContentModel!
-  upsertContent(input: ContentInput!, key: String!): ContentModel!
+  updateContent(id: String!, input: ContentInput!): Boolean!
 }
 
 type Query {
-  getContent(key: String!): ContentModel
-  getContentById(id: String!): ContentModel
   getContents(key: String!): [ContentModel!]!
-  getContentsByKeys(keys: [String!]!): [ContentGroupModel!]!
 }

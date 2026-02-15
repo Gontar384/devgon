@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine
+    container_name: dev_postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: devgon
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - dev_network
+
+  minio:
+    image: minio/minio:latest
+    container_name: dev_minio
+    ports:
+      - "9000:9000"  # API
+      - "9001:9001"  # Console UI
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio_dev_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_dev_data:
+  minio_dev_data:
+
+networks:
+  dev_network:
+    driver: bridge

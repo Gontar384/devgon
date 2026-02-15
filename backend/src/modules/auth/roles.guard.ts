@@ -9,6 +9,8 @@ import { Reflector } from '@nestjs/core';
 import { UserRole, RequestWithUser } from './auth.types';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
+const ROLES_KEY = 'roles';
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -39,5 +41,4 @@ export class RolesGuard implements CanActivate {
   }
 }
 
-export const ROLES_KEY = 'roles';
 export const Roles = (...roles: UserRole[]) => SetMetadata(ROLES_KEY, roles);

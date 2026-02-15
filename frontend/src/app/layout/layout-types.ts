@@ -1,10 +1,6 @@
 import React from 'react';
 import { AuthUser } from '@/lib/auth/auth-types';
 
-export interface NavbarProps {
-  authUser: AuthUser;
-}
-
 export interface DropdownOptionProps {
   title: string;
   href: string;
@@ -21,10 +17,10 @@ export interface DropdownWrapperProps {
 
 export interface AuthButtonProps {
   isMobileBar: boolean;
-  authUser: AuthUser;
 }
 
 export interface LoginButtonProps extends AuthButtonProps {
+  authUser: AuthUser;
   showTooltip: boolean;
   setShowTooltip: React.Dispatch<React.SetStateAction<boolean>>;
   logoutCooldown: boolean;

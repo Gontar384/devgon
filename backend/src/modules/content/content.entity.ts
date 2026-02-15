@@ -3,32 +3,31 @@ import {
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Media } from './media/media.entity';
 
 @Entity({ name: 'content' })
 export class Content {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   key: string;
 
-  @Column({ nullable: true })
-  title?: string;
+  @Column({ type: 'varchar', nullable: true })
+  title?: string | null;
 
-  @Column({ nullable: true })
-  header?: string;
+  @Column({ type: 'varchar', nullable: true })
+  header?: string | null;
 
-  @Column({ nullable: true })
-  description?: string;
+  @Column({ type: 'varchar', nullable: true })
+  description?: string | null;
 
-  @Column('simple-array', { nullable: true })
-  images?: string[];
+  @OneToMany(() => Media, (media) => media.content, { cascade: true })
+  media: Media[];
 
-  @Column({ nullable: true })
-  video?: string;
-
-  @Column({ default: 0, nullable: true })
+  @Column({ type: 'integer' })
   order: number;
 
   @UpdateDateColumn()

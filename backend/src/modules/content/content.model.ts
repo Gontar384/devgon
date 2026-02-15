@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { MediaModel } from './media/media.model';
 
 @ObjectType()
 export class ContentModel {
@@ -17,11 +18,8 @@ export class ContentModel {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(() => [String], { nullable: true })
-  images?: string[];
-
-  @Field({ nullable: true })
-  video?: string;
+  @Field(() => [MediaModel], { nullable: true })
+  media?: MediaModel[];
 
   @Field({ nullable: true })
   order: number;

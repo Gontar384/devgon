@@ -16,14 +16,28 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: devgon_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
+      minio:
+        image: minio/minio:latest
+        ports:
+          - 9000:9000
+          - 9001:9001
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin123
+        options: >-
+          --health-cmd "mc ready local"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 3
 
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +61,16 @@ jobs:
             echo "Waiting for postgres..."
             sleep 2
           done
+
+      - name: Wait for MinIO to be ready
+        run: |
+          until curl -f http://localhost:9000/minio/health/live; do
+            echo "Waiting for MinIO..."
+            sleep 2
+          done
+
       - name: Set DATABASE_URL for tests
-        run: echo "DATABASE_URL=postgresql://testuser:testpassword@localhost:5432/testdb" >> $GITHUB_ENV
+        run: echo "DATABASE_URL=postgresql://postgres:password@localhost:5432/devgon_test" >> $GITHUB_ENV
 
       - name: Create .env.test
         run: |
@@ -61,6 +83,12 @@ jobs:
             echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
             echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
             echo "COOKIE_DOMAIN=.test.site"
+            echo "MINIO_ENDPOINT=localhost"
+            echo "MINIO_PORT=9000"
+            echo "MINIO_USE_SSL=false"
+            echo "MINIO_ROOT_USER=minioadmin"
+            echo "MINIO_ROOT_PASSWORD=minioadmin123"
+            echo "MINIO_BUCKET_NAME=media"
           } > .env.test
         working-directory: backend
 

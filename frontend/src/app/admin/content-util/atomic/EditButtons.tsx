@@ -12,28 +12,31 @@ export function EditButtons({
   isLoading,
 }: EditButtonsProps) {
   return (
-    <div className="flex justify-between items-center gap-6 text-sm relative">
+    <div className="w-full flex justify-between items-center gap-2 text-xs bg-background border-t p-3">
       <div className="underline">
-        {`Ostatnia edycja: ${new Date(updatedAt).toLocaleString('pl-PL', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`}
+        <p>Ostatnia edycja:</p>
+        <p>
+          {new Date(updatedAt).toLocaleString('pl-PL', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </p>
       </div>
       <div className="flex justify-end gap-3">
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="p-3 hover:bg-gray-100 hover:cursor-pointer rounded-full transition-colors"
+            className="p-3 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
             aria-label="Edit"
             type="button"
           >
             <Pencil className="w-6 h-6" />
           </button>
         ) : (
-          <div className="flex gap-3 justify-end">
+          <div className="flex flex-wrap-reverse justify-center gap-3 ">
             <Button
               variant="outline"
               onClick={handleCancel}
@@ -51,7 +54,9 @@ export function EditButtons({
           </div>
         )}
       </div>
-      {isEditing && isLoading && <Loader2Icon className="animate-spin absolute top-7" />}
+      {isEditing && isLoading && (
+        <Loader2Icon className="h-20 w-20 text-primary/70 animate-spin absolute inset-0 m-auto" />
+      )}
     </div>
   );
 }
