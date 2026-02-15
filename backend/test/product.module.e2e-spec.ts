@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { cleanDb, disconnectDb, initDb } from './test-utils/cleanDb';
 
 describe('ProductController (e2e)', () => {
   let app: INestApplication;
@@ -17,16 +16,9 @@ describe('ProductController (e2e)', () => {
     app.setGlobalPrefix('api');
 
     await app.init();
-
-    initDb(app);
-  });
-
-  beforeEach(async () => {
-    await cleanDb();
   });
 
   afterAll(async () => {
-    await disconnectDb();
     await app.close();
   });
 

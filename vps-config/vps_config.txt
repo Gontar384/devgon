@@ -19,6 +19,7 @@ VPS server CONFIGURATION
 ---------------------------------------------------------------
 Add script (setup_vps.sh) and run
 ---------------------------------------------------------------
+ssh root@ip
 nano setup.sh
 chmod +x setup.sh
 ./setup.sh

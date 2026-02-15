@@ -1,9 +1,1 @@
-export default async function globalSetup() {
-  const res = await fetch('http://localhost:4000/api/test-utils/reset-db', {
-    method: 'POST',
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to reset DB. Status: ${res.status}`);
-  }
-}
+export default async function globalSetup() {}
