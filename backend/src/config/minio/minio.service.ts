@@ -92,7 +92,8 @@ export class MinioService implements OnModuleInit {
     const pub = new URL(this.publicUrl);
 
     signed.protocol = pub.protocol;
-    signed.host = pub.host;
+    signed.hostname = pub.hostname;
+    signed.port = pub.port;
 
     return signed.toString();
   }

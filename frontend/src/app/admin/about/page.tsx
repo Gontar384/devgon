@@ -11,7 +11,7 @@ export const generateMetadata = (): Metadata =>
     path: '/admin/about',
   });
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function AdminAboutPage() {
   const { contents, error, failedKeys } = await loadPageContents([
