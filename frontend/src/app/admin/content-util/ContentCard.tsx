@@ -221,7 +221,7 @@ export function ContentCard({
           key={isEditing ? 'editing' : 'view'}
         >
           {!singleMode && (
-            <p className="absolute right-6 top-4 underline">
+            <p className="text-sm absolute right-3 top-3 px-1.5 underline border-2 rounded-full">
               {(content?.order ?? 0) + 1}
             </p>
           )}
