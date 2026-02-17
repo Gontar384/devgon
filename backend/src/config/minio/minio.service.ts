@@ -81,7 +81,7 @@ export class MinioService implements OnModuleInit {
 
   async getSignedUrl(
     storageKey: string,
-    expirySeconds = 3600,
+    expirySeconds = 86400,
   ): Promise<string> {
     if (!this.publicUrl) {
       return await this.minioClient.presignedGetObject(
