@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int, registerEnumType } from '@nestjs/graphql';
-import { MediaType } from './media.entity';
+import { MediaType } from './media-types';
 
 registerEnumType(MediaType, {
   name: 'MediaType',

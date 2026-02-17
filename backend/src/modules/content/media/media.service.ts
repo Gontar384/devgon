@@ -1,10 +1,10 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Media, MediaType } from './media.entity';
+import { Media } from './media.entity';
 import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
-import { UploadedFileType, UploadedMediaItem } from './media-types';
+import { MediaType, UploadedFileType, UploadedMediaItem } from './media-types';
 
 @Injectable()
 export class MediaService {
