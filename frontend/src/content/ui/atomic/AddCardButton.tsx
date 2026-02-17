@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import React from 'react';
-import { AddCardButtonProps } from '@/app/admin/admin-types';
+import { AddCardButtonProps } from '@/content/content-types';
 
 export function AddCardButton({
   contentKey,

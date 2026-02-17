@@ -8,8 +8,8 @@ import {
   Underline,
 } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
-import { ToolbarButton } from '@/components/tiptap/ToolbarButton';
-import { TiptapToolbarProps } from '@/components/tiptap/tiptap-types';
+import { ToolbarButton } from '@/content/util/tiptap/ToolbarButton';
+import { TiptapToolbarProps } from '@/content/util/tiptap/tiptap-types';
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
   const [, setUpdateCounter] = useState(0);

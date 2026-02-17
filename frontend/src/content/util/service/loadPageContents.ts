@@ -1,5 +1,5 @@
-import { getContents } from '@/lib/graphql/contentService';
-import { Content, UsePageContentsResult } from '@/lib/graphql/graphql-types';
+import { getContents } from '@/content/util/service/contentService';
+import { Content, UsePageContentsResult } from '@/content/content-types';
 
 export async function loadPageContents(
   keys: string[],

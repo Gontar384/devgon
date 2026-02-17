@@ -1,5 +1,4 @@
 import { client } from '@/lib/graphql/graphqlClient';
-import { Content, MediaType } from '@/lib/graphql/graphql-types';
 import {
   CREATE_CONTENT,
   DELETE_CONTENT,
@@ -8,8 +7,8 @@ import {
   UPDATE_CONTENT,
 } from '@/lib/graphql/contentGraphql';
 import api from '@/lib/auth/axios';
-import { MediaItem } from '@/app/admin/admin-types';
 import axios from 'axios';
+import { Content, MediaItem, MediaType } from '@/content/content-types';
 
 export async function getContents(key: string): Promise<Content[]> {
   const res = await client.requestWithRedirect<{ getContents: Content[] }>(

@@ -1,7 +1,5 @@
-import { SortableMediaItemProps } from '@/app/admin/admin-types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Media, MediaType } from '@/lib/graphql/graphql-types';
 import Image from 'next/image';
 import {
   CircleChevronDown,
@@ -14,6 +12,11 @@ import {
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
+import {
+  Media,
+  MediaType,
+  SortableMediaItemProps,
+} from '@/content/content-types';
 
 export function SortableMediaItem({
   item,

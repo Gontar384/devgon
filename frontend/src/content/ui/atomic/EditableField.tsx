@@ -1,9 +1,9 @@
-import { TiptapToolbar } from '@/components/tiptap/TiptapToolbar';
+import { TiptapToolbar } from '@/content/util/tiptap/TiptapToolbar';
 import { EditorContent } from '@tiptap/react';
 import React, { useEffect } from 'react';
-import { useSmallEditor } from '@/components/tiptap/useSmallEditor';
-import { useBigEditor } from '@/components/tiptap/useBigEditor';
-import { EditableFieldProps } from '@/app/admin/admin-types';
+import { useSmallEditor } from '@/content/util/tiptap/useSmallEditor';
+import { useBigEditor } from '@/content/util/tiptap/useBigEditor';
+import { EditableFieldProps } from '@/content/content-types';
 
 export function EditableField({
   value,

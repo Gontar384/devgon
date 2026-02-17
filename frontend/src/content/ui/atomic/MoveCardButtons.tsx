@@ -1,6 +1,6 @@
 import { CircleChevronLeft, CircleChevronRight } from 'lucide-react';
 import React from 'react';
-import { MoveCardButtonsProps } from '@/app/admin/admin-types';
+import { MoveCardButtonsProps } from '@/content/content-types';
 
 export function MoveCardButtons({
   handleReorderMobile,

@@ -1,4 +1,4 @@
-import { ToolbarButtonProps } from '@/components/tiptap/tiptap-types';
+import { ToolbarButtonProps } from '@/content/util/tiptap/tiptap-types';
 import React from 'react';
 
 export const ToolbarButton = ({

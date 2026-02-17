@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
 import { AdminLayout } from '@/app/admin/AdminLayout';
 import { AdminHomeManager } from '@/app/admin/home/AdminHomeManager';
-import { loadPageContents } from '@/lib/graphql/loadPageContents';
+import { loadPageContents } from '@/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
-import { DeleteCardButtonProps } from '@/app/admin/admin-types';
+import { DeleteCardButtonProps } from '@/content/content-types';
 
 export function DeleteCardButton({
   handleDelete,

@@ -6,16 +6,19 @@ import React, {
   useState,
 } from 'react';
 import { Card } from '@/components/ui/card';
-import { deleteContent, updateContent } from '@/lib/graphql/contentService';
-import { EditButtons } from '@/app/admin/content-util/atomic/EditButtons';
-import { EditableField } from '@/app/admin/content-util/atomic/EditableField';
-import { ContentCardProps, MediaItem } from '@/app/admin/admin-types';
+import {
+  deleteContent,
+  updateContent,
+} from '@/content/util/service/contentService';
+import { EditButtons } from '@/content/ui/atomic/EditButtons';
+import { EditableField } from '@/content/ui/atomic/EditableField';
 import { toast } from 'sonner';
-import { DeleteCardButton } from '@/app/admin/content-util/atomic/DeleteCardButton';
+import { DeleteCardButton } from '@/content/ui/atomic/DeleteCardButton';
 import { useSortable } from '@dnd-kit/sortable';
-import { EditPopupUtil } from '@/app/admin/content-util/atomic/EditPopupUtil';
-import { MoveCardButtons } from '@/app/admin/content-util/atomic/MoveCardButtons';
-import { MediaUploader } from '@/app/admin/content-util/atomic/media-uploader/MediaUploader';
+import { EditPopupUtil } from '@/content/ui/atomic/EditPopupUtil';
+import { MoveCardButtons } from '@/content/ui/atomic/MoveCardButtons';
+import { MediaUploader } from '@/content/ui/atomic/media-uploader/MediaUploader';
+import { ContentCardProps, MediaItem } from '@/content/content-types';
 
 export function ContentCard({
   content,

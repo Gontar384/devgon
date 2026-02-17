@@ -1,7 +1,7 @@
 import { Loader2Icon, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React from 'react';
-import { EditButtonsProps } from '@/app/admin/admin-types';
+import { EditButtonsProps } from '@/content/content-types';
 
 export function EditButtons({
   isEditing,
