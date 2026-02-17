@@ -275,23 +275,21 @@ export class MediaService {
 
       const mediaMap = new Map(mediaList.map((m) => [m.id, m]));
 
-      const tempUpdates = updates.map(({ id }, idx) => {
-        const media = mediaMap.get(id)!;
-        media.order = -1000 - idx;
-        return media;
-      });
+      await mediaRepo.save(
+        updates.map(({ id }, idx) => ({
+          ...mediaMap.get(id)!,
+          order: -1000 - idx,
+        })),
+      );
 
-      await mediaRepo.save(tempUpdates);
+      await mediaRepo.save(
+        updates.map(({ id, order }) => ({
+          ...mediaMap.get(id)!,
+          order,
+        })),
+      );
 
-      const finalUpdates = updates.map(({ id, order }) => {
-        const media = mediaMap.get(id)!;
-        media.order = order;
-        return media;
-      });
-
-      await mediaRepo.save(finalUpdates);
-
-      this.logger.log(`🔀 Updated order for ${finalUpdates.length} media`);
+      this.logger.log(`🔀 Updated order for ${updates.length} media`);
     });
   }
 
