@@ -12,6 +12,7 @@ import {
   horizontalListSortingStrategy,
   SortableContext,
 } from '@dnd-kit/sortable';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import {
   createContent,
   getContents,
@@ -144,12 +145,16 @@ export function ContentCardManager({
       ) : (
         <div className={`w-full ${!hasContent && 'h-[450px]'}`}>
           {items.length > 0 && (
-            <DndContext sensors={sensors} onDragEnd={handleReorder}>
+            <DndContext
+              sensors={sensors}
+              onDragEnd={handleReorder}
+              modifiers={[restrictToHorizontalAxis]}
+            >
               <SortableContext
                 items={items.map((c) => c.id)}
                 strategy={horizontalListSortingStrategy}
               >
-                <div className="w-full flex gap-4 p-1 overflow-x-auto overflow-y-hidden">
+                <div className="w-full flex gap-4 p-1 overflow-x-auto">
                   {items.map((content) => (
                     <div
                       key={content.id}

@@ -20,6 +20,7 @@ import { MediaItem, MediaUploaderProps } from '@/app/admin/admin-types';
 import { SortableMediaItem } from '@/app/admin/content-util/atomic/media-uploader/SortableMediaItem';
 import { Media, MediaType } from '@/lib/graphql/graphql-types';
 import { toast } from 'sonner';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
 
 const ALLOWED = ['image/', 'video/'];
 
@@ -153,6 +154,7 @@ export function MediaUploader({
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
+          modifiers={[restrictToParentElement]}
         >
           <SortableContext
             items={media.map((i) => i.id)}
@@ -185,7 +187,7 @@ export function MediaUploader({
             <Button
               asChild
               variant="outline"
-              className="hover:cursor-pointer"
+              className={`${!canAddMore ? 'bg-primary hover:bg-primary' : 'hover:cursor-pointer'}`}
               disabled={!canAddMore}
             >
               <span>
