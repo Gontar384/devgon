@@ -1,7 +1,7 @@
 import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
 import { AboutManager } from '@/app/about/ui/AboutManager';
-import { loadPageContents } from '@/lib/graphql/loadPageContents';
+import { loadPageContents } from '@/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({

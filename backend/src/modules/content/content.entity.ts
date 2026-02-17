@@ -4,6 +4,8 @@ import {
   Column,
   UpdateDateColumn,
   OneToMany,
+  Index,
+  CreateDateColumn,
 } from 'typeorm';
 import { Media } from './media/media.entity';
 
@@ -12,23 +14,27 @@ export class Content {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar' })
+  @Index()
+  @Column({ type: 'varchar', length: 255 })
   key: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', length: 1000, nullable: true })
   title?: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', length: 1000, nullable: true })
   header?: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'text', nullable: true })
   description?: string | null;
 
   @OneToMany(() => Media, (media) => media.content, { cascade: true })
   media: Media[];
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', default: 0 })
   order: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;

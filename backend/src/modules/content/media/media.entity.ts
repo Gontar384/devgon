@@ -8,27 +8,23 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Content } from '../content.entity';
-
-export enum MediaType {
-  IMAGE = 'image',
-  VIDEO = 'video',
-}
+import { MediaType } from './media-types';
 
 @Entity({ name: 'media' })
 export class Media {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   filename: string;
 
-  @Column({ type: 'varchar', unique: true })
+  @Column({ type: 'varchar', unique: true, length: 255 })
   storageKey: string;
 
-  @Column({ type: 'varchar', nullable: true, unique: true })
+  @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   uploadTempId?: string | null;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 100 })
   mimeType: string;
 
   @Column({ type: 'enum', enum: MediaType })
@@ -37,7 +33,7 @@ export class Media {
   @Column({ type: 'integer' })
   size: number;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   alt?: string | null;
 
   @Column({ type: 'integer', default: 0 })

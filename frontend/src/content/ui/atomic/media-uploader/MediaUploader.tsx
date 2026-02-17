@@ -16,11 +16,16 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from '@dnd-kit/sortable';
-import { MediaItem, MediaUploaderProps } from '@/app/admin/admin-types';
-import { SortableMediaItem } from '@/app/admin/content-util/atomic/media-uploader/SortableMediaItem';
-import { Media, MediaType } from '@/lib/graphql/graphql-types';
+import { SortableMediaItem } from '@/content/ui/atomic/media-uploader/SortableMediaItem';
 import { toast } from 'sonner';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
+import { useDeviceStore } from '@/store/deviceStore';
+import {
+  Media,
+  MediaItem,
+  MediaType,
+  MediaUploaderProps,
+} from '@/content/content-types';
 
 const ALLOWED = ['image/', 'video/'];
 
@@ -30,9 +35,10 @@ export function MediaUploader({
   isEditing,
   maxMedia,
 }: MediaUploaderProps) {
+  const { isMobile } = useDeviceStore();
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
+      activationConstraint: isMobile ? { distance: Infinity } : { distance: 5 },
     }),
   );
 

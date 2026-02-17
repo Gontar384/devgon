@@ -11,10 +11,10 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', length: 255, unique: true, nullable: false })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', length: 100, unique: true, nullable: false })
   username: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })

@@ -24,7 +24,10 @@ export class ContentService {
     const contents = await this.contentRepo.find({
       where: { key },
       relations: ['media'],
-      order: { order: 'ASC' },
+      order: {
+        order: 'ASC',
+        media: { order: 'ASC' },
+      },
     });
 
     await this.enrichMediaWithUrls(contents);
@@ -62,6 +65,7 @@ export class ContentService {
     const content = await this.contentRepo.findOne({
       where: { id },
       relations: ['media'],
+      order: { media: { order: 'ASC' } },
     });
 
     if (!content) {
@@ -115,15 +119,8 @@ export class ContentService {
       }),
     );
 
-    if (updates.length > 0) {
-      await this.mediaService.updateOrder(updates);
-      await this.mediaService.clearTempIds(updates.map((u) => u.id));
-    }
-
     if (maxMedia !== null && maxMedia !== undefined) {
-      const finalMediaCount = await this.mediaRepo.count({
-        where: { contentId: id },
-      });
+      const finalMediaCount = mediaOrderMap.size;
 
       if (finalMediaCount > maxMedia) {
         this.logger.error(
@@ -138,16 +135,18 @@ export class ContentService {
         }
 
         throw new BadRequestException(
-          `Maximum ${maxMedia} media file(s) allowed. ` +
-            `After your changes you would have ${finalMediaCount} file(s). ` +
-            `Please remove ${finalMediaCount - maxMedia} more file(s) before saving.`,
+          `You've exceeded ${maxMedia} media file(s) allowed `,
         );
       }
-
-      this.logger.log(
-        `✅ Media limit check passed: ${finalMediaCount}/${maxMedia}`,
-      );
     }
+
+    if (updates.length > 0) {
+      await this.mediaService.updateOrder(updates);
+      if (newMediaIds.length > 0) {
+        await this.mediaService.clearTempIds(newMediaIds);
+      }
+    }
+
     this.logger.log(`✅ Content updated with ${updates.length} media`);
   }
 

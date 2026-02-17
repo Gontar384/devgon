@@ -1,7 +1,5 @@
-import { SortableMediaItemProps } from '@/app/admin/admin-types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Media, MediaType } from '@/lib/graphql/graphql-types';
 import Image from 'next/image';
 import {
   CircleChevronDown,
@@ -14,6 +12,11 @@ import {
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
+import {
+  Media,
+  MediaType,
+  SortableMediaItemProps,
+} from '@/content/content-types';
 
 export function SortableMediaItem({
   item,
@@ -123,7 +126,7 @@ export function SortableMediaItem({
             <GripVertical className="w-4 h-4 text-white" />
           </div>
           <div
-            className={`absolute bottom-1 right-1 flex gap-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
+            className={`absolute bottom-1 left-1 flex gap-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
           >
             <button
               onClick={() => move(item.id, -1)}
@@ -164,7 +167,7 @@ export function SortableMediaItem({
 
       {!isExisting && (
         <div
-          className={`absolute bottom-1 left-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
+          className={`absolute bottom-1 right-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
         >
           Nowy
         </div>

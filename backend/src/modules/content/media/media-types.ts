@@ -1,4 +1,7 @@
-import { MediaType } from './media.entity';
+export enum MediaType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+}
 
 export interface UploadedFileType {
   buffer: Buffer;

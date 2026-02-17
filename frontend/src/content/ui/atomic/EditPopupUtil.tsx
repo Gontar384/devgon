@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditPopupUtilProps } from '@/app/admin/admin-types';
+import { EditPopupUtilProps } from '@/content/content-types';
 
 export function EditPopupUtil({
   isEditing,

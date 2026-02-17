@@ -1,10 +1,10 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Media, MediaType } from './media.entity';
+import { Media } from './media.entity';
 import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
-import { UploadedFileType, UploadedMediaItem } from './media-types';
+import { MediaType, UploadedFileType, UploadedMediaItem } from './media-types';
 
 @Injectable()
 export class MediaService {
@@ -275,23 +275,21 @@ export class MediaService {
 
       const mediaMap = new Map(mediaList.map((m) => [m.id, m]));
 
-      const tempUpdates = updates.map(({ id }, idx) => {
-        const media = mediaMap.get(id)!;
-        media.order = -1000 - idx;
-        return media;
-      });
+      await mediaRepo.save(
+        updates.map(({ id }, idx) => ({
+          ...mediaMap.get(id)!,
+          order: -1000 - idx,
+        })),
+      );
 
-      await mediaRepo.save(tempUpdates);
+      await mediaRepo.save(
+        updates.map(({ id, order }) => ({
+          ...mediaMap.get(id)!,
+          order,
+        })),
+      );
 
-      const finalUpdates = updates.map(({ id, order }) => {
-        const media = mediaMap.get(id)!;
-        media.order = order;
-        return media;
-      });
-
-      await mediaRepo.save(finalUpdates);
-
-      this.logger.log(`🔀 Updated order for ${finalUpdates.length} media`);
+      this.logger.log(`🔀 Updated order for ${updates.length} media`);
     });
   }
 

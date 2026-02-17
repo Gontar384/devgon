@@ -1,4 +1,5 @@
-import { Content } from '@/lib/graphql/graphql-types';
+import { Property } from 'csstype';
+import Content = Property.Content;
 
 export interface AboutManagerProps {
   contents: Record<string, Content[]>;
