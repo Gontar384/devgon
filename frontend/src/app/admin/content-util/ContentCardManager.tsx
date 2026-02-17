@@ -24,6 +24,7 @@ import { ContentCard } from '@/app/admin/content-util/ContentCard';
 import useSWR from 'swr';
 import { Content } from '@/lib/graphql/graphql-types';
 import { AddCardButton } from '@/app/admin/content-util/atomic/AddCardButton';
+import { useDeviceStore } from '@/store/deviceStore';
 
 export function ContentCardManager({
   contents: initialContents,
@@ -60,8 +61,11 @@ export function ContentCardManager({
   const hasContent = contents.length > 0;
   const canAddContent = mode === 'multiple' || !hasContent;
 
+  const { isMobile } = useDeviceStore();
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(PointerSensor, {
+      activationConstraint: isMobile ? { distance: Infinity } : { distance: 5 },
+    }),
   );
 
   const handleAdd = async () => {
