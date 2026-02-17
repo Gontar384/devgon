@@ -38,7 +38,7 @@ without rewriting backend logic every time.
 
 ## 🧩 How devgon Works
 
-**devgon is built around three layers:**
+**devgon is built around these layers:**
 
 ### 1️⃣ Backend — Content Engine
 **A NestJS backend that provides:**
