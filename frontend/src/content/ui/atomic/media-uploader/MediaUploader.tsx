@@ -29,6 +29,12 @@ import {
 
 const ALLOWED = ['image/', 'video/'];
 
+/**
+ * Media upload and preview area within the content editor.
+ * Supports drag-and-drop reordering and directional buttons for mobile.
+ * New files are previewed locally via object URLs before upload.
+ * Enforces the `maxMedia` limit on the client side before sending to server.
+ */
 export function MediaUploader({
   media,
   onMediaChange,
