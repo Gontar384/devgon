@@ -1,7 +1,16 @@
 import { GraphQLClient, ClientError } from 'graphql-request';
 import { AUTH_ENDPOINTS } from '@/lib/auth/authActions';
 
+/**
+ * Extended GraphQL client that handles session expiry globally.
+ * On any UNAUTHENTICATED error, redirects the user to the homepage
+ * instead of propagating the error to the caller.
+ */
 export class AppGraphQLClient extends GraphQLClient {
+  /**
+   * Executes a GraphQL request. If the server returns an UNAUTHENTICATED error,
+   * redirects to "/" and rejects the promise. All other errors are re-thrown.
+   */
   async requestWithRedirect<T = any>(
     query: string,
     variables?: Record<string, any>,
