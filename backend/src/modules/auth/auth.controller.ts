@@ -19,6 +19,10 @@ import { AuthSessionGuard } from './auth-session.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  /**
+   * Initiates the Google OAuth flow. The actual redirect to Google
+   * is handled entirely by Passport — this method body intentionally stays empty.
+   */
   @Get('oauth')
   @UseGuards(AuthGuard('google'))
   oauthLogin() {}
@@ -40,6 +44,11 @@ export class AuthController {
     return res.redirect(`${process.env.FRONTEND_URL}`);
   }
 
+  /**
+   * Protected endpoint used by Next.js middleware to verify active sessions.
+   * Returns user data if the session is valid — middleware redirects to "/"
+   * otherwise. Requires a valid access token (AuthSessionGuard handles refresh).
+   */
   @UseGuards(AuthSessionGuard)
   @Get('verify')
   verifyAuth(@Req() req: RequestWithUser): UserResponseDto {
@@ -68,6 +77,10 @@ export class AuthController {
     return await this.authService.getCurrentUser(req, res);
   }
 
+  /**
+   * Deletes the refresh token from the database and clears both auth cookies.
+   * Accepts missing or invalid tokens gracefully — always returns 200.
+   */
   @Post('logout')
   async logout(@Req() req: RequestWithUser, @Res() res: Response) {
     const token = req.cookies[AUTH_POLICY.cookies.refresh.name] as unknown;
