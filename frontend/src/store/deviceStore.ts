@@ -3,6 +3,11 @@
 import { create } from 'zustand';
 import { DeviceState } from '@/store/store-types';
 
+/**
+ * Detects whether the user is on a mobile device based on screen width
+ * and the first interaction event (touch vs mouse). Once determined,
+ * event listeners are removed and the result is fixed for the session.
+ */
 export const useDeviceStore = create<DeviceState>((set) => ({
   isMobile: false,
   detectDevice: () => {
