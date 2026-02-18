@@ -1,5 +1,4 @@
-import { Property } from 'csstype';
-import Content = Property.Content;
+import { Content } from '@/content/content-types';
 
 export interface AboutManagerProps {
   contents: Record<string, Content[]>;
