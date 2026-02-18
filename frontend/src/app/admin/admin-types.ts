@@ -5,7 +5,3 @@ export interface AdminManagerProps {
   error: Error | null;
   failedKeys: string[];
 }
-
-export interface AdminContentErrorBannerProps {
-  failedKeys: string[];
-}

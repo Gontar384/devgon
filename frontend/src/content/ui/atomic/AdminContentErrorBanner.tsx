@@ -1,4 +1,4 @@
-import { AdminContentErrorBannerProps } from '@/app/admin/admin-types';
+import { AdminContentErrorBannerProps } from '@/content/content-types';
 
 export function AdminContentErrorBanner({
   failedKeys,

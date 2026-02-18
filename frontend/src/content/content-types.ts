@@ -125,6 +125,10 @@ export interface MoveCardButtonsProps {
   contentId: string;
 }
 
+export interface AdminContentErrorBannerProps {
+  failedKeys: string[];
+}
+
 export interface MediaUploaderProps {
   media: MediaItem[];
   onMediaChange: (mediaItems: MediaItem[]) => void;
