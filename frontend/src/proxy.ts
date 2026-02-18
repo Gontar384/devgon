@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ProtectedRoute } from '@/lib/auth/auth-types';
 import { AUTH_ENDPOINTS } from '@/lib/auth/authActions';
 
+/**
+ * Next.js middleware that protects routes requiring specific roles.
+ * For each protected path, forwards the request's cookies to the auth
+ * verify endpoint. On success, passes through any Set-Cookie headers
+ * from the response (e.g. refreshed session tokens). Redirects to "/"
+ * on auth failure, missing role, or network error.
+ */
 export async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
