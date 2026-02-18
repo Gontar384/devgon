@@ -9,6 +9,7 @@ export const useMobileBarStore = create<MobileBarState>((set) => ({
   closeBar: () => set({ openedBar: false }),
   mobileBarOpened: false,
   setMobileBarOpened: (opened: boolean) => set({ mobileBarOpened: opened }),
+  /** Flag used to suppress scroll-triggered side effects during programmatic navigation. */
   programmaticScroll: false,
   setProgrammaticScroll: (v: boolean) => set({ programmaticScroll: v }),
 }));
