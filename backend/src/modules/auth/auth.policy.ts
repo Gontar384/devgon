@@ -1,3 +1,9 @@
+/**
+ * Central configuration for the authentication system.
+ * - Access token: 15 min lifetime (JWT)
+ * - Refresh token: 7 days lifetime (opaque, stored in DB)
+ * - Max concurrent sessions per user: 3 (oldest evicted on overflow)
+ */
 export const AUTH_POLICY = {
   cookies: {
     access: {
