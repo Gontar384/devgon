@@ -2,6 +2,10 @@ import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import { DeleteCardButtonProps } from '@/content/content-types';
 
+/**
+ * Delete button with a built-in confirmation step.
+ * First click reveals confirm/cancel options; second click triggers deletion.
+ */
 export function DeleteCardButton({
   handleDelete,
   contentId,
