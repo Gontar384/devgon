@@ -23,6 +23,10 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   oauthLogin() {}
 
+  /**
+   * Handles the OAuth callback from Google. Sets auth cookies and redirects
+   * to the frontend. Cookie rotation happens transparently in setAuthCookies.
+   */
   @Get('oauth/callback')
   @UseGuards(AuthGuard('google'))
   async oauthCallback(@Req() req: RequestWithUser, @Res() res: Response) {
@@ -51,6 +55,11 @@ export class AuthController {
     };
   }
 
+  /**
+   * Returns current user data. Unlike /verify, this endpoint never throws —
+   * silently attempts token refresh and returns a guest object on failure.
+   * Used for client-side session hydration on app load.
+   */
   @Get('me')
   async getCurrentUser(
     @Req() req: Request,
