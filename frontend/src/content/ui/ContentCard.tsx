@@ -20,6 +20,15 @@ import { MoveCardButtons } from '@/content/ui/atomic/MoveCardButtons';
 import { MediaUploader } from '@/content/ui/atomic/media-uploader/MediaUploader';
 import { ContentCardProps, MediaItem } from '@/content/content-types';
 
+/**
+ * Editable card representing a single content block.
+ * Switches between view and edit mode — in edit mode the card becomes
+ * a fixed overlay (z-50) with an animated transition.
+ *
+ * Draft state is kept locally and discarded on cancel.
+ * New media preview URLs are revoked on cancel to prevent memory leaks.
+ * Drag-and-drop is disabled while the card is in edit mode.
+ */
 export function ContentCard({
   content,
   singleMode,

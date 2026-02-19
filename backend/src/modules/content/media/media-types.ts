@@ -3,6 +3,10 @@ export enum MediaType {
   VIDEO = 'video',
 }
 
+/**
+ * Subset of Multer's file object — contains only the fields
+ * used within this application.
+ */
 export interface UploadedFileType {
   buffer: Buffer;
   originalname: string;
@@ -12,6 +16,7 @@ export interface UploadedFileType {
 
 export interface UploadedMediaItem {
   id: string;
+  /** Matches the client-generated tempId sent during upload. */
   tempId: string;
   filename: string;
   type: MediaType;

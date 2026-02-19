@@ -9,6 +9,21 @@ import { RefreshTokenRepository } from './refresh-token.repository';
 import { AUTH_POLICY } from './auth.policy';
 import { clearAuthCookie, setAuthCookie } from './auth.cookies';
 
+/**
+ * Core authentication service handling OAuth login, session management,
+ * and token rotation.
+ *
+ * Auth flow:
+ * 1. User authenticates via Google OAuth → `validateOAuthLogin` creates
+ *    or retrieves the user record and returns a JWT payload.
+ * 2. `setAuthCookies` issues a short-lived access token (JWT) and a
+ *    long-lived refresh token (opaque, stored in DB). Enforces a per-user
+ *    device limit by evicting oldest tokens when the cap is reached.
+ * 3. `refreshAccessToken` implements token rotation — the old refresh token
+ *    is atomically deleted and replaced with a new one on each use.
+ * 4. `getCurrentUser` is used by the /me endpoint: tries access token first,
+ *    silently falls back to refresh, returns a guest object on failure.
+ */
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
@@ -19,6 +34,12 @@ export class AuthService {
     private refreshTokenRepo: RefreshTokenRepository,
   ) {}
 
+  /**
+   * Validates a Google OAuth profile and returns a JWT payload.
+   * Creates a new user record on first login.
+   *
+   * @throws UnauthorizedException if the profile contains no valid email
+   */
   async validateOAuthLogin(profile: GoogleProfile): Promise<JwtPayload> {
     if (
       !profile ||
@@ -49,6 +70,11 @@ export class AuthService {
     };
   }
 
+  /**
+   * Issues access and refresh tokens and sets them as HttpOnly cookies.
+   * Enforces the per-user device limit (`AUTH_POLICY.devices.maxPerUser`)
+   * by removing the oldest refresh tokens before creating a new one.
+   */
   async setAuthCookies(
     jwtPayload: JwtPayload,
     res: Response,
@@ -83,6 +109,13 @@ export class AuthService {
     setAuthCookie(res, 'refresh', refreshToken);
   }
 
+  /**
+   * Rotates the refresh token and reissues the access token.
+   * The old refresh token is deleted atomically before the new one is created,
+   * preventing replay attacks. Expiry is checked after deletion.
+   *
+   * @throws UnauthorizedException if the token is invalid, expired, or the user no longer exists
+   */
   async refreshAccessToken(
     oldRefreshToken: string,
     res: Response,
@@ -133,6 +166,11 @@ export class AuthService {
     return payload;
   }
 
+  /**
+   * Resolves the current user from cookies without throwing.
+   * Tries access token first; on failure silently attempts a refresh.
+   * Returns a guest object `{ userId: '', role: 'guest' }` if both fail.
+   */
   async getCurrentUser(req: Request, res: Response) {
     const accessToken = req?.cookies?.[
       AUTH_POLICY.cookies.access.name
@@ -176,6 +214,10 @@ export class AuthService {
     return { userId: '', email: '', role: 'guest' };
   }
 
+  /**
+   * Deletes the refresh token from the database and clears both auth cookies.
+   * Safe to call with `undefined` (e.g. when no refresh token is present).
+   */
   async logout(refreshToken: string | undefined, res: Response): Promise<void> {
     if (refreshToken) {
       await this.refreshTokenRepo.deleteByToken(refreshToken);
@@ -187,10 +229,15 @@ export class AuthService {
     clearAuthCookie(res, 'refresh');
   }
 
+  /** Generates a cryptographically secure 128-character hex token. */
   private generateSecureToken(): string {
     return randomBytes(64).toString('hex');
   }
 
+  /**
+   * Extracts the real client IP, accounting for reverse proxies.
+   * Checks x-forwarded-for, x-real-ip, then falls back to socket address.
+   */
   private getClientIp(req?: Request): string | undefined {
     if (!req) return undefined;
 

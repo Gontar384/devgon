@@ -3,6 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import * as Minio from 'minio';
 import { MulterFile } from './minio-types';
 
+/**
+ * Service for interacting with MinIO object storage.
+ * Initializes the client on startup and ensures the configured bucket exists.
+ */
 @Injectable()
 export class MinioService implements OnModuleInit {
   private readonly logger = new Logger(MinioService.name);
@@ -79,6 +83,13 @@ export class MinioService implements OnModuleInit {
     await this.minioClient.removeObject(this.bucketName, storageKey);
   }
 
+  /**
+   * Generates a presigned GET URL valid for 24 hours by default.
+   *
+   * When MINIO_PUBLIC_URL is set, a separate client is created pointing
+   * at the public-facing URL instead of the internal endpoint — necessary
+   * in production where the internal MinIO address is not reachable by clients.
+   */
   async getSignedUrl(
     storageKey: string,
     expirySeconds = 86400,

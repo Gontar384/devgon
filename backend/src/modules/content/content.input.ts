@@ -1,5 +1,13 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
 
+/**
+ * Describes a single media item's position in a content update.
+ *
+ * - `kind: "existing"` — media already in the database; provide `id`
+ * - `kind: "new"` — media just uploaded via REST; provide `tempId`
+ *
+ * Items absent from this list are treated as removed and will be deleted.
+ */
 @InputType()
 export class MediaOrderInput {
   @Field()

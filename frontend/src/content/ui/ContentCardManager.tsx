@@ -25,6 +25,16 @@ import { AddCardButton } from '@/content/ui/atomic/AddCardButton';
 import { useDeviceStore } from '@/store/deviceStore';
 import { Content, ContentCardManagerProps } from '@/content/content-types';
 
+/**
+ * Top-level manager for content blocks under a given page section key.
+ * Handles fetching (SWR), creation, and drag-and-drop reordering.
+ *
+ * Supports two modes:
+ * - `single` — only one block allowed; drag-and-drop disabled
+ * - `multiple` — unlimited blocks displayed in a horizontal sortable list
+ *
+ * On mobile, drag-and-drop is disabled in favor of directional buttons.
+ */
 export function ContentCardManager({
   contents: initialContents,
   contentKey,

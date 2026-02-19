@@ -30,6 +30,14 @@ export enum MediaType {
   VIDEO = 'VIDEO',
 }
 
+/**
+ * Represents a media item in the editor — either already saved in the database
+ * or freshly selected by the user and pending upload.
+ *
+ * - `existing` — references a saved Media record; carries full Media data
+ * - `new` — a local file not yet uploaded; carries a File object and a temporary
+ *   object URL for preview (must be revoked on cancel/unmount)
+ */
 export type MediaItem =
   | { id: string; type: 'existing'; data: Media }
   | { id: string; type: 'new'; data: { file: File; previewUrl: string } };
@@ -44,6 +52,10 @@ export interface ContentCardManagerProps {
   contents: Content[];
   contentKey: string;
   mode: 'single' | 'multiple';
+  /**
+   * Controls which text fields are displayed and their max character length.
+   * A value of `0` means the field is hidden; any positive value sets the limit.
+   */
   fields: {
     title: number;
     header: number;
@@ -111,6 +123,10 @@ export interface MoveCardButtonsProps {
     direction: 'left' | 'right',
   ) => Promise<void>;
   contentId: string;
+}
+
+export interface AdminContentErrorBannerProps {
+  failedKeys: string[];
 }
 
 export interface MediaUploaderProps {

@@ -5,6 +5,12 @@ import { useSmallEditor } from '@/content/util/tiptap/useSmallEditor';
 import { useBigEditor } from '@/content/util/tiptap/useBigEditor';
 import { EditableFieldProps } from '@/content/content-types';
 
+/**
+ * Renders a rich text field using Tiptap.
+ * Uses two separate editor instances — `useSmallEditor` (inline) and
+ * `useBigEditor` (multiline) — only the one matching `type` is active.
+ * In view mode renders raw HTML via dangerouslySetInnerHTML.
+ */
 export function EditableField({
   value,
   setValue,

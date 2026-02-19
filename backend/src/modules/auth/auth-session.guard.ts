@@ -11,6 +11,16 @@ import { JwtPayload, RequestWithUser } from './auth.types';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Response } from 'express';
 
+/**
+ * Guard that authenticates requests via HttpOnly cookies.
+ * Works for both REST and GraphQL contexts (extracts req/res accordingly).
+ *
+ * On each request:
+ * 1. Tries to verify the access token — attaches payload to req.user if valid.
+ * 2. If access token is missing or expired, attempts silent refresh using
+ *    the refresh token. This transparently rotates both tokens.
+ * 3. If both fail, clears cookies and throws UnauthorizedException.
+ */
 @Injectable()
 export class AuthSessionGuard implements CanActivate {
   constructor(
@@ -56,6 +66,10 @@ export class AuthSessionGuard implements CanActivate {
     }
   }
 
+  /**
+   * Verifies a JWT access token without throwing.
+   * Returns the payload on success, or `null` if invalid/expired.
+   */
   private tryVerifyAccess(token: string): JwtPayload | null {
     try {
       return this.jwtService.verify<JwtPayload>(token, {
@@ -66,6 +80,7 @@ export class AuthSessionGuard implements CanActivate {
     }
   }
 
+  /** Extracts the Express request from REST or GraphQL execution context. */
   private getRequest(context: ExecutionContext): RequestWithUser {
     if (context.getType<string>() === 'graphql') {
       return GqlExecutionContext.create(context).getContext<{
@@ -76,6 +91,7 @@ export class AuthSessionGuard implements CanActivate {
     return context.switchToHttp().getRequest<RequestWithUser>();
   }
 
+  /** Extracts the Express response from REST or GraphQL execution context. */
   private getResponse(context: ExecutionContext): Response {
     if (context.getType<string>() === 'graphql') {
       return GqlExecutionContext.create(context).getContext<{ res: Response }>()

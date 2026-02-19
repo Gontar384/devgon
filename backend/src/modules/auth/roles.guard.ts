@@ -11,6 +11,12 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 
 const ROLES_KEY = 'roles';
 
+/**
+ * Guard that enforces role-based access control.
+ * Reads required roles from the `@Roles()` decorator via Reflector.
+ * Must be used after AuthSessionGuard (relies on req.user being set).
+ * Works for both REST and GraphQL contexts.
+ */
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}

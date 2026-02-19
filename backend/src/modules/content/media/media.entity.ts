@@ -10,6 +10,11 @@ import {
 import { Content } from '../content.entity';
 import { MediaType } from './media-types';
 
+/**
+ * Represents a media file (image or video) attached to a Content block.
+ * The physical file is stored in MinIO, referenced by `storageKey`.
+ * Deletion of the parent Content cascades to all related Media records.
+ */
 @Entity({ name: 'media' })
 export class Media {
   @PrimaryGeneratedColumn('uuid')
@@ -18,9 +23,15 @@ export class Media {
   @Column({ type: 'varchar', length: 255 })
   filename: string;
 
+  /** Unique key used to identify the file in MinIO object storage. */
   @Column({ type: 'varchar', unique: true, length: 255 })
   storageKey: string;
 
+  /**
+   * Temporary client-generated ID assigned during upload.
+   * Used to match uploaded files to their position in a pending content update.
+   * Cleared to `null` after the content is successfully saved.
+   */
   @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   uploadTempId?: string | null;
 

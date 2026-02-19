@@ -6,6 +6,20 @@ import { MinioService } from '../../../config/minio/minio.service';
 import { v4 as uuidv4 } from 'uuid';
 import { MediaType, UploadedFileType, UploadedMediaItem } from './media-types';
 
+/**
+ * Service responsible for uploading, managing, and deleting media files
+ * attached to content blocks.
+ *
+ * Files are stored in MinIO under a UUID-based storage key. Each uploaded
+ * file is temporarily identified by a client-generated `tempId`, which is
+ * later resolved to a real database ID when the parent content is saved.
+ *
+ * Supported file types:
+ * - Images: JPEG, PNG, GIF, WebP, SVG
+ * - Videos: MP4, MPEG, QuickTime, AVI, WebM
+ *
+ * Max file size is enforced at the controller level (50 MB per file).
+ */
 @Injectable()
 export class MediaService {
   private readonly logger = new Logger(MediaService.name);
@@ -33,6 +47,20 @@ export class MediaService {
     private readonly minioService: MinioService,
   ) {}
 
+  /**
+   * Uploads multiple files to MinIO and persists their metadata to the database.
+   * Each file must have a corresponding client-generated `tempId` at the same index.
+   *
+   * Files with unsupported MIME types are silently skipped (logged as warnings).
+   * If any individual upload fails, all previously uploaded files in the batch
+   * are rolled back (deleted from both MinIO and the database).
+   *
+   * @param contentId - ID of the content block these media files belong to
+   * @param files - Array of uploaded files (from Multer)
+   * @param tempIds - Client-generated temporary IDs matched by index to `files`
+   * @returns Array of uploaded media items with their resolved IDs and tempIds
+   * @throws BadRequestException if no files are provided, counts mismatch, or upload fails
+   */
   async uploadMany(
     contentId: string,
     files: UploadedFileType[],
@@ -102,6 +130,17 @@ export class MediaService {
     return uploadedMedia;
   }
 
+  /**
+   * Uploads a single file to MinIO and saves its metadata record in the database.
+   * The storage key is generated as `{uuid}-{timestamp}.{ext}` to ensure uniqueness.
+   * Media type (IMAGE or VIDEO) is inferred from the file's MIME type.
+   * Alt text is auto-generated from the filename via `generateAltText`.
+   *
+   * @param contentId - ID of the parent content block
+   * @param file - The file to upload
+   * @param tempId - Client-generated temporary ID to associate with this upload
+   * @returns The saved Media entity
+   */
   private async uploadSingleWithTempId(
     contentId: string,
     file: UploadedFileType,
@@ -137,12 +176,27 @@ export class MediaService {
     return await this.mediaRepo.save(media);
   }
 
+  /**
+   * Finds a media record by its temporary upload ID.
+   * Used during content update to resolve `tempId` references into real DB IDs.
+   *
+   * @param tempId - The client-generated temporary identifier
+   * @returns The matching Media entity, or `null` if not found
+   */
   async findByTempId(tempId: string): Promise<Media | null> {
     return await this.mediaRepo.findOne({
       where: { uploadTempId: tempId },
     });
   }
 
+  /**
+   * Deletes multiple media records by ID.
+   * For each record, the corresponding file is removed from MinIO first.
+   * MinIO errors are caught and logged individually to avoid blocking the DB deletion.
+   * After deletion, media order is reindexed for each affected content block.
+   *
+   * @param mediaIds - Array of media IDs to delete
+   */
   async deleteMany(mediaIds: string[]): Promise<void> {
     if (!mediaIds?.length) return;
 
@@ -179,6 +233,12 @@ export class MediaService {
     this.logger.log(`🗑️ Deleted ${mediaList.length} media`);
   }
 
+  /**
+   * Checks whether a file's MIME type is in the list of allowed image or video types.
+   *
+   * @param file - The uploaded file to validate
+   * @returns `true` if the MIME type is allowed, `false` otherwise
+   */
   private isValidFileType(file: UploadedFileType): boolean {
     const allowedMimetypes = [
       ...this.ALLOWED_IMAGE_MIMETYPES,
@@ -188,6 +248,16 @@ export class MediaService {
     return allowedMimetypes.includes(file.mimetype);
   }
 
+  /**
+   * Generates a human-readable alt text string from a filename.
+   * Strips the file extension, replaces underscores and hyphens with spaces,
+   * removes non-alphanumeric characters, normalizes whitespace,
+   * and capitalizes the first letter.
+   * Falls back to `"Media"` if the result is empty.
+   *
+   * @param filename - Original filename (e.g. "my_photo-01.jpg")
+   * @returns Sanitized alt text string (e.g. "My photo 01")
+   */
   private generateAltText(filename: string): string {
     const nameWithoutExt = filename.replace(/\.[^/.]+$/, '');
     let alt = nameWithoutExt.replace(/[_-]/g, ' ');
@@ -200,6 +270,13 @@ export class MediaService {
     return alt || 'Media';
   }
 
+  /**
+   * Restores a contiguous `order` sequence (0, 1, 2, ...) for all media
+   * belonging to a given content block. Called automatically after media deletion.
+   * Only records with a changed order value are written to the database.
+   *
+   * @param contentId - ID of the content block whose media should be reindexed
+   */
   private async reindexMedia(contentId: string): Promise<void> {
     const media = await this.mediaRepo.find({
       where: { contentId },
@@ -224,6 +301,13 @@ export class MediaService {
     }
   }
 
+  /**
+   * Removes a set of recently uploaded media files as part of an error recovery flow.
+   * Deletes each file from MinIO first, then removes the database records.
+   * Individual MinIO errors are caught and logged without interrupting the rollback.
+   *
+   * @param mediaIds - IDs of media records to roll back
+   */
   async rollbackUploads(mediaIds: string[]): Promise<void> {
     if (!mediaIds.length) return;
 
@@ -251,6 +335,17 @@ export class MediaService {
     this.logger.log(`✅ Rollback complete: deleted ${mediaIds.length} media`);
   }
 
+  /**
+   * Updates the `order` field for a set of media records within a single transaction.
+   *
+   * To avoid unique constraint conflicts during reordering, orders are first set
+   * to large negative temporary values (`-1000 - index`), then updated to their
+   * final values in a second pass. This two-phase approach prevents collisions
+   * when swapping adjacent order values.
+   *
+   * @param updates - Array of `{ id, order }` pairs to apply
+   * @throws BadRequestException if any of the provided IDs cannot be found
+   */
   async updateOrder(
     updates: Array<{ id: string; order: number }>,
   ): Promise<void> {
@@ -293,6 +388,13 @@ export class MediaService {
     });
   }
 
+  /**
+   * Clears the `uploadTempId` field for a set of media records.
+   * Called after a successful content update to mark temporary IDs as consumed,
+   * preventing them from being resolved again in future requests.
+   *
+   * @param mediaIds - IDs of media records whose tempId should be nullified
+   */
   async clearTempIds(mediaIds: string[]): Promise<void> {
     if (!mediaIds.length) return;
 

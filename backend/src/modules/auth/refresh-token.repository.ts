@@ -25,6 +25,11 @@ export class RefreshTokenRepository {
     await this.repo.delete({ token });
   }
 
+  /**
+   * Enforces the per-user device limit by removing oldest refresh tokens.
+   * Tokens are ordered by createdAt DESC — excess tokens from the end are deleted.
+   * Called before issuing a new refresh token in `setAuthCookies`.
+   */
   async enforceMaxTokensPerUser(
     userId: string,
     maxTokens: number = 3,
@@ -42,6 +47,11 @@ export class RefreshTokenRepository {
     }
   }
 
+  /**
+   * Atomically deletes a refresh token and returns its data in one query.
+   * Used during token rotation to prevent race conditions — the token
+   * cannot be reused even if the subsequent insert fails.
+   */
   async deleteByTokenReturning(token: string): Promise<RefreshToken | null> {
     const deletedToken = await this.repo
       .createQueryBuilder()

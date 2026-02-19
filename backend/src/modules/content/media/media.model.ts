@@ -35,6 +35,10 @@ export class MediaModel {
   @Field()
   contentId: string;
 
+  /**
+   * Signed MinIO URL for accessing the file. Not stored in the database —
+   * generated on-the-fly and attached to the response in ContentService.
+   */
   @Field()
   url?: string;
 

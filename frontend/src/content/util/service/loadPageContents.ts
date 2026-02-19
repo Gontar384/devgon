@@ -1,6 +1,14 @@
 import { getContents } from '@/content/util/service/contentService';
 import { Content, UsePageContentsResult } from '@/content/content-types';
 
+/**
+ * Fetches content blocks for multiple page section keys in parallel.
+ * Uses allSettled — if some keys fail, the rest are still returned.
+ * Failed keys are collected in `failedKeys` rather than throwing.
+ *
+ * @param keys - Page section identifiers to load
+ * @returns Map of loaded contents, list of failed keys, and the last error if any
+ */
 export async function loadPageContents(
   keys: string[],
 ): Promise<UsePageContentsResult> {

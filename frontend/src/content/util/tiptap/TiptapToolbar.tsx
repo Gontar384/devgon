@@ -11,6 +11,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ToolbarButton } from '@/content/util/tiptap/ToolbarButton';
 import { TiptapToolbarProps } from '@/content/util/tiptap/tiptap-types';
 
+/**
+ * Toolbar for the Tiptap rich text editor.
+ * List controls (bullet/ordered) are shown only in `big` editor mode,
+ * detected via a custom `type` flag stored in editor.storage.
+ *
+ * Uses a dummy counter state to force re-renders on editor/selection
+ * updates, since Tiptap's state changes don't trigger React re-renders natively.
+ */
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
   const [, setUpdateCounter] = useState(0);
   const [showLinkInput, setShowLinkInput] = useState(false);

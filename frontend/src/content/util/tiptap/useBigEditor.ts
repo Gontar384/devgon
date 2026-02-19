@@ -9,6 +9,13 @@ import { EditorOptions } from '@/content/util/tiptap/tiptap-types';
 import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
 
+/**
+ * Tiptap editor instance configured for multiline rich text.
+ * Supports bullet/ordered lists in addition to the base formatting.
+ * Sets `editor.storage.type = "big"` on creation so TiptapToolbar
+ * can conditionally render list controls.
+ * Returns `null` when `enabled` is false, allowing conditional mounting.
+ */
 export const useBigEditor = (options: EditorOptions): Editor | null => {
   const { initialContent, contentLength, enabled } = options;
 

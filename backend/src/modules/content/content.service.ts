@@ -7,6 +7,17 @@ import { MinioService } from '../../config/minio/minio.service';
 import { MediaService } from './media/media.service';
 import { Media } from './media/media.entity';
 
+/**
+ * Service responsible for managing CMS content blocks.
+ *
+ * Each content block is scoped to a named `key` that represents a specific
+ * section of the page (e.g. "hero", "about-us", "team"). Multiple blocks
+ * can exist under the same key and are displayed in ascending `order`.
+ *
+ * This service handles the full lifecycle of content blocks:
+ * creation, update (including media management), deletion, and reordering.
+ * Media files are stored in MinIO object storage and referenced via signed URLs.
+ */
 @Injectable()
 export class ContentService {
   private readonly logger = new Logger(ContentService.name);
@@ -15,11 +26,18 @@ export class ContentService {
     @InjectRepository(Content)
     private readonly contentRepo: Repository<Content>,
     @InjectRepository(Media)
-    private readonly mediaRepo: Repository<Media>,
     private readonly mediaService: MediaService,
     private readonly minioService: MinioService,
   ) {}
 
+  /**
+   * Retrieves all content blocks for a given page section key,
+   * sorted by `order` ascending. Related media are also sorted
+   * by `order` and enriched with signed MinIO URLs before returning.
+   *
+   * @param key - The page section identifier (e.g. "hero", "team")
+   * @returns Ordered list of content blocks with hydrated media URLs
+   */
   async getMany(key: string): Promise<Content[]> {
     const contents = await this.contentRepo.find({
       where: { key },
@@ -35,6 +53,14 @@ export class ContentService {
     return contents;
   }
 
+  /**
+   * Creates a new empty content block for a given page section key.
+   * The new block is appended at the end of the existing list —
+   * its `order` is set to `lastBlock.order + 1`, or `0` if none exist yet.
+   * All text fields (title, header, description) are initialized to `null`.
+   *
+   * @param key - The page section identifier to create the block under
+   */
   async create(key: string): Promise<void> {
     this.logger.log(`📝 Creating empty content for key: ${key}`);
 
@@ -55,6 +81,26 @@ export class ContentService {
     this.logger.log(`✅ Empty content created`);
   }
 
+  /**
+   * Updates an existing content block by ID.
+   *
+   * This method handles three concerns in sequence:
+   * 1. **Text fields** — title, header, and description are trimmed and saved
+   *    if present in the input (undefined fields are skipped).
+   * 2. **Media reconciliation** — the incoming `mediaOrder` list is compared
+   *    against the current media. New media are resolved from their `tempId`
+   *    (set during upload), removed media are deleted from storage and DB,
+   *    and the final order is persisted transactionally.
+   * 3. **Media limit enforcement** — if `maxMedia` is provided and the
+   *    resulting media count exceeds it, newly uploaded files are rolled back
+   *    and a `BadRequestException` is thrown.
+   *
+   * @param id - ID of the content block to update
+   * @param input - Updated text fields and desired media order
+   * @param maxMedia - Optional cap on the number of allowed media files
+   * @throws BadRequestException if the content is not found,
+   *   a tempId cannot be resolved, or the media limit is exceeded
+   */
   async update(
     id: string,
     input: ContentInput,
@@ -150,6 +196,14 @@ export class ContentService {
     this.logger.log(`✅ Content updated with ${updates.length} media`);
   }
 
+  /**
+   * Deletes a content block and all its associated media files.
+   * After deletion, remaining blocks under the same key are reindexed
+   * to maintain a contiguous `order` sequence starting from 0.
+   *
+   * @param id - ID of the content block to delete
+   * @returns `true` if deleted successfully, `false` if not found
+   */
   async delete(id: string): Promise<boolean> {
     const content = await this.contentRepo.findOne({
       where: { id },
@@ -173,6 +227,15 @@ export class ContentService {
     return true;
   }
 
+  /**
+   * Reorders content blocks under a given key based on a provided ID list.
+   * Each block's `order` is set to its index position in the `ids` array.
+   * Only blocks whose order has actually changed are updated in the database.
+   *
+   * @param key - The page section identifier
+   * @param ids - Ordered array of content block IDs representing the new sequence
+   * @returns `true` when reordering is complete
+   */
   async reorder(key: string, ids: string[]): Promise<boolean> {
     const contents = await this.contentRepo.find({ where: { key } });
     const contentMap = new Map(contents.map((c) => [c.id, c]));
@@ -195,6 +258,13 @@ export class ContentService {
     return true;
   }
 
+  /**
+   * Mutates each media object in place by attaching a temporary signed URL
+   * fetched from MinIO. Called before returning data to the client.
+   * Skips content blocks that have no associated media.
+   *
+   * @param contents - List of content blocks whose media should be enriched
+   */
   private async enrichMediaWithUrls(contents: Content[]): Promise<void> {
     for (const content of contents) {
       if (!content.media?.length) continue;
@@ -207,6 +277,13 @@ export class ContentService {
     }
   }
 
+  /**
+   * Restores a contiguous `order` sequence (0, 1, 2, ...) for all content
+   * blocks under a given key. Called automatically after a block is deleted.
+   * Only blocks with a changed order value are written to the database.
+   *
+   * @param key - The page section identifier to reindex
+   */
   private async reindexContents(key: string): Promise<void> {
     const contents = await this.contentRepo.find({
       where: { key },
@@ -229,6 +306,14 @@ export class ContentService {
     }
   }
 
+  /**
+   * Builds a sanitized update object from a raw `ContentInput`.
+   * Only fields explicitly present in the input are included.
+   * String values are trimmed; empty strings are coerced to `null`.
+   *
+   * @param input - Raw input from the GraphQL mutation
+   * @returns Partial entity object safe to pass to `contentRepo.update()`
+   */
   private normalizeInput(input: ContentInput): DeepPartial<Content> {
     const data: DeepPartial<Content> = {};
 

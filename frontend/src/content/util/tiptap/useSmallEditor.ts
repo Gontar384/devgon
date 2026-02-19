@@ -6,6 +6,11 @@ import { EditorOptions } from '@/content/util/tiptap/tiptap-types';
 import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
 
+/**
+ * Tiptap editor instance configured for single-line rich text (no lists).
+ * Sets `editor.storage.type = "small"` on creation.
+ * Returns `null` when `enabled` is false.
+ */
 export const useSmallEditor = (options: EditorOptions): Editor | null => {
   const { initialContent, contentLength, enabled = true } = options;
 

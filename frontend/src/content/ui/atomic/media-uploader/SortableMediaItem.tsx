@@ -18,6 +18,11 @@ import {
   SortableMediaItemProps,
 } from '@/content/content-types';
 
+/**
+ * Single draggable media item within MediaUploader.
+ * Renders a preview for both existing (URL-based) and new (object URL) media.
+ * Exposes delete and directional move controls, visible on hover (or always on mobile).
+ */
 export function SortableMediaItem({
   item,
   onDelete,

@@ -9,6 +9,12 @@ import {
 } from 'typeorm';
 import { Media } from './media/media.entity';
 
+/**
+ * Represents a CMS content block assigned to a named page section.
+ *
+ * Multiple blocks can share the same `key` and are displayed in ascending `order`.
+ * Deleting a Content record cascades to all associated Media records.
+ */
 @Entity({ name: 'content' })
 export class Content {
   @PrimaryGeneratedColumn('uuid')

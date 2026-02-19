@@ -10,6 +10,25 @@ import api from '@/lib/auth/axios';
 import axios from 'axios';
 import { Content, MediaItem, MediaType } from '@/content/content-types';
 
+/**
+ * Client-side service for managing CMS content blocks via GraphQL and REST.
+ *
+ * Most operations communicate through the GraphQL API using `client.requestWithRedirect`,
+ * which automatically handles session expiry by redirecting to the login page.
+ *
+ * The exception is media upload, which uses a REST endpoint (`/api/media/upload/:contentId`)
+ * because GraphQL does not natively support multipart file uploads in this setup.
+ *
+ * Intended for use in admin panel components only.
+ */
+
+/**
+ * Fetches all content blocks for a given page section key.
+ * Results are returned in ascending order as stored in the database.
+ *
+ * @param key - The page section identifier (e.g. "hero", "team")
+ * @returns Ordered list of content blocks with media, or an empty array on failure
+ */
 export async function getContents(key: string): Promise<Content[]> {
   const res = await client.requestWithRedirect<{ getContents: Content[] }>(
     GET_CONTENTS,
@@ -18,6 +37,13 @@ export async function getContents(key: string): Promise<Content[]> {
   return res.getContents ?? [];
 }
 
+/**
+ * Creates a new empty content block for a given page section key.
+ * The block is appended at the end of the existing list on the server.
+ *
+ * @param key - The page section identifier
+ * @returns `true` if creation succeeded
+ */
 export async function createContent(key: string): Promise<boolean> {
   const res = await client.requestWithRedirect<{ createContent: boolean }>(
     CREATE_CONTENT,
@@ -26,6 +52,22 @@ export async function createContent(key: string): Promise<boolean> {
   return res.createContent ?? false;
 }
 
+/**
+ * Updates a content block's text fields and media.
+ *
+ * This is a two-step operation:
+ * 1. **Media upload** — any `MediaItem` with `type: "new"` is uploaded to the server
+ *    via REST. The response maps each `tempId` to a real server-assigned ID.
+ * 2. **GraphQL mutation** — the full update is sent, including text fields and a
+ *    `mediaOrder` array that references both existing media (by ID) and newly
+ *    uploaded media (by `tempId`), along with their desired display order.
+ *
+ * @param id - ID of the content block to update
+ * @param payload - Updated text fields and the full list of media items in desired order
+ * @param maxMedia - Optional server-enforced cap on the number of media files
+ * @returns `true` on success
+ * @throws Re-throws any network or server error for the caller to handle
+ */
 export async function updateContent(
   id: string,
   payload: {
@@ -64,6 +106,19 @@ export async function updateContent(
   }
 }
 
+/**
+ * Uploads new media files to the server for a given content block.
+ * Only items with `type: "new"` are included — existing media is skipped.
+ *
+ * Files are sent as `multipart/form-data`. Each file's client-generated `id`
+ * is used as its `tempId`, enabling the server to match uploaded files
+ * to their positions in the subsequent GraphQL update.
+ *
+ * @param contentId - ID of the content block the files belong to
+ * @param mediaItems - Full list of media items (only new ones are uploaded)
+ * @returns Map of `tempId → server-assigned media ID` for all uploaded files
+ * @throws Error if the upload request fails
+ */
 async function uploadMedia(
   contentId: string,
   mediaItems: MediaItem[],
@@ -111,6 +166,12 @@ async function uploadMedia(
   }
 }
 
+/**
+ * Deletes a content block and all its associated media.
+ *
+ * @param id - ID of the content block to delete
+ * @returns `true` if deleted, `false` if not found
+ */
 export async function deleteContent(id: string): Promise<boolean> {
   const res = await client.requestWithRedirect<{ deleteContent: boolean }>(
     DELETE_CONTENT,
@@ -119,6 +180,14 @@ export async function deleteContent(id: string): Promise<boolean> {
   return res.deleteContent;
 }
 
+/**
+ * Reorders content blocks under a given page section key.
+ * The position of each ID in the `ids` array becomes its new display order.
+ *
+ * @param key - The page section identifier
+ * @param ids - Ordered array of content block IDs representing the new sequence
+ * @returns `true` on success
+ */
 export async function reorderContents(
   key: string,
   ids: string[],
