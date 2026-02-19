@@ -5,7 +5,6 @@ import { Content } from './content.entity';
 import { ContentInput } from './content.input';
 import { MinioService } from '../../config/minio/minio.service';
 import { MediaService } from './media/media.service';
-import { Media } from './media/media.entity';
 
 /**
  * Service responsible for managing CMS content blocks.
@@ -25,7 +24,6 @@ export class ContentService {
   constructor(
     @InjectRepository(Content)
     private readonly contentRepo: Repository<Content>,
-    @InjectRepository(Media)
     private readonly mediaService: MediaService,
     private readonly minioService: MinioService,
   ) {}
