@@ -14,7 +14,7 @@ import { User } from '../user/user.entity';
  * Token rotation replaces the record on every refresh — old token is deleted
  * atomically before the new one is inserted.
  */
-@Entity('refresh_tokens')
+@Entity('refresh_token')
 @Index(['token'])
 @Index(['userId', 'expiresAt'])
 export class RefreshToken {
