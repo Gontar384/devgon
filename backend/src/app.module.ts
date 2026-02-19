@@ -4,7 +4,7 @@ import { ProductModule } from './modules/product/product.module';
 import { TypeOrmConfigModule } from './config/typeorm/typeorm.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
-import { ContentModule } from './modules/content/content.module';
+import { ContentModule } from './modules/cms/content/content.module';
 import { GraphqlConfigModule } from './config/graphql/graphql.module';
 
 @Module({

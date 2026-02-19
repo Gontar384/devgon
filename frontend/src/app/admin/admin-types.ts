@@ -1,4 +1,4 @@
-import { Content } from '@/content/content-types';
+import { Content } from '@/cms/content/content-types';
 
 export interface AdminManagerProps {
   contents: Record<string, Content[]>;
