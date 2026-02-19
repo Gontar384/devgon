@@ -9,6 +9,7 @@ import * as express from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Required for correct IP detection and secure cookies behind a reverse proxy
   if (process.env.NODE_ENV === 'production') {
     (app.getHttpAdapter().getInstance() as express.Express).set(
       'trust proxy',
