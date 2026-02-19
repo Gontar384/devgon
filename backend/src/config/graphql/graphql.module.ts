@@ -10,6 +10,7 @@ import { Request, Response } from 'express';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/config/graphql/schema.gql'),
       sortSchema: true,
+      path: '/api/graphql',
       playground: process.env.NODE_ENV !== 'production',
       context: ({ req, res }: { req: Request; res: Response }) => ({
         req,
