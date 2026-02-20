@@ -98,5 +98,5 @@ jobs:
 
       - name: Run Tests and Lint
         run: |
-          npm run test
+          npm run test:all --prefix backend
           npm run check:code
