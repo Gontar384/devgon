@@ -80,7 +80,7 @@ jobs:
             echo "MINIO_USE_SSL=false"
             echo "MINIO_ROOT_USER=minioadmin"
             echo "MINIO_ROOT_PASSWORD=minioadmin123"
-            echo "MINIO_BUCKET_NAME=media"
+            echo "MINIO_BUCKET_NAME=media-test"
           } > .env.test
         working-directory: backend
 
