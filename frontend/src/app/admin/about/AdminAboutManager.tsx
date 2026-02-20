@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdminManagerProps } from '@/app/admin/admin-types';
-import { ContentCardManager } from '@/content/ui/ContentCardManager';
-import { AdminContentErrorBanner } from '@/content/ui/atomic/AdminContentErrorBanner';
+import { ContentCardManager } from '@/cms/content/ui/ContentCardManager';
+import { AdminContentErrorBanner } from '@/cms/content/ui/atomic/AdminContentErrorBanner';
 
 export function AdminAboutManager({
   contents,
