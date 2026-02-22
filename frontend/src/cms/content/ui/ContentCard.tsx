@@ -216,6 +216,8 @@ export function ContentCard({
         placeholderWidth={placeholderDimensions?.[1] ?? 0}
       />
       <div
+        data-testid="content-card"
+        data-editing={isEditing ? 'true' : undefined}
         className={`flex flex-col flex-shrink-0 w-full
         ${isEditing && 'fixed z-50 m-auto items-center inset-0 h-fit content-card-animate'}
         ${isClosing && 'transition-all duration-200 scale-95'} 
@@ -246,6 +248,7 @@ export function ContentCard({
                 contentLength={fields.title}
                 isEditing={isEditing}
                 header={'Title'}
+                testId="field-title"
               />
             )}
             {fieldsToDisplay.header && (
@@ -256,6 +259,7 @@ export function ContentCard({
                 contentLength={fields.header}
                 isEditing={isEditing}
                 header={'Header'}
+                testId="field-header"
               />
             )}
             {fieldsToDisplay.description && (
@@ -266,6 +270,7 @@ export function ContentCard({
                 contentLength={fields.description}
                 isEditing={isEditing}
                 header={'Description'}
+                testId="field-description"
               />
             )}
             {(maxMedia ?? 0) > 0 && (

@@ -61,6 +61,7 @@ export function SortableMediaItem({
 
   return (
     <div
+      data-testid="media-item"
       ref={setNodeRef}
       style={style}
       className="relative aspect-square group w-[300px] h-[300px]"
@@ -159,6 +160,7 @@ export function SortableMediaItem({
             </button>
           </div>
           <Button
+            data-testid="media-remove-button"
             size="sm"
             variant="destructive"
             className={`absolute top-1 right-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} hover:cursor-pointer transition-opacity z-10 h-7 w-7 p-0`}

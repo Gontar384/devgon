@@ -20,6 +20,7 @@ export function DeleteCardButton({
       <div className="rounded-md py-2 px-6 bg-background w-fit">
         {!confirmOpen ? (
           <Button
+            data-testid="delete-button"
             variant="destructive"
             size="sm"
             className="hover:scale-105 active:scale-105 cursor-pointer"
@@ -40,6 +41,7 @@ export function DeleteCardButton({
                 Anuluj
               </Button>
               <Button
+                data-testid="delete-confirm-button"
                 variant="destructive"
                 size="sm"
                 className="hover:scale-105 active:scale-105 cursor-pointer"
