@@ -16,6 +16,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:unit": "echo '☑️ BACKEND UNIT TESTS' && dotenv -e .env.test -- jest --config test/unit/config/jest.config.ts",
     "test:e2e": "echo '☑️ BACKEND E2E TESTS' && dotenv -e .env.test -- jest --config test/e2e/config/jest.e2e.config.ts --runInBand",
+    "ci:test": "npm run test:unit && npm run test:e2e",
     "migrate": "npm run migration:generate -- migrations/migration",
     "migration:prod": "npx typeorm migration:run -d dist/data-source.js",
     "migration:dev": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./data-source.ts",

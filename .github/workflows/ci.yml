@@ -98,17 +98,9 @@ jobs:
         run: npm run migration:dev
         working-directory: backend
 
-      - name: Start servers
-        run: npm run start:all --prefix frontend &
-
-      - name: Wait for servers
-        run: npx wait-on http://localhost:3000 http://localhost:4000 --timeout 60000
-
       - name: Run Tests and Lint
         run: |
-          npm run test:unit --prefix backend
-          npm run test:e2e --prefix backend
-          npm run test:e2e --prefix frontend
-          npm run test:seo --prefix frontend
+          npm run ci:test --prefix backend
+          npm run ci:test --prefix frontend
           npm run lint --prefix backend
           npm run lint --prefix frontend
