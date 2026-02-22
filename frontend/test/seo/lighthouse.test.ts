@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const URL = 'http://localhost:3000';
-const RESULTS_DIR = path.resolve(__dirname, '../test-results');
+const RESULTS_DIR = path.resolve(__dirname, 'test-results');
 
 async function runLighthouse(url: string) {
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
