@@ -5,7 +5,7 @@ import { EntityManager } from 'typeorm';
 import { MediaService } from '../../src/modules/cms/content/media/media.service';
 import { Media } from '../../src/modules/cms/content/media/media.entity';
 import { MinioService } from '../../src/config/minio/minio.service';
-import { makeFile, makeMedia } from '../config/helpers/factories';
+import { makeFile, makeMedia } from './config/factories/factories';
 import { MediaType } from '../../src/modules/cms/content/media/media-types';
 
 const mockMediaRepo = () => ({

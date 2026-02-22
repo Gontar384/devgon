@@ -5,7 +5,7 @@ import { MinioService } from '../../src/config/minio/minio.service';
 import { ContentService } from '../../src/modules/cms/content/content.service';
 import { Content } from '../../src/modules/cms/content/content.entity';
 import { MediaService } from '../../src/modules/cms/content/media/media.service';
-import { baseInput, makeContent } from '../config/helpers/factories';
+import { baseInput, makeContent } from './config/factories/factories';
 import { ContentInput } from '../../src/modules/cms/content/content.input';
 
 const mockContentRepo = () => ({

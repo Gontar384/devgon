@@ -6,7 +6,7 @@ import {
   bootstrapTestApp,
   gqlAsAdmin,
   adminCookie,
-} from '../config/helpers/e2e.helpers';
+} from './config/helpers/e2e.helpers';
 
 const TEST_BUCKET = 'media-test';
 

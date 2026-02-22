@@ -4,7 +4,7 @@ import {
   bootstrapTestApp,
   gql,
   gqlAsAdmin,
-} from '../config/helpers/e2e.helpers';
+} from './config/helpers/e2e.helpers';
 
 const GET_CONTENTS = `
   query GetContents($key: String!) {
