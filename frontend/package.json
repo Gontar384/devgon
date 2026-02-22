@@ -13,7 +13,7 @@
     "start:all": "concurrently \"dotenv -e ../backend/.env.test -- npm run dev --prefix ../backend\" \"dotenv -e .env.test -- npm run dev\"",
     "test:e2e": "echo '✅ FRONTEND E2E TESTS' && playwright test --config test/e2e/config/playwright.config.ts",
     "test:seo": "echo '✅ FRONTEND SEO TEST' && (tsx test/seo/lighthouse.test.ts || echo 'SEO failed but ignored')",
-    "ci:test": "start-server-and-test start:all \"http://localhost:3000|http://localhost:4000\" \"npm run test:e2e && npm run test:seo\"",
+    "ci:test": "start-server-and-test start:all \"http://localhost:3000|tcp:4000\" \"npm run test:e2e && npm run test:seo\"",
     "lint": "echo '🧹 LINTING FRONTEND' && eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --list-different .",
