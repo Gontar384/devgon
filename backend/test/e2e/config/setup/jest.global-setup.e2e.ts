@@ -4,9 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 import * as request from 'supertest';
 import * as cookieParser from 'cookie-parser';
 import { DataSource } from 'typeorm';
-import { AppModule } from '../../src/app.module';
-import { UserRole } from '../../src/modules/auth/auth.types';
-import { AUTH_POLICY } from '../../src/modules/auth/auth.policy';
+import { AppModule } from '../../../../src/app.module';
+import { UserRole } from '../../../../src/modules/auth/auth.types';
+import { AUTH_POLICY } from '../../../../src/modules/auth/auth.policy';
 
 /**
  * Runs once before the entire e2e suite.
