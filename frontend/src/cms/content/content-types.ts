@@ -100,6 +100,7 @@ export interface EditableFieldProps {
   contentLength: number;
   isEditing: boolean;
   header: 'Title' | 'Header' | 'Description';
+  testId: string;
 }
 
 export interface EditButtonsProps {

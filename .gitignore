@@ -37,6 +37,8 @@ debug.log
 # Test outputs
 coverage/
 test-results/
+admin.storageState.json
+test-image.jpg
 **/*.lcov
 
 # Reports

@@ -29,6 +29,7 @@ export function EditButtons({
       <div className="flex justify-end gap-3">
         {!isEditing ? (
           <button
+            data-testid="edit-button"
             onClick={() => setIsEditing(true)}
             className="p-3 hover:bg-gray-100 hover:cursor-pointer active:bg-gray-100 rounded-full transition-colors"
             aria-label="Edit"
@@ -39,6 +40,7 @@ export function EditButtons({
         ) : (
           <div className="flex flex-wrap-reverse justify-center gap-3 ">
             <Button
+              data-testid="cancel-button"
               variant="outline"
               onClick={handleCancel}
               className="hover:bg-background hover:scale-105 active:bg-background active:scale-105 cursor-pointer"
@@ -46,6 +48,7 @@ export function EditButtons({
               Anuluj
             </Button>
             <Button
+              data-testid="save-button"
               variant="default"
               onClick={handleSave}
               className="hover:bg-primary hover:scale-105 active:bg-primary active:scale-105 cursor-pointer"

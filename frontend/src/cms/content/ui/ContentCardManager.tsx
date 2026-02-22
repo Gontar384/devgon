@@ -135,7 +135,10 @@ export function ContentCardManager({
   };
 
   return (
-    <div className="flex flex-col w-full max-w-[1280px]">
+    <div
+      data-testid="content-manager"
+      className="flex flex-col w-full max-w-[1280px]"
+    >
       <AddCardButton
         contentKey={contentKey}
         isAvailable={canAddContent}

@@ -1,6 +1,6 @@
-import { Media } from '../../../src/modules/cms/content/media/media.entity';
-import { Content } from '../../../src/modules/cms/content/content.entity';
-import { MediaType } from '../../../src/modules/cms/content/media/media-types';
+import { Media } from '../../../../src/modules/cms/content/media/media.entity';
+import { Content } from '../../../../src/modules/cms/content/content.entity';
+import { MediaType } from '../../../../src/modules/cms/content/media/media-types';
 
 /**
  * Represents an uploaded file as Multer sees it.

@@ -18,6 +18,7 @@ export function EditableField({
   contentLength,
   isEditing,
   header,
+  testId,
 }: EditableFieldProps) {
   const smallEditor = useSmallEditor({
     initialContent: value,
@@ -46,7 +47,7 @@ export function EditableField({
   }, [isEditing, editor, setValue]);
 
   return (
-    <div className="flex-1 min-w-0 pr-4 space-y-2">
+    <div data-testid={testId} className="flex-1 min-w-0 pr-4 space-y-2">
       <h2 className="text-xs underline">{header}</h2>
       {isEditing ? (
         <div className="p-2 border rounded border-gray-300">

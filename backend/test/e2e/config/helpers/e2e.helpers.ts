@@ -10,10 +10,7 @@ export interface E2EContext {
 function getAdminCookie(): string {
   const cookie = process.env['E2E_ADMIN_COOKIE'];
   if (!cookie) {
-    throw new Error(
-      'E2E_ADMIN_COOKIE is not set. ' +
-        'Make sure jest.e2e.config.ts points to globalSetup.',
-    );
+    throw new Error('E2E_ADMIN_COOKIE is not set.');
   }
   return cookie;
 }
@@ -36,10 +33,7 @@ export function bootstrapTestApp(): E2EContext {
   const dataSource = global.__E2E_DATA_SOURCE__;
 
   if (!app || !dataSource) {
-    throw new Error(
-      'global.__E2E_APP__ or __E2E_DATA_SOURCE__ is not set. ' +
-        'Make sure jest.e2e.config.ts points to the correct globalSetup file.',
-    );
+    throw new Error('global.__E2E_APP__ or __E2E_DATA_SOURCE__ is not set.');
   }
 
   return { app, dataSource };
