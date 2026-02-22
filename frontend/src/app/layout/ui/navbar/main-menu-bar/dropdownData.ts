@@ -30,18 +30,18 @@ export const dropdownData: DropdownData[] = [
   },
   {
     title: 'Oferta',
-    href: '/products',
+    href: '/',
     option: [
       {
         title: 'Świadczone usługi',
-        href: '/products',
+        href: '/',
         imageSrc: '/svg/btn-our-offer.svg',
         imageW: 40,
         imageH: 42,
       },
       {
         title: 'Dlaczego warto?',
-        href: '/products',
+        href: '/',
         imageSrc: '/svg/btn-why-its-worth.svg',
         imageW: 42,
         imageH: 33,
@@ -61,7 +61,7 @@ export const dropdownData: DropdownData[] = [
       },
       {
         title: 'Gdzie nas znaleźć?',
-        href: '/products',
+        href: '/',
         imageSrc: '/svg/btn-where-to-find-us.svg',
         imageW: 44,
         imageH: 36,
