@@ -277,11 +277,11 @@ test.describe('media upload', () => {
     await card.uploadFile(TEST_IMAGE);
     await card.expectMediaCount(1);
 
-    await card.clickSave();
-
-    await adminPage.waitForResponse(
+    const uploadDone = adminPage.waitForResponse(
       (r) => r.url().includes('/api/media/upload/') && r.status() === 201,
     );
+    await card.clickSave();
+    await uploadDone;
     await waitForGql(adminPage);
 
     const media = await db.getMediaForContent(contentId);
@@ -301,10 +301,11 @@ test.describe('media upload', () => {
 
     await card.clickEdit();
     await card.uploadFile(TEST_IMAGE);
-    await card.clickSave();
-    await adminPage.waitForResponse(
+    const uploadDone = adminPage.waitForResponse(
       (r) => r.url().includes('/api/media/upload/') && r.status() === 201,
     );
+    await card.clickSave();
+    await uploadDone;
     await waitForGql(adminPage);
 
     await card.clickEdit();
