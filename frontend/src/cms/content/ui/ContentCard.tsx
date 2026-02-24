@@ -19,6 +19,7 @@ import { EditPopupUtil } from '@/cms/content/ui/atomic/EditPopupUtil';
 import { MoveCardButtons } from '@/cms/content/ui/atomic/MoveCardButtons';
 import { MediaUploader } from '@/cms/content/ui/atomic/media-uploader/MediaUploader';
 import { ContentCardProps, MediaItem } from '@/cms/content/content-types';
+import { sanitizeTiptapHTML } from '@/cms/content/util/tiptap/uploadSanitizer';
 
 /**
  * Editable card representing a single content block.
@@ -164,12 +165,13 @@ export function ContentCard({
   const stripEmptyHtml = (html?: string | null): string => {
     if (!html) return '';
 
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html.trim();
+    const clean = sanitizeTiptapHTML(html.trim());
 
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = clean;
     const textContent = tempDiv.textContent || tempDiv.innerText || '';
 
-    return textContent.trim() === '' ? '' : html.trim();
+    return textContent.trim() === '' ? '' : clean;
   };
 
   const handleSave = async () => {
