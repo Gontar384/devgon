@@ -5,6 +5,7 @@ import { Content } from './content.entity';
 import { ContentInput } from './content.input';
 import { MinioService } from '../../../config/minio/minio.service';
 import { MediaService } from './media/media.service';
+import * as sanitizeHtml from 'sanitize-html';
 
 /**
  * Service responsible for managing CMS content blocks.
@@ -307,7 +308,8 @@ export class ContentService {
   /**
    * Builds a sanitized update object from a raw `ContentInput`.
    * Only fields explicitly present in the input are included.
-   * String values are trimmed; empty strings are coerced to `null`.
+   * String values are trimmed and sanitized via sanitize-html to strip
+   * disallowed tags and attributes. Empty strings are coerced to `null`.
    *
    * @param input - Raw input from the GraphQL mutation
    * @returns Partial entity object safe to pass to `contentRepo.update()`
@@ -315,16 +317,43 @@ export class ContentService {
   private normalizeInput(input: ContentInput): DeepPartial<Content> {
     const data: DeepPartial<Content> = {};
 
+    const sanitize = (html: string, options: sanitizeHtml.IOptions) =>
+      sanitizeHtml(html.trim(), options) || null;
+
     if (input.title !== undefined) {
-      data.title = input.title?.trim() || null;
+      data.title = input.title
+        ? sanitize(input.title, SMALL_SANITIZE_OPTIONS)
+        : null;
     }
     if (input.header !== undefined) {
-      data.header = input.header?.trim() || null;
+      data.header = input.header
+        ? sanitize(input.header, SMALL_SANITIZE_OPTIONS)
+        : null;
     }
     if (input.description !== undefined) {
-      data.description = input.description?.trim() || null;
+      data.description = input.description
+        ? sanitize(input.description, BIG_SANITIZE_OPTIONS)
+        : null;
     }
 
     return data;
   }
 }
+
+const SMALL_SANITIZE_OPTIONS = {
+  allowedTags: ['p', 'br', 'strong', 'em', 'u', 's', 'a'],
+  allowedAttributes: { a: ['href', 'target', 'rel', 'class'] },
+};
+
+const BIG_SANITIZE_OPTIONS = {
+  ...SMALL_SANITIZE_OPTIONS,
+  allowedTags: [
+    ...SMALL_SANITIZE_OPTIONS.allowedTags,
+    'ul',
+    'ol',
+    'li',
+    'blockquote',
+    'code',
+    'pre',
+  ],
+};
