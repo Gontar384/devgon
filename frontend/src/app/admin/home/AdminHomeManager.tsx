@@ -8,7 +8,8 @@ export function AdminHomeManager({
   error,
   failedKeys,
 }: AdminManagerProps) {
-  const aboutMainCard = contents['about-main-card'] ?? [];
+  const homeHeroCard = contents['home-hero-card'] ?? [];
+  const homeServiceCards = contents['home-service-cards'] ?? [];
 
   return (
     <div className="flex flex-col items-center px-2">
@@ -16,10 +17,18 @@ export function AdminHomeManager({
       <h1 className="sr-only">Strona główna</h1>
       <div className="flex flex-col items-center gap-12 w-full mt-5">
         <ContentCardManager
-          contents={aboutMainCard}
-          contentKey={'about-main-card'}
+          contents={homeHeroCard}
+          contentKey={'home-hero-card'}
           mode={'single'}
+          fields={{ title: 100, header: 200, description: 500 }}
+          maxMedia={1}
+        />
+        <ContentCardManager
+          contents={homeServiceCards}
+          contentKey={'home-service-cards'}
+          mode={'multiple'}
           fields={{ title: 100, header: 100, description: 500 }}
+          maxMedia={0}
         />
       </div>
     </div>

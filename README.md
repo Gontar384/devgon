@@ -15,7 +15,7 @@ When building custom apps without a CMS:
   - database models 
   - APIs 
   - admin forms
-  - validation 
+  - validation
   - permissions
 
 When using traditional CMS platforms:
@@ -99,14 +99,15 @@ For more information contact: **devgonteam@gmail.com**
 
 ## Tech stack
 - ✅ Next.js
+- ✅ Tailwind + shadcn/ui
 - ✅ NestJS
 - ✅ PostgreSQL
 - ✅ MinIO
 - ✅ GraphQL
 - ✅ OAuth2 (GCP)
 - ✅ Docker
-- ✅ nginx
 - ✅ CI/CD
+- ✅ nginx
 - ✅ Deploy on VPS
 
 ## Configuration
@@ -126,6 +127,8 @@ For more information contact: **devgonteam@gmail.com**
 > npm install
 > 
 > npm run dev
+
+**👾 Content editor and an admin panel are only available for authorized user with 'admin' role.**
 
 ## License
 

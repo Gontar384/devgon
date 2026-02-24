@@ -8,6 +8,7 @@ import { Editor } from '@tiptap/core';
 import { EditorOptions } from '@/cms/content/util/tiptap/tiptap-types';
 import { CharacterCount } from '@tiptap/extensions';
 import Link from '@tiptap/extension-link';
+import { PlainTextPaste } from '@/cms/content/util/tiptap/pasteSanitizer';
 
 /**
  * Tiptap editor instance configured for multiline rich text.
@@ -50,6 +51,7 @@ export const useBigEditor = (options: EditorOptions): Editor | null => {
       CharacterCount.configure({
         limit: contentLength,
       }),
+      PlainTextPaste,
     ],
     content: initialContent,
     editorProps: { attributes: { class: 'w-full focus:outline-none' } },

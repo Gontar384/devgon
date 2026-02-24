@@ -39,7 +39,6 @@ export default async function RootLayout({
         <Footer />
         <LoginDialog />
         <Toaster position="bottom-center" />
-        {/*<CursorGlow />*/}
       </body>
     </html>
   );

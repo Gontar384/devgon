@@ -1,6 +1,6 @@
 import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
-import { AboutManager } from '@/app/about/ui/AboutManager';
+import { AboutManager } from '@/app/about/AboutManager';
 import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
@@ -11,7 +11,7 @@ export const generateMetadata = (): Metadata =>
     path: '/about',
   });
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function AboutPage() {
   const { contents } = await loadPageContents([
