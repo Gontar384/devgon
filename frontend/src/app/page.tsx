@@ -1,20 +1,22 @@
 import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
-import homeData from '@/app/home/util/homeData.json';
-import { HomeManager } from '@/app/home/util/HomeManager';
+import { HomeManager } from '@/app/home/HomeManager';
+import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
-  createMetadata(homeData.metaData);
+  createMetadata({
+    title: 'devgon - Strona główna',
+    description:
+      'Poznaj naszą ofertę: inteligentne strony internetowe, nowoczesne rozwiązania technologiczne i automatyzacja procesów – wszystko dla twojej firmy.',
+    path: '/',
+  });
 
-async function getContent() {
-  try {
-  } catch (err) {
-    console.error(err);
-    return;
-  }
-}
+export const revalidate = 60;
 
 export default async function HomePage() {
-  await getContent();
-  return <HomeManager />;
+  const { contents } = await loadPageContents([
+    'home-hero-card',
+    'home-service-cards',
+  ]);
+  return <HomeManager contents={contents} />;
 }

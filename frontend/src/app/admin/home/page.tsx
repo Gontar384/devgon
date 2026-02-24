@@ -15,7 +15,8 @@ export const revalidate = 60;
 
 export default async function AdminHomePage() {
   const { contents, error, failedKeys } = await loadPageContents([
-    'about-main-card',
+    'home-hero-card',
+    'home-service-cards',
   ]);
 
   return (

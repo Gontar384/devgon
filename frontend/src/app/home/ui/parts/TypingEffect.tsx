@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { TypingEffectProps } from '@/app/home/util/types';
+import { useState, useEffect, useMemo } from 'react';
+import { TypingEffectProps } from '@/app/home/home-types';
+
+function stripHTML(html: string): string {
+  return html.replace(/<[^>]*>/g, '').trim();
+}
 
 export function TypingEffect({
   text,
@@ -10,6 +14,7 @@ export function TypingEffect({
   pause = 1000,
   mode = 'typing',
 }: TypingEffectProps) {
+  const plainText = useMemo(() => stripHTML(text), [text]);
   const [displayed, setDisplayed] = useState('');
   const [index, setIndex] = useState(0);
   const [forward, setForward] = useState(true);
@@ -28,9 +33,9 @@ export function TypingEffect({
     let timeout: NodeJS.Timeout;
 
     if (forward) {
-      if (index < text.length) {
+      if (index < plainText.length) {
         timeout = setTimeout(() => {
-          setDisplayed((prev) => prev + text[index]);
+          setDisplayed((prev) => prev + plainText[index]);
           setIndex(index + 1);
         }, speed);
       } else {
@@ -52,11 +57,13 @@ export function TypingEffect({
     }
 
     return () => clearTimeout(timeout);
-  }, [index, forward, text, speed, deleteSpeed, pause, mode]);
+  }, [index, forward, plainText, speed, deleteSpeed, pause, mode]);
+
+  if (!plainText) return null;
 
   return (
     <span>
-      {mode === 'typing' ? displayed : text}
+      {mode === 'typing' ? displayed : plainText}
       <span
         className={`inline-block h-[1em] w-[2px] bg-current align-middle text-primary transition-opacity duration-150 ${
           showCursor ? 'opacity-100' : 'opacity-0'

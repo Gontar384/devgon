@@ -2,6 +2,26 @@ import { DropdownData } from '@/app/layout/layout-types';
 
 export const dropdownData: DropdownData[] = [
   {
+    title: 'Oferta',
+    href: '/',
+    option: [
+      {
+        title: 'Świadczone usługi',
+        href: '/',
+        imageSrc: '/svg/btn-our-offer.svg',
+        imageW: 40,
+        imageH: 42,
+      },
+      {
+        title: 'Dlaczego warto?',
+        href: '/',
+        imageSrc: '/svg/btn-why-its-worth.svg',
+        imageW: 42,
+        imageH: 33,
+      },
+    ],
+  },
+  {
     title: 'O nas',
     href: '/about',
     option: [
@@ -25,26 +45,6 @@ export const dropdownData: DropdownData[] = [
         imageSrc: '/svg/btn-news.svg',
         imageW: 39,
         imageH: 34,
-      },
-    ],
-  },
-  {
-    title: 'Oferta',
-    href: '/',
-    option: [
-      {
-        title: 'Świadczone usługi',
-        href: '/',
-        imageSrc: '/svg/btn-our-offer.svg',
-        imageW: 40,
-        imageH: 42,
-      },
-      {
-        title: 'Dlaczego warto?',
-        href: '/',
-        imageSrc: '/svg/btn-why-its-worth.svg',
-        imageW: 42,
-        imageH: 33,
       },
     ],
   },
