@@ -15,9 +15,8 @@ export function DropdownOption({
     <MenubarItem asChild className="text-base">
       <Link
         href={href}
-        className="cursor-pointer h-12 py-2 flex items-center gap-2 !rounded-none active:bg-accent"
+        className="cursor-pointer h-12 flex items-center gap-2 !rounded-none active:bg-accent"
       >
-        {title}
         <Image
           src={imageSrc}
           alt={title}
@@ -25,6 +24,7 @@ export function DropdownOption({
           height={imageH}
           priority
         />
+        {title}
       </Link>
     </MenubarItem>
   );

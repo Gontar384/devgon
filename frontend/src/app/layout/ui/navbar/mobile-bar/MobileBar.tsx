@@ -86,7 +86,7 @@ export default function MobileBar() {
                 href={dropdown.href}
                 key={dropdown.title}
               >
-                {dropdown.option.map((option) => (
+                {dropdown.option?.map((option) => (
                   <MobileDropdownOption
                     title={option.title}
                     href={option.href}
