@@ -78,6 +78,7 @@ export interface ContentCardProps {
     direction: 'left' | 'right',
   ) => Promise<void>;
   maxMedia?: number;
+  totalItems?: number;
 }
 
 export interface AddCardButtonProps {
@@ -142,4 +143,5 @@ export interface SortableMediaItemProps {
   onDelete: () => void;
   isEditing: boolean;
   move: (id: string, dir: -1 | 1) => void;
+  canReorder: boolean;
 }

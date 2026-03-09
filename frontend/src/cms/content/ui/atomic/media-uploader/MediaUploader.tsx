@@ -180,6 +180,7 @@ export function MediaUploader({
                   onDelete={() => handleDelete(item.id)}
                   isEditing={isEditing}
                   move={moveItem}
+                  canReorder={media.length > 1}
                 />
               ))}
             </div>

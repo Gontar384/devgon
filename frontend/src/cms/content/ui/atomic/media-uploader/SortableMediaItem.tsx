@@ -28,6 +28,7 @@ export function SortableMediaItem({
   onDelete,
   isEditing,
   move,
+  canReorder,
 }: SortableMediaItemProps) {
   const {
     attributes,
@@ -36,7 +37,7 @@ export function SortableMediaItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: item.id, disabled: !isEditing });
+  } = useSortable({ id: item.id, disabled: !isEditing || !canReorder });
 
   const { isMobile } = useDeviceStore();
 
@@ -122,7 +123,7 @@ export function SortableMediaItem({
         </div>
       ) : null}
 
-      {isEditing && (
+      {isEditing && canReorder && (
         <>
           <div
             {...attributes}

@@ -37,6 +37,7 @@ export function ContentCard({
   handleRevalidate,
   handleReorderMobile,
   maxMedia,
+  totalItems,
 }: ContentCardProps) {
   const safeData = content ?? {};
   const [draftTitle, setDraftTitle] = useState(safeData.title ?? '');
@@ -120,7 +121,7 @@ export function ContentCard({
 
   const sortableHook = useSortable({
     id: content?.id || 'placeholder-id',
-    disabled: singleMode || !content?.id || isEditing,
+    disabled: singleMode || !content?.id || isEditing || (totalItems ?? 0) <= 1,
   });
   const { attributes, listeners, setNodeRef, transform, transition } =
     !singleMode
@@ -303,7 +304,7 @@ export function ContentCard({
               isEditing={isEditing}
             />
           )}
-          {!singleMode && !isEditing && (
+          {!singleMode && !isEditing && (totalItems ?? 0) > 1 && (
             <MoveCardButtons
               handleReorderMobile={handleReorderMobile}
               contentId={content.id}
