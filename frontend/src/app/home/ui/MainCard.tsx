@@ -17,14 +17,14 @@ export function MainCard({ content }: MainCardProps) {
 
   return (
     <Card
-      className="card-animate bg-background/90 backdrop-blur border shadow-xl break-words px-2 md:px-6 relative overflow-hidden"
+      className="card-animate bg-background/90 backdrop-blur border shadow-xl px-2 md:px-6 relative overflow-hidden"
       aria-label={safeData.title}
     >
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
         <div className="flex-1 min-w-0">
           <CardHeader>
             <CardTitle>
-              <h1 className="text-6xl font-bold whitespace-nowrap">
+              <h1 className="text-4xl md:text-6xl font-bold break-words">
                 <TypingEffect
                   text={safeData.title}
                   speed={300}
@@ -35,17 +35,21 @@ export function MainCard({ content }: MainCardProps) {
               </h1>
             </CardTitle>
           </CardHeader>
-          <CardContent
-            className="prose prose-sm max-w-none text-2xl py-4"
-            dangerouslySetInnerHTML={{ __html: safeData.header }}
-          />
-          <CardContent
-            className="prose prose-sm max-w-none text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: safeData.description }}
-          />
+          <CardContent className="py-4">
+            <div
+              className="text-xl md:text-2xl "
+              dangerouslySetInnerHTML={{ __html: safeData.header }}
+            />
+          </CardContent>
+          <CardContent>
+            <div
+              className="text-sm text-muted-foreground"
+              dangerouslySetInnerHTML={{ __html: safeData.description }}
+            />
+          </CardContent>
         </div>
-        <div className="flex-shrink-0">
-          {safeData.photoUrl && (
+        {safeData.photoUrl && (
+          <div className="flex-shrink-0 w-full md:w-auto">
             <Image
               src={safeData.photoUrl}
               alt={safeData.photoAlt}
@@ -53,10 +57,10 @@ export function MainCard({ content }: MainCardProps) {
               height={400}
               unoptimized
               priority
-              className="rounded-lg object-cover"
+              className="rounded-lg object-cover w-full md:w-[400px] md:h-[400px]"
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </Card>
   );

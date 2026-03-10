@@ -12,7 +12,7 @@ export function AllRightsReserved() {
         priority
       />
       <div className="flex flex-col text-sm text-muted-foreground whitespace-nowrap">
-        <span>© 2025 devgon</span>
+        <span>© 2026 devgon</span>
         <span>All rights reserved</span>
       </div>
     </div>

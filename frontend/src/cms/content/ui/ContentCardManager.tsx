@@ -183,6 +183,7 @@ export function ContentCardManager({
                         handleRevalidate={handleRevalidate}
                         handleReorderMobile={handleReorderMobile}
                         maxMedia={maxMedia}
+                        totalItems={items.length}
                       />
                     </div>
                   ))}

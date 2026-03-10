@@ -13,9 +13,8 @@ export function MobileDropdownOption({
   return (
     <Link
       href={href}
-      className="flex items-center justify-between gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-base transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md hover:bg-accent active:scale-[0.98] active:bg-accent"
+      className="flex items-center justify-center gap-2 rounded-xl border border-foreground/20 w-72 px-4 h-14 text-base transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md hover:bg-accent active:scale-[0.98] active:bg-accent"
     >
-      {title}
       <Image
         src={imageSrc}
         alt={title}
@@ -23,6 +22,7 @@ export function MobileDropdownOption({
         height={imageH}
         priority
       />
+      <p className="text-center">{title}</p>
     </Link>
   );
 }

@@ -28,6 +28,7 @@ export function SortableMediaItem({
   onDelete,
   isEditing,
   move,
+  canReorder,
 }: SortableMediaItemProps) {
   const {
     attributes,
@@ -36,7 +37,7 @@ export function SortableMediaItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: item.id, disabled: !isEditing });
+  } = useSortable({ id: item.id, disabled: !isEditing || !canReorder });
 
   const { isMobile } = useDeviceStore();
 
@@ -122,7 +123,7 @@ export function SortableMediaItem({
         </div>
       ) : null}
 
-      {isEditing && (
+      {isEditing && canReorder && (
         <>
           <div
             {...attributes}
@@ -159,17 +160,19 @@ export function SortableMediaItem({
               )}
             </button>
           </div>
-          <Button
-            data-testid="media-remove-button"
-            size="sm"
-            variant="destructive"
-            className={`absolute top-1 right-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} hover:cursor-pointer transition-opacity z-10 h-7 w-7 p-0`}
-            onClick={onDelete}
-            type="button"
-          >
-            <X className="w-4 h-4" />
-          </Button>
         </>
+      )}
+      {isEditing && (
+        <Button
+          data-testid="media-remove-button"
+          size="sm"
+          variant="destructive"
+          className={`absolute top-1 right-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} hover:cursor-pointer transition-opacity z-10 h-7 w-7 p-0`}
+          onClick={onDelete}
+          type="button"
+        >
+          <X className="w-4 h-4" />
+        </Button>
       )}
 
       {!isExisting && (

@@ -10,14 +10,14 @@ export function MainMenuBar() {
       className="hidden md:flex select-none"
       aria-label="Główne opcje nawigacji"
     >
-      <Menubar className="flex gap-1">
+      <Menubar className="flex gap-4">
         {dropdownData.map((dropdown) => (
           <Dropdown
             title={dropdown.title}
             href={dropdown.href}
             key={dropdown.title}
           >
-            {dropdown.option.map((option) => (
+            {dropdown.option?.map((option) => (
               <DropdownOption
                 key={option.title}
                 title={option.title}
