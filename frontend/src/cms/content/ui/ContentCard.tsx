@@ -119,21 +119,22 @@ export function ContentCard({
     description: fields.description > 0,
   };
 
+  const canSort = !singleMode && (totalItems ?? 0) > 1;
+
   const sortableHook = useSortable({
     id: content?.id || 'placeholder-id',
-    disabled: singleMode || !content?.id || isEditing || (totalItems ?? 0) <= 1,
+    disabled: !canSort || isEditing || !content?.id,
   });
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    !singleMode
-      ? sortableHook
-      : {
-          attributes: {},
-          listeners: {},
-          setNodeRef: () => {},
-          transform: null,
-          transition: undefined,
-        };
-  const sortableStyle = !singleMode
+  const { attributes, listeners, setNodeRef, transform, transition } = canSort
+    ? sortableHook
+    : {
+        attributes: {},
+        listeners: {},
+        setNodeRef: () => {},
+        transform: null,
+        transition: undefined,
+      };
+  const sortableStyle = canSort
     ? {
         transform: transform
           ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
@@ -227,8 +228,8 @@ export function ContentCard({
         ${!singleMode && !isEditing && 'max-w-[600px]'}`}
         ref={combinedRef}
         style={sortableStyle}
-        {...(!singleMode && !isEditing ? attributes : {})}
-        {...(!singleMode && !isEditing ? listeners : {})}
+        {...(canSort && !isEditing ? attributes : {})}
+        {...(canSort && !isEditing ? listeners : {})}
         aria-describedby={undefined}
       >
         <Card
