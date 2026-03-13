@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { MediaModel } from './media/media.model';
+import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
 export class ContentModel {
@@ -13,10 +14,13 @@ export class ContentModel {
   title?: string;
 
   @Field({ nullable: true })
-  header?: string;
+  subtitle?: string;
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  customData?: Record<string, any>;
 
   @Field(() => [MediaModel], { nullable: true })
   media?: MediaModel[];
