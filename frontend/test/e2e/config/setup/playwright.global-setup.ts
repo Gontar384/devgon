@@ -34,6 +34,17 @@ export default async function globalSetup(): Promise<void> {
     throw new Error('DATABASE_URL is not set.');
   }
 
+  const healthRes = await fetch(`${BASE_URL}/api/health`);
+  const health = (await healthRes.json()) as { env?: string };
+
+  if (health.env !== 'testing') {
+    throw new Error(
+      `🚫 Backend is not running in test mode.\n` +
+        `Expected NODE_ENV=testing, got: "${health.env ?? 'undefined'}"\n` +
+        `Make sure backend is started with backend/.env.test.`,
+    );
+  }
+
   const db = new Client({ connectionString });
   await db.connect();
 
