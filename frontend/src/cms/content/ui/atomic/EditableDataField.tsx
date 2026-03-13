@@ -21,44 +21,66 @@ export function EditableDataField({
     if (error) setError(null);
   };
 
-  const handleBlur = () => {
-    if (!internalValue.trim()) {
-      setError(null);
-      return;
-    }
+  const handleFormat = () => {
     try {
-      JSON.parse(internalValue);
+      const formatted = JSON.stringify(JSON.parse(internalValue), null, 2);
+      setInternalValue(formatted);
+      setValue(formatted);
       setError(null);
     } catch (err: any) {
       setError(err.message);
     }
   };
 
+  const handleBlur = () => {
+    if (!internalValue.trim()) {
+      setError(null);
+      return;
+    }
+    handleFormat();
+  };
+
   return (
     <div data-testid={testId} className="flex-1 min-w-0 pr-4 space-y-2">
-      <h2 className="text-xs underline">{fieldName}</h2>
+      <h2 className="text-xs flex items-center gap-2">
+        <span className="underline">{fieldName}</span>
+        {isEditing && (
+          <span className="text-gray-400">Alt+Shift+F to format</span>
+        )}
+      </h2>
       {isEditing ? (
-        <div className="border rounded border-gray-300 p-2 bg-gray-50">
-          <Editor
-            value={internalValue}
-            onValueChange={handleChange}
-            onBlur={handleBlur}
-            highlight={(code) => highlight(code, languages.json, 'json')}
-            padding={10}
-            style={{
-              fontFamily: '"Fira Code", monospace',
-              fontSize: 14,
-              minHeight: 150,
-              overflow: 'auto',
-              backgroundColor: 'transparent',
+        <>
+          <div
+            className="border rounded border-gray-300 p-2"
+            onKeyDown={(e) => {
+              if (e.altKey && e.shiftKey && e.key === 'F') {
+                e.preventDefault();
+                handleFormat();
+              }
             }}
-          />
+          >
+            <Editor
+              value={internalValue}
+              onValueChange={handleChange}
+              onBlur={handleBlur}
+              highlight={(code) => highlight(code, languages.json, 'json')}
+              padding={10}
+              textareaClassName="outline-none"
+              style={{
+                fontFamily: '"Fira Code", monospace',
+                fontSize: 14,
+                minHeight: 150,
+                overflow: 'auto',
+                backgroundColor: 'transparent',
+              }}
+            />
+          </div>
           {error && (
             <p className="text-red-500 text-xs mt-1">Błąd w JSON: {error}</p>
           )}
-        </div>
+        </>
       ) : (
-        <pre className="p-2 border rounded bg-gray-100 text-sm overflow-x-auto">
+        <pre className="p-2 border rounded text-sm overflow-x-auto">
           {internalValue}
         </pre>
       )}
