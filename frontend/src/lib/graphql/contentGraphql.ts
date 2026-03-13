@@ -6,10 +6,11 @@ export const GET_CONTENTS = gql`
       id
       key
       title
-      header
+      subtitle
       description
       order
       updatedAt
+      customData
       media {
         id
         filename

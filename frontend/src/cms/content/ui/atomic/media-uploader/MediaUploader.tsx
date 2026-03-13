@@ -116,7 +116,7 @@ export function MediaUploader({
   if (!isEditing) {
     return (
       <div className="gap-0 space-y-2">
-        <h2 className="text-xs underline">Media</h2>
+        <h2 className="text-xs underline">media</h2>
         <div className="flex flex-wrap gap-2">
           {media.length > 0 ? (
             media
@@ -160,7 +160,7 @@ export function MediaUploader({
 
   return (
     <div className="gap-0 space-y-2">
-      <h2 className="text-xs underline">Media</h2>
+      <h2 className="text-xs underline">media</h2>
       <div className="p-2 border rounded border-gray-300">
         <DndContext
           sensors={sensors}
