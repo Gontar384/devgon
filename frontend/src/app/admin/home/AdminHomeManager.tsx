@@ -20,14 +20,24 @@ export function AdminHomeManager({
           contents={homeHeroCard}
           contentKey={'home-hero-card'}
           mode={'single'}
-          fields={{ title: 100, header: 200, description: 500 }}
+          fields={{
+            title: 100,
+            subtitle: 200,
+            description: 500,
+            customData: 500,
+          }}
           maxMedia={1}
         />
         <ContentCardManager
           contents={homeServiceCards}
           contentKey={'home-service-cards'}
           mode={'multiple'}
-          fields={{ title: 100, header: 100, description: 500 }}
+          fields={{
+            title: 100,
+            subtitle: 100,
+            description: 500,
+            customData: 500,
+          }}
           maxMedia={0}
         />
       </div>
