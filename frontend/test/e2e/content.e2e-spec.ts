@@ -120,7 +120,7 @@ test.describe('updateContent — text fields', () => {
     const card = multi.card(0);
     await card.clickEdit();
     await card.fillTitle('New Title');
-    await card.fillHeader('New Header');
+    await card.fillSubtitle('New Subtitle');
     await card.fillDescription('New Description');
     await card.clickSave();
 

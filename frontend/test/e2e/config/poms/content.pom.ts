@@ -39,8 +39,8 @@ export class ContentCardPOM {
     await this.fillTiptap('field-title', value);
   }
 
-  async fillHeader(value: string): Promise<void> {
-    await this.fillTiptap('field-header', value);
+  async fillSubtitle(value: string): Promise<void> {
+    await this.fillTiptap('field-subtitle', value);
   }
 
   async fillDescription(value: string): Promise<void> {

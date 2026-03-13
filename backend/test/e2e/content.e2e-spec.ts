@@ -9,7 +9,7 @@ import {
 const GET_CONTENTS = `
   query GetContents($key: String!) {
     getContents(key: $key) {
-      id key title header description order
+      id key title subtitle description order
       media { id }
     }
   }
@@ -116,12 +116,12 @@ describe('Content (e2e)', () => {
     it('initializes text fields as null', async () => {
       await gqlAsAdmin(app, CREATE_CONTENT, { key: 'hero' });
       const rows = await ds.query<
-        Array<{ title: null; header: null; description: null }>
-      >('SELECT title, header, description FROM "content" WHERE key = $1', [
+        Array<{ title: null; subtitle: null; description: null }>
+      >('SELECT title, subtitle, description FROM "content" WHERE key = $1', [
         'hero',
       ]);
       expect(rows[0].title).toBeNull();
-      expect(rows[0].header).toBeNull();
+      expect(rows[0].subtitle).toBeNull();
       expect(rows[0].description).toBeNull();
     });
 
@@ -146,18 +146,18 @@ describe('Content (e2e)', () => {
         id,
         input: {
           title: '  Trimmed  ',
-          header: ' Header ',
+          subtitle: ' Subtitle ',
           description: 'Desc',
           mediaOrder: [],
         },
       });
 
-      const rows = await ds.query<Array<{ title: string; header: string }>>(
-        'SELECT title, header FROM "content" WHERE id = $1',
+      const rows = await ds.query<Array<{ title: string; subtitle: string }>>(
+        'SELECT title, subtitle FROM "content" WHERE id = $1',
         [id],
       );
       expect(rows[0].title).toBe('Trimmed');
-      expect(rows[0].header).toBe('Header');
+      expect(rows[0].subtitle).toBe('Subtitle');
     });
 
     it('coerces blank string to null', async () => {
