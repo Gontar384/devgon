@@ -17,7 +17,7 @@ export function EditableField({
   type,
   contentLength,
   isEditing,
-  header,
+  fieldName,
   testId,
 }: EditableFieldProps) {
   const smallEditor = useSmallEditor({
@@ -48,7 +48,7 @@ export function EditableField({
 
   return (
     <div data-testid={testId} className="flex-1 min-w-0 pr-4 space-y-2">
-      <h2 className="text-xs underline">{header}</h2>
+      <h2 className="text-xs underline">{fieldName}</h2>
       {isEditing ? (
         <div className="p-2 border rounded border-gray-300">
           {editor && <TiptapToolbar editor={editor} />}

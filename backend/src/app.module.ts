@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { ContentModule } from './modules/cms/content/content.module';
 import { GraphqlConfigModule } from './config/graphql/graphql.module';
+import { HealthModule } from '../test/healthcheck/health.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GraphqlConfigModule } from './config/graphql/graphql.module';
     UserModule,
     ContentModule,
     GraphqlConfigModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

@@ -26,9 +26,9 @@ import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const CMS_URL = '/admin/about';
-const MULTI_KEY = 'about-side-cards'; // mode="multiple", maxMedia=3
-const SINGLE_KEY = 'about-main-card'; // mode="single",   maxMedia=5
+const CMS_URL = '/admin/home';
+const SINGLE_KEY = 'home-hero'; // mode="single", maxMedia=0
+const MULTI_KEY = 'home-services'; // mode="multiple", maxMedia=1
 
 /**
  * Minimal 1×1 JPEG — created inline so no external file is needed.
@@ -120,7 +120,7 @@ test.describe('updateContent — text fields', () => {
     const card = multi.card(0);
     await card.clickEdit();
     await card.fillTitle('New Title');
-    await card.fillHeader('New Header');
+    await card.fillSubtitle('New Subtitle');
     await card.fillDescription('New Description');
     await card.clickSave();
 

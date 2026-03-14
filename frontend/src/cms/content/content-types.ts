@@ -4,8 +4,9 @@ export interface Content {
   id: string;
   key: string;
   title?: string;
-  header?: string;
+  subtitle?: string;
   description?: string;
+  customData?: Record<string, any>;
   media?: Media[];
   order?: number;
   updatedAt: string;
@@ -58,8 +59,9 @@ export interface ContentCardManagerProps {
    */
   fields: {
     title: number;
-    header: number;
+    subtitle: number;
     description: number;
+    customData: number;
   };
   maxMedia?: number;
 }
@@ -69,8 +71,9 @@ export interface ContentCardProps {
   singleMode: boolean;
   fields: {
     title: number;
-    header: number;
+    subtitle: number;
     description: number;
+    customData: number;
   };
   handleRevalidate: () => Promise<void>;
   handleReorderMobile: (
@@ -100,7 +103,7 @@ export interface EditableFieldProps {
   type: 'small' | 'big';
   contentLength: number;
   isEditing: boolean;
-  header: 'Title' | 'Header' | 'Description';
+  fieldName: 'title' | 'subtitle' | 'description';
   testId: string;
 }
 
@@ -145,3 +148,27 @@ export interface SortableMediaItemProps {
   move: (id: string, dir: -1 | 1) => void;
   canReorder: boolean;
 }
+
+export interface EditableDataFieldProps {
+  value: string;
+  setValue: (v: string) => void;
+  isEditing: boolean;
+  fieldName: string;
+  testId?: string;
+}
+
+interface FallbackMedia {
+  url?: string;
+  alt?: string;
+  type?: MediaType;
+}
+
+export interface FallbackContent {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  customData?: Record<string, any>;
+  media?: FallbackMedia[];
+}
+
+export type ContentOrFallback = Content | FallbackContent;

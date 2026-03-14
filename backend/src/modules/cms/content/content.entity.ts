@@ -28,10 +28,13 @@ export class Content {
   title?: string | null;
 
   @Column({ type: 'varchar', length: 1000, nullable: true })
-  header?: string | null;
+  subtitle?: string | null;
 
   @Column({ type: 'text', nullable: true })
   description?: string | null;
+
+  @Column({ type: 'jsonb', nullable: true })
+  customData?: Record<string, any> | null;
 
   @OneToMany(() => Media, (media) => media.content, { cascade: true })
   media: Media[];

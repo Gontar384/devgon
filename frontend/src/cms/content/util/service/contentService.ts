@@ -63,7 +63,7 @@ export async function createContent(key: string): Promise<boolean> {
  *    uploaded media (by `tempId`), along with their desired display order.
  *
  * @param id - ID of the content block to update
- * @param payload - Updated text fields and the full list of media items in desired order
+ * @param payload - Updated text fields, JSON and the full list of media items in desired order
  * @param maxMedia - Optional server-enforced cap on the number of media files
  * @returns `true` on success
  * @throws Re-throws any network or server error for the caller to handle
@@ -72,8 +72,9 @@ export async function updateContent(
   id: string,
   payload: {
     title?: string;
-    header?: string;
+    subtitle?: string;
     description?: string;
+    customData?: Record<string, any>;
     mediaItems: MediaItem[];
   },
   maxMedia?: number,
@@ -92,8 +93,9 @@ export async function updateContent(
       id,
       input: {
         title: payload.title,
-        header: payload.header,
+        subtitle: payload.subtitle,
         description: payload.description,
+        customData: payload.customData,
         mediaOrder,
       },
       maxMedia,

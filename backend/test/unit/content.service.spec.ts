@@ -123,7 +123,7 @@ describe('ContentService', () => {
       expect(contentRepo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           title: null,
-          header: null,
+          subtitle: null,
           description: null,
         }),
       );

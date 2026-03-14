@@ -20,6 +20,7 @@ import { MoveCardButtons } from '@/cms/content/ui/atomic/MoveCardButtons';
 import { MediaUploader } from '@/cms/content/ui/atomic/media-uploader/MediaUploader';
 import { ContentCardProps, MediaItem } from '@/cms/content/content-types';
 import { sanitizeTiptapHTML } from '@/cms/content/util/tiptap/uploadSanitizer';
+import { EditableDataField } from '@/cms/content/ui/atomic/EditableDataField';
 
 /**
  * Editable card representing a single content block.
@@ -41,9 +42,12 @@ export function ContentCard({
 }: ContentCardProps) {
   const safeData = content ?? {};
   const [draftTitle, setDraftTitle] = useState(safeData.title ?? '');
-  const [draftHeader, setDraftHeader] = useState(safeData.header ?? '');
+  const [draftSubtitle, setDraftSubtitle] = useState(safeData.subtitle ?? '');
   const [draftDescription, setDraftDescription] = useState(
     safeData.description ?? '',
+  );
+  const [draftCustomData, setDraftCustomData] = useState<string>(
+    JSON.stringify(safeData.customData ?? {}, null, 2),
   );
 
   const [mediaItems, setMediaItems] = useState<MediaItem[]>(() =>
@@ -61,8 +65,9 @@ export function ContentCard({
   useEffect(() => {
     if (!isEditing) {
       setDraftTitle(safeData.title ?? '');
-      setDraftHeader(safeData.header ?? '');
+      setDraftSubtitle(safeData.subtitle ?? '');
       setDraftDescription(safeData.description ?? '');
+      setDraftCustomData(JSON.stringify(safeData.customData ?? {}, null, 2));
 
       setMediaItems(
         (content?.media || []).map<MediaItem>((m) => ({
@@ -74,8 +79,9 @@ export function ContentCard({
     }
   }, [
     safeData.title,
-    safeData.header,
+    safeData.subtitle,
     safeData.description,
+    safeData.customData,
     content?.media,
     isEditing,
   ]);
@@ -94,8 +100,9 @@ export function ContentCard({
 
   const handleCancel = () => {
     setDraftTitle(safeData.title ?? '');
-    setDraftHeader(safeData.header ?? '');
+    setDraftSubtitle(safeData.subtitle ?? '');
     setDraftDescription(safeData.description ?? '');
+    setDraftCustomData(JSON.stringify(safeData.customData ?? {}, null, 2));
 
     mediaItems.forEach((item) => {
       if (item.type === 'new') {
@@ -115,8 +122,9 @@ export function ContentCard({
 
   const fieldsToDisplay = {
     title: fields.title > 0,
-    header: fields.header > 0,
+    subtitle: fields.subtitle > 0,
     description: fields.description > 0,
+    customData: fields.customData > 0,
   };
 
   const canSort = !singleMode && (totalItems ?? 0) > 1;
@@ -176,15 +184,30 @@ export function ContentCard({
     return textContent.trim() === '' ? '' : clean;
   };
 
+  const isValidJSON = (value: string | null | undefined): boolean => {
+    if (!value || value.trim() === '') return true;
+    try {
+      JSON.parse(value);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   const handleSave = async () => {
     if (!content) return;
+    if (!isValidJSON(draftCustomData)) {
+      toast.error('Błąd w JSON: niepoprawny format');
+      return;
+    }
     setIsLoading(true);
     setIsClosing(true);
 
     const payload = {
       title: stripEmptyHtml(draftTitle),
-      header: stripEmptyHtml(draftHeader),
+      subtitle: stripEmptyHtml(draftSubtitle),
       description: stripEmptyHtml(draftDescription),
+      customData: draftCustomData ? JSON.parse(draftCustomData) : {},
       mediaItems,
     };
     try {
@@ -251,19 +274,19 @@ export function ContentCard({
                 type="small"
                 contentLength={fields.title}
                 isEditing={isEditing}
-                header={'Title'}
+                fieldName={'title'}
                 testId="field-title"
               />
             )}
-            {fieldsToDisplay.header && (
+            {fieldsToDisplay.subtitle && (
               <EditableField
-                value={draftHeader}
-                setValue={setDraftHeader}
+                value={draftSubtitle}
+                setValue={setDraftSubtitle}
                 type="small"
-                contentLength={fields.header}
+                contentLength={fields.subtitle}
                 isEditing={isEditing}
-                header={'Header'}
-                testId="field-header"
+                fieldName={'subtitle'}
+                testId="field-subtitle"
               />
             )}
             {fieldsToDisplay.description && (
@@ -273,8 +296,17 @@ export function ContentCard({
                 type="big"
                 contentLength={fields.description}
                 isEditing={isEditing}
-                header={'Description'}
+                fieldName={'description'}
                 testId="field-description"
+              />
+            )}
+            {fieldsToDisplay.customData && (
+              <EditableDataField
+                value={draftCustomData}
+                setValue={setDraftCustomData}
+                isEditing={isEditing}
+                fieldName="custom JSON"
+                testId="field-custom-json"
               />
             )}
             {(maxMedia ?? 0) > 0 && (

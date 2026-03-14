@@ -5,18 +5,15 @@ import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'devgon - Strona główna',
+    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
     description:
-      'Poznaj naszą ofertę: inteligentne strony internetowe, nowoczesne rozwiązania technologiczne i automatyzacja procesów – wszystko dla twojej firmy.',
+      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
     path: '/',
   });
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export default async function HomePage() {
-  const { contents } = await loadPageContents([
-    'home-hero-card',
-    'home-service-cards',
-  ]);
+  const { contents } = await loadPageContents(['home-hero', 'home-services']);
   return <HomeManager contents={contents} />;
 }

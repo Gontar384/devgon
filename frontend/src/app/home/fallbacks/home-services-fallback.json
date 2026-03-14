@@ -1,0 +1,59 @@
+[
+  {
+    "title": "Aplikacje <strong>biznesowe</strong>",
+    "subtitle": "<p>Dedykowane systemy dla firm.</p>",
+    "description": "<p>Projektujemy aplikacje dopasowane do procesów firmy zamiast zmuszać firmę do dopasowania się do gotowego narzędzia.</p>",
+    "media": [
+      {
+        "url": "/image/cool-programmer.png",
+        "alt": "Aplikacje biznesowe Devgon",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "href": "/oferta/aplikacje-biznesowe",
+      "cta": {
+        "label": "Zobacz więcej",
+        "href": "/oferta/aplikacje-biznesowe"
+      }
+    }
+  },
+  {
+    "title": "Optymalizacja <strong>procesów</strong>",
+    "subtitle": "<p>Analiza i usprawnianie pracy.</p>",
+    "description": "<p>Identyfikujemy wąskie gardła w procesach biznesowych i projektujemy rozwiązania które je eliminują.</p>",
+    "media": [
+      {
+        "url": "/images/service-process-optimization.jpg",
+        "alt": "Optymalizacja procesów Devgon",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "href": "/oferta/optymalizacja-procesow",
+      "cta": {
+        "label": "Zobacz więcej",
+        "href": "/oferta/optymalizacja-procesow"
+      }
+    }
+  },
+  {
+    "title": "Automatyzacje <strong>i integracje</strong>",
+    "subtitle": "<p>Łączenie systemów.</p>",
+    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
+    "media": [
+      {
+        "url": "/images/service-automation-integration.jpg",
+        "alt": "Automatyzacje i integracje Devgon",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "href": "/oferta/automatyzacje-i-integracje",
+      "cta": {
+        "label": "Zobacz więcej",
+        "href": "/oferta/automatyzacje-i-integracje"
+      }
+    }
+  }
+]

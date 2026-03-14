@@ -1,4 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 /**
  * Describes a single media item's position in a content update.
@@ -27,9 +28,12 @@ export class MediaOrderInput {
 export class ContentInput {
   @Field({ nullable: true }) title?: string;
 
-  @Field({ nullable: true }) header?: string;
+  @Field({ nullable: true }) subtitle?: string;
 
   @Field({ nullable: true }) description?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  customData?: Record<string, any>;
 
   @Field(() => [MediaOrderInput])
   mediaOrder: MediaOrderInput[];

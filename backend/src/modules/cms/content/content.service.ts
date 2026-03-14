@@ -14,6 +14,11 @@ import * as sanitizeHtml from 'sanitize-html';
  * section of the page (e.g. "hero", "about-us", "team"). Multiple blocks
  * can exist under the same key and are displayed in ascending `order`.
  *
+ * In addition to basic text fields (title, subtitle, description),
+ * each block can store arbitrary structured data in the `customData` JSON column.
+ * This allows different sections to define their own schema without
+ * requiring database migrations.
+ *
  * This service handles the full lifecycle of content blocks:
  * creation, update (including media management), deletion, and reordering.
  * Media files are stored in MinIO object storage and referenced via signed URLs.
@@ -56,7 +61,7 @@ export class ContentService {
    * Creates a new empty content block for a given page section key.
    * The new block is appended at the end of the existing list —
    * its `order` is set to `lastBlock.order + 1`, or `0` if none exist yet.
-   * All text fields (title, header, description) are initialized to `null`.
+   * All fields (title, subtitle, description and `customData`) are initialized to `null`.
    *
    * @param key - The page section identifier to create the block under
    */
@@ -72,8 +77,9 @@ export class ContentService {
       key,
       order: lastContent ? lastContent.order + 1 : 0,
       title: null,
-      header: null,
+      subtitle: null,
       description: null,
+      customData: null,
     });
 
     await this.contentRepo.save(content);
@@ -83,9 +89,13 @@ export class ContentService {
   /**
    * Updates an existing content block by ID.
    *
-   * This method handles three concerns in sequence:
-   * 1. **Text fields** — title, header, and description are trimmed and saved
+   * This method handles four concerns in sequence:
+   * 1. **Text and structured fields** — `title`, `subtitle`, `description`,
+   *    and the optional `customData` JSON field are normalized and persisted
    *    if present in the input (undefined fields are skipped).
+   *    Text fields are trimmed and sanitized to remove disallowed HTML.
+   *    The `customData` field may contain arbitrary structured JSON defined
+   *    by the frontend and is stored as-is.
    * 2. **Media reconciliation** — the incoming `mediaOrder` list is compared
    *    against the current media. New media are resolved from their `tempId`
    *    (set during upload), removed media are deleted from storage and DB,
@@ -93,9 +103,11 @@ export class ContentService {
    * 3. **Media limit enforcement** — if `maxMedia` is provided and the
    *    resulting media count exceeds it, newly uploaded files are rolled back
    *    and a `BadRequestException` is thrown.
+   * 4. **Media order persistence** — the final media order is written to the
+   *    database and any temporary upload identifiers are cleared.
    *
    * @param id - ID of the content block to update
-   * @param input - Updated text fields and desired media order
+   * @param input - Updated optional text fields, JSON `customData` and desired media order
    * @param maxMedia - Optional cap on the number of allowed media files
    * @throws BadRequestException if the content is not found,
    *   a tempId cannot be resolved, or the media limit is exceeded
@@ -164,7 +176,7 @@ export class ContentService {
       }),
     );
 
-    if (maxMedia !== null && maxMedia !== undefined) {
+    if (maxMedia != null) {
       const finalMediaCount = mediaOrderMap.size;
 
       if (finalMediaCount > maxMedia) {
@@ -310,6 +322,8 @@ export class ContentService {
    * Only fields explicitly present in the input are included.
    * String values are trimmed and sanitized via sanitize-html to strip
    * disallowed tags and attributes. Empty strings are coerced to `null`.
+   * The optional `customData` JSON field is passed through as-is and may contain
+   * arbitrary structured data defined by the frontend.
    *
    * @param input - Raw input from the GraphQL mutation
    * @returns Partial entity object safe to pass to `contentRepo.update()`
@@ -325,15 +339,18 @@ export class ContentService {
         ? sanitize(input.title, SMALL_SANITIZE_OPTIONS)
         : null;
     }
-    if (input.header !== undefined) {
-      data.header = input.header
-        ? sanitize(input.header, SMALL_SANITIZE_OPTIONS)
+    if (input.subtitle !== undefined) {
+      data.subtitle = input.subtitle
+        ? sanitize(input.subtitle, SMALL_SANITIZE_OPTIONS)
         : null;
     }
     if (input.description !== undefined) {
       data.description = input.description
         ? sanitize(input.description, BIG_SANITIZE_OPTIONS)
         : null;
+    }
+    if (input.customData !== undefined) {
+      data.customData = input.customData ?? null;
     }
 
     return data;

@@ -1,15 +1,15 @@
-import { Content } from '@/cms/content/content-types';
+import { Content, ContentOrFallback } from '@/cms/content/content-types';
 
 export interface HomeManagerProps {
   contents: Record<string, Content[]>;
 }
 
-export interface MainCardProps {
-  content: Content;
+export interface HeroProps {
+  content: ContentOrFallback;
 }
 
-export interface SideCardProps {
-  content: Content;
+export interface ServiceCardProps {
+  content: ContentOrFallback;
 }
 
 export interface TypingEffectProps {
@@ -18,4 +18,9 @@ export interface TypingEffectProps {
   deleteSpeed?: number;
   pause?: number;
   mode?: string;
+}
+
+export interface RotatingWordsProps {
+  words: string[];
+  interval?: number;
 }
