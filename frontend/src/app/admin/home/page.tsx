@@ -6,17 +6,18 @@ import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'devgon - Panel administratora | Strona główna',
-    description: 'Panel administratora - zarządzanie contentem | Strona główna',
-    path: '/admin/home',
+    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
+    description:
+      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
+    path: '/',
   });
 
 export const revalidate = 60;
 
 export default async function AdminHomePage() {
   const { contents, error, failedKeys } = await loadPageContents([
-    'home-hero-card',
-    'home-service-cards',
+    'home-hero',
+    'home-services',
   ]);
 
   return (
