@@ -1,0 +1,23 @@
+{
+  "title": "<p>Budujmy systemy które</p>",
+  "subtitle": "<p>Pomagam firmom upraszczać procesy, tworzyć aplikacje i integrować narzędzia.</p>",
+  "description": "<p>Projektuję rozwiązania technologiczne dopasowane do realnych potrzeb biznesu — od analizy procesów po wdrożenie gotowego systemu.</p>",
+  "customData": {
+    "typingWord": "devgon",
+    "heroWords": [
+      "automatyzują pracę",
+      "łączą systemy",
+      "eliminują chaos w firmie",
+      "skalują biznes",
+      "upraszczają procesy"
+    ],
+    "primaryCta": {
+      "label": "Zobacz ofertę",
+      "href": "#uslugi"
+    },
+    "secondaryCta": {
+      "label": "Umów rozmowę",
+      "href": "#kontakt"
+    }
+  }
+}

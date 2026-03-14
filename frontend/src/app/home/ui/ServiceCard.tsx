@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import React from 'react';
 import { ServiceCardProps } from '@/app/home/home-types';
 import { MediaType } from '@/cms/content/content-types';
