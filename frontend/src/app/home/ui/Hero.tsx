@@ -1,78 +1,82 @@
-import Image from 'next/image';
 import React from 'react';
-import { MainCardProps } from '@/app/home/home-types';
+import { RotatingWords } from '@/app/home/ui/parts/RotatingWords';
+import { HeroProps } from '@/app/home/home-types';
 import { TypingEffect } from '@/app/home/ui/parts/TypingEffect';
 
-export function Hero({ content }: MainCardProps) {
-  const safeData = {
-    title: content?.title ?? '',
-    header: content?.header ?? '',
-    description: content?.description ?? '',
-    photoUrl: content?.media?.[0]?.url ?? '',
-    photoAlt: content?.media?.[0]?.alt ?? '',
-  };
-
+export function Hero({ content }: HeroProps) {
   if (!content) return null;
 
+  const safeData = {
+    title: content?.title ?? '',
+    subtitle: content?.subtitle ?? '',
+    description: content?.description ?? '',
+    typingWord: content?.customData?.typingWord ?? '',
+    heroWords: content?.customData?.heroWords ?? '',
+    primaryCta: content?.customData?.primaryCta ?? null,
+    secondaryCta: content?.customData?.secondaryCta ?? null,
+  };
+
   return (
-    <section
-      className="relative w-full min-h-[80vh] flex items-center overflow-hidden rounded-2xl"
-      aria-label={safeData.title}
-    >
-      {/* Background image with overlay */}
-      {safeData.photoUrl && (
-        <>
-          <Image
-            src={safeData.photoUrl}
-            alt={safeData.photoAlt}
-            fill
-            unoptimized
-            priority
-            className="object-cover object-center"
-          />
-          {/* Dark gradient overlay — left strong, right transparent */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10" />
-        </>
-      )}
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+      {/* tło */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-background" />
 
-      {/* Fallback background when no image */}
-      {!safeData.photoUrl && (
-        <div className="absolute inset-0 bg-gradient-to-br from-background to-muted" />
-      )}
+      {/* subtle glow */}
+      <div className="absolute top-[-200px] left-[50%] w-[900px] h-[900px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-3xl px-6 py-16 md:px-16 md:py-24">
-        <h1
-          className={`text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 break-words ${
-            safeData.photoUrl ? 'text-white' : 'text-foreground'
-          }`}
-        >
+      <div className="relative z-10 max-w-3xl px-6 text-center flex flex-col items-center gap-8">
+        <h1 className="text-4xl md:text-6xl font-bold break-words">
           <TypingEffect
-            text={safeData.title}
+            text={safeData.typingWord}
             speed={300}
             deleteSpeed={100}
             pause={1000}
             mode="typing"
           />
         </h1>
+        {/* TITLE */}
+        <h2
+          className="text-4xl md:text-6xl lg:text-7xl leading-tight"
+          dangerouslySetInnerHTML={{ __html: safeData.title }}
+        />
 
-        {safeData.header && (
-          <div
-            className={`max-w-none mb-4 ${
-              safeData.photoUrl ? 'text-white/90' : 'text-foreground'
-            }`}
-            dangerouslySetInnerHTML={{ __html: safeData.header }}
-          />
-        )}
+        {/* ROTATING WORDS */}
+        <div className="text-3xl md:text-4xl font-semibold text-primary min-h-[1.4em]">
+          <RotatingWords words={safeData.heroWords} />
+        </div>
 
-        {safeData.description && (
-          <div
-            className={`max-w-none ${
-              safeData.photoUrl ? 'text-white/70' : 'text-muted-foreground'
-            }`}
-            dangerouslySetInnerHTML={{ __html: safeData.description }}
-          />
-        )}
+        {/* SUBTITLE */}
+        <div
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl"
+          dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
+        />
+
+        {/* DESCRIPTION */}
+        <div
+          className="text-base text-muted-foreground max-w-xl"
+          dangerouslySetInnerHTML={{ __html: safeData.description }}
+        />
+
+        {/* CTA */}
+        <div className="flex gap-4 flex-wrap justify-center pt-4">
+          {safeData.primaryCta && (
+            <a
+              href={safeData.primaryCta.href}
+              className="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
+            >
+              {safeData.primaryCta.label}
+            </a>
+          )}
+
+          {safeData.secondaryCta && (
+            <a
+              href={safeData.secondaryCta.href}
+              className="px-6 py-3 rounded-lg border border-border hover:bg-muted transition"
+            >
+              {safeData.secondaryCta.label}
+            </a>
+          )}
+        </div>
       </div>
     </section>
   );

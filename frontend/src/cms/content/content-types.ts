@@ -156,3 +156,19 @@ export interface EditableDataFieldProps {
   fieldName: string;
   testId?: string;
 }
+
+interface FallbackMedia {
+  url?: string;
+  alt?: string;
+  type?: MediaType;
+}
+
+export interface FallbackContent {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  customData?: Record<string, any>;
+  media?: FallbackMedia[];
+}
+
+export type ContentOrFallback = Content | FallbackContent;
