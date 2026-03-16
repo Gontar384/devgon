@@ -78,12 +78,6 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
     : childrenArray.slice(0, MOBILE_INITIAL);
   const hasMore = count > MOBILE_INITIAL;
 
-  // szerokość karty — px gdy obliczona, CSS fallback przed hydracją
-  const slotStyle = (cw: number | null) =>
-    cw ? { width: cw, minWidth: cw } : undefined;
-  const slotClass = (cw: number | null) =>
-    `flex-shrink-0${cw ? '' : ' w-1/2 lg:w-1/3'}`;
-
   return (
     <div className="relative w-full">
       {/* MOBILE */}
