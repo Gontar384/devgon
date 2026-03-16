@@ -29,12 +29,12 @@ export function HomeManager({ contents }: HomeManagerProps) {
   return (
     <>
       <HomeHero content={homeHero} />
-      <section className="w-full py-24">
-        <div className="max-w-[1500px] mx-auto">
+      <section className="w-full py-12">
+        <div className="max-w-[1700px] mx-auto">
           <HomeServicesCarousel count={homeServices.length}>
             {homeServices.map((content, i) => (
               <TiltCard key={'id' in content ? content.id : `fallback-${i}`}>
-                <HomeServiceCard content={content} />
+                <HomeServiceCard content={content} priority={i === 0} />
               </TiltCard>
             ))}
           </HomeServicesCarousel>

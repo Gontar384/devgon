@@ -1,16 +1,26 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HomeServicesProps } from '@/app/home/home-types';
+import { HomeServicesCarouselProps } from '@/app/home/home-types';
 
 const MOBILE_INITIAL = 3;
 const GAP = 32;
 
-export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
+function getVisible(windowWidth: number): number {
+  if (windowWidth >= 1400) return 3;
+  if (windowWidth >= 900) return 2;
+  return 1;
+}
+
+export function HomeServicesCarousel({
+  children,
+  count,
+}: HomeServicesCarouselProps) {
   const [offset, setOffset] = useState(0);
-  const [visible, setVisible] = useState(3);
   const [cardWidth, setCardWidth] = useState<number | null>(null);
+  const [visible, setVisible] = useState(3); // SSR fallback
+
   const [expanded, setExpanded] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,29 +31,41 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
   const childrenArray = React.Children.toArray(children);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const update = () => {
-      const w = window.innerWidth;
-      const v = w < 1024 ? 2 : 3;
+      const v = getVisible(window.innerWidth);
       setVisible(v);
-      if (containerRef.current) {
-        const totalWidth = containerRef.current.offsetWidth;
-        setCardWidth((totalWidth - GAP * (v - 1)) / v + 2);
-      }
+      const totalWidth = container.offsetWidth;
+      setCardWidth((totalWidth - GAP * (v - 1)) / v);
     };
 
+    const ro = new ResizeObserver(update);
+    ro.observe(container);
+
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+
+    return () => ro.disconnect();
   }, []);
 
-  const canPrev = offset > 0;
-  const canNext = offset + visible < count;
+  const maxOffset = Math.max(0, count - visible);
+  const clampedOffset = Math.min(offset, maxOffset);
 
-  const go = (dir: 1 | -1) => {
-    if (dir === 1 && !canNext) return;
-    if (dir === -1 && !canPrev) return;
-    setOffset((o) => Math.min(Math.max(o + dir, 0), count - visible));
-  };
+  const canPrev = clampedOffset > 0;
+  const canNext = clampedOffset + visible < count;
+
+  const go = useCallback(
+    (dir: 1 | -1) => {
+      if (dir === 1 && !canNext) return;
+      if (dir === -1 && !canPrev) return;
+      setOffset((o) => {
+        const current = Math.min(o, maxOffset);
+        return Math.min(Math.max(current + dir, 0), maxOffset);
+      });
+    },
+    [canNext, canPrev, maxOffset],
+  );
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStart.current = e.touches[0].clientX;
@@ -80,7 +102,6 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
 
   return (
     <div className="relative w-full">
-      {/* MOBILE */}
       <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
         <AnimatePresence initial={false}>
           {mobileVisible.map((child, i) => (
@@ -97,7 +118,6 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
             </motion.div>
           ))}
         </AnimatePresence>
-
         {hasMore && (
           <button
             onClick={() => setExpanded((e) => !e)}
@@ -113,8 +133,6 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
           </button>
         )}
       </div>
-
-      {/* TABLET / DESKTOP */}
       <div className="hidden sm:block overflow-hidden">
         <div className="px-5 py-5">
           <div
@@ -129,7 +147,9 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
           >
             <motion.div
               className="flex gap-8"
-              animate={{ x: cardWidth ? -(offset * (cardWidth + GAP)) : 0 }}
+              animate={{
+                x: cardWidth ? -(clampedOffset * (cardWidth + GAP)) : 0,
+              }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               {childrenArray.map((child, i) => (
@@ -140,7 +160,11 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
                       ? { width: cardWidth, minWidth: cardWidth, flexShrink: 0 }
                       : undefined
                   }
-                  className={`flex-shrink-0${!cardWidth ? ' w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.334rem)]' : ''}`}
+                  className={`flex-shrink-0${
+                    !cardWidth
+                      ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]'
+                      : ''
+                  }`}
                 >
                   {child}
                 </div>
@@ -149,9 +173,8 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
           </div>
         </div>
       </div>
-
       {count > visible && (
-        <div className="hidden sm:flex items-center justify-center gap-4 mt-10">
+        <div className="hidden sm:flex items-center justify-center gap-4 mt-6">
           <button
             onClick={() => go(-1)}
             disabled={!canPrev}
@@ -159,19 +182,19 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
           >
             <ChevronLeft size={20} />
           </button>
-
           <div className="flex gap-2">
             {Array.from({ length: count }).map((_, i) => {
-              const isActive = i >= offset && i < offset + visible;
+              const isActive =
+                i >= clampedOffset && i < clampedOffset + visible;
               return (
                 <button
                   key={i}
                   onClick={() => {
-                    if (i < offset) {
-                      setOffset(Math.min(i, count - visible));
+                    if (i < clampedOffset) {
+                      setOffset(Math.min(i, maxOffset));
                     } else {
                       setOffset(
-                        Math.min(Math.max(i - visible + 1, 0), count - visible),
+                        Math.min(Math.max(i - visible + 1, 0), maxOffset),
                       );
                     }
                   }}
@@ -184,7 +207,6 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
               );
             })}
           </div>
-
           <button
             onClick={() => go(1)}
             disabled={!canNext}

@@ -11,6 +11,7 @@ export interface HomeHeroProps {
 
 export interface HomeServiceCardProps {
   content: ContentOrFallback;
+  priority?: boolean;
 }
 
 export interface TypingEffectProps {
@@ -33,7 +34,7 @@ export interface AnimateClientProps {
   className?: string;
 }
 
-export interface HomeServicesProps {
+export interface HomeServicesCarouselProps {
   children: React.ReactNode[];
   count: number;
 }

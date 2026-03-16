@@ -65,7 +65,7 @@ export function HomeHero({ content }: HomeHeroProps) {
             {safeData.primaryCta && (
               <Link
                 href={safeData.primaryCta.href}
-                className="text-base md:text-lg px-6 py-3 bg-primary text-white rounded-lg cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
+                className="text-base md:text-lg px-6 py-3 bg-primary text-primary-foreground rounded-lg cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
               >
                 {safeData.primaryCta.label}
               </Link>

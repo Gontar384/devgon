@@ -1,154 +1,59 @@
 [
   {
-    "title": "Aplikacje <strong>biznesowe</strong>",
-    "subtitle": "<p>Dedykowane systemy dla firm.</p>",
-    "description": "<p>Projektujemy aplikacje dopasowane do procesów firmy zamiast zmuszać firmę do dopasowania się do gotowego narzędzia.</p>",
+    "title": "Aplikacje i systemy",
+    "subtitle": "Dedykowane rozwiązania dla firm",
+    "description": "Tworzymy aplikacje i systemy, które porządkują procesy i eliminują ręczną pracę — przygotowane na rozwój i skalowanie w chmurze.",
     "media": [
       {
-        "url": "/image/cool-programmer.png",
-        "alt": "Aplikacje biznesowe Devgon",
+        "url": "/image/business-apps.png",
+        "alt": "Aplikacje i systemy Devgon",
         "type": "IMAGE"
       }
     ],
     "customData": {
-      "href": "/oferta/aplikacje-biznesowe",
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/oferta/aplikacje-biznesowe"
-      }
+        "href": "/offer/apps-and-systems"
+      },
+      "tags": ["Systemy", "Aplikacje", "SaaS"]
     }
   },
   {
-    "title": "Optymalizacja <strong>procesów</strong>",
-    "subtitle": "<p>Analiza i usprawnianie pracy.</p>",
-    "description": "<p>Identyfikujemy wąskie gardła w procesach biznesowych i projektujemy rozwiązania które je eliminują.</p>",
+    "title": "Automatyzacje procesów",
+    "subtitle": "Mniej ręcznej pracy, więcej efektów",
+    "description": "Łączymy systemy i automatyzujemy przepływ danych, wykorzystując AI tam, gdzie realnie oszczędza czas i eliminuje błędy.",
     "media": [
       {
-        "url": "/images/service-process-optimization.jpg",
-        "alt": "Optymalizacja procesów Devgon",
+        "url": "/image/work-optimization.png",
+        "alt": "Automatyzacje procesów Devgon",
         "type": "IMAGE"
       }
     ],
     "customData": {
-      "href": "/oferta/optymalizacja-procesow",
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/oferta/optymalizacja-procesow"
-      }
+        "href": "/offer/processes-automation"
+      },
+      "tags": ["Automatyzacja", "AI", "Integracje"]
     }
   },
   {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
+    "title": "Rozwój i skalowanie",
+    "subtitle": "Gotowość na wzrost biznesu",
+    "description": "Rozwijamy istniejące systemy, poprawiamy ich wydajność i przygotowujemy je na większy ruch oraz dalsze skalowanie w chmurze.",
     "media": [
       {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
+        "url": "/image/company-scaling.png",
+        "alt": "Rozwój i skalowanie Devgon",
         "type": "IMAGE"
       }
     ],
     "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
-    }
-  },
-  {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
-    "media": [
-      {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
-      "cta": {
-        "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
-    }
-  },
-  {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
-    "media": [
-      {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
-      "cta": {
-        "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
-    }
-  },
-  {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
-    "media": [
-      {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
-      "cta": {
-        "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
-    }
-  },
-  {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
-    "media": [
-      {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
-      "cta": {
-        "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
-    }
-  },
-  {
-    "title": "Automatyzacje <strong>i integracje</strong>",
-    "subtitle": "<p>Łączenie systemów.</p>",
-    "description": "<p>Integrujemy narzędzia wykorzystywane w firmie i automatyzujemy powtarzalne zadania.</p>",
-    "media": [
-      {
-        "url": "/images/service-automation-integration.jpg",
-        "alt": "Automatyzacje i integracje Devgon",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "href": "/oferta/automatyzacje-i-integracje",
-      "cta": {
-        "label": "Zobacz więcej",
-        "href": "/oferta/automatyzacje-i-integracje"
-      }
+        "href": "/offer/company-scaling"
+      },
+      "tags": ["Skalowanie", "Cloud", "Performance"]
     }
   }
 ]
