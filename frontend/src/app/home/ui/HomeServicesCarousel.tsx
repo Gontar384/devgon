@@ -116,7 +116,7 @@ export function HomeServicesCarousel({ children, count }: HomeServicesProps) {
 
       {/* TABLET / DESKTOP */}
       <div className="hidden sm:block overflow-hidden">
-        <div className="px-6 py-3">
+        <div className="px-5 py-5">
           <div
             ref={containerRef}
             className="select-none touch-pan-y"

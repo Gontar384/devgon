@@ -8,7 +8,7 @@ export const dropdownData: DropdownData[] = [
       {
         title: 'Aplikacje biznesowe',
         href: '/',
-        imageSrc: '/svg/ipad.svg',
+        imageSrc: '/svg/mobile.svg',
         imageW: 35,
         imageH: 35,
       },
