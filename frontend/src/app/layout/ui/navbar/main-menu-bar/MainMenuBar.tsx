@@ -2,7 +2,7 @@ import { Menubar } from '@radix-ui/react-menubar';
 import React from 'react';
 import { Dropdown } from '@/app/layout/ui/navbar/main-menu-bar/Dropdown';
 import { DropdownOption } from '@/app/layout/ui/navbar/main-menu-bar/DropdownOption';
-import { dropdownData } from '@/app/layout/ui/navbar/main-menu-bar/dropdownData';
+import { dropdownData } from '@/app/layout/ui/navbar/dropdownData';
 
 export function MainMenuBar() {
   return (

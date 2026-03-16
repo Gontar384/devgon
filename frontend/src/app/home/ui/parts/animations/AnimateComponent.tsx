@@ -1,18 +1,13 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { AnimateClientProps } from '@/app/home/home-types';
 
-interface AnimateInProps {
-  children: React.ReactNode;
-  delay?: number; // ms
-  className?: string;
-}
-
-export function AnimateIn({
+export function AnimateComponent({
   children,
   delay = 0,
   className = '',
-}: AnimateInProps) {
+}: AnimateClientProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

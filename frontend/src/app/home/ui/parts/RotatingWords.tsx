@@ -5,31 +5,50 @@ import { RotatingWordsProps } from '@/app/home/home-types';
 
 export function RotatingWords({ words, interval = 2500 }: RotatingWordsProps) {
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [animate, setAnimate] = useState(true);
+
+  const extendedWords = [...words, words[0]];
 
   useEffect(() => {
     if (!words.length) return;
 
     const timer = setInterval(() => {
-      setVisible(false);
-
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % words.length);
-        setVisible(true);
-      }, 200);
+      setIndex((prev) => prev + 1);
     }, interval);
 
     return () => clearInterval(timer);
   }, [words, interval]);
 
+  useEffect(() => {
+    if (index === words.length) {
+      setTimeout(() => {
+        setAnimate(false);
+        setIndex(0);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setAnimate(true);
+          });
+        });
+      }, 500);
+    }
+  }, [index, words.length]);
+
   return (
-    <span className="inline-block relative overflow-hidden h-[1.2em]">
+    <span className="inline-block relative overflow-hidden h-[1.4em] font-bold">
       <span
-        className={` transition-all duration-300 ${
-          visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+        className={`flex flex-col ${
+          animate
+            ? 'transition-[transform] duration-500 ease-[cubic-bezier(.22,1,.36,1)]'
+            : ''
         }`}
+        style={{ transform: `translateY(-${index * 1.4}em)` }}
       >
-        {words[index]}
+        {extendedWords.map((word, i) => (
+          <span key={i} className="h-[1.4em] flex items-center justify-center">
+            {word}
+          </span>
+        ))}
       </span>
     </span>
   );
