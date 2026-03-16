@@ -1,14 +1,15 @@
-import { ServiceCard } from '@/app/home/ui/ServiceCard';
+import { HomeServiceCard } from '@/app/home/ui/HomeServiceCard';
 import React from 'react';
 import { HomeManagerProps } from '@/app/home/home-types';
-import { Hero } from '@/app/home/ui/Hero';
+import { HomeHero } from '@/app/home/ui/HomeHero';
 import {
   ContentOrFallback,
   FallbackContent,
 } from '@/cms/content/content-types';
 import homeHeroFallbackJson from '@/app/home/fallbacks/home-hero-fallback.json';
 import homeServicesFallbackJson from '@/app/home/fallbacks/home-services-fallback.json';
-import { AnimateIn } from '@/app/home/ui/parts/AnimateIn';
+import { HomeServicesCarousel } from '@/app/home/ui/HomeServicesCarousel';
+import { TiltCard } from '@/app/home/ui/parts/animations/TiltCard';
 
 const homeServicesFallback = homeServicesFallbackJson as FallbackContent[];
 const homeHeroFallback = homeHeroFallbackJson as FallbackContent;
@@ -27,21 +28,16 @@ export function HomeManager({ contents }: HomeManagerProps) {
 
   return (
     <>
-      <AnimateIn>
-        <Hero content={homeHero} />
-      </AnimateIn>
-      <section className="w-full py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <HomeHero content={homeHero} />
+      <section className="w-full py-12">
+        <div className="max-w-[1700px] mx-auto">
+          <HomeServicesCarousel count={homeServices.length}>
             {homeServices.map((content, i) => (
-              <AnimateIn
-                key={'id' in content ? content.id : `fallback-${i}`}
-                delay={i * 150}
-              >
-                <ServiceCard content={content} />
-              </AnimateIn>
+              <TiltCard key={'id' in content ? content.id : `fallback-${i}`}>
+                <HomeServiceCard content={content} priority={i === 0} />
+              </TiltCard>
             ))}
-          </div>
+          </HomeServicesCarousel>
         </div>
       </section>
     </>

@@ -1,26 +1,40 @@
 import { Content, ContentOrFallback } from '@/cms/content/content-types';
+import React from 'react';
 
 export interface HomeManagerProps {
   contents: Record<string, Content[]>;
 }
 
-export interface HeroProps {
+export interface HomeHeroProps {
   content: ContentOrFallback;
 }
 
-export interface ServiceCardProps {
+export interface HomeServiceCardProps {
   content: ContentOrFallback;
+  priority?: boolean;
 }
 
 export interface TypingEffectProps {
   text: string;
   speed?: number;
   deleteSpeed?: number;
-  pause?: number;
+  emptyWordPause?: number;
+  fullWordPause?: number;
   mode?: string;
 }
 
 export interface RotatingWordsProps {
   words: string[];
   interval?: number;
+}
+
+export interface AnimateClientProps {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}
+
+export interface HomeServicesCarouselProps {
+  children: React.ReactNode[];
+  count: number;
 }

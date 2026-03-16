@@ -11,7 +11,8 @@ export function TypingEffect({
   text,
   speed = 300,
   deleteSpeed = 100,
-  pause = 1000,
+  emptyWordPause = 1000,
+  fullWordPause = 1000,
   mode = 'typing',
 }: TypingEffectProps) {
   const plainText = useMemo(() => stripHTML(text), [text]);
@@ -41,7 +42,7 @@ export function TypingEffect({
       } else {
         timeout = setTimeout(() => {
           setForward(false);
-        }, pause);
+        }, fullWordPause);
       }
     } else {
       if (index > 0) {
@@ -52,12 +53,21 @@ export function TypingEffect({
       } else {
         timeout = setTimeout(() => {
           setForward(true);
-        }, pause);
+        }, emptyWordPause);
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [index, forward, plainText, speed, deleteSpeed, pause, mode]);
+  }, [
+    index,
+    forward,
+    plainText,
+    speed,
+    deleteSpeed,
+    emptyWordPause,
+    fullWordPause,
+    mode,
+  ]);
 
   if (!plainText) return null;
 

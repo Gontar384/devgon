@@ -8,7 +8,7 @@ import {
 } from '@tsparticles/engine';
 import { loadSlim } from '@tsparticles/slim';
 
-export const ParticlesBackground = ({ id }: { id?: string }) => {
+export const ParticlesBackground = ({ id }: { id: string }) => {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const ParticlesBackground = ({ id }: { id?: string }) => {
             quantity: 4,
           },
           repulse: {
-            distance: 130,
+            distance: 150,
             duration: 0.4,
           },
         },
@@ -50,11 +50,11 @@ export const ParticlesBackground = ({ id }: { id?: string }) => {
           value: '#000000',
         },
         links: {
-          color: '#000000',
-          distance: 150,
+          color: '#e57f73',
+          distance: 300,
           enable: true,
-          opacity: 0.6,
-          width: 1,
+          opacity: 1,
+          width: 6,
         },
         move: {
           direction: MoveDirection.none,
@@ -63,23 +63,23 @@ export const ParticlesBackground = ({ id }: { id?: string }) => {
             default: OutMode.out,
           },
           random: false,
-          speed: 5,
+          speed: 6,
           straight: false,
         },
         number: {
           density: {
             enable: true,
           },
-          value: 100,
+          value: 50,
         },
         opacity: {
-          value: 0.8,
+          value: 1,
         },
         shape: {
           type: 'circle',
         },
         size: {
-          value: { min: 3, max: 7 },
+          value: { min: 7, max: 15 },
         },
       },
       detectRetina: true,
@@ -90,7 +90,7 @@ export const ParticlesBackground = ({ id }: { id?: string }) => {
   if (init) {
     return (
       <Particles
-        id={id ?? crypto.randomUUID()}
+        id={id}
         options={{ ...options, fullScreen: { enable: false } }}
         className="absolute inset-0 pointer-events-none z-10"
       />
