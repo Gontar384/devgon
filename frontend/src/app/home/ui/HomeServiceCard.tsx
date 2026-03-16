@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import React from 'react';
-import { ServiceCardProps } from '@/app/home/home-types';
+import { HomeServiceCardProps } from '@/app/home/home-types';
 import { MediaType } from '@/cms/content/content-types';
 
-export function ServiceCard({ content }: ServiceCardProps) {
+export function HomeServiceCard({ content }: HomeServiceCardProps) {
   if (!content) return null;
 
   const safeData = {
@@ -20,7 +20,7 @@ export function ServiceCard({ content }: ServiceCardProps) {
 
   return (
     <Card
-      className="group flex flex-col h-full bg-background border shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden rounded-xl"
+      className="w-full group flex flex-col h-[700px] bg-background border transition-all duration-300 overflow-hidden rounded-xl"
       aria-label={safeData.title}
     >
       {/* Obraz na górze */}
@@ -57,7 +57,7 @@ export function ServiceCard({ content }: ServiceCardProps) {
                 muted
                 loop
                 playsInline
-                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                className="object-cover w-full h-full transition-transform duration-500"
               />
             ) : (
               <Image
@@ -65,7 +65,7 @@ export function ServiceCard({ content }: ServiceCardProps) {
                 alt={safeData.photoAlt}
                 fill
                 unoptimized
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-500"
               />
             )}
           </div>
