@@ -35,17 +35,20 @@ export function RotatingWords({ words, interval = 2500 }: RotatingWordsProps) {
   }, [index, words.length]);
 
   return (
-    <span className="inline-block relative overflow-hidden h-[1.4em] font-bold">
+    <span className="inline-block relative overflow-hidden max-h-[2.5em] font-bold">
       <span
-        className={`flex flex-col ${
+        className={`flex flex-col items-center text-center ${
           animate
-            ? 'transition-[transform] duration-500 ease-[cubic-bezier(.22,1,.36,1)]'
+            ? 'transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]'
             : ''
         }`}
-        style={{ transform: `translateY(-${index * 1.4}em)` }}
+        style={{ transform: `translateY(-${index * 2.5}em)` }}
       >
         {extendedWords.map((word, i) => (
-          <span key={i} className="h-[1.4em] flex items-center justify-center">
+          <span
+            key={i}
+            className="h-[2.5em] flex items-center justify-center text-center break-words"
+          >
             {word}
           </span>
         ))}
