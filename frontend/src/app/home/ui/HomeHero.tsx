@@ -24,7 +24,7 @@ export function HomeHero({ content }: HomeHeroProps) {
     <section className="flex justify-center items-center w-full min-h-screen relative select-none">
       <div className="backdrop-blur-[15px] absolute inset-0 z-20" />
       <ParticlesBackground id="hero-particles" />
-      <div className="flex flex-col items-center justify-center px-8 py-12 gap-6 text-center relative z-30 max-w-[800px]">
+      <div className="flex flex-col items-center justify-center px-6 py-12 gap-6 text-center relative z-30 max-w-[800px]">
         <AnimateItem delay={0}>
           <h2 className="text-6xl md:text-7xl font-bold">
             <TypingEffect
@@ -61,11 +61,11 @@ export function HomeHero({ content }: HomeHeroProps) {
           />
         </AnimateItem>
         <AnimateItem delay={1.0}>
-          <div className="flex gap-2.5 flex-wrap justify-center pt-4">
+          <div className="flex gap-2 md:gap-3 flex-wrap justify-center pt-4">
             {safeData.primaryCta && (
               <Link
                 href={safeData.primaryCta.href}
-                className="text-base md:text-lg px-6 py-3 bg-primary text-primary-foreground rounded-lg cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
+                className="text-base md:text-lg px-4 md:px-6 py-3 bg-primary text-primary-foreground rounded-lg cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
               >
                 {safeData.primaryCta.label}
               </Link>
@@ -74,7 +74,7 @@ export function HomeHero({ content }: HomeHeroProps) {
             {safeData.secondaryCta && (
               <Link
                 href={safeData.secondaryCta.href}
-                className="text-base md:text-lg px-6 py-3 rounded-lg border cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
+                className="text-base md:text-lg px-4 md:px-6 py-3 rounded-lg border cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
               >
                 {safeData.secondaryCta.label}
               </Link>
