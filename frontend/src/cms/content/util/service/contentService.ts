@@ -24,7 +24,8 @@ import { Content, MediaItem, MediaType } from '@/cms/content/content-types';
 
 /**
  * Fetches all content blocks for a given page section key.
- * Results are returned in ascending order as stored in the database.
+ * Used exclusively by SWR in admin panel components for live client-side refresh.
+ * For server-side fetching with ISR support, use loadPageContents instead.
  *
  * @param key - The page section identifier (e.g. "hero", "team")
  * @returns Ordered list of content blocks with media, or an empty array on failure

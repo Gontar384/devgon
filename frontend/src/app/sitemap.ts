@@ -8,9 +8,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
-    {
-      url: `https://${domain}/about`,
-      lastModified: new Date(),
-    },
   ];
 }

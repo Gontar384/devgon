@@ -12,7 +12,7 @@ export const generateMetadata = (): Metadata =>
     path: '/',
   });
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function AdminHomePage() {
   const { contents, error, failedKeys } = await loadPageContents([

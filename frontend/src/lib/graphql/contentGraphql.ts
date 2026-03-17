@@ -50,3 +50,30 @@ export const REORDER_CONTENTS = gql`
     reorderContents(key: $key, ids: $ids)
   }
 `;
+
+export const GET_CONTENTS_QUERY = `
+  query GetContents($key: String!) {
+    getContents(key: $key) {
+      id
+      key
+      title
+      subtitle
+      description
+      order
+      updatedAt
+      customData
+      media {
+        id
+        filename
+        mimeType
+        type
+        size
+        alt
+        order
+        url
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
