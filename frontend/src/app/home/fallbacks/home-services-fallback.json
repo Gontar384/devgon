@@ -5,7 +5,7 @@
     "description": "Tworzymy aplikacje i systemy, które porządkują procesy i eliminują ręczną pracę — przygotowane na rozwój i skalowanie w chmurze.",
     "media": [
       {
-        "url": "/image/business-apps.png",
+        "url": "/image/business-apps.jpg",
         "alt": "Aplikacje i systemy Devgon",
         "type": "IMAGE"
       }
@@ -24,7 +24,7 @@
     "description": "Łączymy systemy i automatyzujemy przepływ danych, wykorzystując AI tam, gdzie realnie oszczędza czas i eliminuje błędy.",
     "media": [
       {
-        "url": "/image/work-optimization.png",
+        "url": "/image/work-optimization.jpg",
         "alt": "Automatyzacje procesów Devgon",
         "type": "IMAGE"
       }
@@ -43,7 +43,7 @@
     "description": "Rozwijamy istniejące systemy, poprawiamy ich wydajność i przygotowujemy je na większy ruch oraz dalsze skalowanie w chmurze.",
     "media": [
       {
-        "url": "/image/company-scaling.png",
+        "url": "/image/company-scaling.jpg",
         "alt": "Rozwój i skalowanie Devgon",
         "type": "IMAGE"
       }
