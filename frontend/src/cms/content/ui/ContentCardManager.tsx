@@ -58,12 +58,13 @@ export function ContentCardManager({
   }, [contents]);
 
   const handleRevalidate = async () => {
-    await mutate();
-
     await fetch('/api/revalidate', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tag: contentKey }),
     });
+
+    await mutate();
   };
 
   const singleMode = mode === 'single';
