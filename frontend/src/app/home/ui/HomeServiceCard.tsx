@@ -54,13 +54,13 @@ export function HomeServiceCard({
             />
           </CardHeader>
           {safeData.subtitle && (
-            <p
+            <div
               className="text-[15px] md:text-[16px] leading-snug text-muted-foreground line-clamp-1"
               dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
             />
           )}
           {safeData.description && (
-            <p
+            <div
               className="text-[14px] md:text-[15px] leading-relaxed text-muted-foreground line-clamp-5"
               dangerouslySetInnerHTML={{ __html: safeData.description }}
             />
