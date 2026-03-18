@@ -1,4 +1,8 @@
-import { Content, ContentOrFallback } from '@/cms/content/content-types';
+import {
+  Content,
+  ContentOrFallback,
+  MediaType,
+} from '@/cms/content/content-types';
 import React from 'react';
 
 export interface HomeManagerProps {
@@ -37,4 +41,28 @@ export interface AnimateClientProps {
 export interface HomeServicesCarouselProps {
   children: React.ReactNode[];
   count: number;
+}
+
+export interface TiltCardProps {
+  children: React.ReactNode;
+}
+
+export interface ScrollRevealImageProps {
+  src: string;
+  alt: string;
+  type?: MediaType;
+  badge: { title: string; subtitle: string };
+}
+
+export interface HomeProblemSectionProps {
+  content: ContentOrFallback;
+}
+
+export type ProblemIcon = 'clock' | 'chaos' | 'rocket' | 'zap';
+
+export interface ProblemItem {
+  icon: ProblemIcon;
+  tag: string;
+  problem: string;
+  solution: string;
 }

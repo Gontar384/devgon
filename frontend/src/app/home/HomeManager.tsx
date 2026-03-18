@@ -8,11 +8,15 @@ import {
 } from '@/cms/content/content-types';
 import homeHeroFallbackJson from '@/app/home/fallbacks/home-hero-fallback.json';
 import homeServicesFallbackJson from '@/app/home/fallbacks/home-services-fallback.json';
+import homeProblemsFallbackJson from '@/app/home/fallbacks/home-problems-fallback.json';
 import { HomeServicesCarousel } from '@/app/home/ui/HomeServicesCarousel';
 import { TiltCard } from '@/app/home/ui/parts/animations/TiltCard';
+import { HomeProblemsSection } from '@/app/home/ui/HomeProblemsSection';
+import { AnimateComponent } from '@/app/home/ui/parts/animations/AnimateComponent';
 
 const homeServicesFallback = homeServicesFallbackJson as FallbackContent[];
 const homeHeroFallback = homeHeroFallbackJson as FallbackContent;
+const homeProblemsFallback = homeProblemsFallbackJson as FallbackContent;
 
 export function HomeManager({ contents }: HomeManagerProps) {
   const homeHeroCMS = contents['home-hero']?.[0];
@@ -26,6 +30,11 @@ export function HomeManager({ contents }: HomeManagerProps) {
     ...homeServicesFallback.slice(homeServicesCMS.length),
   ];
 
+  const homeProblemsCMS = contents['home-problems']?.[0];
+  const homeProblems: ContentOrFallback = homeProblemsCMS
+    ? homeProblemsCMS
+    : homeProblemsFallback;
+
   return (
     <>
       <HomeHero content={homeHero} />
@@ -33,13 +42,21 @@ export function HomeManager({ contents }: HomeManagerProps) {
         <div className="max-w-[1700px] mx-auto">
           <HomeServicesCarousel count={homeServices.length}>
             {homeServices.map((content, i) => (
-              <TiltCard key={'id' in content ? content.id : `fallback-${i}`}>
-                <HomeServiceCard content={content} priority={i === 0} />
-              </TiltCard>
+              <AnimateComponent
+                key={'id' in content ? content.id : `fallback-ahs${i}`}
+                delay={0.2 * i}
+              >
+                <div className="will-change-transform">
+                  <TiltCard>
+                    <HomeServiceCard content={content} priority={i === 0} />
+                  </TiltCard>
+                </div>
+              </AnimateComponent>
             ))}
           </HomeServicesCarousel>
         </div>
       </section>
+      <HomeProblemsSection content={homeProblems} />
     </>
   );
 }

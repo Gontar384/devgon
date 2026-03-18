@@ -1,0 +1,48 @@
+{
+  "title": "Brzmi znajomo?",
+  "subtitle": "Pracujemy z firmami, które mają te same bolączki od lat. Wiemy jak je wyeliminować — trwale.",
+  "media": [
+    {
+      "url": "/image/pro-dev.jpg",
+      "alt": "Zespół Devgon przy pracy",
+      "type": "IMAGE"
+    }
+  ],
+  "customData": {
+    "problems": [
+      {
+        "icon": "clock",
+        "tag": "Automatyzacja",
+        "problem": "Twój zespół traci godziny dziennie na ręczne przepisywanie danych między systemami",
+        "solution": "Automatyzujemy przepływ danych i łączymy Twoje narzędzia — dane trafiają tam gdzie trzeba, same i na czas."
+      },
+      {
+        "icon": "chaos",
+        "tag": "Systemy",
+        "problem": "Procesy żyją w głowach ludzi i arkuszach Excel — gdy ktoś odchodzi, wiedza znika",
+        "solution": "Budujemy systemy, które porządkują i dokumentują procesy. Firma działa niezależnie od rotacji."
+      },
+      {
+        "icon": "rocket",
+        "tag": "Aplikacje",
+        "problem": "Masz pomysł na produkt lub narzędzie wewnętrzne, ale nie wiesz od czego zacząć",
+        "solution": "Przeprowadzamy Cię od analizy potrzeb przez projekt do gotowego, działającego systemu w chmurze."
+      },
+      {
+        "icon": "zap",
+        "tag": "Skalowanie",
+        "problem": "Twoja aplikacja zaczyna się sypać przy większym ruchu — klienci to czują",
+        "solution": "Optymalizujemy istniejące systemy i przenosimy je do chmury, żeby skalowały się razem z Twoim biznesem."
+      }
+    ],
+    "cta": {
+      "label": "Umów bezpłatną rozmowę",
+      "href": "#contact"
+    },
+    "badge": {
+      "label1": "Każde wdrożenie zaczyna się od analizy procesów — nie od pisania kodu.",
+      "label2": "Devgon — podejście projektowe"
+    },
+    "topHeader": "Rozwiązujemy realne problemy"
+  }
+}

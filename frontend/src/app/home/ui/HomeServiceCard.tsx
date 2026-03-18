@@ -22,7 +22,7 @@ export function HomeServiceCard({
     description: content.description ?? '',
     photoUrl: content.media?.[0]?.url ?? '',
     photoAlt: content.media?.[0]?.alt ?? '',
-    type: content.media?.[0]?.type ?? MediaType.IMAGE,
+    mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
     cta: content.customData?.cta ?? '',
     tags: content.customData?.tags ?? [],
   };
@@ -72,7 +72,7 @@ export function HomeServiceCard({
               className="relative w-full flex-shrink-0 overflow-hidden rounded-xl"
               style={{ height: PHOTO_HEIGHT }}
             >
-              {safeData.type === MediaType.VIDEO ? (
+              {safeData.mediaType === MediaType.VIDEO ? (
                 <video
                   src={safeData.photoUrl}
                   autoPlay

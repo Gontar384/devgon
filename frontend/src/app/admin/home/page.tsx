@@ -18,6 +18,7 @@ export default async function AdminHomePage() {
   const { contents, error, failedKeys } = await loadPageContents([
     'home-hero',
     'home-services',
+    'home-problems',
   ]);
 
   return (
