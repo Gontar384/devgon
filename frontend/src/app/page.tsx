@@ -11,9 +11,11 @@ export const generateMetadata = (): Metadata =>
     path: '/',
   });
 
-export const revalidate = 300;
-
 export default async function HomePage() {
-  const { contents } = await loadPageContents(['home-hero', 'home-services']);
+  const { contents } = await loadPageContents([
+    'home-hero',
+    'home-services',
+    'home-problems',
+  ]);
   return <HomeManager contents={contents} />;
 }

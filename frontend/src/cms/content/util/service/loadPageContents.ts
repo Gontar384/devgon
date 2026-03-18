@@ -6,7 +6,7 @@ import { GET_CONTENTS_QUERY } from '@/lib/graphql/contentGraphql';
  * Fetches a single page section's content via native fetch with Next.js cache tag.
  * Enables on-demand revalidation via revalidateTag(key) from /api/revalidate.
  */
-async function fetchPublicContents(key: string): Promise<Content[]> {
+export async function fetchPublicContents(key: string): Promise<Content[]> {
   const response = await fetch(AUTH_ENDPOINTS.graphql, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

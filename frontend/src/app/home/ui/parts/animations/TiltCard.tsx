@@ -1,10 +1,11 @@
 'use client';
 import React, { useRef } from 'react';
+import { TiltCardProps } from '@/app/home/home-types';
 
-const PERSPECTIVE = 1200;
+const PERSPECTIVE = 800;
 const TILT_INTENSITY = 8;
 
-export function TiltCard({ children }: { children: React.ReactNode }) {
+export function TiltCard({ children }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const applyTilt = (x: number, y: number) => {
