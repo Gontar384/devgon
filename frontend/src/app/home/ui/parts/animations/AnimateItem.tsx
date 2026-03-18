@@ -12,7 +12,8 @@ export function AnimateItem({
     <motion.div
       className={className}
       initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
       transition={{ delay, duration: 0.6, ease: 'easeOut' }}
     >
       {children}
