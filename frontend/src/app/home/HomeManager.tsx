@@ -44,7 +44,7 @@ export function HomeManager({ contents }: HomeManagerProps) {
             {homeServices.map((content, i) => (
               <AnimateComponent
                 key={'id' in content ? content.id : `fallback-ahs${i}`}
-                delay={0.2 * i}
+                delay={0.15 * i}
               >
                 <div className="will-change-transform">
                   <TiltCard>

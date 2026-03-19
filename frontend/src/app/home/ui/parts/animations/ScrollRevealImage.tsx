@@ -92,7 +92,7 @@ export function ScrollRevealImage({
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
         whileTap={{ scale: 1.05 }}
       >
         <div className="relative w-full h-full">{renderMedia()}</div>
