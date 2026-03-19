@@ -70,7 +70,6 @@ export function HomeHero({ content }: HomeHeroProps) {
                 {safeData.primaryCta.label}
               </Link>
             )}
-
             {safeData.secondaryCta && (
               <Link
                 href={safeData.secondaryCta.href}
@@ -81,7 +80,9 @@ export function HomeHero({ content }: HomeHeroProps) {
             )}
           </div>
         </AnimateItem>
-        <ScrollArrow />
+        <AnimateItem delay={1.2}>
+          <ScrollArrow />
+        </AnimateItem>
       </div>
     </section>
   );
