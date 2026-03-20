@@ -15,14 +15,14 @@ export const socialLinks: SocialLinkData[] = [
   {
     title: 'Facebook',
     href: '/',
-    iconSrc: '/svg/facebook.svg',
+    iconSrc: '/svg/footer/facebook.svg',
     iconWidth: 24,
     iconHeight: 24,
   },
   {
     title: 'Instagram',
     href: '/',
-    iconSrc: '/svg/instagram.svg',
+    iconSrc: '/svg/footer/instagram.svg',
     iconWidth: 24,
     iconHeight: 24,
   },

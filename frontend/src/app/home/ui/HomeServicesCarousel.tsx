@@ -101,121 +101,140 @@ export function HomeServicesCarousel({
   const hasMore = count > MOBILE_INITIAL;
 
   return (
-    <div className="relative w-full">
-      <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
-        <AnimatePresence initial={false}>
-          {mobileVisible.map((child, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.35,
-                delay: i >= MOBILE_INITIAL ? (i - MOBILE_INITIAL) * 0.1 : 0,
-              }}
+    <section className="w-full py-12">
+      <div className="max-w-[1700px] mx-auto">
+        <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
+          <AnimatePresence>
+            {mobileVisible.map((child, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{
+                  duration: 0.7,
+                  ease: 'easeOut',
+                  delay:
+                    i >= MOBILE_INITIAL
+                      ? (i - MOBILE_INITIAL) * 0.15
+                      : i * 0.15,
+                }}
+              >
+                {child}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {hasMore && (
+            <button
+              onClick={() => setExpanded((e) => !e)}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
             >
-              {child}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-        {hasMore && (
-          <button
-            onClick={() => setExpanded((e) => !e)}
-            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
-          >
-            <motion.div
-              animate={{ rotate: expanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
+              <motion.div
+                animate={{ rotate: expanded ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronDown size={18} />
+              </motion.div>
+              {expanded ? 'Zwiń' : `Pokaż więcej (${count - MOBILE_INITIAL})`}
+            </button>
+          )}
+        </div>
+        <div className="hidden sm:block overflow-hidden">
+          <div className="px-5 py-5">
+            <div
+              ref={containerRef}
+              className="select-none touch-pan-y"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseLeave}
             >
-              <ChevronDown size={18} />
-            </motion.div>
-            {expanded ? 'Zwiń' : `Pokaż więcej (${count - MOBILE_INITIAL})`}
-          </button>
+              <motion.div
+                className="flex gap-8"
+                animate={{
+                  x: cardWidth ? -(clampedOffset * (cardWidth + GAP)) : 0,
+                }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {childrenArray.map((child, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{
+                      duration: 0.7,
+                      ease: 'easeOut',
+                      delay: i * 0.15,
+                    }}
+                    style={
+                      cardWidth
+                        ? {
+                            width: cardWidth,
+                            minWidth: cardWidth,
+                            flexShrink: 0,
+                          }
+                        : undefined
+                    }
+                    className={`flex-shrink-0${
+                      !cardWidth
+                        ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]'
+                        : ''
+                    }`}
+                  >
+                    {child}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+        {count > visible && (
+          <div className="hidden sm:flex items-center justify-center gap-4 mt-6">
+            <button
+              onClick={() => go(-1)}
+              disabled={!canPrev}
+              className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <div className="flex gap-2">
+              {Array.from({ length: count }).map((_, i) => {
+                const isActive =
+                  i >= clampedOffset && i < clampedOffset + visible;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      if (i < clampedOffset) {
+                        setOffset(Math.min(i, maxOffset));
+                      } else {
+                        setOffset(
+                          Math.min(Math.max(i - visible + 1, 0), maxOffset),
+                        );
+                      }
+                    }}
+                    className={`h-2 rounded-full transition-all duration-200 ${
+                      isActive
+                        ? 'bg-primary w-4 pointer-events-none'
+                        : 'bg-muted-foreground/40 w-2 cursor-pointer hover:bg-primary/50'
+                    }`}
+                  />
+                );
+              })}
+            </div>
+            <button
+              onClick={() => go(1)}
+              disabled={!canNext}
+              className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
         )}
       </div>
-      <div className="hidden sm:block overflow-hidden">
-        <div className="px-5 py-5">
-          <div
-            ref={containerRef}
-            className="select-none touch-pan-y"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseLeave}
-          >
-            <motion.div
-              className="flex gap-8"
-              animate={{
-                x: cardWidth ? -(clampedOffset * (cardWidth + GAP)) : 0,
-              }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {childrenArray.map((child, i) => (
-                <div
-                  key={i}
-                  style={
-                    cardWidth
-                      ? { width: cardWidth, minWidth: cardWidth, flexShrink: 0 }
-                      : undefined
-                  }
-                  className={`flex-shrink-0${
-                    !cardWidth
-                      ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]'
-                      : ''
-                  }`}
-                >
-                  {child}
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-      {count > visible && (
-        <div className="hidden sm:flex items-center justify-center gap-4 mt-6">
-          <button
-            onClick={() => go(-1)}
-            disabled={!canPrev}
-            className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <div className="flex gap-2">
-            {Array.from({ length: count }).map((_, i) => {
-              const isActive =
-                i >= clampedOffset && i < clampedOffset + visible;
-              return (
-                <button
-                  key={i}
-                  onClick={() => {
-                    if (i < clampedOffset) {
-                      setOffset(Math.min(i, maxOffset));
-                    } else {
-                      setOffset(
-                        Math.min(Math.max(i - visible + 1, 0), maxOffset),
-                      );
-                    }
-                  }}
-                  className={`h-2 rounded-full transition-all duration-200 ${
-                    isActive
-                      ? 'bg-primary w-4 pointer-events-none'
-                      : 'bg-muted-foreground/40 w-2 cursor-pointer hover:bg-primary/50'
-                  }`}
-                />
-              );
-            })}
-          </div>
-          <button
-            onClick={() => go(1)}
-            disabled={!canNext}
-            className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-      )}
-    </div>
+    </section>
   );
 }

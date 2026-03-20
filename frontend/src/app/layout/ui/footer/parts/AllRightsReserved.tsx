@@ -5,7 +5,7 @@ export function AllRightsReserved() {
   return (
     <div className="flex items-center gap-4 pr-12">
       <Image
-        src="/svg/footer-page-designer.svg"
+        src="/svg/footer/page-designer.svg"
         alt="Programista"
         width={50}
         height={46}

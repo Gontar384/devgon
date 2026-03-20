@@ -17,9 +17,10 @@ export const dynamic = 'force-dynamic';
 export default async function AdminHomePage() {
   const { contents, error, failedKeys } = await loadPageContents([
     'home-hero',
+    'home-intro',
     'home-services',
     'home-problems',
-    'home-intro',
+    'home-tech',
   ]);
 
   return (

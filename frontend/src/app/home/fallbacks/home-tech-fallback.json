@@ -1,0 +1,91 @@
+{
+  "title": "Technologie, z których korzystamy",
+  "subtitle": "Sprawdzone narzędzia do budowy skalowalnych systemów",
+  "media": [
+    {
+      "url": "/svg/tech/nextjs.svg",
+      "alt": "Next.js",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/nestjs.svg",
+      "alt": "NestJS",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/react.svg",
+      "alt": "React",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/nodejs.svg",
+      "alt": "Node.js",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/typescript.svg",
+      "alt": "TypeScript",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/docker.svg",
+      "alt": "Docker",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/aws.svg",
+      "alt": "AWS",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/gcp.svg",
+      "alt": "GCP",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/github.svg",
+      "alt": "GitHub",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/n8n.svg",
+      "alt": "n8n",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/jira.svg",
+      "alt": "Jira",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/linux.svg",
+      "alt": "Linux",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/java.svg",
+      "alt": "Java",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/springboot.svg",
+      "alt": "SpringBoot",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/android.svg",
+      "alt": "Android",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/shopify.svg",
+      "alt": "Shopify",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/wix.svg",
+      "alt": "Wix",
+      "type": "IMAGE"
+    }
+  ]
+}

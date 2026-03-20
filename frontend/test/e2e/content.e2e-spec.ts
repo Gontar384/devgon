@@ -57,7 +57,7 @@ async function goToCms(page: Page): Promise<{
   await page.waitForLoadState('networkidle');
   return {
     single: new ContentManagerPOM(page, 0),
-    multi: new ContentManagerPOM(page, 1),
+    multi: new ContentManagerPOM(page, 2),
   };
 }
 

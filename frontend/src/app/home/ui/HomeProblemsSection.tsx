@@ -74,7 +74,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
             </AnimateItem>
             <div className="flex flex-col gap-3">
               {safeData.problems.map((item, index) => (
-                <AnimateItem key={'problem-id' + index} delay={0.15}>
+                <AnimateItem key={'problem-id' + index} delay={0.1}>
                   <div className="flex flex-col gap-0 rounded-2xl border bg-background overflow-hidden transition duration-300 hover:shadow-md hover:scale-101 active:scale-101">
                     <div className="flex items-center gap-2 px-4 pt-2 pb-2 border-b">
                       <span className="flex items-center justify-center w-9 h-9 rounded-md bg-primary/10 text-primary">
@@ -114,7 +114,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
               ))}
             </div>
             {safeData.cta.label && (
-              <AnimateItem delay={0.15}>
+              <AnimateItem delay={0.1}>
                 <Link
                   href={safeData.cta.href}
                   className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground text-[14px] md:text-[15px] font-medium hover:scale-102 active:scale-98 transition-all duration-200"
