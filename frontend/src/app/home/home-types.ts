@@ -76,3 +76,17 @@ export interface ProblemItem {
   problem: string;
   solution: string;
 }
+
+export interface HomeTechProps {
+  content: ContentOrFallback;
+}
+
+type Logo = {
+  src: string;
+  alt: string;
+  type: MediaType;
+};
+
+export interface TechMarqueeProps {
+  logos: Logo[];
+}

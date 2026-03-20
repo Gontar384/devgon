@@ -10,16 +10,18 @@ import homeHeroFallbackJson from '@/app/home/fallbacks/home-hero-fallback.json';
 import homeServicesFallbackJson from '@/app/home/fallbacks/home-services-fallback.json';
 import homeProblemsFallbackJson from '@/app/home/fallbacks/home-problems-fallback.json';
 import homeIntroFallbackJson from '@/app/home/fallbacks/home-intro-fallback.json';
+import homeTechFallbackJson from '@/app/home/fallbacks/home-tech-fallback.json';
 import { HomeServicesCarousel } from '@/app/home/ui/HomeServicesCarousel';
 import { TiltCard } from '@/app/home/ui/parts/animations/TiltCard';
 import { HomeProblemsSection } from '@/app/home/ui/HomeProblemsSection';
-import { AnimateComponent } from '@/app/home/ui/parts/animations/AnimateComponent';
 import { HomeIntro } from '@/app/home/ui/HomeIntro';
+import { HomeTech } from '@/app/home/ui/HomeTech';
 
 const homeHeroFallback = homeHeroFallbackJson as FallbackContent;
 const homeIntroFallback = homeIntroFallbackJson as FallbackContent;
 const homeServicesFallback = homeServicesFallbackJson as FallbackContent[];
 const homeProblemsFallback = homeProblemsFallbackJson as FallbackContent;
+const homeTechFallback = homeTechFallbackJson as FallbackContent;
 
 export function HomeManager({ contents }: HomeManagerProps) {
   const homeHeroCMS = contents['home-hero']?.[0];
@@ -43,29 +45,24 @@ export function HomeManager({ contents }: HomeManagerProps) {
     ? homeProblemsCMS
     : homeProblemsFallback;
 
+  const homeTechCMS = contents['home-tech']?.[0];
+  const homeTech: ContentOrFallback = homeTechCMS
+    ? homeTechCMS
+    : homeTechFallback;
+
   return (
     <>
       <HomeHero content={homeHero} />
       <HomeIntro content={homeIntro} />
-      <section className="w-full py-12">
-        <div className="max-w-[1700px] mx-auto">
-          <HomeServicesCarousel count={homeServices.length}>
-            {homeServices.map((content, i) => (
-              <AnimateComponent
-                key={'id' in content ? content.id : `fallback-ahs${i}`}
-                delay={0.15 * i}
-              >
-                <div className="will-change-transform">
-                  <TiltCard>
-                    <HomeServiceCard content={content} priority={i === 0} />
-                  </TiltCard>
-                </div>
-              </AnimateComponent>
-            ))}
-          </HomeServicesCarousel>
-        </div>
-      </section>
+      <HomeServicesCarousel count={homeServices.length}>
+        {homeServices.map((content, i) => (
+          <TiltCard key={'id' in content ? content.id : `fallback-ahs${i}`}>
+            <HomeServiceCard content={content} priority={i === 0} />
+          </TiltCard>
+        ))}
+      </HomeServicesCarousel>
       <HomeProblemsSection content={homeProblems} />
+      <HomeTech content={homeTech} />
     </>
   );
 }

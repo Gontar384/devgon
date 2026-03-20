@@ -30,6 +30,18 @@ export function AdminHomeManager({
           maxMedia={0}
         />
         <ContentCardManager
+          contents={homeProblems}
+          contentKey={'home-intro'}
+          mode={'single'}
+          fields={{
+            title: 40,
+            subtitle: 100,
+            description: 0,
+            customData: 0,
+          }}
+          maxMedia={1}
+        />
+        <ContentCardManager
           contents={homeServices}
           contentKey={'home-services'}
           mode={'multiple'}
@@ -55,15 +67,15 @@ export function AdminHomeManager({
         />
         <ContentCardManager
           contents={homeProblems}
-          contentKey={'home-intro'}
+          contentKey={'home-tech'}
           mode={'single'}
           fields={{
-            title: 40,
+            title: 100,
             subtitle: 100,
             description: 0,
             customData: 0,
           }}
-          maxMedia={1}
+          maxMedia={20}
         />
       </div>
     </div>
