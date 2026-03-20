@@ -16,7 +16,6 @@ import {
   ProblemItem,
 } from '@/app/home/home-types';
 import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { CursorGlow } from '@/app/home/ui/parts/animations/CursorGlow';
 
 const ICONS: Record<ProblemIcon, React.ReactNode> = {
   clock: <Clock size={15} />,
