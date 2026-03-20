@@ -53,6 +53,18 @@ export function AdminHomeManager({
           }}
           maxMedia={1}
         />
+        <ContentCardManager
+          contents={homeProblems}
+          contentKey={'home-intro'}
+          mode={'single'}
+          fields={{
+            title: 40,
+            subtitle: 100,
+            description: 0,
+            customData: 0,
+          }}
+          maxMedia={1}
+        />
       </div>
     </div>
   );

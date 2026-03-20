@@ -3,7 +3,7 @@ import { RotatingWords } from '@/app/home/ui/parts/RotatingWords';
 import { HomeHeroProps } from '@/app/home/home-types';
 import { TypingEffect } from '@/app/home/ui/parts/TypingEffect';
 import Link from 'next/link';
-import { ParticlesBackground } from '@/components/extra/ParticlesBackground';
+import { ParticlesBackground } from '@/app/home/ui/parts/animations/ParticlesBackground';
 import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
 import { ScrollArrow } from '@/app/home/ui/parts/ScrollArrow';
 

@@ -1,0 +1,11 @@
+{
+  "title": "OFERTA",
+  "subtitle": "Sprawdź, jak możemy pomóc rozwinąć Twój biznes dzięki technologii.",
+  "media": [
+    {
+      "url": "/image/cool-programmer.jpg",
+      "alt": "Sprawdź ofertę devgon",
+      "type": "IMAGE"
+    }
+  ]
+}

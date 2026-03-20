@@ -13,6 +13,16 @@ export interface HomeHeroProps {
   content: ContentOrFallback;
 }
 
+export interface HomeIntroProps {
+  content: ContentOrFallback;
+}
+
+export interface HomeIntroImageProps {
+  photoUrl: string;
+  photoAlt: string;
+  mediaType: MediaType;
+}
+
 export interface HomeServiceCardProps {
   content: ContentOrFallback;
   priority?: boolean;
