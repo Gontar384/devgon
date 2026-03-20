@@ -39,7 +39,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
 
   return (
     <section id="problems" className="w-full border-t">
-      <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24 select-none">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] gap-10 xl:gap-16 items-start">
           {safeData.photoUrl && (
             <ScrollRevealImage
@@ -55,7 +55,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
           <div className="flex flex-col gap-6 lg:order-first">
             <AnimateItem delay={0}>
               <div className="flex flex-col gap-2.5">
-                <span className="text-[12px] md:text-[14px] uppercase tracking-[0.18em] text-primary font-semibold">
+                <span className="text-[18px] md:text-[20px] uppercase tracking-[0.18em] text-primary font-semibold">
                   {safeData.topHeader}
                 </span>
                 {safeData.title && (
@@ -74,10 +74,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
             </AnimateItem>
             <div className="flex flex-col gap-3">
               {safeData.problems.map((item, index) => (
-                <AnimateItem
-                  key={'problem-id' + index}
-                  delay={0.1 + 0.1 * index}
-                >
+                <AnimateItem key={'problem-id' + index} delay={0.15}>
                   <div className="flex flex-col gap-0 rounded-2xl border bg-background overflow-hidden transition duration-300 hover:shadow-md hover:scale-101 active:scale-101">
                     <div className="flex items-center gap-2 px-4 pt-2 pb-2 border-b">
                       <span className="flex items-center justify-center w-9 h-9 rounded-md bg-primary/10 text-primary">
@@ -117,13 +114,15 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
               ))}
             </div>
             {safeData.cta.label && (
-              <Link
-                href={safeData.cta.href}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground text-[14px] md:text-[15px] font-medium hover:scale-102 active:scale-98 transition-all duration-200"
-              >
-                {safeData.cta.label}
-                <ArrowRight size={15} />
-              </Link>
+              <AnimateItem delay={0.15}>
+                <Link
+                  href={safeData.cta.href}
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground text-[14px] md:text-[15px] font-medium hover:scale-102 active:scale-98 transition-all duration-200"
+                >
+                  {safeData.cta.label}
+                  <ArrowRight size={15} />
+                </Link>
+              </AnimateItem>
             )}
           </div>
         </div>

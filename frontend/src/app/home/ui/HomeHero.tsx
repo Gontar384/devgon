@@ -3,7 +3,7 @@ import { RotatingWords } from '@/app/home/ui/parts/RotatingWords';
 import { HomeHeroProps } from '@/app/home/home-types';
 import { TypingEffect } from '@/app/home/ui/parts/TypingEffect';
 import Link from 'next/link';
-import { ParticlesBackground } from '@/components/extra/ParticlesBackground';
+import { ParticlesBackground } from '@/app/home/ui/parts/animations/ParticlesBackground';
 import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
 import { ScrollArrow } from '@/app/home/ui/parts/ScrollArrow';
 
@@ -37,30 +37,30 @@ export function HomeHero({ content }: HomeHeroProps) {
             />
           </h2>
         </AnimateItem>
-        <AnimateItem delay={0.2}>
+        <AnimateItem delay={0.15}>
           <h1
             className="text-5xl md:text-6xl leading-tight"
             dangerouslySetInnerHTML={{ __html: safeData.title }}
           />
         </AnimateItem>
-        <AnimateItem delay={0.4}>
+        <AnimateItem delay={0.3}>
           <div className="text-3xl md:text-4xl text-primary">
             <RotatingWords words={safeData.heroWords} interval={2500} />
           </div>
         </AnimateItem>
-        <AnimateItem delay={0.6}>
+        <AnimateItem delay={0.45}>
           <div
             className="text-xl md:text-2xl"
             dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
           />
         </AnimateItem>
-        <AnimateItem delay={0.8}>
+        <AnimateItem delay={0.6}>
           <div
             className="text-base md:text-lg text-muted-foreground "
             dangerouslySetInnerHTML={{ __html: safeData.description }}
           />
         </AnimateItem>
-        <AnimateItem delay={1.0}>
+        <AnimateItem delay={0.75}>
           <div className="flex gap-2 md:gap-3 flex-wrap justify-center pt-4">
             {safeData.primaryCta && (
               <Link
@@ -70,7 +70,6 @@ export function HomeHero({ content }: HomeHeroProps) {
                 {safeData.primaryCta.label}
               </Link>
             )}
-
             {safeData.secondaryCta && (
               <Link
                 href={safeData.secondaryCta.href}
@@ -81,7 +80,9 @@ export function HomeHero({ content }: HomeHeroProps) {
             )}
           </div>
         </AnimateItem>
-        <ScrollArrow />
+        <AnimateItem delay={0.75}>
+          <ScrollArrow />
+        </AnimateItem>
       </div>
     </section>
   );

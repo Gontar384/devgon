@@ -19,6 +19,7 @@ export default async function AdminHomePage() {
     'home-hero',
     'home-services',
     'home-problems',
+    'home-intro',
   ]);
 
   return (

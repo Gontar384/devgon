@@ -8,12 +8,9 @@ export function ScrollArrow() {
   };
 
   return (
-    <motion.button
+    <button
       onClick={handleClick}
       className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary active:text-primary transition-colors duration-200 cursor-pointer mt-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.4, duration: 0.6 }}
     >
       <span className="text-sm md:text-base tracking-widest uppercase">
         Przewiń
@@ -24,6 +21,6 @@ export function ScrollArrow() {
       >
         <ChevronDown size={28} />
       </motion.div>
-    </motion.button>
+    </button>
   );
 }

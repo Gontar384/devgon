@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { MediaType } from '@/cms/content/content-types';
@@ -9,6 +9,9 @@ import { ScrollRevealImageProps } from '@/app/home/home-types';
 const CONTAINER_ASPECT_RATIO = '4/5';
 const MOBILE_ASPECT_RATIO = '16/9';
 
+const SHIMMER_INTERVAL = 4000;
+const SHIMMER_DURATION = 700;
+
 export function ScrollRevealImage({
   src,
   alt,
@@ -16,6 +19,22 @@ export function ScrollRevealImage({
   badge,
 }: ScrollRevealImageProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [shimmer, setShimmer] = useState(false);
+
+  useEffect(() => {
+    const trigger = () => {
+      setShimmer(true);
+      setTimeout(() => setShimmer(false), SHIMMER_DURATION + 200);
+    };
+
+    const id = setInterval(trigger, SHIMMER_INTERVAL);
+    const initial = setTimeout(trigger, 1500);
+
+    return () => {
+      clearInterval(id);
+      clearTimeout(initial);
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -28,7 +47,7 @@ export function ScrollRevealImage({
     ['inset(100% 0% 0% 0% round 16px)', 'inset(0% 0% 0% 0% round 16px)'],
   );
 
-  const media =
+  const renderMedia = () =>
     type === MediaType.VIDEO ? (
       <video
         src={src}
@@ -51,17 +70,33 @@ export function ScrollRevealImage({
       />
     );
 
+  const shimmerOverlay = (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div
+        className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"
+        style={{
+          transform: shimmer ? 'translateX(100%)' : 'translateX(-100%)',
+          transition: shimmer
+            ? `transform ${SHIMMER_DURATION}ms ease-in-out`
+            : 'none',
+        }}
+      />
+    </div>
+  );
+
   return (
     <>
       <motion.div
-        className="block lg:hidden w-full overflow-hidden rounded-2xl bg-muted"
+        className="block lg:hidden w-full overflow-hidden rounded-2xl bg-muted relative"
         style={{ aspectRatio: MOBILE_ASPECT_RATIO }}
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
+        whileTap={{ scale: 1.05 }}
       >
-        <div className="relative w-full h-full">{media}</div>
+        <div className="relative w-full h-full">{renderMedia()}</div>
+        {shimmerOverlay}
       </motion.div>
       <motion.div
         ref={ref}
@@ -72,15 +107,13 @@ export function ScrollRevealImage({
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <motion.div
-          className="relative w-full overflow-hidden rounded-2xl bg-muted group cursor-pointer"
+          className="relative w-full overflow-hidden rounded-2xl bg-muted group"
           style={{ aspectRatio: CONTAINER_ASPECT_RATIO, clipPath }}
         >
           <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-            {media}
+            {renderMedia()}
           </div>
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
-          </div>
+          {shimmerOverlay}
           {badge.title && (
             <motion.div
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
