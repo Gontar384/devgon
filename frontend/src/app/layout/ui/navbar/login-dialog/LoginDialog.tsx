@@ -85,7 +85,7 @@ export function LoginDialog() {
               onClick={handleLogin}
             >
               <Image
-                src="/svg/google.svg"
+                src="/svg/login/google.svg"
                 alt="Zaloguj się za pomocą Google"
                 width={24}
                 height={24}

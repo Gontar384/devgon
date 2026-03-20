@@ -94,7 +94,7 @@ export function LoginButton({
       >
         <span>Zaloguj się i odblokuj pełne możliwości naszej strony!</span>
         <Image
-          src="/svg/tooltip-login-guy.svg"
+          src="/svg/login/login-guy.svg"
           alt="Login icon"
           width={48}
           height={48}
