@@ -94,7 +94,6 @@ export function SortableMediaItem({
           )}
         </div>
       ) : null}
-
       {!isExisting && file && previewUrl ? (
         <div className="relative w-full h-full overflow-hidden">
           {isImage ? (
@@ -133,7 +132,7 @@ export function SortableMediaItem({
             <GripVertical className="w-4 h-4 text-white" />
           </div>
           <div
-            className={`absolute bottom-1 left-1 flex gap-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
+            className={`absolute bottom-6 left-1 flex gap-1 ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
           >
             <button
               onClick={() => move(item.id, -1)}
@@ -174,10 +173,25 @@ export function SortableMediaItem({
           <X className="w-4 h-4" />
         </Button>
       )}
-
+      {isExisting && media && (
+        <div
+          className={`absolute bottom-0 inset-x-0 bg-black/60 text-white text-xs px-2 py-1 truncate rounded-b
+                ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity z-10`}
+        >
+          {media.filename}
+        </div>
+      )}
+      {!isExisting && file && (
+        <div
+          className={`absolute bottom-0 inset-x-0 bg-black/60 text-white text-xs px-2 py-1 truncate rounded-b
+                ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity z-10`}
+        >
+          {file.name}
+        </div>
+      )}
       {!isExisting && (
         <div
-          className={`absolute bottom-1 right-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
+          className={`absolute bottom-7 right-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
         >
           Nowy
         </div>
