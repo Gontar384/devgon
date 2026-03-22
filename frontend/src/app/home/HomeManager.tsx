@@ -11,16 +11,19 @@ import homeServicesFallbackJson from '@/app/home/fallbacks/home-services-fallbac
 import homeProblemsFallbackJson from '@/app/home/fallbacks/home-problems-fallback.json';
 import homeIntroFallbackJson from '@/app/home/fallbacks/home-intro-fallback.json';
 import homeTechFallbackJson from '@/app/home/fallbacks/home-tech-fallback.json';
+import homeProcessFallbackJson from '@/app/home/fallbacks/home-process-fallback.json';
 import { HomeServicesCarousel } from '@/app/home/ui/HomeServicesCarousel';
 import { TiltCard } from '@/app/home/ui/parts/animations/TiltCard';
 import { HomeProblemsSection } from '@/app/home/ui/HomeProblemsSection';
 import { HomeIntro } from '@/app/home/ui/HomeIntro';
 import { HomeTech } from '@/app/home/ui/HomeTech';
+import { HomeProcess } from '@/app/home/ui/HomeProcess';
 
 const homeHeroFallback = homeHeroFallbackJson as FallbackContent;
 const homeIntroFallback = homeIntroFallbackJson as FallbackContent;
 const homeServicesFallback = homeServicesFallbackJson as FallbackContent[];
 const homeProblemsFallback = homeProblemsFallbackJson as FallbackContent;
+const homeProcessFallback = homeProcessFallbackJson as FallbackContent;
 const homeTechFallback = homeTechFallbackJson as FallbackContent;
 
 export function HomeManager({ contents }: HomeManagerProps) {
@@ -45,6 +48,11 @@ export function HomeManager({ contents }: HomeManagerProps) {
     ? homeProblemsCMS
     : homeProblemsFallback;
 
+  const homeProcessCMS = contents['home-process']?.[0];
+  const homeProcess: ContentOrFallback = homeProcessCMS
+    ? homeProcessCMS
+    : homeProcessFallback;
+
   const homeTechCMS = contents['home-tech']?.[0];
   const homeTech: ContentOrFallback = homeTechCMS
     ? homeTechCMS
@@ -62,6 +70,7 @@ export function HomeManager({ contents }: HomeManagerProps) {
         ))}
       </HomeServicesCarousel>
       <HomeProblemsSection content={homeProblems} />
+      <HomeProcess content={homeProcess} />
       <HomeTech content={homeTech} />
     </>
   );

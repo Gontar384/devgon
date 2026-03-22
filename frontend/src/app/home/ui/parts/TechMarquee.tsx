@@ -17,7 +17,7 @@ export function TechMarquee({ logos }: TechMarqueeProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const pausedRef = useRef(false);
   const x = useMotionValue(0);
-  const speed = 120;
+  const speed = 100;
 
   const loopLogos = [...logos, ...logos, ...logos];
 
@@ -49,8 +49,6 @@ export function TechMarquee({ logos }: TechMarqueeProps) {
   return (
     <TooltipProvider delayDuration={0}>
       <div className="relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-24 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-24 bg-gradient-to-l from-background to-transparent z-10" />
         <motion.div
           ref={marqueeRef}
           style={{ x }}

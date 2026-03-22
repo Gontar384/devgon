@@ -1,0 +1,25 @@
+{
+  "title": "Jak wygląda współpraca",
+  "subtitle": "Prosty i przejrzysty proces od pomysłu do wdrożenia",
+  "customData": {
+    "topHeader": "Jak działamy",
+    "items": [
+      {
+        "title": "Rozmowa i analiza",
+        "description": "Poznajemy Twój biznes i problemy, które chcesz rozwiązać."
+      },
+      {
+        "title": "Propozycja rozwiązania",
+        "description": "Otrzymujesz konkretny plan działania i zakres prac."
+      },
+      {
+        "title": "Realizacja",
+        "description": "Budujemy system i automatyzacje krok po kroku."
+      },
+      {
+        "title": "Wdrożenie i rozwój",
+        "description": "Uruchamiamy rozwiązanie i rozwijamy je dalej."
+      }
+    ]
+  }
+}
