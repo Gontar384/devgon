@@ -20,16 +20,9 @@ export function HomeTech({ content }: HomeTechProps) {
   };
 
   return (
-    <section className="relative w-full py-10 md:py-20 overflow-hidden select-none">
+    <section className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-primary/5">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 100% 50% at 50% 30%, color-mix(in srgb, var(--color-primary) 10%, transparent) 0%, transparent 100%)',
-        }}
-      />
       <AnimateItem>
         <div className="relative max-w-[1400px] mx-auto px-6 text-center mb-14">
           {safeData.title && (
