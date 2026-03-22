@@ -12,6 +12,7 @@ export function AdminHomeManager({
   const homeIntro = contents['home-intro'] ?? [];
   const homeServices = contents['home-services'] ?? [];
   const homeProblems = contents['home-problems'] ?? [];
+  const homeProcess = contents['home-process'] ?? [];
   const homeTech = contents['home-tech'] ?? [];
 
   return (
@@ -66,6 +67,18 @@ export function AdminHomeManager({
             customData: 1000,
           }}
           maxMedia={1}
+        />
+        <ContentCardManager
+          contents={homeProcess}
+          contentKey={'home-process'}
+          mode={'single'}
+          fields={{
+            title: 50,
+            subtitle: 100,
+            description: 0,
+            customData: 1000,
+          }}
+          maxMedia={0}
         />
         <ContentCardManager
           contents={homeTech}

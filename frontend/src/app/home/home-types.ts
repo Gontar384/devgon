@@ -90,3 +90,16 @@ type Logo = {
 export interface TechMarqueeProps {
   logos: Logo[];
 }
+
+export interface HomeProcessProps {
+  content: ContentOrFallback;
+}
+
+type ProcessItem = {
+  title: string;
+  description: string;
+};
+
+export interface ProcessTimelineProps {
+  items: ProcessItem[];
+}
