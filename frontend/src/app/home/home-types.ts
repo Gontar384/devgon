@@ -103,3 +103,19 @@ type ProcessItem = {
 export interface ProcessTimelineProps {
   items: ProcessItem[];
 }
+
+export interface HomeAboutProps {
+  content: ContentOrFallback;
+}
+
+export interface MediaContainerProps {
+  src: string;
+  alt: string;
+  type: MediaType;
+}
+
+type CursorColor = 'primary' | 'muted';
+
+export interface CursorGlowProps {
+  cursorColor: CursorColor;
+}

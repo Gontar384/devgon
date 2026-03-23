@@ -1,0 +1,12 @@
+{
+  "title": "O devgon",
+  "subtitle": "Technologia, która realnie wspiera biznes",
+  "description": "Tworzę rozwiązania, które nie tylko działają, ale przede wszystkim rozwiązują realne problemy biznesowe. Łączę podejście programistyczne z myśleniem o użytkowniku i sprzedaży. Na co dzień pracuję jako programista, dzięki czemu mam doświadczenie w budowaniu skalowalnych i wydajnych systemów. Jednocześnie skupiam się na tym, aby wszystko było intuicyjne, szybkie i nastawione na efekt. Interesuję się optymalizacją, automatyzacją i tworzeniem rozwiązań, które po prostu mają sens. Prywatnie jestem pasjonatem motoryzacji i rozwoju — lubię rzeczy, które są dopracowane i działają jak należy.",
+  "media": [
+    {
+      "url": "/logo/logo-black.svg",
+      "alt": "devgon founder",
+      "type": "IMAGE"
+    }
+  ]
+}

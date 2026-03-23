@@ -19,6 +19,7 @@ export default async function HomePage() {
     'home-intro',
     'home-process',
     'home-tech',
+    'home-about',
   ]);
   return <HomeManager contents={contents} />;
 }
