@@ -13,7 +13,10 @@ export function HomeProcess({ content }: HomeProcessProps) {
   };
 
   return (
-    <section className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none">
+    <section
+      id="collaboration"
+      className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none"
+    >
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-muted/30" />
         <div className="absolute left-1/2 -translate-x-1/2 w-[1400px] h-[400px] bg-primary/10 blur-3xl rounded-full" />

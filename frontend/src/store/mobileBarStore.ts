@@ -12,4 +12,6 @@ export const useMobileBarStore = create<MobileBarState>((set) => ({
   /** Flag used to suppress scroll-triggered side effects during programmatic navigation. */
   programmaticScroll: false,
   setProgrammaticScroll: (v: boolean) => set({ programmaticScroll: v }),
+  scrollingToAnchor: false,
+  setScrollingToAnchor: (v: boolean) => set({ scrollingToAnchor: v }),
 }));

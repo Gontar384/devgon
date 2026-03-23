@@ -79,7 +79,7 @@ export function CursorGlow({ cursorColor }: CursorGlowProps) {
   }, [isMobile]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-999">
+    <div className="absolute inset-0 pointer-events-none z-35">
       <div
         ref={glowRef}
         className={`absolute w-20 h-20 bg-${cursorColor} rounded-full pointer-events-none blur-lg transition-opacity duration-300`}

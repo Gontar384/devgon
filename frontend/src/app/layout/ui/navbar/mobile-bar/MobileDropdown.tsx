@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleChevronUp } from 'lucide-react';
+import { useMobileBarStore } from '@/store/mobileBarStore';
+import { useSmoothScrollTo } from '@/app/layout/ui/navbar/main-menu-bar/useSmoothScrollTo';
 
 export function MobileDropdown({
   title,
@@ -18,11 +20,24 @@ export function MobileDropdown({
     setAccordionActive((prev) => !prev);
   };
 
+  const { closeBar, setScrollingToAnchor } = useMobileBarStore();
+  const scrollTo = useSmoothScrollTo();
+  const isAnchor = href.startsWith('/#');
+
+  const handleClick = () => {
+    closeBar();
+    if (isAnchor) {
+      setScrollingToAnchor(true);
+      scrollTo(href.replace('/#', ''));
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1 items-center">
         <Link
           href={href}
+          onClick={handleClick}
           className="rounded-xl flex items-center justify-center border border-foreground/40 w-72 px-4 h-12 text-xl font-semibold transition-all hover:scale-[1.02] hover:border-foreground/40 hover:shadow-md hover:bg-accent active:scale-[0.98] active:bg-accent"
         >
           {title}
