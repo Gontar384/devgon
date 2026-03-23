@@ -2,8 +2,9 @@
 
 import { useRef, useEffect } from 'react';
 import { useDeviceStore } from '@/store/deviceStore';
+import { CursorGlowProps } from '@/app/home/home-types';
 
-export function CursorGlow() {
+export function CursorGlow({ cursorColor }: CursorGlowProps) {
   const glowRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useDeviceStore();
 
@@ -81,7 +82,7 @@ export function CursorGlow() {
     <div className="absolute inset-0 pointer-events-none z-999">
       <div
         ref={glowRef}
-        className="absolute w-20 h-20 bg-primary rounded-full pointer-events-none blur-lg transition-opacity duration-300"
+        className={`absolute w-20 h-20 bg-${cursorColor} rounded-full pointer-events-none blur-lg transition-opacity duration-300`}
         style={{
           transform: 'translate3d(0,0,0)',
           willChange: 'transform',

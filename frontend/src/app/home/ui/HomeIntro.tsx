@@ -36,7 +36,7 @@ export function HomeIntro({ content }: HomeIntroProps) {
           />
         </div>
       </AnimateItem>
-      <CursorGlow />
+      <CursorGlow cursorColor="muted" />
     </section>
   );
 }
