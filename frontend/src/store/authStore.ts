@@ -2,12 +2,7 @@
 import { create } from 'zustand';
 import { AuthUser } from '@/lib/auth/auth-types';
 import api from '@/lib/auth/axios';
-
-interface AuthState {
-  user: AuthUser;
-  isLoading: boolean;
-  fetchUser: () => Promise<void>;
-}
+import { AuthState } from '@/store/store-types';
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: { userId: '', email: '', role: 'guest' },

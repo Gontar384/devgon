@@ -16,6 +16,11 @@
 
 html {
   overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 4rem;
 }
 
 :root {

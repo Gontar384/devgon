@@ -101,7 +101,7 @@ export function HomeServicesCarousel({
   const hasMore = count > MOBILE_INITIAL;
 
   return (
-    <section className="w-full py-12">
+    <section id="offer" className="w-full py-12">
       <div className="max-w-[1700px] mx-auto">
         <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
           <AnimatePresence>

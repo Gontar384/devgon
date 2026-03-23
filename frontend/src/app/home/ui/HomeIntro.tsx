@@ -17,7 +17,10 @@ export function HomeIntro({ content }: HomeIntroProps) {
   };
 
   return (
-    <section className="relative h-[60vh] w-full overflow-hidden flex items-center justify-center">
+    <section
+      id="introduction"
+      className="relative h-[60vh] w-full overflow-hidden flex items-center justify-center"
+    >
       <HomeIntroImage
         photoUrl={safeData.photoUrl}
         photoAlt={safeData.photoAlt}
@@ -36,7 +39,7 @@ export function HomeIntro({ content }: HomeIntroProps) {
           />
         </div>
       </AnimateItem>
-      <CursorGlow />
+      <CursorGlow cursorColor="muted" />
     </section>
   );
 }

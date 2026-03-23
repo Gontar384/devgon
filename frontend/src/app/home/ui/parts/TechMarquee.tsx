@@ -58,11 +58,8 @@ export function TechMarquee({ logos }: TechMarqueeProps) {
             <Tooltip key={`${logo.src}-${i}`} open={activeIndex === i}>
               <TooltipTrigger asChild>
                 <div
-                  className={`relative flex flex-col items-center justify-center
-                              min-w-[100px] md:min-w-[140px]
-                              h-[50px] md:h-[70px]
-                              opacity-80 transition-all duration-300
-                              hover:opacity-100 hover:scale-110
+                  className={`relative flex flex-col items-center justify-center min-w-[100px] md:min-w-[140px]
+                              h-[50px] md:h-[70px] opacity-80 transition-all duration-300 hover:opacity-100 hover:scale-110
                               ${activeIndex === i ? 'scale-110 opacity-100' : ''}`}
                   onMouseEnter={() => handleLogoEnter(i)}
                   onMouseLeave={handleLogoLeave}

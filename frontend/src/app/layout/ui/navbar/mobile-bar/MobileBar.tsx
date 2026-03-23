@@ -34,8 +34,16 @@ export default function MobileBar() {
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
+      document.documentElement.style.scrollBehavior = 'auto';
       window.scrollTo(0, scrollYRef.current);
-      timeout = setTimeout(() => setProgrammaticScroll(false), 50);
+      requestAnimationFrame(() => {
+        document.documentElement.style.scrollBehavior = '';
+      });
+      timeout = setTimeout(() => {
+        if (!useMobileBarStore.getState().scrollingToAnchor) {
+          setProgrammaticScroll(false);
+        }
+      }, 50);
     }
     return () => {
       if (timeout) clearTimeout(timeout);

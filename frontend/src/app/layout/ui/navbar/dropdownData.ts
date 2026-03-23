@@ -3,7 +3,7 @@ import { DropdownData } from '@/app/layout/layout-types';
 export const dropdownData: DropdownData[] = [
   {
     title: 'Oferta',
-    href: '/',
+    href: '/#offer',
     option: [
       {
         title: 'Aplikacje biznesowe',
@@ -30,32 +30,25 @@ export const dropdownData: DropdownData[] = [
   },
   {
     title: 'O nas',
-    href: '/',
+    href: '/#introduction',
     option: [
       {
         title: 'Rozwiązywane problemy',
-        href: '/',
+        href: '/#problems',
         imageSrc: '/svg/menu/puzzle.svg',
         imageW: 35,
         imageH: 35,
       },
       {
-        title: 'Współpraca',
-        href: '/',
+        title: 'Jak pracujemy',
+        href: '/#collaboration',
         imageSrc: '/svg/menu/handshake.svg',
         imageW: 35,
         imageH: 35,
       },
       {
-        title: 'Przykładowe realizacje',
-        href: '/',
-        imageSrc: '/svg/menu/bulb.svg',
-        imageW: 35,
-        imageH: 35,
-      },
-      {
         title: 'O devgon',
-        href: '/',
+        href: '/#about',
         imageSrc: '/svg/menu/team.svg',
         imageW: 35,
         imageH: 35,
