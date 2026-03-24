@@ -8,6 +8,7 @@ import MobileBar from '@/app/layout/ui/navbar/mobile-bar/MobileBar';
 import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
 import { AuthInitializer } from '@/lib/auth/AuthInitializer';
+import { CookieBanner } from '@/app/layout/ui/CookieBanner';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -39,6 +40,7 @@ export default async function RootLayout({
         <Footer />
         <LoginDialog />
         <Toaster position="bottom-center" />
+        <CookieBanner />
       </body>
     </html>
   );
