@@ -21,10 +21,7 @@ export function HomeHero({ content }: HomeHeroProps) {
   };
 
   return (
-    <section
-      id="start"
-      className="flex justify-center items-center w-full min-h-screen relative select-none"
-    >
+    <section className="flex justify-center items-center w-full min-h-screen relative select-none">
       <div className="backdrop-blur-[14px] absolute inset-0 z-20" />
       <ParticlesBackground id="hero-particles" />
       <div className="flex flex-col items-center justify-center px-6 py-12 gap-6 text-center relative z-30 max-w-[800px]">
