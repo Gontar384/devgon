@@ -2,10 +2,10 @@ import React from 'react';
 import { RotatingWords } from '@/app/home/ui/parts/RotatingWords';
 import { HomeHeroProps } from '@/app/home/home-types';
 import { TypingEffect } from '@/app/home/ui/parts/TypingEffect';
-import Link from 'next/link';
 import { ParticlesBackground } from '@/app/home/ui/parts/animations/ParticlesBackground';
 import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
 import { ScrollArrow } from '@/app/home/ui/parts/ScrollArrow';
+import { HeroButton } from '@/app/home/ui/parts/HeroButton';
 
 export function HomeHero({ content }: HomeHeroProps) {
   if (!content) return null;
@@ -63,20 +63,17 @@ export function HomeHero({ content }: HomeHeroProps) {
         <AnimateItem delay={0.2}>
           <div className="flex gap-2 md:gap-3 flex-wrap justify-center pt-4">
             {safeData.primaryCta && (
-              <Link
+              <HeroButton
                 href={safeData.primaryCta.href}
-                className="text-base md:text-lg px-4 md:px-6 py-3 bg-primary text-primary-foreground rounded-lg cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
-              >
-                {safeData.primaryCta.label}
-              </Link>
+                label={safeData.primaryCta.label}
+                primary
+              />
             )}
             {safeData.secondaryCta && (
-              <Link
+              <HeroButton
                 href={safeData.secondaryCta.href}
-                className="text-base md:text-lg px-4 md:px-6 py-3 rounded-lg border cursor-pointer hover:scale-105 active:scale-105 trasition duration-200"
-              >
-                {safeData.secondaryCta.label}
-              </Link>
+                label={safeData.secondaryCta.label}
+              />
             )}
           </div>
         </AnimateItem>
