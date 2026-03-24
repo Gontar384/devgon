@@ -27,7 +27,7 @@ export function HomeIntro({ content }: HomeIntroProps) {
         mediaType={safeData.mediaType}
       />
       <div className="absolute inset-0 bg-black/50" />
-      <AnimateItem delay={0.2}>
+      <AnimateItem>
         <div className="relative z-10 text-center px-6 max-w-[1200px] select-none text-primary">
           <h2
             className="text-5xl md:text-7xl "

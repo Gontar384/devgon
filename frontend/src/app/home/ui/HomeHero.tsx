@@ -40,30 +40,30 @@ export function HomeHero({ content }: HomeHeroProps) {
             />
           </h2>
         </AnimateItem>
-        <AnimateItem delay={0.15}>
+        <AnimateItem delay={0.1}>
           <h1
             className="text-5xl md:text-6xl leading-tight"
             dangerouslySetInnerHTML={{ __html: safeData.title }}
           />
         </AnimateItem>
-        <AnimateItem delay={0.3}>
+        <AnimateItem delay={0.2}>
           <div className="text-3xl md:text-4xl text-primary">
             <RotatingWords words={safeData.heroWords} interval={2500} />
           </div>
         </AnimateItem>
-        <AnimateItem delay={0.45}>
+        <AnimateItem delay={0.3}>
           <div
             className="text-xl md:text-2xl"
             dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
           />
         </AnimateItem>
-        <AnimateItem delay={0.6}>
+        <AnimateItem delay={0.4}>
           <div
             className="text-base md:text-lg text-muted-foreground "
             dangerouslySetInnerHTML={{ __html: safeData.description }}
           />
         </AnimateItem>
-        <AnimateItem delay={0.75}>
+        <AnimateItem delay={0.2}>
           <div className="flex gap-2 md:gap-3 flex-wrap justify-center pt-4">
             {safeData.primaryCta && (
               <Link
@@ -83,7 +83,7 @@ export function HomeHero({ content }: HomeHeroProps) {
             )}
           </div>
         </AnimateItem>
-        <AnimateItem delay={0.75}>
+        <AnimateItem delay={0.2}>
           <ScrollArrow />
         </AnimateItem>
       </div>
