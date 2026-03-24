@@ -6,6 +6,13 @@ import { useMobileBarStore } from '@/store/mobileBarStore';
 const NAVBAR_HEIGHT = 64;
 
 function performScroll(targetY: number, onDone: () => void) {
+  const bodyFixed = document.body.style.position === 'fixed';
+
+  if (bodyFixed) {
+    requestAnimationFrame(() => performScroll(targetY, onDone));
+    return;
+  }
+
   if (Math.abs(window.scrollY - targetY) < 2) {
     onDone();
     return;
