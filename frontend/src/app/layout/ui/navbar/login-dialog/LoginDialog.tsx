@@ -11,7 +11,7 @@ import { loginWithGoogle } from '@/lib/auth/authActions';
 
 export function LoginDialog() {
   const { dialogOpen, setDialogOpen } = useLoginDialogStore();
-  const { openedBar, setProgrammaticScroll } = useMobileBarStore();
+  const { openedBar, setIsNavigating } = useMobileBarStore();
   const scrollYRef = useRef(0);
   const [animateState, setAnimateState] = useState<'closed' | 'open'>('closed');
   const [mounted, setMounted] = useState(false);
@@ -42,13 +42,13 @@ export function LoginDialog() {
       setMounted(true);
       setTimeout(() => setAnimateState('open'), 0);
     } else {
-      setProgrammaticScroll(true);
+      setIsNavigating(true);
       setAnimateState('closed');
       const timeoutMounted = setTimeout(() => {
         setMounted(false);
       }, 200);
       const timeoutScroll = setTimeout(() => {
-        setProgrammaticScroll(false);
+        setIsNavigating(false);
       }, 250);
       return () => {
         clearTimeout(timeoutMounted);

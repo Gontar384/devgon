@@ -53,7 +53,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
             />
           )}
           <div className="flex flex-col gap-6 lg:order-first">
-            <AnimateItem delay={0}>
+            <AnimateItem>
               <div className="flex flex-col gap-2.5">
                 <span className="text-[18px] md:text-[20px] uppercase tracking-[0.18em] text-primary font-semibold">
                   {safeData.topHeader}

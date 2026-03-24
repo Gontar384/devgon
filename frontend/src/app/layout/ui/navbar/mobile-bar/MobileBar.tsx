@@ -9,28 +9,32 @@ import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
 import { dropdownData } from '@/app/layout/ui/navbar/dropdownData';
 
 export default function MobileBar() {
-  const { openedBar, closeBar, setProgrammaticScroll } = useMobileBarStore();
+  const { openedBar, closeBar, setIsNavigating } = useMobileBarStore();
   const pathname = usePathname();
   const scrollYRef = useRef(0);
   const openedBarRef = useRef(openedBar);
+  const isMountedRef = useRef(false);
   openedBarRef.current = openedBar;
 
   useEffect(() => {
-    if (openedBar) {
-      closeBar();
-    }
+    if (openedBar) closeBar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [closeBar, pathname]);
+  }, [pathname]);
 
   useEffect(() => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      if (!openedBar) return;
+    }
+
     let timeout: NodeJS.Timeout;
+
     if (openedBar) {
       scrollYRef.current = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = '100%';
     } else {
-      setProgrammaticScroll(true);
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
@@ -39,12 +43,15 @@ export default function MobileBar() {
       requestAnimationFrame(() => {
         document.documentElement.style.scrollBehavior = '';
       });
-      timeout = setTimeout(() => {
-        if (!useMobileBarStore.getState().scrollingToAnchor) {
-          setProgrammaticScroll(false);
-        }
-      }, 50);
+      const navigatingToSection = useMobileBarStore.getState().isNavigating;
+      if (!navigatingToSection) {
+        setIsNavigating(true);
+        timeout = setTimeout(() => {
+          setIsNavigating(false);
+        }, 100);
+      }
     }
+
     return () => {
       if (timeout) clearTimeout(timeout);
     };
@@ -55,13 +62,10 @@ export default function MobileBar() {
     const checkWidth = () => {
       requestAnimationFrame(() => {
         const isDesktop = window.innerWidth >= 768;
-        if (openedBarRef.current && isDesktop) {
-          closeBar();
-        }
+        if (openedBarRef.current && isDesktop) closeBar();
       });
     };
     checkWidth();
-
     window.addEventListener('resize', checkWidth);
     return () => window.removeEventListener('resize', checkWidth);
     // eslint-disable-next-line react-hooks/exhaustive-deps

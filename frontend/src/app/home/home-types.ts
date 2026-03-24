@@ -119,3 +119,9 @@ type CursorColor = 'primary' | 'muted';
 export interface CursorGlowProps {
   cursorColor: CursorColor;
 }
+
+export interface HeroButtonProps {
+  href: string;
+  label: string;
+  primary?: boolean;
+}

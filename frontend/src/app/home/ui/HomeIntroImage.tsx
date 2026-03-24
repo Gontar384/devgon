@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
 import { HomeIntroImageProps } from '@/app/home/home-types';
+import { useDeviceStore } from '@/store/deviceStore';
 
 export function HomeIntroImage({
   photoUrl,
@@ -12,14 +13,23 @@ export function HomeIntroImage({
   mediaType,
 }: HomeIntroImageProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const { isMobile } = useDeviceStore();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1.1]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isMobile ? ['-20%', '20%'] : ['-12%', '12%'],
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isMobile ? [1.1, 1.1] : [1.25, 1.25],
+  );
 
   const isVideo = mediaType === MediaType.VIDEO;
 

@@ -17,10 +17,8 @@ export interface MobileBarState {
   closeBar: () => void;
   mobileBarOpened: boolean;
   setMobileBarOpened: (opened: boolean) => void;
-  programmaticScroll: boolean;
-  setProgrammaticScroll: (v: boolean) => void;
-  scrollingToAnchor: boolean;
-  setScrollingToAnchor: (v: boolean) => void;
+  isNavigating: boolean;
+  setIsNavigating: (v: boolean) => void;
 }
 
 export interface LoginDialogState {
