@@ -2,23 +2,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { useMobileBarStore } from '@/store/mobileBarStore';
-import { useSmoothScrollTo } from '@/app/layout/ui/navbar/main-menu-bar/useSmoothScrollTo';
+import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
 
 export function SiteLogo() {
-  const { closeBar, setScrollingToAnchor } = useMobileBarStore();
-  const scrollTo = useSmoothScrollTo();
-
-  const handleClick = () => {
-    setScrollingToAnchor(true);
-    closeBar();
-    scrollTo('start');
-  };
+  const { navigateToTop } = useNavigation();
 
   return (
     <Link
-      href="/#start"
-      onClick={handleClick}
+      href="/"
+      onClick={(e) => {
+        e.preventDefault();
+        navigateToTop();
+      }}
       className="ml-4 select-none flex-shrink-0"
     >
       <Image

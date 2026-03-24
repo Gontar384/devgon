@@ -7,12 +7,14 @@ export interface DropdownOptionProps {
   imageSrc: string;
   imageW: number;
   imageH: number;
+  onNavigate?: () => void;
 }
 
 export interface DropdownWrapperProps {
   title: string;
   href: string;
   children?: React.ReactNode;
+  onNavigate?: () => void;
 }
 
 export interface AuthButtonProps {
