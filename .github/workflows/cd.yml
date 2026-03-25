@@ -88,6 +88,12 @@ jobs:
               echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}"
               echo "MINIO_BUCKET_NAME=media"
               echo "MINIO_PUBLIC_URL=https://minio.devgon.site"
+              echo "SMTP_HOST=smtp-relay.brevo.com"
+              echo "SMTP_PORT=587"
+              echo "SMTP_USER=${{ secrets.SMTP_USER }}"
+              echo "SMTP_PASS=${{ secrets.SMTP_PASS }}"
+              echo "SMTP_FROM=devgonteam@gmail.com"
+              echo "CONTACT_MAIL_TO=devgonteam@gmail.com"
             } > .env
             
             echo "Starting postgres and minio first..."

@@ -37,7 +37,7 @@
     ],
     "cta": {
       "label": "Umów bezpłatną rozmowę",
-      "href": "#contact"
+      "href": "/#contact"
     },
     "badge": {
       "label1": "Każde wdrożenie zaczyna się od analizy procesów — nie od pisania kodu.",

@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import { useMobileBarStore } from '@/store/mobileBarStore';
+import { navigationSuppressRef } from '@/app/layout/ui/navbar/useNavigation';
 
 export default function NavbarClient() {
   const hiddenRef = useRef(false);
@@ -9,8 +10,6 @@ export default function NavbarClient() {
   const ticking = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { openedBar, isNavigating } = useMobileBarStore();
-  const suppressRef = useRef(false);
-  const hasUserScrolled = useRef(false);
 
   const applyVisibility = (hide: boolean) => {
     hiddenRef.current = hide;
@@ -22,8 +21,6 @@ export default function NavbarClient() {
   };
 
   useEffect(() => {
-    suppressRef.current = openedBar || isNavigating;
-
     if (!isNavigating && !openedBar) {
       lastY.current = window.scrollY;
       applyVisibility(false);
@@ -44,6 +41,8 @@ export default function NavbarClient() {
     };
   }, []);
 
+  const hasUserScrolled = useRef(false);
+
   useEffect(() => {
     lastY.current = window.scrollY;
 
@@ -53,7 +52,7 @@ export default function NavbarClient() {
         return;
       }
 
-      if (suppressRef.current) return;
+      if (navigationSuppressRef.current || openedBar) return;
 
       const currentY = window.scrollY;
       if (ticking.current) return;
@@ -79,6 +78,7 @@ export default function NavbarClient() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

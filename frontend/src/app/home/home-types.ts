@@ -124,4 +124,9 @@ export interface HeroButtonProps {
   href: string;
   label: string;
   primary?: boolean;
+  icon?: React.ReactNode;
+}
+
+export interface HomeContactProps {
+  content: ContentOrFallback;
 }

@@ -20,7 +20,7 @@ export function HomeTech({ content }: HomeTechProps) {
   };
 
   return (
-    <section className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-muted/70">
+    <section className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-muted/60">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute inset-y-0 left-0 w-8 md:w-24 pointer-events-none bg-gradient-to-r from-muted to-transparent z-20" />

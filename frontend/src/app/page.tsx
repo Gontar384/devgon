@@ -21,6 +21,7 @@ export default async function HomePage() {
     'home-process',
     'home-tech',
     'home-about',
+    'home-contact',
   ]);
 
   return (

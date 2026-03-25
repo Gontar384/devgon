@@ -12,11 +12,11 @@
     ],
     "primaryCta": {
       "label": "Zobacz ofertę",
-      "href": "#offer"
+      "href": "/#offer"
     },
     "secondaryCta": {
       "label": "Umów rozmowę",
-      "href": "#contact"
+      "href": "/#contact"
     }
   }
 }

@@ -15,6 +15,7 @@ export function AdminHomeManager({
   const homeProcess = contents['home-process'] ?? [];
   const homeTech = contents['home-tech'] ?? [];
   const homeAbout = contents['home-about'] ?? [];
+  const homeContact = contents['home-contact'] ?? [];
 
   return (
     <div className="flex flex-col items-center px-2">
@@ -104,6 +105,18 @@ export function AdminHomeManager({
             customData: 0,
           }}
           maxMedia={1}
+        />
+        <ContentCardManager
+          contents={homeContact}
+          contentKey={'home-contact'}
+          mode={'single'}
+          fields={{
+            title: 50,
+            subtitle: 150,
+            description: 0,
+            customData: 0,
+          }}
+          maxMedia={0}
         />
       </div>
     </div>

@@ -16,6 +16,7 @@ import {
   ProblemItem,
 } from '@/app/home/home-types';
 import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
+import { HeroButton } from '@/app/home/ui/parts/HeroButton';
 
 const ICONS: Record<ProblemIcon, React.ReactNode> = {
   clock: <Clock size={15} />,
@@ -115,13 +116,12 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
             </div>
             {safeData.cta.label && (
               <AnimateItem delay={0.1}>
-                <Link
+                <HeroButton
                   href={safeData.cta.href}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground text-[14px] md:text-[15px] font-medium hover:scale-102 active:scale-98 transition-all duration-200"
-                >
-                  {safeData.cta.label}
-                  <ArrowRight size={15} />
-                </Link>
+                  label={safeData.cta.label}
+                  primary
+                  icon={<ArrowRight size={20} />}
+                />
               </AnimateItem>
             )}
           </div>
