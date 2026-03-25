@@ -85,7 +85,7 @@ export function useNavigation() {
       return;
     }
 
-    router.push('/');
+    router.push('/', { scroll: false });
     setIsNavigating(true);
     performScroll(0, () => setIsNavigating(false));
   }, [closeBar, setIsNavigating, pathname, router]);
