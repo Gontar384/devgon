@@ -5,6 +5,8 @@ import { useMobileBarStore } from '@/store/mobileBarStore';
 
 const NAVBAR_HEIGHT = 64;
 
+export const navigationSuppressRef = { current: false };
+
 function performScroll(targetY: number, onDone: () => void) {
   const bodyFixed = document.body.style.position === 'fixed';
 
@@ -63,8 +65,12 @@ export function useHashScrollOnMount() {
     if (!hash) return;
 
     const timeout = setTimeout(() => {
+      navigationSuppressRef.current = true;
       setIsNavigating(true);
-      scrollToSection(hash, () => setIsNavigating(false));
+      scrollToSection(hash, () => {
+        navigationSuppressRef.current = false;
+        setIsNavigating(false);
+      });
     }, 100);
 
     return () => clearTimeout(timeout);
@@ -85,9 +91,13 @@ export function useNavigation() {
       return;
     }
 
-    router.push('/');
+    router.push('/', { scroll: false });
+    navigationSuppressRef.current = true;
     setIsNavigating(true);
-    performScroll(0, () => setIsNavigating(false));
+    performScroll(0, () => {
+      navigationSuppressRef.current = false;
+      setIsNavigating(false);
+    });
   }, [closeBar, setIsNavigating, pathname, router]);
 
   const navigateTo = useCallback(
@@ -104,17 +114,25 @@ export function useNavigation() {
       const sectionId = href.slice(2);
 
       if (pathname !== '/') {
+        navigationSuppressRef.current = true;
         setIsNavigating(true);
         router.push(href);
-        setTimeout(() => setIsNavigating(false), 1500);
+        setTimeout(() => {
+          navigationSuppressRef.current = false;
+          setIsNavigating(false);
+        }, 1500);
         return;
       }
 
-      router.push(href);
+      router.push(href, { scroll: false });
+      navigationSuppressRef.current = true;
       setIsNavigating(true);
 
       setTimeout(() => {
-        scrollToSection(sectionId, () => setIsNavigating(false));
+        scrollToSection(sectionId, () => {
+          navigationSuppressRef.current = false;
+          setIsNavigating(false);
+        });
       }, 50);
     },
     [closeBar, setIsNavigating, pathname, router],

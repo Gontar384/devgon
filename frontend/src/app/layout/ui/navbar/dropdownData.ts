@@ -57,7 +57,7 @@ export const dropdownData: DropdownData[] = [
   },
   {
     title: 'Kontakt',
-    href: '/',
+    href: '/#contact',
     option: [],
   },
 ];

@@ -81,6 +81,12 @@ jobs:
             echo "MINIO_ROOT_PASSWORD=minioadmin123"
             echo "MINIO_BUCKET_NAME=media-test"
             echo "MINIO_PUBLIC_URL="
+            echo "SMTP_HOST=smtp-relay.brevo.com"
+            echo "SMTP_PORT=587"
+            echo "SMTP_USER=example@smtp-brevo.com"
+            echo "SMTP_PASS=generated_key"
+            echo "SMTP_FROM=sender@email.com"
+            echo "CONTACT_MAIL_TO=example@email.com"
           } > .env.test
         working-directory: backend
 

@@ -13,6 +13,7 @@ import homeIntroFallbackJson from '@/app/home/fallbacks/home-intro-fallback.json
 import homeTechFallbackJson from '@/app/home/fallbacks/home-tech-fallback.json';
 import homeProcessFallbackJson from '@/app/home/fallbacks/home-process-fallback.json';
 import homeAboutFallbackJson from '@/app/home/fallbacks/home-about-fallback.json';
+import homeContactFallbackJson from '@/app/home/fallbacks/home-contact-fallback.json';
 import { HomeServicesCarousel } from '@/app/home/ui/HomeServicesCarousel';
 import { TiltCard } from '@/app/home/ui/parts/animations/TiltCard';
 import { HomeProblemsSection } from '@/app/home/ui/HomeProblemsSection';
@@ -20,6 +21,7 @@ import { HomeIntro } from '@/app/home/ui/HomeIntro';
 import { HomeTech } from '@/app/home/ui/HomeTech';
 import { HomeProcess } from '@/app/home/ui/HomeProcess';
 import { HomeAbout } from '@/app/home/ui/HomeAbout';
+import { HomeContact } from '@/app/home/ui/HomeContact';
 
 const homeHeroFallback = homeHeroFallbackJson as FallbackContent;
 const homeIntroFallback = homeIntroFallbackJson as FallbackContent;
@@ -28,6 +30,7 @@ const homeProblemsFallback = homeProblemsFallbackJson as FallbackContent;
 const homeProcessFallback = homeProcessFallbackJson as FallbackContent;
 const homeTechFallback = homeTechFallbackJson as FallbackContent;
 const homeAboutFallback = homeAboutFallbackJson as FallbackContent;
+const homeContactFallback = homeContactFallbackJson as FallbackContent;
 
 export function HomeManager({ contents }: HomeManagerProps) {
   const homeHeroCMS = contents['home-hero']?.[0];
@@ -66,6 +69,11 @@ export function HomeManager({ contents }: HomeManagerProps) {
     ? homeAboutCMS
     : homeAboutFallback;
 
+  const homeContactCMS = contents['home-contact']?.[0];
+  const homeContact: ContentOrFallback = homeContactCMS
+    ? homeContactCMS
+    : homeContactFallback;
+
   return (
     <>
       <HomeHero content={homeHero} />
@@ -81,6 +89,7 @@ export function HomeManager({ contents }: HomeManagerProps) {
       <HomeProcess content={homeProcess} />
       <HomeTech content={homeTech} />
       <HomeAbout content={homeAbout} />
+      <HomeContact content={homeContact} />
     </>
   );
 }
