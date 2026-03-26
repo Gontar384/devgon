@@ -10,6 +10,7 @@ export function HomeContact({ content }: HomeContactProps) {
   const safeData = {
     title: content?.title ?? '',
     subtitle: content?.subtitle ?? '',
+    description: content?.description ?? '',
   };
 
   return (
@@ -61,13 +62,14 @@ export function HomeContact({ content }: HomeContactProps) {
               <div className="bg-background/70 backdrop-blur-sm border border-border rounded-2xl p-8 hover:border-primary/40 active:border-primary/40 transition-colors duration-300">
                 <RevealPhone />
               </div>
-              <div className="bg-primary/10 border border-primary/20 rounded-2xl p-8">
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  Zazwyczaj odpowiadam w ciągu{' '}
-                  <span className="text-foreground font-medium">24 godzin</span>
-                  . W pilnych sprawach zadzwoń.
-                </p>
-              </div>
+              {safeData.description && (
+                <div className="bg-primary/10 border border-primary/20 rounded-2xl p-8">
+                  <div
+                    className="text-base text-muted-foreground leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: safeData.description }}
+                  />
+                </div>
+              )}
             </div>
             <div className="bg-background/70 backdrop-blur-sm border border-border rounded-2xl p-9 md:p-12 hover:border-primary/30 active:border-primary/30 transition-colors duration-300">
               <HomeContactForm />
