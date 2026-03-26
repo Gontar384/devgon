@@ -32,7 +32,6 @@ export function MediaContainer({ src, alt, type }: MediaContainerProps) {
         },
       }}
     >
-      <div className="absolute inset-0 bg-primary/10 blur-2xl rounded-2xl" />
       {type === MediaType.VIDEO ? (
         <video
           src={src}
