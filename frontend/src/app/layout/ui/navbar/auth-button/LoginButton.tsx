@@ -11,6 +11,8 @@ import { useDeviceStore } from '@/store/deviceStore';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useLoginDialogStore } from '@/store/loginDialogStore';
 
+const LOGIN_TOOLTIP_ENABLED = false;
+
 export function LoginButton({
   authUser,
   isMobileBar,
@@ -68,8 +70,9 @@ export function LoginButton({
   return (
     <Tooltip
       open={
-        (!isAuthenticated && !isMobile && showTooltip && !logoutCooldown) ||
-        (!isAuthenticated && isMobile && showTooltipOnMobile && openedBar)
+        LOGIN_TOOLTIP_ENABLED &&
+        ((!isAuthenticated && !isMobile && showTooltip && !logoutCooldown) ||
+          (!isAuthenticated && isMobile && showTooltipOnMobile && openedBar))
       }
       onOpenChange={setShowTooltip}
     >
