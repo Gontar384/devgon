@@ -2,10 +2,6 @@ import { FooterLinkData, SocialLinkData } from '@/app/layout/layout-types';
 
 export const footerLinks: FooterLinkData[] = [
   {
-    title: 'Regulamin',
-    href: '/',
-  },
-  {
     title: 'Polityka prywatności',
     href: '/',
   },
@@ -14,16 +10,30 @@ export const footerLinks: FooterLinkData[] = [
 export const socialLinks: SocialLinkData[] = [
   {
     title: 'Facebook',
-    href: '/',
+    href: 'https://www.facebook.com/kuba.gontarek.3',
     iconSrc: '/svg/footer/facebook.svg',
-    iconWidth: 24,
-    iconHeight: 24,
+    iconWidth: 18,
+    iconHeight: 18,
   },
   {
     title: 'Instagram',
-    href: '/',
+    href: 'https://www.instagram.com/g0ntar',
     iconSrc: '/svg/footer/instagram.svg',
-    iconWidth: 24,
-    iconHeight: 24,
+    iconWidth: 18,
+    iconHeight: 18,
+  },
+  {
+    title: 'Linkedin',
+    href: 'https://www.linkedin.com/in/jakub-gontarek-3b8210370',
+    iconSrc: '/svg/footer/linkedin.svg',
+    iconWidth: 18,
+    iconHeight: 18,
+  },
+  {
+    title: 'GitHub',
+    href: 'https://github.com/Gontar384',
+    iconSrc: '/svg/footer/github.svg',
+    iconWidth: 18,
+    iconHeight: 18,
   },
 ];
