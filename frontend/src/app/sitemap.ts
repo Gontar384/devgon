@@ -8,5 +8,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
+    {
+      url: `https://${domain}/privacy-policy`,
+      lastModified: new Date(),
+    },
   ];
 }
