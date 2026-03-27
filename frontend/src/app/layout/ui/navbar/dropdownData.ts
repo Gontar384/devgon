@@ -34,7 +34,7 @@ export const dropdownData: DropdownData[] = [
     option: [
       {
         title: 'Rozwiązywane problemy',
-        href: '/#problems',
+        href: '/#solutions',
         imageSrc: '/svg/menu/puzzle.svg',
         imageW: 35,
         imageH: 35,

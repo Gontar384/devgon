@@ -18,11 +18,7 @@ export function HomeAbout({ content }: HomeAboutProps) {
 
   return (
     <section id="about" className="relative py-24 overflow-hidden select-none">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-muted/30" />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 blur-3xl rounded-full" />
-      </div>
-      <div className="max-w-[1200px] mx-auto px-6">
+      <div className="max-w-[1200px] mx-auto px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <AnimateItem>
             <div className="relative">

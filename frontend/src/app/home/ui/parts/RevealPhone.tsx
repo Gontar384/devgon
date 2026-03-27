@@ -9,8 +9,6 @@ const PARTS = ['+48', '517', '988', '760'];
 export function RevealPhone() {
   const [revealed, setRevealed] = useState(false);
 
-  const phone = PARTS.join(' ');
-
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2.5 text-primary">
@@ -45,7 +43,12 @@ export function RevealPhone() {
               transition={{ duration: 0.4, ease: 'easeOut' }}
               className="text-xl font-semibold hover:text-primary active:text-primary transition-colors tracking-wide"
             >
-              {phone}
+              {PARTS.map((part, i) => (
+                <span key={i}>
+                  {part}
+                  {i < PARTS.length - 1 ? ' ' : ''}
+                </span>
+              ))}
             </motion.a>
           )}
         </AnimatePresence>

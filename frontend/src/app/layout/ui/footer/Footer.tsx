@@ -1,51 +1,28 @@
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { AllRightsReserved } from '@/app/layout/ui/footer/parts/AllRightsReserved';
+import { ShortCompanyNote } from '@/app/layout/ui/footer/parts/ShortCompanyNote';
 import { DevgonWatermark } from '@/app/layout/ui/footer/parts/DevgonWatermark';
-import { footerLinks, socialLinks } from '@/app/layout/ui/footer/linksData';
+import { SocialLinks } from '@/app/layout/ui/footer/parts/SocialLinks';
+import { SmallMenu } from '@/app/layout/ui/footer/parts/SmallMenu';
+import { OtherLinks } from '@/app/layout/ui/footer/parts/OtherLinks';
+import { AllRightsReserved } from '@/app/layout/ui/footer/parts/AllRightsReserved';
+import { SmallContact } from '@/app/layout/ui/footer/parts/SmallContact';
 
 export function Footer() {
   return (
-    <footer className="px-2 select-none mt-16" aria-label="Stopka strony">
+    <footer className="px-2 select-none mt-24" aria-label="Stopka strony">
       <Card>
-        <CardContent className="flex flex-col md:flex-row justify-between items-center px-4 md:px-8 gap-6">
-          <AllRightsReserved />
-          <div
-            className="flex flex-wrap items-center justify-center md:justify-start text-sm text-muted-foreground gap-4 whitespace-nowrap"
-            aria-label="Linki do podstron"
-          >
-            {footerLinks.map((link) => (
-              <Link
-                key={link.title}
-                href={link.href}
-                className="cursor-pointer hover:underline active:underline"
-              >
-                {link.title}
-              </Link>
-            ))}
+        <CardContent>
+          <div className="flex flex-wrap justify-evenly items-center pt-6 pb-10 gap-10">
+            <ShortCompanyNote />
+            <SocialLinks />
+            <SmallMenu />
+            <SmallContact />
           </div>
-          <div
-            className="flex flex-wrap items-center justify-center md:justify-start text-sm gap-4 text-muted-foreground"
-            aria-label="Linki społecznościowe"
-          >
-            {socialLinks.map((link) => (
-              <Link
-                href={link.href}
-                key={link.title}
-                className="flex items-center gap-1 cursor-pointer hover:underline active:underline"
-              >
-                <Image
-                  src={link.iconSrc}
-                  alt={link.title}
-                  width={link.iconWidth}
-                  height={link.iconHeight}
-                  priority
-                />
-                {link.title}
-              </Link>
-            ))}
+          <div className="border" />
+          <div className="flex flex-wrap justify-between items-center mt-5 mx-2 gap-10">
+            <AllRightsReserved />
+            <OtherLinks />
           </div>
         </CardContent>
       </Card>

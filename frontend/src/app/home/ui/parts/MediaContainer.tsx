@@ -11,6 +11,7 @@ export function MediaContainer({ src, alt, type }: MediaContainerProps) {
       className="relative w-full max-w-[350px] md:max-w-[450px] h-auto pointer-events-none"
       initial={{ opacity: 0, rotate: 0, scale: 1, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       animate={{
         rotate: [0, 1, -1, 0],
         scale: [1, 1.03, 0.97, 1],
@@ -32,7 +33,6 @@ export function MediaContainer({ src, alt, type }: MediaContainerProps) {
         },
       }}
     >
-      <div className="absolute inset-0 bg-primary/10 blur-2xl rounded-2xl" />
       {type === MediaType.VIDEO ? (
         <video
           src={src}
