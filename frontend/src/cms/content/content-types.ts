@@ -152,6 +152,7 @@ export interface SortableMediaItemProps {
 export interface EditableDataFieldProps {
   value: string;
   setValue: (v: string) => void;
+  contentLength: number;
   isEditing: boolean;
   fieldName: string;
   testId?: string;

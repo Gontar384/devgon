@@ -304,6 +304,7 @@ export function ContentCard({
               <EditableDataField
                 value={draftCustomData}
                 setValue={setDraftCustomData}
+                contentLength={fields.customData}
                 isEditing={isEditing}
                 fieldName="custom JSON"
                 testId="field-custom-json"

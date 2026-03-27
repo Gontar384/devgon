@@ -8,6 +8,7 @@ import { EditableDataFieldProps } from '@/cms/content/content-types';
 export function EditableDataField({
   value,
   setValue,
+  contentLength,
   isEditing,
   fieldName,
   testId,
@@ -16,6 +17,7 @@ export function EditableDataField({
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (val: string) => {
+    if (contentLength && val.length > contentLength) return;
     setInternalValue(val);
     setValue(val);
     if (error) setError(null);
@@ -42,12 +44,19 @@ export function EditableDataField({
 
   return (
     <div data-testid={testId} className="flex-1 min-w-0 pr-4 space-y-2">
-      <h2 className="text-xs flex items-center gap-2">
-        <span className="underline">{fieldName}</span>
+      <div className="flex justify-between text-xs">
+        <h2 className="flex items-center gap-2">
+          <span className="underline">{fieldName}</span>
+          {isEditing && (
+            <span className="text-gray-400">Alt+Shift+F to format</span>
+          )}
+        </h2>
         {isEditing && (
-          <span className="text-gray-400">Alt+Shift+F to format</span>
+          <div className="text-gray-500">
+            {internalValue.length}/{contentLength}
+          </div>
         )}
-      </h2>
+      </div>
       {isEditing ? (
         <>
           <div
