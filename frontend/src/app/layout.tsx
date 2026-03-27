@@ -12,9 +12,9 @@ import { CookieBanner } from '@/app/layout/ui/CookieBanner';
 
 export const metadata: Metadata = {
   ...createMetadata({
-    title: 'devgon',
+    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
     description:
-      'Inteligentne strony internetowe, automatyzacja procesów i nowoczesne rozwiązania technologiczne – zwiększ efektywność swojej firmy już dziś.',
+      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
     path: '/',
     image: '/logo/logo-caption-black.svg',
   }),

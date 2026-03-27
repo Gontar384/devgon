@@ -9,7 +9,7 @@ export function DevgonWatermark() {
       <Link
         target="_blank"
         rel="noopener noreferrer"
-        href="https://devgon.site"
+        href="https://devgon.pl"
         className="font-bold underline"
       >
         devgon

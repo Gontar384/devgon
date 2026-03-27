@@ -38,7 +38,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
   };
 
   return (
-    <section id="problems" className="w-full border-t">
+    <section id="solutions" className="w-full border-t">
       <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24 select-none">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] gap-10 xl:gap-16 items-start">
           {safeData.photoUrl && (
