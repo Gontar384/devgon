@@ -1,0 +1,60 @@
+[
+  {
+    "title": "Administrator danych",
+    "description": "Administratorem danych osobowych jest Jakub Gontarek, prowadzący działalność nierejestrowaną pod nazwą devgon, z adresem do korespondencji: devgonteam@gmail.com"
+  },
+  {
+    "title": "Zakres zbieranych danych",
+    "description": "Za pośrednictwem formularza kontaktowego zbierane są następujące dane:",
+    "customData": {
+      "items": [
+        "imię i nazwisko",
+        "adres e-mail",
+        "numer telefonu (jeśli podany)",
+        "treść wiadomości"
+      ]
+    }
+  },
+  {
+    "title": "Cel i podstawa prawna przetwarzania danych",
+    "description": "Dane osobowe przetwarzane są wyłącznie w celu odpowiedzi na zapytanie przesłane przez formularz kontaktowy oraz prowadzenia korespondencji związanej z działalnością devgon. Dane mogą być również przetwarzane w wewnętrznym systemie informatycznym (panelu CMS) w celu przypisania zapytań do konkretnego konsultanta oraz usprawnienia obsługi kontaktów z klientami. Podstawą prawną przetwarzania danych jest dobrowolnie wyrażona zgoda Użytkownika (art. 6 ust. 1 lit. a RODO).",
+    "customData": {
+      "items": [
+        "odpowiedzi na zapytanie przesłane przez formularz kontaktowy",
+        "prowadzenia korespondencji związanej z działalnością devgon"
+      ]
+    }
+  },
+  {
+    "title": "Przekazywanie danych",
+    "description": "Dane mogą być udostępnione podmiotom technicznym (np. operatorowi hostingu, dostawcy poczty e-mail), wyłącznie w zakresie niezbędnym do świadczenia usług."
+  },
+  {
+    "title": "Czas przechowywania danych",
+    "description": "Dane będą przechowywane przez czas niezbędny do realizacji kontaktu i ewentualnej współpracy lub do momentu cofnięcia zgody."
+  },
+  {
+    "title": "Prawa użytkownika",
+    "description": "Każdy Użytkownik ma prawo do:",
+    "customData": {
+      "items": [
+        "dostępu do swoich danych",
+        "ich sprostowania, usunięcia lub ograniczenia przetwarzania",
+        "cofnięcia zgody w dowolnym momencie",
+        "wniesienia skargi do Prezesa UODO"
+      ]
+    }
+  },
+  {
+    "title": "Dobrowolność podania danych",
+    "description": "Podanie danych osobowych jest dobrowolne, ale niezbędne do realizacji kontaktu."
+  },
+  {
+    "title": "Pliki cookies",
+    "description": "Serwis wykorzystuje pliki cookies wyłącznie w celach technicznych, związanych z uwierzytelnianiem użytkowników. Po zalogowaniu przez Google OAuth 2.0 system zapisuje dwa tokeny sesyjne: token autoryzacyjny (auth token) oraz token odświeżający (refresh token). Tokeny te przechowywane są w bezpiecznych plikach cookies i służą wyłącznie do utrzymania sesji zalogowanego użytkownika. Serwis nie stosuje cookies marketingowych, analitycznych ani śledzących."
+  },
+  {
+    "title": "Zabezpieczenie danych",
+    "description": "Dane osobowe są przechowywane i przetwarzane w sposób zapewniający ich bezpieczeństwo, integralność i poufność. Dostęp do danych mają wyłącznie uprawnione osoby, a system informatyczny, w którym są przechowywane, zabezpieczony jest przed nieautoryzowanym dostępem poprzez odpowiednie środki techniczne i organizacyjne, zgodnie z wymogami RODO."
+  }
+]

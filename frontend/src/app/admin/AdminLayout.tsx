@@ -21,6 +21,16 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               Strona główna
             </Link>
           </TabsTrigger>
+          <TabsTrigger
+            value="/admin/privacy-policy"
+            className="cursor-pointer bg-background data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+            id={undefined} //hydration mismatch error occurred
+            aria-controls={undefined}
+          >
+            <Link href="/admin/privacy-policy" className="text-xl">
+              Polityka prywatności
+            </Link>
+          </TabsTrigger>
         </TabsList>
       </Tabs>
       <div className="mt-8">{children}</div>

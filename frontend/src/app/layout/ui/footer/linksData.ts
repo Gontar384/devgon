@@ -53,6 +53,6 @@ export const smallMenu: FooterLinkData[] = [
 export const otherLinks: FooterLinkData[] = [
   {
     title: 'Polityka prywatności',
-    href: '/',
+    href: '/privacy-policy',
   },
 ];

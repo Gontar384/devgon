@@ -107,7 +107,17 @@ export function useNavigation() {
       const isAnchor = href.startsWith('/#');
 
       if (!isAnchor) {
+        navigationSuppressRef.current = true;
+        setIsNavigating(true);
+
         router.push(href);
+
+        setTimeout(() => {
+          performScroll(0, () => {
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          });
+        }, 50);
         return;
       }
 
