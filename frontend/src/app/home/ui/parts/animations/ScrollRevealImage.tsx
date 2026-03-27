@@ -64,7 +64,6 @@ export function ScrollRevealImage({
         alt={alt}
         fill
         unoptimized
-        priority={true}
         draggable={false}
         className="object-cover select-none pointer-events-none"
       />

@@ -13,14 +13,14 @@ export function Footer() {
     <footer className="px-2 select-none mt-24" aria-label="Stopka strony">
       <Card>
         <CardContent>
-          <div className="flex flex-wrap justify-evenly items-center pt-6 pb-10 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-[1.6fr_1fr] lg:grid-cols-[1.6fr_1fr_1fr_1fr] px-4 pt-4 pb-8 gap-12">
             <ShortCompanyNote />
-            <SocialLinks />
             <SmallMenu />
             <SmallContact />
+            <SocialLinks />
           </div>
           <div className="border" />
-          <div className="flex flex-wrap justify-between items-center mt-5 mx-2 gap-10">
+          <div className="flex flex-wrap justify-between items-center px-4 pt-5 gap-12">
             <AllRightsReserved />
             <OtherLinks />
           </div>

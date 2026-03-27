@@ -73,7 +73,7 @@ export function TechMarquee({ logos }: TechMarqueeProps) {
                       muted
                       loop
                       playsInline
-                      className="h-full object-contain"
+                      className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
                       aria-label={logo.alt}
                     />
                   ) : (
@@ -84,7 +84,7 @@ export function TechMarquee({ logos }: TechMarqueeProps) {
                       height={70}
                       unoptimized
                       draggable={false}
-                      className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px]"
+                      className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
                     />
                   )}
                 </div>

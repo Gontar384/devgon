@@ -29,7 +29,7 @@ export function HomeServiceCard({
 
   return (
     <Card
-      className="w-full flex flex-col bg-background border transition-all duration-300 overflow-hidden rounded-xl"
+      className="w-full flex flex-col bg-background border transition-all duration-300 overflow-hidden rounded-xl select-none"
       style={{ height: CARD_HEIGHT }}
       aria-label={safeData.title}
     >
@@ -80,7 +80,7 @@ export function HomeServiceCard({
                   loop
                   playsInline
                   draggable={false}
-                  className="absolute inset-0 object-cover w-full h-full transition-transform duration-500 select-none"
+                  className="absolute inset-0 object-cover w-full h-full transition-transform duration-500 pointer-events-none"
                 />
               ) : (
                 <Image
@@ -90,7 +90,7 @@ export function HomeServiceCard({
                   unoptimized
                   priority={priority}
                   draggable={false}
-                  className="object-cover transition-transform duration-500 select-none"
+                  className="object-cover transition-transform duration-500 pointer-events-none"
                 />
               )}
             </div>

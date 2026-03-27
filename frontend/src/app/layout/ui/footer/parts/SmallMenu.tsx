@@ -8,10 +8,10 @@ export function SmallMenu() {
   const { navigateTo, navigateToTop } = useNavigation();
 
   return (
-    <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+    <div className="flex flex-col gap-2 text-sm text-muted-foreground">
       <div className="font-semibold">Nawigacja</div>
       <div
-        className="flex flex-col justify-center gap-0.5 whitespace-nowrap"
+        className="flex flex-col justify-center gap-1 whitespace-nowrap"
         aria-label="Nawigacja"
       >
         {smallMenu.map((link) => (

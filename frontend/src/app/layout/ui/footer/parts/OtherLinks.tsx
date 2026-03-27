@@ -5,7 +5,7 @@ import React from 'react';
 export function OtherLinks() {
   return (
     <div
-      className="flex flex-wrap justify-center md:justify-start text-xs text-muted-foreground gap-4 whitespace-nowrap"
+      className="flex flex-wrap text-xs text-muted-foreground gap-4 whitespace-nowrap"
       aria-label="Linki do podstron"
     >
       {otherLinks.map((link) => (
