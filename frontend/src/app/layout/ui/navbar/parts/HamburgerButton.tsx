@@ -1,16 +1,16 @@
 'use client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleX, Hamburger } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useDeviceStore } from '@/store/deviceStore';
+import { useHoverWithTouch } from '../useHoverWithTouch';
 
 export function HamburgerButton() {
   const { toggleBar, openedBar } = useMobileBarStore();
   const detectDevice = useDeviceStore((state) => state.detectDevice);
   const [blockInitAnimation, setBlockInitAnimation] = useState(true);
-  const [pressed, setPressed] = useState(false);
+  const { hovered, handlers } = useHoverWithTouch();
 
   useEffect(() => {
     const timeout = setTimeout(() => setBlockInitAnimation(false), 50);
@@ -24,15 +24,11 @@ export function HamburgerButton() {
   }, [detectDevice]);
 
   return (
-    <Button
-      variant="ghost"
-      className={`mr-3 h-12 p-3 md:hidden cursor-pointer ${pressed && 'bg-accent'}`}
+    <button
+      className={`flex items-center justify-center h-12 px-2.5 mr-3 md:hidden cursor-pointer rounded-md ${hovered ? 'bg-accent' : ''}`}
       aria-label="Otwórz menu nawigacji mobilnej"
       onClick={toggleBar}
-      onTouchStart={() => setPressed(true)}
-      onTouchEnd={() => {
-        setTimeout(() => setPressed(false), 100);
-      }}
+      {...handlers}
     >
       <AnimatePresence mode="wait">
         {!openedBar ? (
@@ -57,6 +53,6 @@ export function HamburgerButton() {
           </motion.div>
         )}
       </AnimatePresence>
-    </Button>
+    </button>
   );
 }

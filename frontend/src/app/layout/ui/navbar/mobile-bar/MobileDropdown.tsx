@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import { DropdownWrapperProps } from '@/app/layout/layout-types';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleChevronUp } from 'lucide-react';
 import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
+import { useHoverWithTouch } from '@/app/layout/ui/navbar/useHoverWithTouch';
 
 export function MobileDropdown({
   title,
@@ -15,7 +15,7 @@ export function MobileDropdown({
   const [accordionActive, setAccordionActive] = useState(false);
   const hasChildren = React.Children.count(children) > 0;
   const { navigateTo } = useNavigation();
-  const [pressed, setPressed] = useState(false);
+  const { hovered, handlers } = useHoverWithTouch();
 
   return (
     <div className="flex flex-col gap-2">
@@ -31,16 +31,12 @@ export function MobileDropdown({
           {title}
         </Link>
         {hasChildren && (
-          <Button
-            variant="ghost"
-            onClick={() => setAccordionActive((prev) => !prev)}
-            onTouchStart={() => setPressed(true)}
-            onTouchEnd={() => {
-              setTimeout(() => setPressed(false), 100);
-            }}
-            className={`cursor-pointer h-12 !p-1.5 ${pressed && 'bg-accent'}`}
+          <button
+            className={`flex items-center justify-center h-12 p-1.5 cursor-pointer rounded-md ${hovered ? 'bg-accent' : ''}`}
             aria-expanded={accordionActive}
             aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
+            onClick={() => setAccordionActive((prev) => !prev)}
+            {...handlers}
           >
             <motion.div
               animate={{ rotate: accordionActive ? 180 : 0 }}
@@ -49,7 +45,7 @@ export function MobileDropdown({
             >
               <CircleChevronUp className="!w-10 !h-10" />
             </motion.div>
-          </Button>
+          </button>
         )}
       </div>
       {hasChildren && (
