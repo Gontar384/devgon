@@ -7,6 +7,7 @@ import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
 import { dropdownData } from '@/app/layout/ui/navbar/dropdownData';
+import { suppressScrollRef } from '@/app/layout/ui/navbar/scrollControl';
 
 export default function MobileBar() {
   const { openedBar, closeBar, setIsNavigating } = useMobileBarStore();
@@ -27,36 +28,42 @@ export default function MobileBar() {
       if (!openedBar) return;
     }
 
-    let timeout: NodeJS.Timeout;
-
     if (openedBar) {
       scrollYRef.current = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = '100%';
     } else {
+      suppressScrollRef.current = true;
+
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
+
       document.documentElement.style.scrollBehavior = 'auto';
+
       window.scrollTo(0, scrollYRef.current);
+
       requestAnimationFrame(() => {
         document.documentElement.style.scrollBehavior = '';
+
+        requestAnimationFrame(() => {
+          suppressScrollRef.current = false;
+        });
       });
+
       const navigatingToSection = useMobileBarStore.getState().isNavigating;
       if (!navigatingToSection) {
         setIsNavigating(true);
-        timeout = setTimeout(() => {
-          setIsNavigating(false);
-        }, 100);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setIsNavigating(false);
+          });
+        });
       }
     }
-
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openedBar]);
+  }, [openedBar, setIsNavigating]);
 
   useEffect(() => {
     const checkWidth = () => {

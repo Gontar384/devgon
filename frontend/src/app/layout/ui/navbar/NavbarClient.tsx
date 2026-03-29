@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { navigationSuppressRef } from '@/app/layout/ui/navbar/useNavigation';
+import { suppressScrollRef } from '@/app/layout/ui/navbar/scrollControl';
 
 export default function NavbarClient() {
   const hiddenRef = useRef(false);
@@ -12,6 +13,8 @@ export default function NavbarClient() {
   const { openedBar, isNavigating } = useMobileBarStore();
 
   const applyVisibility = (hide: boolean) => {
+    if (hiddenRef.current === hide) return;
+
     hiddenRef.current = hide;
     if (containerRef.current) {
       containerRef.current.style.transform = hide
@@ -24,6 +27,7 @@ export default function NavbarClient() {
     if (!isNavigating && !openedBar) {
       lastY.current = window.scrollY;
       applyVisibility(false);
+      hiddenRef.current = false;
     }
   }, [openedBar, isNavigating]);
 
@@ -47,15 +51,23 @@ export default function NavbarClient() {
     lastY.current = window.scrollY;
 
     const onScroll = () => {
-      if (!hasUserScrolled.current) {
+      if (
+        !hasUserScrolled.current ||
+        navigationSuppressRef.current ||
+        openedBar ||
+        suppressScrollRef.current
+      ) {
         lastY.current = window.scrollY;
         return;
       }
 
-      if (navigationSuppressRef.current || openedBar) return;
-
       const currentY = window.scrollY;
-      if (ticking.current) return;
+      if (currentY < 0) return;
+
+      if (ticking.current) {
+        lastY.current = window.scrollY;
+        return;
+      }
 
       ticking.current = true;
       window.requestAnimationFrame(() => {
