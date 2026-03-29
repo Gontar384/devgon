@@ -12,12 +12,15 @@ export function HomeWorkflow({ content }: HomeWorkflowProps) {
     items: content.customData?.items ?? [],
   };
 
+  if (!safeData.items.length) return null;
+
   return (
     <section
       id="workflow"
+      aria-label={safeData.title || 'Nasz proces'}
       className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none"
     >
-      <div className="absolute inset-0 -z-10">
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-muted/30" />
         <div className="absolute left-1/2 -translate-x-1/2 w-[1400px] h-[400px] bg-primary/10 blur-3xl rounded-full" />
       </div>
