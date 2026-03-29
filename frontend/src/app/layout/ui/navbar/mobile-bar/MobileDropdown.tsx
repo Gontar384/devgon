@@ -35,10 +35,10 @@ export function MobileDropdown({
             variant="ghost"
             onClick={() => setAccordionActive((prev) => !prev)}
             onTouchStart={() => setPressed(true)}
-            onTouchEnd={() => {
-              setTimeout(() => setPressed(false), 100);
-            }}
-            className={`cursor-pointer h-12 !p-1.5 ${pressed && 'bg-accent'}`}
+            onTouchEnd={() => setPressed(false)}
+            onTouchCancel={() => setPressed(false)}
+            onTouchMove={() => setPressed(false)}
+            className={`cursor-pointer h-12 !p-1.5 ${pressed ? 'bg-accent' : ''}`}
             aria-expanded={accordionActive}
             aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
           >

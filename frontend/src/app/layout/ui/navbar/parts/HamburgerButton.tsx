@@ -26,13 +26,13 @@ export function HamburgerButton() {
   return (
     <Button
       variant="ghost"
-      className={`mr-3 h-12 p-3 md:hidden cursor-pointer ${pressed && 'bg-accent'}`}
+      className={`mr-3 h-12 p-3 md:hidden cursor-pointer ${pressed ? 'bg-accent' : ''}`}
       aria-label="Otwórz menu nawigacji mobilnej"
       onClick={toggleBar}
       onTouchStart={() => setPressed(true)}
-      onTouchEnd={() => {
-        setTimeout(() => setPressed(false), 100);
-      }}
+      onTouchEnd={() => setPressed(false)}
+      onTouchCancel={() => setPressed(false)}
+      onTouchMove={() => setPressed(false)}
     >
       <AnimatePresence mode="wait">
         {!openedBar ? (
