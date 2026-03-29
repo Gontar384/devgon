@@ -125,6 +125,8 @@ export interface NavigationButtonProps {
   label: string;
   primary?: boolean;
   icon?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
+  ariaLabel?: string;
 }
 
 export interface HomeContactProps {

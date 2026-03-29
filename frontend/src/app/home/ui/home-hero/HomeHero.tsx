@@ -86,12 +86,14 @@ export function HomeHero({ content }: HomeHeroProps) {
                   href={safeData.primaryCta.href}
                   label={safeData.primaryCta.label}
                   primary
+                  size={'lg'}
                 />
               )}
               {safeData.secondaryCta && (
                 <NavigationButton
                   href={safeData.secondaryCta.href}
                   label={safeData.secondaryCta.label}
+                  size={'lg'}
                 />
               )}
             </div>

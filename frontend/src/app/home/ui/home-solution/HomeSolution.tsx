@@ -120,6 +120,7 @@ export function HomeSolution({ content }: HomeSolutionProps) {
                   label={safeData.cta.label}
                   primary
                   icon={<ArrowRight size={20} />}
+                  size={'md'}
                 />
               </AnimateItem>
             )}
