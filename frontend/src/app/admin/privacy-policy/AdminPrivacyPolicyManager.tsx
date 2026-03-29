@@ -24,7 +24,7 @@ export function AdminPrivacyPolicyManager({
             title: 100,
             subtitle: 500,
             description: 0,
-            customData: 200,
+            customData: 300,
           }}
           maxMedia={0}
         />

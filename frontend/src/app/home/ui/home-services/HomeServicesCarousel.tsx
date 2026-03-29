@@ -19,8 +19,7 @@ export function HomeServicesCarousel({
 }: HomeServicesCarouselProps) {
   const [offset, setOffset] = useState(0);
   const [cardWidth, setCardWidth] = useState<number | null>(null);
-  const [visible, setVisible] = useState(3); // SSR fallback
-
+  const [visible, setVisible] = useState(3);
   const [expanded, setExpanded] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,15 +42,12 @@ export function HomeServicesCarousel({
 
     const ro = new ResizeObserver(update);
     ro.observe(container);
-
     update();
-
     return () => ro.disconnect();
   }, []);
 
   const maxOffset = Math.max(0, count - visible);
   const clampedOffset = Math.min(offset, maxOffset);
-
   const canPrev = clampedOffset > 0;
   const canNext = clampedOffset + visible < count;
 
@@ -76,7 +72,6 @@ export function HomeServicesCarousel({
     if (Math.abs(diff) > 50) go(diff > 0 ? 1 : -1);
     touchStart.current = null;
   };
-
   const onMouseDown = (e: React.MouseEvent) => {
     mouseStart.current = e.clientX;
     isDragging.current = false;
@@ -101,7 +96,7 @@ export function HomeServicesCarousel({
   const hasMore = count > MOBILE_INITIAL;
 
   return (
-    <section id="offer" className="w-full py-12">
+    <section id="services" aria-label="Nasze usługi" className="w-full py-12">
       <div className="max-w-[1700px] mx-auto">
         <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
           <AnimatePresence>
@@ -110,7 +105,7 @@ export function HomeServicesCarousel({
                 key={i}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
+                viewport={{ once: true, amount: 0 }}
                 transition={{
                   duration: 0.7,
                   ease: 'easeOut',
@@ -127,11 +122,14 @@ export function HomeServicesCarousel({
           {hasMore && (
             <button
               onClick={() => setExpanded((e) => !e)}
+              aria-expanded={expanded}
+              aria-controls="services-mobile-list"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
             >
               <motion.div
                 animate={{ rotate: expanded ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
+                aria-hidden="true"
               >
                 <ChevronDown size={18} />
               </motion.div>
@@ -163,7 +161,7 @@ export function HomeServicesCarousel({
                     key={i}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
+                    viewport={{ once: true, amount: 0 }}
                     transition={{
                       duration: 0.7,
                       ease: 'easeOut',
@@ -178,11 +176,7 @@ export function HomeServicesCarousel({
                           }
                         : undefined
                     }
-                    className={`flex-shrink-0${
-                      !cardWidth
-                        ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]'
-                        : ''
-                    }`}
+                    className={`flex-shrink-0${!cardWidth ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]' : ''}`}
                   >
                     {child}
                   </motion.div>
@@ -192,21 +186,33 @@ export function HomeServicesCarousel({
           </div>
         </div>
         {count > visible && (
-          <div className="hidden sm:flex items-center justify-center gap-4 mt-6">
+          <div
+            className="hidden sm:flex items-center justify-center gap-4 mt-6"
+            role="group"
+            aria-label="Nawigacja karuzeli"
+          >
             <button
               onClick={() => go(-1)}
               disabled={!canPrev}
+              aria-label="Poprzednia usługa"
               className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} aria-hidden="true" />
             </button>
-            <div className="flex gap-2">
+            <div
+              role="tablist"
+              aria-label="Pozycja w karuzeli"
+              className="flex gap-2"
+            >
               {Array.from({ length: count }).map((_, i) => {
                 const isActive =
                   i >= clampedOffset && i < clampedOffset + visible;
                 return (
                   <button
                     key={i}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`Usługa ${i + 1}`}
                     onClick={() => {
                       if (i < clampedOffset) {
                         setOffset(Math.min(i, maxOffset));
@@ -228,9 +234,10 @@ export function HomeServicesCarousel({
             <button
               onClick={() => go(1)}
               disabled={!canNext}
+              aria-label="Następna usługa"
               className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} aria-hidden="true" />
             </button>
           </div>
         )}

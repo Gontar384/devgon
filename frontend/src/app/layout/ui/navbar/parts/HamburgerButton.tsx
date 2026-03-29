@@ -4,7 +4,7 @@ import { CircleX, Hamburger } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 import { useDeviceStore } from '@/store/deviceStore';
-import { useHoverWithTouch } from '../useHoverWithTouch';
+import { useHoverWithTouch } from '../../../util/useHoverWithTouch';
 
 export function HamburgerButton() {
   const { toggleBar, openedBar } = useMobileBarStore();

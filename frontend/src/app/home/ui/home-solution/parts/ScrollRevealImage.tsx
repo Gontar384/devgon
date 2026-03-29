@@ -8,7 +8,6 @@ import { ScrollRevealImageProps } from '@/app/home/home-types';
 
 const CONTAINER_ASPECT_RATIO = '4/5';
 const MOBILE_ASPECT_RATIO = '16/9';
-
 const SHIMMER_INTERVAL = 4000;
 const SHIMMER_DURATION = 700;
 
@@ -56,6 +55,7 @@ export function ScrollRevealImage({
         loop
         playsInline
         draggable={false}
+        aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
       />
     ) : (
@@ -70,7 +70,10 @@ export function ScrollRevealImage({
     );
 
   const shimmerOverlay = (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 pointer-events-none overflow-hidden"
+    >
       <div
         className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"
         style={{
@@ -90,9 +93,10 @@ export function ScrollRevealImage({
         style={{ aspectRatio: MOBILE_ASPECT_RATIO }}
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
+        viewport={{ once: true, amount: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
         whileTap={{ scale: 1.05 }}
+        aria-hidden="true"
       >
         <div className="relative w-full h-full">{renderMedia()}</div>
         {shimmerOverlay}
@@ -102,8 +106,9 @@ export function ScrollRevealImage({
         className="hidden lg:block sticky top-[100px] self-start w-full"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={{ once: true, amount: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
+        aria-hidden="true"
       >
         <motion.div
           className="relative w-full overflow-hidden rounded-2xl bg-muted group"
@@ -124,9 +129,11 @@ export function ScrollRevealImage({
               <p className="text-[13px] md:text-[14px] font-medium leading-snug">
                 {badge.title}
               </p>
-              <p className="text-[11px] md:text-[12px] text-muted-foreground mt-1 uppercase tracking-widest">
-                {badge.subtitle}
-              </p>
+              {badge.subtitle && (
+                <p className="text-[11px] md:text-[12px] text-muted-foreground mt-1 uppercase tracking-widest">
+                  {badge.subtitle}
+                </p>
+              )}
             </motion.div>
           )}
         </motion.div>

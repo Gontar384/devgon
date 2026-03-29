@@ -1,8 +1,8 @@
 import React from 'react';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { HomeContactForm } from '@/app/home/ui/HomeContactForm';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { HomeContactForm } from '@/app/home/ui/home-contact/HomeContactForm';
 import Link from 'next/link';
-import { RevealPhone } from '@/app/home/ui/parts/RevealPhone';
+import { RevealPhone } from '@/app/home/ui/home-contact/parts/RevealPhone';
 import { Mail, MessageSquare } from 'lucide-react';
 import { HomeContactProps } from '@/app/home/home-types';
 

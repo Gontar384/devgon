@@ -7,7 +7,7 @@ import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
 import { dropdownData } from '@/app/layout/ui/navbar/dropdownData';
-import { suppressScrollRef } from '@/app/layout/ui/navbar/scrollControl';
+import { suppressScrollRef } from '@/app/layout/util/scrollControl';
 
 export default function MobileBar() {
   const { openedBar, closeBar, setIsNavigating } = useMobileBarStore();

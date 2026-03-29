@@ -6,7 +6,7 @@ import {
   REORDER_CONTENTS,
   UPDATE_CONTENT,
 } from '@/lib/graphql/contentGraphql';
-import api from '@/lib/auth/axios';
+import api from '@/lib/axios';
 import axios from 'axios';
 import { Content, MediaItem, MediaType } from '@/cms/content/content-types';
 

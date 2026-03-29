@@ -10,12 +10,17 @@ export function ScrollArrow() {
   return (
     <button
       onClick={handleClick}
+      aria-label="Przewiń do następnej sekcji"
       className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary active:text-primary transition-colors duration-200 cursor-pointer mt-4"
     >
-      <span className="text-sm md:text-base tracking-widest uppercase">
+      <span
+        className="text-sm md:text-base tracking-widest uppercase"
+        aria-hidden="true"
+      >
         Przewiń
       </span>
       <motion.div
+        aria-hidden="true"
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
       >

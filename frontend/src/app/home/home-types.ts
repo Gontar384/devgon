@@ -42,7 +42,7 @@ export interface RotatingWordsProps {
   interval?: number;
 }
 
-export interface AnimateClientProps {
+export interface AnimateItemProps {
   children: React.ReactNode;
   delay?: number;
   className?: string;
@@ -64,7 +64,7 @@ export interface ScrollRevealImageProps {
   badge: { title: string; subtitle: string };
 }
 
-export interface HomeProblemSectionProps {
+export interface HomeSolutionProps {
   content: ContentOrFallback;
 }
 
@@ -87,11 +87,11 @@ type Logo = {
   type: MediaType;
 };
 
-export interface TechMarqueeProps {
+export interface MediaMarqueeProps {
   logos: Logo[];
 }
 
-export interface HomeProcessProps {
+export interface HomeWorkflowProps {
   content: ContentOrFallback;
 }
 
@@ -120,11 +120,13 @@ export interface CursorGlowProps {
   cursorColor: CursorColor;
 }
 
-export interface HeroButtonProps {
+export interface NavigationButtonProps {
   href: string;
   label: string;
   primary?: boolean;
   icon?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
+  ariaLabel?: string;
 }
 
 export interface HomeContactProps {

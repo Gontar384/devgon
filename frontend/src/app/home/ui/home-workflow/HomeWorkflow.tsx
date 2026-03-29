@@ -1,8 +1,8 @@
-import { HomeProcessProps } from '@/app/home/home-types';
-import { ProcessTimeline } from '@/app/home/ui/ProcessTimeline';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
+import { HomeWorkflowProps } from '@/app/home/home-types';
+import { ProcessTimeline } from '@/app/home/ui/home-workflow/parts/ProcessTimeline';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 
-export function HomeProcess({ content }: HomeProcessProps) {
+export function HomeWorkflow({ content }: HomeWorkflowProps) {
   if (!content) return null;
 
   const safeData = {
@@ -12,12 +12,15 @@ export function HomeProcess({ content }: HomeProcessProps) {
     items: content.customData?.items ?? [],
   };
 
+  if (!safeData.items.length) return null;
+
   return (
     <section
-      id="collaboration"
+      id="workflow"
+      aria-label={safeData.title || 'Nasz proces'}
       className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none"
     >
-      <div className="absolute inset-0 -z-10">
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-muted/30" />
         <div className="absolute left-1/2 -translate-x-1/2 w-[1400px] h-[400px] bg-primary/10 blur-3xl rounded-full" />
       </div>

@@ -3,25 +3,25 @@ import { DropdownData } from '@/app/layout/layout-types';
 export const dropdownData: DropdownData[] = [
   {
     title: 'Oferta',
-    href: '/#offer',
+    href: '/#services',
     option: [
       {
         title: 'Aplikacje biznesowe',
-        href: '/',
+        href: '/#services',
         imageSrc: '/svg/menu/mobile.svg',
         imageW: 35,
         imageH: 35,
       },
       {
         title: 'Optymalizacja procesów',
-        href: '/',
+        href: '/#services',
         imageSrc: '/svg/menu/brain.svg',
         imageW: 35,
         imageH: 35,
       },
       {
         title: 'Automatyzacje i integracje',
-        href: '/',
+        href: '/#services',
         imageSrc: '/svg/menu/plug.svg',
         imageW: 35,
         imageH: 35,
@@ -30,7 +30,7 @@ export const dropdownData: DropdownData[] = [
   },
   {
     title: 'O nas',
-    href: '/#introduction',
+    href: '/#intro',
     option: [
       {
         title: 'Rozwiązywane problemy',
@@ -41,7 +41,7 @@ export const dropdownData: DropdownData[] = [
       },
       {
         title: 'Jak pracujemy',
-        href: '/#collaboration',
+        href: '/#workflow',
         imageSrc: '/svg/menu/handshake.svg',
         imageW: 35,
         imageH: 35,

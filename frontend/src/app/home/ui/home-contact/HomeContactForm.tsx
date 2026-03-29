@@ -7,9 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { AxiosError } from 'axios';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
-import { ContactFormValues, contactSchema } from '@/app/home/contact-schema';
+import {
+  ContactFormValues,
+  contactSchema,
+} from '@/app/home/ui/home-contact/parts/contact-schema';
 import { Label } from '@/components/ui/label';
-import api from '@/lib/auth/axios';
+import api from '@/lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function HomeContactForm() {
