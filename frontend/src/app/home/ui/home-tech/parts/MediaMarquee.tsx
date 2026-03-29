@@ -12,12 +12,13 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+const SPEED = 100;
+
 export function MediaMarquee({ logos }: MediaMarqueeProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const pausedRef = useRef(false);
   const x = useMotionValue(0);
-  const speed = 100;
 
   const loopLogos = [...logos, ...logos, ...logos];
 
@@ -31,8 +32,7 @@ export function MediaMarquee({ logos }: MediaMarqueeProps) {
     if (!totalWidth) return;
 
     const current = x.get();
-    const next = current - (delta / 1000) * speed;
-
+    const next = current - (delta / 1000) * SPEED;
     x.set(next <= -totalWidth ? next + totalWidth : next);
   });
 
@@ -48,52 +48,61 @@ export function MediaMarquee({ logos }: MediaMarqueeProps) {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="relative w-full overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        role="region"
+        aria-label="Lista technologii"
+      >
         <motion.div
           ref={marqueeRef}
           style={{ x }}
           className="flex gap-4 md:gap-12 w-max will-change-transform py-2"
         >
-          {loopLogos.map((logo, i) => (
-            <Tooltip key={`${logo.src}-${i}`} open={activeIndex === i}>
-              <TooltipTrigger asChild>
-                <div
-                  className={`relative flex flex-col items-center justify-center min-w-[100px] md:min-w-[140px]
-                              h-[50px] md:h-[70px] opacity-80 transition-all duration-300 hover:opacity-100 hover:scale-110
-                              ${activeIndex === i ? 'scale-110 opacity-100' : ''}`}
-                  onMouseEnter={() => handleLogoEnter(i)}
-                  onMouseLeave={handleLogoLeave}
-                  onTouchStart={() => handleLogoEnter(i)}
-                  onTouchEnd={handleLogoLeave}
-                >
-                  {logo.type === MediaType.VIDEO ? (
-                    <video
-                      src={logo.src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
-                      aria-label={logo.alt}
-                    />
-                  ) : (
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={100}
-                      height={70}
-                      unoptimized
-                      draggable={false}
-                      className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
-                    />
-                  )}
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <p>{logo.alt}</p>
-              </TooltipContent>
-            </Tooltip>
-          ))}
+          {loopLogos.map((logo, i) => {
+            const isDuplicate = i >= logos.length;
+            return (
+              <Tooltip key={`${logo.src}-${i}`} open={activeIndex === i}>
+                <TooltipTrigger asChild>
+                  <div
+                    aria-hidden={isDuplicate ? 'true' : undefined}
+                    className={`relative flex flex-col items-center justify-center min-w-[100px] md:min-w-[140px]
+                                h-[50px] md:h-[70px] opacity-80 transition-all duration-300 hover:opacity-100 hover:scale-110
+                                ${activeIndex === i ? 'scale-110 opacity-100' : ''}`}
+                    onMouseEnter={() => handleLogoEnter(i)}
+                    onMouseLeave={handleLogoLeave}
+                    onTouchStart={() => handleLogoEnter(i)}
+                    onTouchEnd={handleLogoLeave}
+                  >
+                    {logo.type === MediaType.VIDEO ? (
+                      <video
+                        src={logo.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        aria-label={isDuplicate ? undefined : logo.alt}
+                        aria-hidden={isDuplicate ? 'true' : undefined}
+                        className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
+                      />
+                    ) : (
+                      <Image
+                        src={logo.src}
+                        alt={isDuplicate ? '' : logo.alt}
+                        width={100}
+                        height={70}
+                        unoptimized
+                        draggable={false}
+                        className="object-contain max-h-[55px] md:max-h-[70px] max-w-[70px] md:max-w-[100px] pointer-events-none"
+                      />
+                    )}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>{logo.alt}</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
         </motion.div>
       </div>
     </TooltipProvider>

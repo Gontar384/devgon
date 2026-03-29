@@ -19,12 +19,29 @@ export function HomeTech({ content }: HomeTechProps) {
         })) ?? [],
   };
 
+  if (!safeData.logos.length) return null;
+
   return (
-    <section className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-muted/60">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      <div className="absolute inset-y-0 left-0 w-8 md:w-24 pointer-events-none bg-gradient-to-r from-muted to-transparent z-20" />
-      <div className="absolute inset-y-0 right-0 w-8 md:w-24 pointer-events-none bg-gradient-to-l from-muted to-transparent z-20" />
+    <section
+      aria-label={safeData.title || 'Technologie'}
+      className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-muted/60"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 left-0 w-8 md:w-24 pointer-events-none bg-gradient-to-r from-muted to-transparent z-20"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 right-0 w-8 md:w-24 pointer-events-none bg-gradient-to-l from-muted to-transparent z-20"
+      />
       <AnimateItem>
         <div className="relative max-w-[1400px] mx-auto px-6 text-center mb-14">
           {safeData.title && (
