@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { HomeIntroImageProps } from '@/app/home/home-types';
 import { useDeviceStore } from '@/store/deviceStore';
+import { useMobileBarStore } from '@/store/mobileBarStore';
 
 export function HomeIntroImage({
   photoUrl,
@@ -14,6 +15,8 @@ export function HomeIntroImage({
 }: HomeIntroImageProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { isMobile } = useDeviceStore();
+  const { openedBar } = useMobileBarStore();
+  const isVideo = mediaType === MediaType.VIDEO;
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -23,15 +26,11 @@ export function HomeIntroImage({
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    isMobile ? ['-20%', '20%'] : ['-12%', '12%'],
+    openedBar ? ['0%', '0%'] : isMobile ? ['-10%', '10%'] : ['-12%', '12%'],
   );
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 1],
-    isMobile ? [1.1, 1.1] : [1.25, 1.25],
-  );
+  const scale = isMobile ? 1.1 : 1.25;
 
-  const isVideo = mediaType === MediaType.VIDEO;
+  if (!photoUrl) return null;
 
   return (
     <div ref={ref} className="absolute inset-0 overflow-hidden">
@@ -49,6 +48,7 @@ export function HomeIntroImage({
             muted
             loop
             playsInline
+            aria-hidden="true"
             className="w-full h-full object-cover"
           />
         ) : (
@@ -56,9 +56,9 @@ export function HomeIntroImage({
             src={photoUrl}
             alt={photoAlt}
             fill
-            sizes="115vw"
             unoptimized
-            priority={true}
+            sizes="100vw"
+            priority
             className="object-cover"
           />
         )}

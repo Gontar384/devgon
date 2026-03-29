@@ -19,24 +19,31 @@ export function HomeIntro({ content }: HomeIntroProps) {
   return (
     <section
       id="intro"
+      aria-label={safeData.title || 'Sekcja wprowadzająca'}
       className="relative h-[60vh] w-full overflow-hidden flex items-center justify-center"
     >
-      <HomeIntroImage
-        photoUrl={safeData.photoUrl}
-        photoAlt={safeData.photoAlt}
-        mediaType={safeData.mediaType}
-      />
-      <div className="absolute inset-0 bg-black/50" />
+      {safeData.photoUrl && (
+        <HomeIntroImage
+          photoUrl={safeData.photoUrl}
+          photoAlt={safeData.photoAlt}
+          mediaType={safeData.mediaType}
+        />
+      )}
+      <div aria-hidden="true" className="absolute inset-0 bg-black/50" />
       <AnimateItem>
         <div className="relative z-10 text-center px-6 max-w-[1200px] select-none text-primary">
-          <h2
-            className="text-5xl md:text-7xl "
-            dangerouslySetInnerHTML={{ __html: safeData.title }}
-          />
-          <div
-            className="text-lg md:text-xl text-background mt-4"
-            dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
-          />
+          {safeData.title && (
+            <h2
+              className="text-5xl md:text-7xl"
+              dangerouslySetInnerHTML={{ __html: safeData.title }}
+            />
+          )}
+          {safeData.subtitle && (
+            <div
+              className="text-lg md:text-xl text-background mt-4"
+              dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
+            />
+          )}
         </div>
       </AnimateItem>
       <CursorGlow cursorColor="muted" />
