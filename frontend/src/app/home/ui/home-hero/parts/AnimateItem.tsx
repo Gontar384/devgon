@@ -13,7 +13,7 @@ export function AnimateItem({
       className={`relative ${className ?? ''}`}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0 }}
       transition={{ delay, duration: 0.7, ease: 'easeOut' }}
     >
       {children}

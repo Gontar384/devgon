@@ -10,23 +10,21 @@ import { loadSlim } from '@tsparticles/slim';
 
 export const ParticlesBackground = ({ id }: { id: string }) => {
   const [init, setInit] = useState(false);
+  const isMobile = useMemo(
+    () => typeof window !== 'undefined' && window.innerWidth < 768,
+    [],
+  );
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
+    }).then(() => setInit(true));
   }, []);
 
   const options: ISourceOptions = useMemo(
     () => ({
-      background: {
-        color: {
-          value: '',
-        },
-      },
-      fpsLimit: 120,
+      background: { color: { value: '' } },
+      fpsLimit: isMobile ? 60 : 120,
       interactivity: {
         events: {
           onClick: {},
@@ -36,66 +34,49 @@ export const ParticlesBackground = ({ id }: { id: string }) => {
           },
         },
         modes: {
-          push: {
-            quantity: 4,
-          },
-          repulse: {
-            distance: 150,
-            duration: 0.4,
-          },
+          push: { quantity: 4 },
+          repulse: { distance: 150, duration: 0.4 },
         },
       },
       particles: {
-        color: {
-          value: '#000000',
-        },
+        color: { value: '#000000' },
         links: {
           color: '#e57f73',
-          distance: 300,
+          distance: isMobile ? 400 : 300,
           enable: true,
           opacity: 1,
-          width: 6,
+          width: isMobile ? 4 : 6,
         },
         move: {
           direction: MoveDirection.none,
           enable: true,
-          outModes: {
-            default: OutMode.out,
-          },
+          outModes: { default: OutMode.out },
           random: false,
-          speed: 6,
+          speed: isMobile ? 4 : 6,
           straight: false,
         },
         number: {
-          density: {
-            enable: true,
-          },
-          value: 50,
+          density: { enable: true },
+          value: isMobile ? 30 : 50,
         },
-        opacity: {
-          value: 1,
-        },
-        shape: {
-          type: 'circle',
-        },
+        opacity: { value: 1 },
+        shape: { type: 'circle' },
         size: {
-          value: { min: 7, max: 15 },
+          value: isMobile ? { min: 5, max: 10 } : { min: 7, max: 15 },
         },
       },
       detectRetina: true,
     }),
-    [],
+    [isMobile],
   );
 
-  if (init) {
-    return (
-      <Particles
-        id={id}
-        options={{ ...options, fullScreen: { enable: false } }}
-        className="absolute inset-0 pointer-events-none z-10"
-      />
-    );
-  }
+  if (!init) return <></>;
 
-  return <></>;
+  return (
+    <Particles
+      id={id}
+      options={{ ...options, fullScreen: { enable: false } }}
+      className="absolute inset-0 pointer-events-none z-10"
+    />
+  );
 };

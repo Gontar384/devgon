@@ -1,47 +1,45 @@
 'use client';
-
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RotatingWordsProps } from '@/app/home/home-types';
 
 export function RotatingWords({ words, interval = 2500 }: RotatingWordsProps) {
   const [index, setIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
 
-  const extendedWords = [...words, words[0]];
+  const extendedWords = useMemo(() => [...words, words[0]], [words]);
 
   useEffect(() => {
     if (!words.length) return;
-
     const timer = setInterval(() => {
       setIndex((prev) => prev + 1);
     }, interval);
-
     return () => clearInterval(timer);
   }, [words, interval]);
 
   useEffect(() => {
-    if (index === words.length) {
-      setTimeout(() => {
-        setAnimate(false);
-        setIndex(0);
+    if (index !== words.length) return;
 
+    const timeout = setTimeout(() => {
+      setAnimate(false);
+      setIndex(0);
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setAnimate(true);
-          });
+          setAnimate(true);
         });
-      }, 500);
-    }
+      });
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [index, words.length]);
 
   return (
     <span className="inline-block relative overflow-hidden max-h-[2.5em] font-bold">
       <span
-        className={`flex flex-col items-center text-center ${
+        className={
           animate
-            ? 'transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]'
-            : ''
-        }`}
+            ? 'flex flex-col items-center text-center transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]'
+            : 'flex flex-col items-center text-center'
+        }
         style={{ transform: `translateY(-${index * 2.5}em)` }}
       >
         {extendedWords.map((word, i) => (
