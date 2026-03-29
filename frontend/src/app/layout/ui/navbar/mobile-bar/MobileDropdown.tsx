@@ -15,6 +15,7 @@ export function MobileDropdown({
   const [accordionActive, setAccordionActive] = useState(false);
   const hasChildren = React.Children.count(children) > 0;
   const { navigateTo } = useNavigation();
+  const [pressed, setPressed] = useState(false);
 
   return (
     <div className="flex flex-col gap-2">
@@ -33,7 +34,11 @@ export function MobileDropdown({
           <Button
             variant="ghost"
             onClick={() => setAccordionActive((prev) => !prev)}
-            className="cursor-pointer h-12 !p-1.5 active:bg-accent"
+            onTouchStart={() => setPressed(true)}
+            onTouchEnd={() => {
+              setTimeout(() => setPressed(false), 100);
+            }}
+            className={`cursor-pointer h-12 !p-1.5 ${pressed && 'bg-accent'}`}
             aria-expanded={accordionActive}
             aria-controls={`submenu-${title.replace(/\s/g, '-')}`}
           >
