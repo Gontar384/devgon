@@ -10,6 +10,7 @@ export function HamburgerButton() {
   const { toggleBar, openedBar } = useMobileBarStore();
   const detectDevice = useDeviceStore((state) => state.detectDevice);
   const [blockInitAnimation, setBlockInitAnimation] = useState(true);
+  const [pressed, setPressed] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => setBlockInitAnimation(false), 50);
@@ -25,9 +26,13 @@ export function HamburgerButton() {
   return (
     <Button
       variant="ghost"
-      className="mr-3 h-12 p-3 md:hidden cursor-pointer active:bg-accent"
+      className={`mr-3 h-12 p-3 md:hidden cursor-pointer ${pressed && 'bg-accent'}`}
       aria-label="Otwórz menu nawigacji mobilnej"
       onClick={toggleBar}
+      onTouchStart={() => setPressed(true)}
+      onTouchEnd={() => {
+        setTimeout(() => setPressed(false), 100);
+      }}
     >
       <AnimatePresence mode="wait">
         {!openedBar ? (
