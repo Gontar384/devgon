@@ -10,11 +10,13 @@ export default function NavbarClient() {
   const lastY = useRef<number>(0);
   const ticking = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasUserScrolled = useRef(false);
+  const isTransitioning = useRef(false);
+  const transitionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { openedBar, isNavigating } = useMobileBarStore();
 
   const applyVisibility = (hide: boolean) => {
     if (hiddenRef.current === hide) return;
-
     hiddenRef.current = hide;
     if (containerRef.current) {
       containerRef.current.style.transform = hide
@@ -24,28 +26,43 @@ export default function NavbarClient() {
   };
 
   useEffect(() => {
+    isTransitioning.current = true;
+    if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
+
+    transitionTimeout.current = setTimeout(() => {
+      isTransitioning.current = false;
+
+      if (!openedBar) {
+        lastY.current = window.scrollY;
+        applyVisibility(false);
+        hiddenRef.current = false;
+      }
+    }, 450);
+
+    return () => {
+      if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
+    };
+  }, [openedBar]);
+
+  useEffect(() => {
     if (!isNavigating && !openedBar) {
       lastY.current = window.scrollY;
       applyVisibility(false);
       hiddenRef.current = false;
     }
-  }, [openedBar, isNavigating]);
+  }, [isNavigating, openedBar]);
 
   useEffect(() => {
     const markUserScroll = () => {
       hasUserScrolled.current = true;
     };
-
     window.addEventListener('wheel', markUserScroll, { passive: true });
     window.addEventListener('touchmove', markUserScroll, { passive: true });
-
     return () => {
       window.removeEventListener('wheel', markUserScroll);
       window.removeEventListener('touchmove', markUserScroll);
     };
   }, []);
-
-  const hasUserScrolled = useRef(false);
 
   useEffect(() => {
     lastY.current = window.scrollY;
@@ -55,7 +72,8 @@ export default function NavbarClient() {
         !hasUserScrolled.current ||
         navigationSuppressRef.current ||
         openedBar ||
-        suppressScrollRef.current
+        suppressScrollRef.current ||
+        isTransitioning.current
       ) {
         lastY.current = window.scrollY;
         return;
