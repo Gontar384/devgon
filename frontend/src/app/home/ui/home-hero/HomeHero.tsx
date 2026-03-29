@@ -1,11 +1,11 @@
 import React from 'react';
-import { RotatingWords } from '@/app/home/ui/parts/RotatingWords';
+import { RotatingWords } from '@/app/home/ui/home-hero/parts/RotatingWords';
 import { HomeHeroProps } from '@/app/home/home-types';
-import { TypingEffect } from '@/app/home/ui/parts/TypingEffect';
-import { ParticlesBackground } from '@/app/home/ui/parts/animations/ParticlesBackground';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { ScrollArrow } from '@/app/home/ui/parts/ScrollArrow';
-import { HeroButton } from '@/app/home/ui/parts/HeroButton';
+import { TypingEffect } from '@/app/home/ui/home-hero/parts/TypingEffect';
+import { ParticlesBackground } from '@/app/home/ui/home-hero/parts/ParticlesBackground';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { ScrollArrow } from '@/app/home/ui/home-hero/parts/ScrollArrow';
+import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 
 export function HomeHero({ content }: HomeHeroProps) {
   if (!content) return null;
@@ -63,14 +63,14 @@ export function HomeHero({ content }: HomeHeroProps) {
         <AnimateItem delay={0.2}>
           <div className="flex gap-2 md:gap-3 flex-wrap justify-center pt-4">
             {safeData.primaryCta && (
-              <HeroButton
+              <NavigationButton
                 href={safeData.primaryCta.href}
                 label={safeData.primaryCta.label}
                 primary
               />
             )}
             {safeData.secondaryCta && (
-              <HeroButton
+              <NavigationButton
                 href={safeData.secondaryCta.href}
                 label={safeData.secondaryCta.label}
               />

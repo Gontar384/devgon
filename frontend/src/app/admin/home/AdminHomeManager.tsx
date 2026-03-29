@@ -11,8 +11,8 @@ export function AdminHomeManager({
   const homeHero = contents['home-hero'] ?? [];
   const homeIntro = contents['home-intro'] ?? [];
   const homeServices = contents['home-services'] ?? [];
-  const homeProblems = contents['home-problems'] ?? [];
-  const homeProcess = contents['home-process'] ?? [];
+  const homeSolution = contents['home-solution'] ?? [];
+  const homeWorkflow = contents['home-workflow'] ?? [];
   const homeTech = contents['home-tech'] ?? [];
   const homeAbout = contents['home-about'] ?? [];
   const homeContact = contents['home-contact'] ?? [];
@@ -39,8 +39,8 @@ export function AdminHomeManager({
           contentKey={'home-intro'}
           mode={'single'}
           fields={{
-            title: 40,
-            subtitle: 100,
+            title: 50,
+            subtitle: 200,
             description: 0,
             customData: 0,
           }}
@@ -52,31 +52,31 @@ export function AdminHomeManager({
           mode={'multiple'}
           fields={{
             title: 100,
-            subtitle: 100,
+            subtitle: 200,
             description: 500,
             customData: 500,
           }}
           maxMedia={1}
         />
         <ContentCardManager
-          contents={homeProblems}
-          contentKey={'home-problems'}
+          contents={homeSolution}
+          contentKey={'home-solution'}
           mode={'single'}
           fields={{
             title: 100,
-            subtitle: 100,
+            subtitle: 200,
             description: 0,
-            customData: 1000,
+            customData: 2000,
           }}
           maxMedia={1}
         />
         <ContentCardManager
-          contents={homeProcess}
-          contentKey={'home-process'}
+          contents={homeWorkflow}
+          contentKey={'home-workflow'}
           mode={'single'}
           fields={{
-            title: 50,
-            subtitle: 100,
+            title: 100,
+            subtitle: 200,
             description: 0,
             customData: 1000,
           }}
@@ -88,7 +88,7 @@ export function AdminHomeManager({
           mode={'single'}
           fields={{
             title: 100,
-            subtitle: 100,
+            subtitle: 200,
             description: 0,
             customData: 0,
           }}
@@ -100,8 +100,8 @@ export function AdminHomeManager({
           mode={'single'}
           fields={{
             title: 100,
-            subtitle: 100,
-            description: 500,
+            subtitle: 200,
+            description: 1000,
             customData: 0,
           }}
           maxMedia={1}
@@ -111,9 +111,9 @@ export function AdminHomeManager({
           contentKey={'home-contact'}
           mode={'single'}
           fields={{
-            title: 50,
-            subtitle: 150,
-            description: 300,
+            title: 100,
+            subtitle: 200,
+            description: 500,
             customData: 0,
           }}
           maxMedia={0}

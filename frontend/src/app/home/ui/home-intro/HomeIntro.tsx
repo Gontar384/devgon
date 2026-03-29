@@ -1,9 +1,9 @@
 import React from 'react';
 import { MediaType } from '@/cms/content/content-types';
 import { HomeIntroProps } from '@/app/home/home-types';
-import { HomeIntroImage } from './HomeIntroImage';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { CursorGlow } from '@/app/home/ui/parts/animations/CursorGlow';
+import { HomeIntroImage } from './parts/HomeIntroImage';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { CursorGlow } from '@/app/home/ui/home-intro/parts/CursorGlow';
 
 export function HomeIntro({ content }: HomeIntroProps) {
   if (!content) return null;
@@ -18,7 +18,7 @@ export function HomeIntro({ content }: HomeIntroProps) {
 
   return (
     <section
-      id="introduction"
+      id="intro"
       className="relative h-[60vh] w-full overflow-hidden flex items-center justify-center"
     >
       <HomeIntroImage

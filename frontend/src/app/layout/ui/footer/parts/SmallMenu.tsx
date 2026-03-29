@@ -2,7 +2,7 @@
 import { smallMenu } from '@/app/layout/ui/footer/linksData';
 import Link from 'next/link';
 import React from 'react';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
+import { useNavigation } from '@/app/layout/util/useNavigation';
 
 export function SmallMenu() {
   const { navigateTo, navigateToTop } = useNavigation();

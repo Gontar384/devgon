@@ -5,7 +5,7 @@ import { MenubarContent, MenubarTrigger } from '@/components/ui/menubar';
 import { CircleChevronDown } from 'lucide-react';
 import { MenubarMenu } from '@radix-ui/react-menubar';
 import { DropdownWrapperProps } from '@/app/layout/layout-types';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
+import { useNavigation } from '@/app/layout/util/useNavigation';
 
 export function Dropdown({
   title,

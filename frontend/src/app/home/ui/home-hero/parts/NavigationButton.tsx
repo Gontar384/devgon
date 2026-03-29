@@ -1,15 +1,15 @@
 'use client';
 import React from 'react';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
-import { HeroButtonProps } from '@/app/home/home-types';
+import { useNavigation } from '@/app/layout/util/useNavigation';
+import { NavigationButtonProps } from '@/app/home/home-types';
 import Link from 'next/link';
 
-export function HeroButton({
+export function NavigationButton({
   href,
   label,
   primary = false,
   icon,
-}: HeroButtonProps) {
+}: NavigationButtonProps) {
   const { navigateTo } = useNavigation();
 
   const baseClasses =

@@ -38,7 +38,7 @@ export const smallMenu: FooterLinkData[] = [
   },
   {
     title: 'Oferta',
-    href: '/#offer',
+    href: '/#services',
   },
   {
     title: 'Współpraca',

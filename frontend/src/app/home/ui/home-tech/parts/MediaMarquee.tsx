@@ -3,7 +3,7 @@
 import { useMotionValue, useAnimationFrame, motion } from 'framer-motion';
 import Image from 'next/image';
 import { MediaType } from '@/cms/content/content-types';
-import { TechMarqueeProps } from '@/app/home/home-types';
+import { MediaMarqueeProps } from '@/app/home/home-types';
 import { useRef, useState } from 'react';
 import {
   Tooltip,
@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-export function TechMarquee({ logos }: TechMarqueeProps) {
+export function MediaMarquee({ logos }: MediaMarqueeProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const pausedRef = useRef(false);

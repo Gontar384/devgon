@@ -4,8 +4,8 @@ import { DropdownWrapperProps } from '@/app/layout/layout-types';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleChevronUp } from 'lucide-react';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
-import { useHoverWithTouch } from '@/app/layout/ui/navbar/useHoverWithTouch';
+import { useNavigation } from '@/app/layout/util/useNavigation';
+import { useHoverWithTouch } from '@/app/layout/util/useHoverWithTouch';
 
 export function MobileDropdown({
   title,

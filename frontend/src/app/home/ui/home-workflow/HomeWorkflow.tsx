@@ -1,8 +1,8 @@
-import { HomeProcessProps } from '@/app/home/home-types';
-import { ProcessTimeline } from '@/app/home/ui/ProcessTimeline';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
+import { HomeWorkflowProps } from '@/app/home/home-types';
+import { ProcessTimeline } from '@/app/home/ui/home-workflow/parts/ProcessTimeline';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 
-export function HomeProcess({ content }: HomeProcessProps) {
+export function HomeWorkflow({ content }: HomeWorkflowProps) {
   if (!content) return null;
 
   const safeData = {
@@ -14,7 +14,7 @@ export function HomeProcess({ content }: HomeProcessProps) {
 
   return (
     <section
-      id="collaboration"
+      id="workflow"
       className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none"
     >
       <div className="absolute inset-0 -z-10">

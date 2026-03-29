@@ -1,13 +1,13 @@
 'use client';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { AnimateClientProps } from '@/app/home/home-types';
+import { AnimateItemProps } from '@/app/home/home-types';
 
 export function AnimateItem({
   children,
   delay = 0,
   className,
-}: AnimateClientProps) {
+}: AnimateItemProps) {
   return (
     <motion.div
       className={`relative ${className ?? ''}`}

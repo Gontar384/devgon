@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MenubarItem } from '@/components/ui/menubar';
 import { DropdownOptionProps } from '@/app/layout/layout-types';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
+import { useNavigation } from '@/app/layout/util/useNavigation';
 
 export function DropdownOption({
   title,

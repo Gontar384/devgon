@@ -1,7 +1,7 @@
 import { MediaType } from '@/cms/content/content-types';
 import { HomeTechProps } from '@/app/home/home-types';
-import { TechMarquee } from '@/app/home/ui/parts/TechMarquee';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
+import { MediaMarquee } from '@/app/home/ui/home-tech/parts/MediaMarquee';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 
 export function HomeTech({ content }: HomeTechProps) {
   if (!content) return null;
@@ -43,7 +43,7 @@ export function HomeTech({ content }: HomeTechProps) {
       </AnimateItem>
       <AnimateItem delay={0.1}>
         <div className="relative">
-          <TechMarquee logos={safeData.logos} />
+          <MediaMarquee logos={safeData.logos} />
         </div>
       </AnimateItem>
     </section>

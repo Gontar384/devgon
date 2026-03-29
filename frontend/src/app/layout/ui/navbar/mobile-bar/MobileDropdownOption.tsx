@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DropdownOptionProps } from '@/app/layout/layout-types';
-import { useNavigation } from '@/app/layout/ui/navbar/useNavigation';
+import { useNavigation } from '@/app/layout/util/useNavigation';
 
 export function MobileDropdownOption({
   title,

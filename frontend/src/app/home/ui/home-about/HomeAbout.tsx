@@ -1,8 +1,8 @@
 import { HomeAboutProps } from '@/app/home/home-types';
 import { MediaType } from '@/cms/content/content-types';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { CursorGlow } from '@/app/home/ui/parts/animations/CursorGlow';
-import { MediaContainer } from '@/app/home/ui/parts/MediaContainer';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { CursorGlow } from '@/app/home/ui/home-intro/parts/CursorGlow';
+import { MediaContainer } from '@/app/home/ui/home-about/parts/MediaContainer';
 
 export function HomeAbout({ content }: HomeAboutProps) {
   if (!content) return null;

@@ -2,7 +2,7 @@ import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
 import { HomeManager } from '@/app/home/HomeManager';
 import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
-import { HashScrollHandler } from '@/app/home/useHashScrollOnMount';
+import { HashScrollHandler } from '@/app/home/util/useHashScrollOnMount';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -15,10 +15,10 @@ export const generateMetadata = (): Metadata =>
 export default async function HomePage() {
   const { contents } = await loadPageContents([
     'home-hero',
-    'home-services',
-    'home-problems',
     'home-intro',
-    'home-process',
+    'home-services',
+    'home-solution',
+    'home-workflow',
     'home-tech',
     'home-about',
     'home-contact',

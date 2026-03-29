@@ -2,8 +2,8 @@
 import React, { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import { useMobileBarStore } from '@/store/mobileBarStore';
-import { navigationSuppressRef } from '@/app/layout/ui/navbar/useNavigation';
-import { suppressScrollRef } from '@/app/layout/ui/navbar/scrollControl';
+import { navigationSuppressRef } from '@/app/layout/util/useNavigation';
+import { suppressScrollRef } from '@/app/layout/util/scrollControl';
 
 export default function NavbarClient() {
   const hiddenRef = useRef(false);

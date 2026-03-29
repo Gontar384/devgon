@@ -8,14 +8,14 @@ import {
   Zap,
 } from 'lucide-react';
 import { MediaType } from '@/cms/content/content-types';
-import { ScrollRevealImage } from '@/app/home/ui/parts/animations/ScrollRevealImage';
+import { ScrollRevealImage } from '@/app/home/ui/home-solution/parts/ScrollRevealImage';
 import {
-  HomeProblemSectionProps,
+  HomeSolutionProps,
   ProblemIcon,
   ProblemItem,
 } from '@/app/home/home-types';
-import { AnimateItem } from '@/app/home/ui/parts/animations/AnimateItem';
-import { HeroButton } from '@/app/home/ui/parts/HeroButton';
+import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 
 const ICONS: Record<ProblemIcon, React.ReactNode> = {
   clock: <Clock size={15} />,
@@ -24,7 +24,7 @@ const ICONS: Record<ProblemIcon, React.ReactNode> = {
   zap: <Zap size={15} />,
 };
 
-export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
+export function HomeSolution({ content }: HomeSolutionProps) {
   const safeData = {
     title: content.title ?? '',
     subtitle: content.subtitle ?? '',
@@ -115,7 +115,7 @@ export function HomeProblemsSection({ content }: HomeProblemSectionProps) {
             </div>
             {safeData.cta.label && (
               <AnimateItem delay={0.1}>
-                <HeroButton
+                <NavigationButton
                   href={safeData.cta.href}
                   label={safeData.cta.label}
                   primary

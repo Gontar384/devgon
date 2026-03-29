@@ -1,4 +1,4 @@
-import api from '@/lib/auth/axios';
+import api from '@/lib/axios';
 
 /** Redirects the browser to the backend Google OAuth entry point. */
 export function loginWithGoogle(): void {

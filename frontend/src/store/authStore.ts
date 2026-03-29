@@ -1,7 +1,7 @@
 'use client';
 import { create } from 'zustand';
 import { AuthUser } from '@/lib/auth/auth-types';
-import api from '@/lib/auth/axios';
+import api from '@/lib/axios';
 import { AuthState } from '@/store/store-types';
 
 export const useAuthStore = create<AuthState>((set) => ({
