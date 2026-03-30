@@ -17,13 +17,18 @@ export function HomeAbout({ content }: HomeAboutProps) {
   };
 
   return (
-    <section id="about" className="relative py-24 overflow-hidden select-none">
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className="relative py-24 overflow-hidden select-none"
+    >
       <div className="max-w-[1200px] mx-auto px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <AnimateItem>
             <div className="relative">
               {safeData.title && (
                 <h2
+                  id="about-heading"
                   className="text-5xl md:text-6xl font-semibold leading-tight"
                   dangerouslySetInnerHTML={{ __html: safeData.title }}
                 />
@@ -44,11 +49,13 @@ export function HomeAbout({ content }: HomeAboutProps) {
           </AnimateItem>
           {safeData.photoUrl && (
             <div className="w-full flex justify-center">
-              <MediaContainer
-                src={safeData.photoUrl}
-                alt={safeData.photoAlt}
-                type={safeData.mediaType}
-              />
+              <AnimateItem>
+                <MediaContainer
+                  src={safeData.photoUrl}
+                  alt={safeData.photoAlt}
+                  type={safeData.mediaType}
+                />
+              </AnimateItem>
             </div>
           )}
         </div>
