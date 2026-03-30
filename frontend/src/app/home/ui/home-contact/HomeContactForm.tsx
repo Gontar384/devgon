@@ -217,7 +217,7 @@ export function HomeContactForm() {
             </Label>
             <Textarea
               id="message"
-              placeholder="Opisz swój projekt lub zadaj pytanie..."
+              placeholder="Opisz swój pomysł lub zadaj pytanie..."
               rows={6}
               className="text-base px-4 py-3 resize-none"
               {...register('message')}

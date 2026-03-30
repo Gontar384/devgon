@@ -72,7 +72,7 @@ export function HomeContact({ content }: HomeContactProps) {
             </AnimateItem>
             {safeData.description && (
               <AnimateItem delay={0.2}>
-                <div className="bg-primary/10 border border-primary/20 rounded-2xl p-8">
+                <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
                   <div
                     className="text-base text-muted-foreground leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: safeData.description }}

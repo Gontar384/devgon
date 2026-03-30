@@ -1,6 +1,6 @@
 {
-  "title": "Technologie, z których korzystamy",
-  "subtitle": "Sprawdzone narzędzia do budowy skalowalnych systemów",
+  "title": "Nasz Stack Technologiczny",
+  "subtitle": "Wykorzystujemy nowoczesne i stabilne rozwiązania. Dobieramy narzędzia pod Twój biznes, nie odwrotnie.",
   "media": [
     {
       "url": "/svg/tech/nextjs.svg",
@@ -13,23 +13,18 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/react.svg",
-      "alt": "React",
+      "url": "/svg/tech/n8n.svg",
+      "alt": "n8n",
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/nodejs.svg",
-      "alt": "Node.js",
+      "url": "/svg/tech/openai.svg",
+      "alt": "OpenAI",
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/typescript.svg",
-      "alt": "TypeScript",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/docker.svg",
-      "alt": "Docker",
+      "url": "/svg/tech/python.svg",
+      "alt": "Python",
       "type": "IMAGE"
     },
     {
@@ -43,23 +38,13 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/github.svg",
-      "alt": "GitHub",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/n8n.svg",
-      "alt": "n8n",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/jira.svg",
-      "alt": "Jira",
+      "url": "/svg/tech/docker.svg",
+      "alt": "Docker",
       "type": "IMAGE"
     },
     {
       "url": "/svg/tech/linux.svg",
-      "alt": "Linux",
+      "alt": "Linux VPS",
       "type": "IMAGE"
     },
     {
@@ -73,8 +58,23 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/android.svg",
-      "alt": "Android",
+      "url": "/svg/tech/postgresql.svg",
+      "alt": "PostgreSQL",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/typescript.svg",
+      "alt": "TypeScript",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/nodejs.svg",
+      "alt": "Node.js",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/react.svg",
+      "alt": "React.js",
       "type": "IMAGE"
     },
     {
@@ -83,8 +83,13 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/wix.svg",
-      "alt": "Wix",
+      "url": "/svg/tech/github.svg",
+      "alt": "GitHub",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/jira.svg",
+      "alt": "Jira",
       "type": "IMAGE"
     }
   ]

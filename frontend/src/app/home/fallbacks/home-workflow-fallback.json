@@ -1,24 +1,24 @@
 {
-  "title": "Jak wygląda współpraca",
-  "subtitle": "Prosty i przejrzysty proces od pomysłu do wdrożenia",
+  "title": "Jak budujemy Twój sukces",
+  "subtitle": "Od audytu procesów biznesowych po inteligentne systemy pracujące na Twój zysk.",
   "customData": {
-    "topHeader": "Jak działamy",
+    "topHeader": "Proces devgon",
     "items": [
       {
-        "title": "Rozmowa i analiza",
-        "description": "Poznajemy Twój biznes i problemy, które chcesz rozwiązać."
+        "title": "Analiza i mapowanie",
+        "description": "Nie zgadujemy. Analizujemy Twoje procesy, znajdujemy wąskie gardła i wyceniamy realne oszczędności czasu."
       },
       {
-        "title": "Propozycja rozwiązania",
-        "description": "Otrzymujesz konkretny plan działania i zakres prac."
+        "title": "Architektura rozwiązań",
+        "description": "Dobieramy sprawdzone, niezawodne narzędzia, które najlepiej rozwiążą Twój problem przy zachowaniu optymalnego budżetu."
       },
       {
-        "title": "Realizacja",
-        "description": "Budujemy system i automatyzacje krok po kroku."
+        "title": "Zwinna implementacja",
+        "description": "Wdrażamy automatyzacje i systemy iteracyjnie. Szybko widzisz pierwsze efekty i masz realny wpływ na kształt narzędzia."
       },
       {
-        "title": "Wdrożenie i rozwój",
-        "description": "Uruchamiamy rozwiązanie i rozwijamy je dalej."
+        "title": "Optymalizacja i opieka",
+        "description": "Uruchamiamy system, szkolimy zespół i monitorujemy wydajność w chmurze, by wszystko działało jak w zegarku."
       }
     ]
   }

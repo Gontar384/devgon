@@ -6,8 +6,9 @@ import { MediaType } from '@/cms/content/content-types';
 import { ExternalLink } from 'lucide-react';
 import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 
-const CARD_HEIGHT = 650;
-const PHOTO_HEIGHT = 260;
+const CARD_HEIGHT = 675;
+const PHOTO_HEIGHT = 270;
+const TEXT_HEIGHT = 280;
 
 export function HomeServiceCard({
   content,
@@ -32,7 +33,10 @@ export function HomeServiceCard({
       style={{ height: CARD_HEIGHT }}
     >
       <CardContent className="flex flex-col h-full px-5 pb-5 pt-2 overflow-hidden">
-        <div className="flex flex-col gap-1.5 flex-shrink-0 overflow-hidden">
+        <div
+          className="flex flex-col gap-1.5 flex-shrink-0 overflow-hidden"
+          style={{ height: TEXT_HEIGHT }}
+        >
           {safeData.tags.length > 0 && (
             <ul
               aria-label="Kategorie"
@@ -89,7 +93,7 @@ export function HomeServiceCard({
               ) : (
                 <Image
                   src={safeData.photoUrl}
-                  alt=""
+                  alt={safeData.photoAlt}
                   fill
                   unoptimized
                   priority={priority}

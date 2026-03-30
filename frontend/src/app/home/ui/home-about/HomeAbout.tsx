@@ -3,6 +3,12 @@ import { MediaType } from '@/cms/content/content-types';
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 import { CursorGlow } from '@/app/home/ui/home-intro/parts/CursorGlow';
 import { MediaContainer } from '@/app/home/ui/home-about/parts/MediaContainer';
+import { Cookie } from 'next/font/google';
+
+const cookie = Cookie({
+  subsets: ['latin'],
+  weight: ['400'],
+});
 
 export function HomeAbout({ content }: HomeAboutProps) {
   if (!content) return null;
@@ -14,6 +20,7 @@ export function HomeAbout({ content }: HomeAboutProps) {
     photoUrl: content.media?.[0]?.url ?? '',
     photoAlt: content.media?.[0]?.alt ?? '',
     mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
+    signature: content.customData?.signature ?? '',
   };
 
   return (
@@ -44,6 +51,18 @@ export function HomeAbout({ content }: HomeAboutProps) {
                   className="text-base md:text-lg mt-5 text-muted-foreground space-y-4"
                   dangerouslySetInnerHTML={{ __html: safeData.description }}
                 />
+              )}
+              {safeData.signature && (
+                <div className="flex flex-col items-end gap-0.5">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/40">
+                    Founder & CEO
+                  </span>
+                  <span
+                    className={`${cookie.className} text-6xl md:text-7xl leading-none`}
+                  >
+                    {safeData.signature}
+                  </span>
+                </div>
               )}
             </div>
           </AnimateItem>
