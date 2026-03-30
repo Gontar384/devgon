@@ -1,3 +1,4 @@
+'use client';
 import {
   Tooltip,
   TooltipContent,
@@ -5,20 +6,27 @@ import {
 } from '@/components/ui/tooltip';
 import { UserStar } from 'lucide-react';
 import React from 'react';
-import Link from 'next/link';
+import { useDeviceStore } from '@/store/deviceStore';
+import { NavLink } from '@/app/layout/util/NavLink';
 
 export function AdminButton() {
+  const { isMobile } = useDeviceStore();
+
+  const trigger = (
+    <NavLink
+      href="/admin"
+      className="hover:scale-105 active:scale-105 cursor-pointer flex items-center justify-center px-0.5"
+      aria-label="Przejdź do panelu administratora"
+    >
+      <UserStar className="!w-7 !h-7" aria-hidden="true" />
+    </NavLink>
+  );
+
+  if (isMobile) return trigger;
+
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
-        <Link
-          href="/admin"
-          className="hover:scale-105 active:scale-105 cursor-pointer flex items-center justify-center px-0.5"
-          aria-label="Przejdź do panelu administratora"
-        >
-          <UserStar className="!w-7 !h-7" aria-hidden="true" />
-        </Link>
-      </TooltipTrigger>
+      <TooltipTrigger asChild>{trigger}</TooltipTrigger>
       <TooltipContent className="select-none" side="bottom">
         <span>Panel administratora</span>
       </TooltipContent>
