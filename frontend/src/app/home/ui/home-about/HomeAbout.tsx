@@ -48,15 +48,13 @@ export function HomeAbout({ content }: HomeAboutProps) {
             </div>
           </AnimateItem>
           {safeData.photoUrl && (
-            <div className="w-full flex justify-center">
-              <AnimateItem>
-                <MediaContainer
-                  src={safeData.photoUrl}
-                  alt={safeData.photoAlt}
-                  type={safeData.mediaType}
-                />
-              </AnimateItem>
-            </div>
+            <AnimateItem className="w-full flex justify-center">
+              <MediaContainer
+                src={safeData.photoUrl}
+                alt={safeData.photoAlt}
+                type={safeData.mediaType}
+              />
+            </AnimateItem>
           )}
         </div>
       </div>
