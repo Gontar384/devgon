@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { AnchorHTMLAttributes } from 'react';
 import { AuthUser } from '@/lib/auth/auth-types';
+import { LinkProps } from 'next/link';
 
 export interface DropdownOptionProps {
   title: string;
@@ -52,3 +53,8 @@ export interface SocialLinkData extends FooterLinkData {
   iconWidth: number;
   iconHeight: number;
 }
+
+export type NavLinkProps = LinkProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    onNavigate?: () => void;
+  };

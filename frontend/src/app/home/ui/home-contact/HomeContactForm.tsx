@@ -169,7 +169,7 @@ export function HomeContactForm() {
             <Input
               id="email"
               type="email"
-              placeholder="jan@kowalski.pl"
+              placeholder="jan.kowalski@email.com"
               className="h-12 text-base px-4"
               {...register('email')}
               aria-invalid={!!errors.email}

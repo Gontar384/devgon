@@ -1,11 +1,11 @@
 'use client';
 import { smallMenu } from '@/app/layout/ui/footer/linksData';
-import Link from 'next/link';
 import React from 'react';
 import { useNavigation } from '@/app/layout/util/useNavigation';
+import { NavLink } from '@/app/layout/util/NavLink';
 
 export function SmallMenu() {
-  const { navigateTo, navigateToTop } = useNavigation();
+  const { navigateToTop } = useNavigation();
 
   return (
     <div className="flex flex-col gap-2 text-sm text-muted-foreground">
@@ -15,17 +15,14 @@ export function SmallMenu() {
         aria-label="Nawigacja"
       >
         {smallMenu.map((link) => (
-          <Link
+          <NavLink
             key={link.title}
             href={link.href}
-            onClick={(e) => {
-              e.preventDefault();
-              link.href === '/' ? navigateToTop() : navigateTo(link.href);
-            }}
+            onNavigate={link.href === '/' ? navigateToTop : undefined}
             className="cursor-pointer hover:underline active:underline"
           >
             {link.title}
-          </Link>
+          </NavLink>
         ))}
       </div>
     </div>
