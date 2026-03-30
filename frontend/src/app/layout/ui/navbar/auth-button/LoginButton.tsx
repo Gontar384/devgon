@@ -94,6 +94,7 @@ export function LoginButton({
         className="w-60 flex select-none !z-45"
         side="bottom"
         onClick={() => setShowTooltipOnMobile(false)}
+        role="tooltip"
       >
         <span>Zaloguj się i odblokuj pełne możliwości naszej strony!</span>
         <Image
@@ -101,7 +102,6 @@ export function LoginButton({
           alt="Login icon"
           width={48}
           height={48}
-          priority
         />
       </TooltipContent>
     </Tooltip>

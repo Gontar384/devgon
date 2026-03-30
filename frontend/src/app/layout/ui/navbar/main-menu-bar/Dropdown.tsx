@@ -28,7 +28,10 @@ export function Dropdown({
             className="p-0.5 transition-transform duration-100 data-[state=open]:bg-accent data-[state=open]:rotate-180 data-[state=closed]:rotate-0 focus:bg-background hover:bg-accent active:bg-accent"
             id={undefined}
           >
-            <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
+            <CircleChevronDown
+              className="!w-7 !h-7 cursor-pointer"
+              aria-hidden="true"
+            />
           </MenubarTrigger>
         )}
       </div>

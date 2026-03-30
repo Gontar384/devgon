@@ -91,6 +91,7 @@ export default function MobileBar() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu mobilne"
+          tabIndex={-1}
           style={{
             msOverflowStyle: 'none',
             scrollbarWidth: 'none',

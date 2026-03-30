@@ -13,7 +13,7 @@
     "customData": {
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/offer/apps-and-systems"
+        "href": "/#services"
       },
       "tags": ["Systemy", "Aplikacje", "SaaS"]
     }
@@ -32,7 +32,7 @@
     "customData": {
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/offer/processes-automation"
+        "href": "/#services"
       },
       "tags": ["Automatyzacja", "AI", "Integracje"]
     }
@@ -51,7 +51,7 @@
     "customData": {
       "cta": {
         "label": "Zobacz więcej",
-        "href": "/offer/company-scaling"
+        "href": "/#services"
       },
       "tags": ["Skalowanie", "Cloud", "Performance"]
     }

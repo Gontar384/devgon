@@ -39,7 +39,7 @@ export function HamburgerButton() {
             exit={{ opacity: 0, rotate: 180 }}
             transition={{ duration: 0.2 }}
           >
-            <Hamburger className="!w-10 !h-10" />
+            <Hamburger className="!w-10 !h-10" aria-hidden="true" />
           </motion.div>
         ) : (
           <motion.div
@@ -49,7 +49,7 @@ export function HamburgerButton() {
             exit={{ opacity: 0, rotate: -180 }}
             transition={{ duration: 0.2 }}
           >
-            <CircleX className="!w-10 !h-10" />
+            <CircleX className="!w-10 !h-10" aria-hidden="true" />
           </motion.div>
         )}
       </AnimatePresence>

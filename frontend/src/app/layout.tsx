@@ -36,7 +36,9 @@ export default async function RootLayout({
         <AuthInitializer />
         <NavbarClient />
         <MobileBar />
-        <main className="min-h-screen mt-16">{children}</main>
+        <main id="main-content" tabIndex={-1} className="min-h-screen mt-16">
+          {children}
+        </main>
         <Footer />
         <LoginDialog />
         <Toaster position="bottom-center" />

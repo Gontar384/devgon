@@ -19,12 +19,14 @@ export function AuthButton({ isMobileBar }: AuthButtonProps) {
     return (
       <Skeleton
         className={`h-10 w-36 bg-primary/40 ${isMobileBar ? 'mt-12' : 'hidden md:flex'}`}
+        aria-busy="true"
       />
     );
   }
 
   return (
     <div
+      role="toolbar"
       className={`gap-2 select-none ${isMobileBar ? 'flex mt-12' : 'hidden md:flex'}`}
       aria-label="Akcje użytkownika"
     >

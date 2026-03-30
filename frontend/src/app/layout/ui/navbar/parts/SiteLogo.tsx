@@ -12,6 +12,7 @@ export function SiteLogo() {
       href="/"
       onNavigate={navigateToTop}
       className="ml-4 select-none flex-shrink-0"
+      aria-label="Przejdź do strony głównej"
     >
       <Image
         src="/logo/logo-caption-black.svg"

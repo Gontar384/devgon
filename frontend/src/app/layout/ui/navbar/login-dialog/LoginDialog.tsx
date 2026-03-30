@@ -66,6 +66,10 @@ export function LoginDialog() {
       ${animateState === 'open' ? 'opacity-100' : 'opacity-0'}`}
       aria-modal="true"
       role="dialog"
+      tabIndex={-1}
+      ref={(el) => {
+        if (el && dialogOpen) el.focus();
+      }}
     >
       <div
         className={`relative w-full max-w-md rounded-[1.2rem] bg-background p-6 shadow-lg select-none transition-all duration-200
@@ -89,7 +93,6 @@ export function LoginDialog() {
                 alt="Zaloguj się za pomocą Google"
                 width={24}
                 height={24}
-                priority
               />
               Zaloguj przez Google
             </Button>

@@ -14,8 +14,9 @@ export function AdminButton() {
         <Link
           href="/admin"
           className="hover:scale-105 active:scale-105 cursor-pointer flex items-center justify-center px-0.5"
+          aria-label="Przejdź do panelu administratora"
         >
-          <UserStar className="!w-7 !h-7" />
+          <UserStar className="!w-7 !h-7" aria-hidden="true" />
         </Link>
       </TooltipTrigger>
       <TooltipContent className="select-none" side="bottom">
