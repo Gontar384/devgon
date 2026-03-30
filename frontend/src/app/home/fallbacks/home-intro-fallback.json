@@ -1,10 +1,10 @@
 {
-  "title": "OFERTA",
-  "subtitle": "Sprawdź, jak możemy pomóc rozwinąć Twój biznes dzięki technologii.",
+  "title": "Technologia dla biznesu",
+  "subtitle": "Sprawdź, jak możemy pomóc rozwinąć Twój biznes dzięki najnowszym rozwiązaniom.",
   "media": [
     {
       "url": "/image/cool-programmer.jpg",
-      "alt": "Sprawdź ofertę devgon",
+      "alt": "Sprawdź naszą ofertę",
       "type": "IMAGE"
     }
   ]

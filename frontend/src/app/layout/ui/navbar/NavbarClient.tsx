@@ -114,6 +114,7 @@ export default function NavbarClient() {
   return (
     <div
       ref={containerRef}
+      aria-hidden={hiddenRef.current}
       className="fixed top-0 left-0 right-0 z-45 transition-transform duration-400 will-change-transform"
     >
       <Navbar />

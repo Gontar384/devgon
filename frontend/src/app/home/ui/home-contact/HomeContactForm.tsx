@@ -63,7 +63,10 @@ export function HomeContactForm() {
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.1, type: 'spring', stiffness: 200 }}
           >
-            <CheckCircle2 className="w-20 h-20 text-primary" />
+            <CheckCircle2
+              className="w-20 h-20 text-primary"
+              aria-hidden="true"
+            />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -99,6 +102,7 @@ export function HomeContactForm() {
           exit={{ opacity: 0 }}
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-6"
+          noValidate
         >
           {/* honeypot */}
           <input
@@ -119,9 +123,16 @@ export function HomeContactForm() {
                 className="h-12 text-base px-4"
                 {...register('firstName')}
                 aria-invalid={!!errors.firstName}
+                aria-describedby={
+                  errors.firstName ? 'firstName-error' : undefined
+                }
               />
               {errors.firstName && (
-                <p className="text-sm text-destructive">
+                <p
+                  id="firstName-error"
+                  role="alert"
+                  className="text-sm text-destructive"
+                >
                   {errors.firstName.message}
                 </p>
               )}
@@ -136,9 +147,16 @@ export function HomeContactForm() {
                 className="h-12 text-base px-4"
                 {...register('lastName')}
                 aria-invalid={!!errors.lastName}
+                aria-describedby={
+                  errors.lastName ? 'lastName-error' : undefined
+                }
               />
               {errors.lastName && (
-                <p className="text-sm text-destructive">
+                <p
+                  id="lastName-error"
+                  role="alert"
+                  className="text-sm text-destructive"
+                >
                   {errors.lastName.message}
                 </p>
               )}
@@ -151,13 +169,20 @@ export function HomeContactForm() {
             <Input
               id="email"
               type="email"
-              placeholder="jan@kowalski.pl"
+              placeholder="jan.kowalski@email.com"
               className="h-12 text-base px-4"
               {...register('email')}
               aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? 'email-error' : undefined}
             />
             {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
+              <p
+                id="email-error"
+                role="alert"
+                className="text-sm text-destructive"
+              >
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-2">
@@ -174,9 +199,16 @@ export function HomeContactForm() {
               className="h-12 text-base px-4"
               {...register('phone')}
               aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
             />
             {errors.phone && (
-              <p className="text-sm text-destructive">{errors.phone.message}</p>
+              <p
+                id="phone-error"
+                role="alert"
+                className="text-sm text-destructive"
+              >
+                {errors.phone.message}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-2">
@@ -185,14 +217,19 @@ export function HomeContactForm() {
             </Label>
             <Textarea
               id="message"
-              placeholder="Opisz swój projekt lub zadaj pytanie..."
+              placeholder="Opisz swój pomysł lub zadaj pytanie..."
               rows={6}
               className="text-base px-4 py-3 resize-none"
               {...register('message')}
               aria-invalid={!!errors.message}
+              aria-describedby={errors.message ? 'message-error' : undefined}
             />
             {errors.message && (
-              <p className="text-sm text-destructive">
+              <p
+                id="message-error"
+                role="alert"
+                className="text-sm text-destructive"
+              >
                 {errors.message.message}
               </p>
             )}
@@ -200,6 +237,7 @@ export function HomeContactForm() {
           <AnimatePresence>
             {submitError && (
               <motion.p
+                role="alert"
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
@@ -216,12 +254,12 @@ export function HomeContactForm() {
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                 Wysyłanie...
               </>
             ) : (
               <>
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4" aria-hidden="true" />
                 Wyślij wiadomość
               </>
             )}

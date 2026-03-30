@@ -1,10 +1,10 @@
 {
   "title": "Brzmi znajomo?",
-  "subtitle": "Pracujemy z firmami, które mają te same bolączki od lat. Wiemy jak je wyeliminować — trwale.",
+  "subtitle": "Pomagamy firmom, które utknęły w procesach sprzed dekady. Zamieniamy chaos i ręczną pracę w zautomatyzowaną przewagę rynkową.",
   "media": [
     {
       "url": "/image/pro-dev.jpg",
-      "alt": "Zespół Devgon przy pracy",
+      "alt": "Zespół analizujący procesy klienta",
       "type": "IMAGE"
     }
   ],
@@ -12,37 +12,37 @@
     "problems": [
       {
         "icon": "clock",
-        "tag": "Automatyzacja",
-        "problem": "Twój zespół traci godziny dziennie na ręczne przepisywanie danych między systemami",
-        "solution": "Automatyzujemy przepływ danych i łączymy Twoje narzędzia — dane trafiają tam gdzie trzeba, same i na czas."
+        "tag": "AI & Data",
+        "problem": "Twoja konkurencja już wdraża AI, a Ty wciąż nie wiesz, jak wykorzystać posiadane dane do wzrostu",
+        "solution": "Projektujemy i wdrażamy narzędzia AI oraz analitykę, które wyciągają realne wnioski z Twoich danych i automatyzują decyzje."
       },
       {
         "icon": "chaos",
-        "tag": "Systemy",
-        "problem": "Procesy żyją w głowach ludzi i arkuszach Excel — gdy ktoś odchodzi, wiedza znika",
-        "solution": "Budujemy systemy, które porządkują i dokumentują procesy. Firma działa niezależnie od rotacji."
+        "tag": "Integracje",
+        "problem": "Twoje systemy (CRM, sklep, ERP) nie rozmawiają ze sobą, co zmusza zespół do ręcznego kopiowania danych",
+        "solution": "Łączymy wszystko w jeden ekosystem za pomocą znanych integratorów. Dane przepływają same, eliminując błędy ludzkie i opóźnienia."
       },
       {
         "icon": "rocket",
-        "tag": "Aplikacje",
-        "problem": "Masz pomysł na produkt lub narzędzie wewnętrzne, ale nie wiesz od czego zacząć",
-        "solution": "Przeprowadzamy Cię od analizy potrzeb przez projekt do gotowego, działającego systemu w chmurze."
+        "tag": "Efektywność",
+        "problem": "Wąskie gardła w procesach blokują Twój wzrost - mimo większego zespołu, efektywność stoi w miejscu",
+        "solution": "Analizujemy procesy, wyłapujemy blokady i optymalizujemy je poprzez dedykowane narzędzia i automatyzację workflow."
       },
       {
         "icon": "zap",
-        "tag": "Skalowanie",
-        "problem": "Twoja aplikacja zaczyna się sypać przy większym ruchu — klienci to czują",
-        "solution": "Optymalizujemy istniejące systemy i przenosimy je do chmury, żeby skalowały się razem z Twoim biznesem."
+        "tag": "Infrastruktura",
+        "problem": "Utrzymanie własnych serwerów jest drogie i ryzykowne, a obecna technologia nie pozwala na nagły wzrost ruchu",
+        "solution": "Migrujemy Twoje rozwiązania do chmury i na dedykowane VPS, zapewniając szybkość, bezpieczeństwo i skalowalność bez limitów."
       }
     ],
     "cta": {
-      "label": "Umów bezpłatną rozmowę",
+      "label": "Zdiagnozuj swoje procesy",
       "href": "/#contact"
     },
     "badge": {
-      "label1": "Każde wdrożenie zaczyna się od analizy procesów — nie od pisania kodu.",
-      "label2": "Devgon — podejście projektowe"
+      "label1": "Nie sprzedajemy kodu. Sprzedajemy czas Twojego zespołu i spokój Twojej głowy.",
+      "label2": "Eksperci od transformacji cyfrowej"
     },
-    "topHeader": "Rozwiązujemy realne problemy"
+    "topHeader": "Zatrzymaj marnotrawstwo zasobów"
   }
 }

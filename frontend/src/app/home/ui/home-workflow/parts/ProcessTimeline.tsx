@@ -42,7 +42,6 @@ export function ProcessTimeline({ items }: ProcessTimelineProps) {
           className="absolute top-0 left-0 w-full bg-primary origin-top h-full"
         />
       </div>
-
       <ol className="lg:hidden flex flex-col gap-6 list-none p-0 m-0">
         {items.map((item, i) => (
           <li key={i}>
@@ -72,7 +71,7 @@ export function ProcessTimeline({ items }: ProcessTimelineProps) {
               <div
                 className={`flex-1 p-5 rounded-xl border bg-background transition-all duration-200 ${active === i ? 'scale-105 shadow-lg' : ''}`}
               >
-                <h3 className="font-semibold text-base line-clamp-2">
+                <h3 className="font-semibold text-lg line-clamp-2">
                   {item.title}
                 </h3>
                 <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed line-clamp-4">
@@ -107,7 +106,7 @@ export function ProcessTimeline({ items }: ProcessTimelineProps) {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.12, duration: 0.4 }}
                       viewport={{ once: true, amount: 0 }}
-                      className="relative text-center max-h-[170px]"
+                      className="relative text-center max-h-[220px]"
                       onMouseEnter={() => setActive(globalIndex)}
                       onMouseLeave={() => setActive(null)}
                     >
@@ -122,12 +121,12 @@ export function ProcessTimeline({ items }: ProcessTimelineProps) {
                         className={`mx-auto mt-4 mb-6 w-3 h-3 rounded-full bg-primary transition-transform duration-200 ${active === globalIndex ? 'scale-150' : ''}`}
                       />
                       <div
-                        className={`h-full min-h-[80px] pt-4 px-3 rounded-xl border bg-background overflow-hidden transition-all duration-200 ${active === globalIndex ? 'scale-105 shadow-lg' : ''}`}
+                        className={`h-full flex flex-col items-center justify-center min-h-[80px] px-3 py-2 rounded-xl border bg-background overflow-hidden transition-all duration-200 ${active === globalIndex ? 'scale-105 shadow-lg' : ''}`}
                       >
                         <h3 className="font-semibold text-lg line-clamp-2">
                           {item.title}
                         </h3>
-                        <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed line-clamp-4">
+                        <p className="text-muted-foreground mt-1.5 text-sm leading-relaxed line-clamp-6">
                           {item.description}
                         </p>
                       </div>

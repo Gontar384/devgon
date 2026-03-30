@@ -1,59 +1,71 @@
 [
   {
-    "title": "Aplikacje i systemy",
-    "subtitle": "Dedykowane rozwiązania dla firm",
-    "description": "Tworzymy aplikacje i systemy, które porządkują procesy i eliminują ręczną pracę — przygotowane na rozwój i skalowanie w chmurze.",
+    "title": "Software & Web Development",
+    "subtitle": "Dedykowane ekosystemy cyfrowe",
+    "description": "Projektujemy i budujemy szybkie sklepy, strony oraz aplikacje webowe, które nie tylko dobrze wyglądają, ale stają się silnikiem Twojej sprzedaży. Stabilne, bezpieczne i gotowe na chmurę.",
     "media": [
       {
         "url": "/image/business-apps.jpg",
-        "alt": "Aplikacje i systemy Devgon",
+        "alt": "Software & Web Development",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Zobacz więcej",
-        "href": "/offer/apps-and-systems"
+        "label": "Zbuduj swój system",
+        "href": "/#services"
       },
-      "tags": ["Systemy", "Aplikacje", "SaaS"]
+      "tags": [
+        "E-commerce",
+        "Web Apps",
+        "Custom Software"
+      ]
     }
   },
   {
-    "title": "Automatyzacje procesów",
-    "subtitle": "Mniej ręcznej pracy, więcej efektów",
-    "description": "Łączymy systemy i automatyzujemy przepływ danych, wykorzystując AI tam, gdzie realnie oszczędza czas i eliminuje błędy.",
+    "title": "Automatyzacja i Integracje",
+    "subtitle": "Uwolnij czas swoich pracowników",
+    "description": "Eliminujemy wąskie gardła, łącząc Twoje narzędzia w jeden płynny organizm. Zastępujemy żmudną, ręczną pracę inteligentnymi botami i przepływami danych.",
     "media": [
       {
         "url": "/image/work-optimization.jpg",
-        "alt": "Automatyzacje procesów Devgon",
+        "alt": "Automatyzacja i Integracje",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Zobacz więcej",
-        "href": "/offer/processes-automation"
+        "label": "Zautomatyzuj biznes",
+        "href": "/#services"
       },
-      "tags": ["Automatyzacja", "AI", "Integracje"]
+      "tags": [
+        "Procesy",
+        "Workflow",
+        "Integratory"
+      ]
     }
   },
   {
-    "title": "Rozwój i skalowanie",
-    "subtitle": "Gotowość na wzrost biznesu",
-    "description": "Rozwijamy istniejące systemy, poprawiamy ich wydajność i przygotowujemy je na większy ruch oraz dalsze skalowanie w chmurze.",
+    "title": "AI & Data Engineering",
+    "subtitle": "Analityka i sztuczna inteligencja",
+    "description": "Przekuwamy chaos danych w konkretne decyzje. Wdrażamy modele AI, migrujemy infrastrukturę do chmury i optymalizujemy procesy, by Twój biznes rósł szybciej niż konkurencja.",
     "media": [
       {
         "url": "/image/company-scaling.jpg",
-        "alt": "Rozwój i skalowanie Devgon",
+        "alt": "AI & Data Engineering",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Zobacz więcej",
-        "href": "/offer/company-scaling"
+        "label": "Wdróż AI",
+        "href": "/#services"
       },
-      "tags": ["Skalowanie", "Cloud", "Performance"]
+      "tags": [
+        "AI Implementation",
+        "Cloud Data",
+        "Optimization"
+      ]
     }
   }
 ]

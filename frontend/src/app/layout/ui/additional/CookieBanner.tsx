@@ -25,6 +25,9 @@ export function CookieBanner() {
     <AnimatePresence>
       {show && (
         <motion.div
+          role="dialog"
+          aria-label="Cookie consent"
+          aria-live="polite"
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}

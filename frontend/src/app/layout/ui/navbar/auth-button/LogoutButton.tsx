@@ -50,8 +50,9 @@ export function LogoutButton({
               size="lg"
               className={`hover:scale-105 active:scale-105 cursor-pointer`}
               onClick={handleLogout}
+              aria-label="Wyloguj się"
             >
-              <DoorOpen className="!w-7 !h-7" />
+              <DoorOpen className="!w-7 !h-7" aria-hidden="true" />
             </Button>
           </TooltipTrigger>
           <TooltipContent className="select-none" side="bottom">

@@ -1,11 +1,10 @@
 'use client';
 import React from 'react';
-import Link from 'next/link';
 import { MenubarContent, MenubarTrigger } from '@/components/ui/menubar';
 import { CircleChevronDown } from 'lucide-react';
 import { MenubarMenu } from '@radix-ui/react-menubar';
 import { DropdownWrapperProps } from '@/app/layout/layout-types';
-import { useNavigation } from '@/app/layout/util/useNavigation';
+import { NavLink } from '@/app/layout/util/NavLink';
 
 export function Dropdown({
   title,
@@ -13,29 +12,26 @@ export function Dropdown({
   children,
   onNavigate,
 }: DropdownWrapperProps) {
-  const { navigateTo } = useNavigation();
   const hasChildren = React.Children.count(children) > 0;
 
   return (
     <MenubarMenu value={title}>
       <div className="flex items-center">
-        <Link
+        <NavLink
           href={href}
-          onClick={(e) => {
-            e.preventDefault();
-            onNavigate?.();
-            navigateTo(href);
-          }}
           className="text-xl py-1 px-2 rounded-xl hover:bg-accent active:bg-accent"
         >
           {title}
-        </Link>
+        </NavLink>
         {hasChildren && (
           <MenubarTrigger
             className="p-0.5 transition-transform duration-100 data-[state=open]:bg-accent data-[state=open]:rotate-180 data-[state=closed]:rotate-0 focus:bg-background hover:bg-accent active:bg-accent"
             id={undefined}
           >
-            <CircleChevronDown className="!w-7 !h-7 cursor-pointer" />
+            <CircleChevronDown
+              className="!w-7 !h-7 cursor-pointer"
+              aria-hidden="true"
+            />
           </MenubarTrigger>
         )}
       </div>

@@ -9,28 +9,15 @@ export function MediaContainer({ src, alt, type }: MediaContainerProps) {
   return (
     <motion.div
       className="relative w-full max-w-[350px] md:max-w-[450px] pointer-events-none"
-      initial={{ opacity: 0, rotate: 0, scale: 1, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
       animate={{
         rotate: [0, 1, -1, 0],
         scale: [1, 1.03, 0.97, 1],
       }}
       transition={{
-        opacity: { duration: 0.7, ease: 'easeOut' },
-        y: { duration: 0.7, ease: 'easeOut' },
-        rotate: {
-          duration: 3,
-          repeat: Infinity,
-          repeatType: 'loop',
-          ease: 'easeInOut',
-        },
-        scale: {
-          duration: 3,
-          repeat: Infinity,
-          repeatType: 'loop',
-          ease: 'easeInOut',
-        },
+        duration: 3,
+        repeat: Infinity,
+        repeatType: 'loop',
+        ease: 'easeInOut',
       }}
     >
       {type === MediaType.VIDEO ? (
@@ -40,8 +27,9 @@ export function MediaContainer({ src, alt, type }: MediaContainerProps) {
           muted
           loop
           playsInline
+          preload="none"
           className="rounded-2xl object-cover w-full h-full"
-          aria-label={alt}
+          aria-label={alt || 'Media sekcji O mnie'}
         />
       ) : (
         <Image

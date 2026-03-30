@@ -10,6 +10,7 @@ export default function Navbar() {
     <nav
       className="w-full h-16 flex items-center justify-between bg-background shadow-md"
       aria-label="Główna nawigacja"
+      role="navigation"
     >
       <SiteLogo />
       <MainMenuBar />

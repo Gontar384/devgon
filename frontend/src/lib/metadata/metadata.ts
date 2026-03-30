@@ -20,6 +20,7 @@ export function createMetadata({
 
   return {
     metadataBase: new URL(siteUrl),
+    robots: { index: true, follow: true },
     title: title,
     description,
     alternates: {

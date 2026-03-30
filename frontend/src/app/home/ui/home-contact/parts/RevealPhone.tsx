@@ -38,6 +38,7 @@ export function RevealPhone() {
             <motion.a
               key="phone"
               href={`tel:${PARTS.join('')}`}
+              aria-label={`Zadzwoń: ${PARTS.join(' ')}`}
               initial={{ opacity: 0, scale: 1.05, filter: 'blur(8px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.4, ease: 'easeOut' }}

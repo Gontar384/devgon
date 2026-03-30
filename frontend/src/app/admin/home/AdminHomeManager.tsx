@@ -102,7 +102,7 @@ export function AdminHomeManager({
             title: 100,
             subtitle: 200,
             description: 1000,
-            customData: 0,
+            customData: 100,
           }}
           maxMedia={1}
         />

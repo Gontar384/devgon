@@ -1,20 +1,18 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import { useNavigation } from '@/app/layout/util/useNavigation';
+import { NavLink } from '@/app/layout/util/NavLink';
 
 export function SiteLogo() {
   const { navigateToTop } = useNavigation();
 
   return (
-    <Link
+    <NavLink
       href="/"
-      onClick={(e) => {
-        e.preventDefault();
-        navigateToTop();
-      }}
+      onNavigate={navigateToTop}
       className="ml-4 select-none flex-shrink-0"
+      aria-label="Przejdź do strony głównej"
     >
       <Image
         src="/logo/logo-caption-black.svg"
@@ -23,6 +21,6 @@ export function SiteLogo() {
         height={60}
         priority
       />
-    </Link>
+    </NavLink>
   );
 }

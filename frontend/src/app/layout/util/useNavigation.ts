@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 
@@ -55,27 +55,6 @@ function scrollToSection(sectionId: string, onDone: () => void) {
   const targetY =
     el.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT;
   performScroll(targetY, onDone);
-}
-
-export function useHashScrollOnMount() {
-  const { setIsNavigating } = useMobileBarStore();
-
-  useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    if (!hash) return;
-
-    const timeout = setTimeout(() => {
-      navigationSuppressRef.current = true;
-      setIsNavigating(true);
-      scrollToSection(hash, () => {
-        navigationSuppressRef.current = false;
-        setIsNavigating(false);
-      });
-    }, 100);
-
-    return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 }
 
 export function useNavigation() {
@@ -148,5 +127,50 @@ export function useNavigation() {
     [closeBar, setIsNavigating, pathname, router],
   );
 
-  return { navigateTo, navigateToTop };
+  const getLinkHandler = useCallback(
+    (href: string, onNavigate?: () => void) => {
+      return (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (
+          e.metaKey ||
+          e.ctrlKey ||
+          e.shiftKey ||
+          e.altKey ||
+          e.button !== 0
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        if (onNavigate) {
+          onNavigate();
+        } else {
+          navigateTo(href);
+        }
+      };
+    },
+    [navigateTo],
+  );
+
+  return { navigateTo, navigateToTop, getLinkHandler };
+}
+
+export function useHashScrollOnMount() {
+  const { setIsNavigating } = useMobileBarStore();
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+
+    const timeout = setTimeout(() => {
+      navigationSuppressRef.current = true;
+      setIsNavigating(true);
+      scrollToSection(hash, () => {
+        navigationSuppressRef.current = false;
+        setIsNavigating(false);
+      });
+    }, 100);
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 }
