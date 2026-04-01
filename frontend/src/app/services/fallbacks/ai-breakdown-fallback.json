@@ -1,0 +1,44 @@
+{
+  "title": "Co obejmuje <span class=\"text-primary\">oferta AI?</span>",
+  "subtitle": "Wdrażamy AI tam gdzie realnie przynosi wartość — nie dla efektu, ale dla wyników.",
+  "customData": {
+    "items": [
+      {
+        "icon": "Bot",
+        "title": "Asystenci i chatboty AI",
+        "description": "Inteligentne boty obsługi klienta, wewnętrzne asystenty wiedzy firmowej, agenty wykonujące zadania. Zasilane GPT-4, Claude lub modelami open-source.",
+        "tags": ["GPT-4", "Claude", "RAG", "Chatbot"]
+      },
+      {
+        "icon": "BrainCircuit",
+        "title": "Automatyzacja kognitywna",
+        "description": "AI przejmuje zadania wymagające rozumienia: kategoryzacja maili, analiza umów, klasyfikacja zgłoszeń, ekstrakcja danych z dokumentów.",
+        "tags": ["NLP", "Klasyfikacja", "Ekstrakcja", "OCR+AI"]
+      },
+      {
+        "icon": "TrendingUp",
+        "title": "Analityka predykcyjna",
+        "description": "Modele prognozowania sprzedaży, ryzyka, churnu klientów. Zamiast reagować na problemy — przewidujesz je z tygodniowym wyprzedzeniem.",
+        "tags": ["Forecasting", "ML", "Churn", "Anomalie"]
+      },
+      {
+        "icon": "Database",
+        "title": "Data Engineering",
+        "description": "Hurtownia danych, data lakehouse, pipelines ETL. Zbieramy dane z wszystkich źródeł, porządkujemy i udostępniamy w formie gotowej do analizy.",
+        "tags": ["Data Lake", "Snowflake", "dbt", "Airflow"]
+      },
+      {
+        "icon": "Search",
+        "title": "Wyszukiwanie semantyczne (RAG)",
+        "description": "Systemy wyszukiwania bazujące na znaczeniu, nie słowach kluczowych. Asystent, który naprawdę rozumie bazę wiedzy Twojej firmy.",
+        "tags": ["Vector DB", "Embeddings", "RAG", "Pinecone"]
+      },
+      {
+        "icon": "SlidersHorizontal",
+        "title": "Optymalizacja i rekomendacje",
+        "description": "Silniki rekomendacji produktów, optymalizacja cen, dopasowanie ofert do klientów. Personalizacja na skali, której człowiek nie osiągnie.",
+        "tags": ["Rekomendacje", "Personalizacja", "A/B", "Pricing"]
+      }
+    ]
+  }
+}

@@ -13,7 +13,7 @@
     "customData": {
       "cta": {
         "label": "Zbuduj swój system",
-        "href": "/#services"
+        "href": "/services/systems"
       },
       "tags": [
         "E-commerce",
@@ -36,7 +36,7 @@
     "customData": {
       "cta": {
         "label": "Zautomatyzuj biznes",
-        "href": "/#services"
+        "href": "/services/integrations"
       },
       "tags": [
         "Procesy",
@@ -59,7 +59,7 @@
     "customData": {
       "cta": {
         "label": "Wdróż AI",
-        "href": "/#services"
+        "href": "/services/ai"
       },
       "tags": [
         "AI Implementation",

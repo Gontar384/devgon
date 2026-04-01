@@ -7,21 +7,21 @@ export const dropdownData: DropdownData[] = [
     option: [
       {
         title: 'Aplikacje biznesowe',
-        href: '/#services',
+        href: '/services/systems',
         imageSrc: '/svg/menu/mobile.svg',
         imageW: 35,
         imageH: 35,
       },
       {
         title: 'Optymalizacja procesów',
-        href: '/#services',
+        href: '/services/integrations',
         imageSrc: '/svg/menu/brain.svg',
         imageW: 35,
         imageH: 35,
       },
       {
         title: 'Automatyzacje i integracje',
-        href: '/#services',
+        href: '/services/ai',
         imageSrc: '/svg/menu/plug.svg',
         imageW: 35,
         imageH: 35,

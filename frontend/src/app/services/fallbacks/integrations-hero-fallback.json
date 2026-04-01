@@ -1,0 +1,29 @@
+{
+  "title": "Integracje, które <span class=\"text-primary\">eliminują</span> ręczną pracę",
+  "subtitle": "Automatyzacja i Integracje",
+  "description": "Łączymy Twoje narzędzia w jeden płynny organizm. Dane płyną tam gdzie powinny, kiedy powinny — bez udziału człowieka.",
+  "media": [
+    {
+      "url": "/image/work-optimization.jpg",
+      "alt": "Automatyzacja i integracje systemów",
+      "type": "IMAGE"
+    }
+  ],
+  "customData": {
+    "badge": "Automatyzacja i Integracje",
+    "primaryCta": {
+      "label": "Zautomatyzuj biznes",
+      "href": "/#contact"
+    },
+    "secondaryCta": {
+      "label": "Zobacz możliwości",
+      "href": "/#services"
+    },
+    "stats": [
+      { "value": "80%", "label": "Mniej ręcznej pracy" },
+      { "value": "200+", "label": "Obsługiwanych API" },
+      { "value": "24/7", "label": "Praca automatów" }
+    ],
+    "accentWords": ["automatyzuje", "integruje", "synchronizuje", "eliminuje"]
+  }
+}

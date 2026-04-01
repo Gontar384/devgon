@@ -1,0 +1,34 @@
+{
+  "title": "Dlaczego automatyzacja <span class=\"text-primary\">się opłaca?</span>",
+  "subtitle": "ROI z automatyzacji jest policzalny. Pokazujemy liczby przed wdrożeniem.",
+  "customData": {
+    "items": [
+      {
+        "icon": "Clock",
+        "title": "Odzyskaj czas swojego zespołu",
+        "description": "Przeciętna firma traci 20-30% czasu pracowników na zadania, które maszyna robi w sekundę. Automatyzacja to inwestycja z tygodniowym ROI.",
+        "metric": "20h",
+        "metricLabel": "tygodniowo do odzysku"
+      },
+      {
+        "icon": "AlertTriangle",
+        "title": "Zero błędów ludzkich",
+        "description": "Automat nie pomyli się w arkuszu, nie zapomni o fakturze, nie wyśle oferty do złego klienta. Raz skonfigurowany — działa perfekcyjnie.",
+        "metric": "0",
+        "metricLabel": "błędów przy przepisywaniu"
+      },
+      {
+        "icon": "Repeat",
+        "title": "Skaluj bez zatrudniania",
+        "description": "Podwój wolumen zamówień bez podwajania zespołu. Automatyzacja rośnie razem z Twoim biznesem, nie wymaga on-boardingu.",
+        "metric": "2×",
+        "metricLabel": "wolumen bez nowych etatów"
+      },
+      {
+        "icon": "Eye",
+        "title": "Pełna widoczność procesów",
+        "description": "Każda automatyzacja generuje logi. Widzisz co działa, co się zatrzymało i dlaczego — w czasie rzeczywistym, nie po fakcie."
+      }
+    ]
+  }
+}
