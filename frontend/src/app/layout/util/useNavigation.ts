@@ -65,11 +65,6 @@ export function useNavigation() {
   const navigateToTop = useCallback(() => {
     closeBar();
 
-    if (pathname !== '/') {
-      router.push('/');
-      return;
-    }
-
     router.push('/', { scroll: false });
     navigationSuppressRef.current = true;
     setIsNavigating(true);
@@ -77,7 +72,7 @@ export function useNavigation() {
       navigationSuppressRef.current = false;
       setIsNavigating(false);
     });
-  }, [closeBar, setIsNavigating, pathname, router]);
+  }, [closeBar, setIsNavigating, router]);
 
   const navigateTo = useCallback(
     (href: string) => {
@@ -89,7 +84,7 @@ export function useNavigation() {
         navigationSuppressRef.current = true;
         setIsNavigating(true);
 
-        router.push(href);
+        router.push(href, { scroll: false });
 
         setTimeout(() => {
           performScroll(0, () => {
@@ -105,7 +100,7 @@ export function useNavigation() {
       if (pathname !== '/') {
         navigationSuppressRef.current = true;
         setIsNavigating(true);
-        router.push(href);
+        router.push(href, { scroll: false });
         setTimeout(() => {
           navigationSuppressRef.current = false;
           setIsNavigating(false);
