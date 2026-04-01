@@ -78,16 +78,20 @@ export function useNavigation() {
     (href: string) => {
       closeBar();
 
-      const isAnchor = href.startsWith('/#');
+      const [rawPath, sectionId] = href.split('#');
+      const targetPath = rawPath || pathname;
 
-      if (!isAnchor) {
+      const isSamePage =
+        pathname === targetPath || (targetPath === '/' && pathname === '/');
+
+      if (sectionId && isSamePage) {
         navigationSuppressRef.current = true;
         setIsNavigating(true);
 
         router.push(href, { scroll: false });
 
         setTimeout(() => {
-          performScroll(0, () => {
+          scrollToSection(sectionId, () => {
             navigationSuppressRef.current = false;
             setIsNavigating(false);
           });
@@ -95,29 +99,41 @@ export function useNavigation() {
         return;
       }
 
-      const sectionId = href.slice(2);
-
-      if (pathname !== '/') {
-        navigationSuppressRef.current = true;
-        setIsNavigating(true);
-        router.push(href, { scroll: false });
-        setTimeout(() => {
-          navigationSuppressRef.current = false;
-          setIsNavigating(false);
-        }, 1500);
-        return;
-      }
-
-      router.push(href, { scroll: false });
       navigationSuppressRef.current = true;
       setIsNavigating(true);
 
-      setTimeout(() => {
-        scrollToSection(sectionId, () => {
-          navigationSuppressRef.current = false;
-          setIsNavigating(false);
-        });
-      }, 50);
+      router.push(href, { scroll: false });
+
+      if (sectionId) {
+        let attempts = 0;
+        const checkExist = setInterval(() => {
+          const element = document.getElementById(sectionId);
+          attempts++;
+
+          if (element) {
+            clearInterval(checkExist);
+            setTimeout(() => {
+              scrollToSection(sectionId, () => {
+                navigationSuppressRef.current = false;
+                setIsNavigating(false);
+              });
+            }, 100);
+          }
+
+          if (attempts > 50) {
+            clearInterval(checkExist);
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          }
+        }, 100);
+      } else {
+        setTimeout(() => {
+          performScroll(0, () => {
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          });
+        }, 100);
+      }
     },
     [closeBar, setIsNavigating, pathname, router],
   );
@@ -156,16 +172,34 @@ export function useHashScrollOnMount() {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
 
-    const timeout = setTimeout(() => {
-      navigationSuppressRef.current = true;
-      setIsNavigating(true);
-      scrollToSection(hash, () => {
+    navigationSuppressRef.current = true;
+    setIsNavigating(true);
+
+    let attempts = 0;
+    const maxAttempts = 100;
+
+    const checkExist = setInterval(() => {
+      const element = document.getElementById(hash);
+      attempts++;
+
+      if (element) {
+        clearInterval(checkExist);
+        setTimeout(() => {
+          scrollToSection(hash, () => {
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          });
+        }, 100);
+      }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(checkExist);
         navigationSuppressRef.current = false;
         setIsNavigating(false);
-      });
-    }, 100);
+      }
+    }, 50);
 
-    return () => clearTimeout(timeout);
+    return () => clearInterval(checkExist);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
