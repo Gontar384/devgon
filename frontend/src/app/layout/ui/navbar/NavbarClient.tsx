@@ -23,6 +23,9 @@ export default function NavbarClient() {
         ? 'translateY(-100%)'
         : 'translateY(0)';
     }
+    if (hide) {
+      window.dispatchEvent(new CustomEvent('navbar:hide'));
+    }
   };
 
   useEffect(() => {

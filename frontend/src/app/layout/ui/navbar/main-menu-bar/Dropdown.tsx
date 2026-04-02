@@ -36,7 +36,10 @@ export function Dropdown({
         )}
       </div>
       {hasChildren && (
-        <MenubarContent className="bg-background p-0 border border-foreground/50 hidden md:block">
+        <MenubarContent
+          className="bg-background p-0 border border-foreground/50 hidden md:block"
+          onCloseAutoFocus={(e) => e.preventDefault()}
+        >
           {React.Children.map(children, (child, index) => (
             <>
               {React.isValidElement(child)
