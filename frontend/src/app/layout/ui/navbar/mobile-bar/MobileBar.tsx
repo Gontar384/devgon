@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
-import { dropdownData } from '@/app/layout/ui/navbar/dropdownData';
+import { dropdownData } from '@/app/layout/util/dropdownData';
 import { suppressScrollRef } from '@/app/layout/util/scrollControl';
 
 export default function MobileBar() {

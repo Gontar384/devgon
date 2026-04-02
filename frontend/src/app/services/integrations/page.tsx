@@ -5,7 +5,7 @@ import { ServiceManager } from '@/app/services/ServiceManager';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'Automatyzacja i Integracje — devgon',
+    title: 'Automations & Integrations — devgon',
     description:
       'Łączymy Twoje systemy w jeden organizm. Automatyzujemy powtarzalne procesy, integrujemy CRM, ERP i e-commerce. 80% mniej ręcznej pracy.',
     path: '/services/integrations',

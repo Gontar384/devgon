@@ -1,6 +1,6 @@
 {
   "title": "Integracje, które <span class=\"text-primary\">eliminują</span> ręczną pracę",
-  "subtitle": "Automatyzacja i Integracje",
+  "subtitle": "Automatyzacje i integracje",
   "description": "Łączymy Twoje narzędzia w jeden płynny organizm. Dane płyną tam gdzie powinny, kiedy powinny — bez udziału człowieka.",
   "media": [
     {
@@ -10,7 +10,7 @@
     }
   ],
   "customData": {
-    "badge": "Automatyzacja i Integracje",
+    "badge": "Automations & Integrations",
     "primaryCta": {
       "label": "Zautomatyzuj biznes",
       "href": "/services/integrations#contact"
