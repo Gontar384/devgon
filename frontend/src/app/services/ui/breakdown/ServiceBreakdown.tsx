@@ -21,7 +21,7 @@ export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
     <section
       id="breakdown"
       aria-label={safeData.title || 'Szczegóły usługi'}
-      className="w-full border-b"
+      className="w-full border-b select-none"
     >
       <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24">
         <div className="flex flex-col gap-10 md:gap-16">

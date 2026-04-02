@@ -1,23 +1,27 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ServiceHeroProps } from '@/app/services/service-page-types';
 import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
+import { MediaType } from '@/cms/content/content-types';
+import Image from 'next/image';
 
 export function ServiceHero({ content }: ServiceHeroProps) {
   const safeData = {
     title: content.title ?? '',
-    subtitle: content.subtitle ?? '',
     description: content.description ?? '',
+    photoUrl: content.media?.[0]?.url ?? '',
+    photoAlt: content.media?.[0]?.alt ?? '',
+    mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
     badge: content.customData?.badge ?? '',
+    accentWords: (content.customData?.accentWords as string[]) ?? [],
     primaryCta: content.customData?.primaryCta ?? null,
     secondaryCta: content.customData?.secondaryCta ?? null,
     stats:
       (content.customData?.stats as { value: string; label: string }[]) ?? [],
-    accentWords: (content.customData?.accentWords as string[]) ?? [],
   };
 
   const [wordIndex, setWordIndex] = useState(0);
@@ -34,40 +38,38 @@ export function ServiceHero({ content }: ServiceHeroProps) {
 
   return (
     <section
-      aria-label={`${safeData.subtitle} — sekcja powitalna`}
-      className="relative w-full min-h-[92vh] flex items-end pb-16 md:pb-24 overflow-hidden border-b"
+      aria-label={`${safeData.badge} — sekcja powitalna`}
+      className="relative min-h-screen w-full flex items-center pb-16 md:pb-24 overflow-hidden border-b select-none"
     >
-      {/* Grid background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage:
-            'linear-gradient(to right, hsl(var(--border)/0.4) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)/0.4) 1px, transparent 1px)',
+          backgroundImage: [
+            'linear-gradient(to right, oklch(0.506 0.004 17.282 / 0.3) 1px, transparent 1px)',
+            'linear-gradient(to bottom, oklch(0.506 0.004 17.282 / 0.3) 1px, transparent 1px)',
+          ].join(', '),
           backgroundSize: '72px 72px',
         }}
       />
-      {/* Radial gradient overlay */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 0%, hsl(var(--primary)/0.08) 0%, transparent 70%)',
+            'radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.706 0.128 27.786 / 0.15) 0%, transparent 70%)',
         }}
       />
-      {/* Fade to bg at bottom */}
       <div
         aria-hidden="true"
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to bottom, transparent, hsl(var(--background)))',
+            'linear-gradient(to bottom, transparent, oklch(0.812 0.01 106.613))',
         }}
       />
-
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-4 md:px-10">
-        <div className="max-w-[860px]">
+      <div className="relative w-full max-w-[1600px] items-center mx-auto px-4 md:px-10 mt-10 flex flex-col xl:flex-row gap-[40px] xl:gap-[70px]">
+        <div className="max-w-[900px] flex flex-col">
           {safeData.badge && (
             <AnimateItem delay={0}>
               <div className="inline-flex items-center gap-2 rounded-full border bg-background/80 backdrop-blur-sm px-4 py-1.5 mb-6">
@@ -75,26 +77,24 @@ export function ServiceHero({ content }: ServiceHeroProps) {
                   className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
                   aria-hidden="true"
                 />
-                <span className="text-[12px] uppercase tracking-[0.18em] font-semibold text-primary">
+                <span className="text-[12px] md:text-[14px] uppercase tracking-[0.18em] font-semibold text-primary">
                   {safeData.badge}
                 </span>
               </div>
             </AnimateItem>
           )}
-
           {safeData.title && (
             <AnimateItem delay={0.08}>
               <h1
-                className="text-[40px] md:text-[60px] lg:text-[72px] font-bold leading-[1.05] tracking-tight mb-4"
+                className="text-[50px] md:text-[70px] font-bold leading-[1.05] tracking-tight mb-4"
                 dangerouslySetInnerHTML={{ __html: safeData.title }}
               />
             </AnimateItem>
           )}
-
           {safeData.accentWords.length > 0 && (
             <AnimateItem delay={0.14}>
               <div
-                className="text-[22px] md:text-[30px] text-primary font-semibold mb-5 h-[1.4em] overflow-hidden"
+                className="text-[24px] md:text-[32px] text-primary font-semibold mb-5 h-[1.4em] overflow-hidden"
                 aria-live="polite"
                 aria-atomic="true"
               >
@@ -111,7 +111,6 @@ export function ServiceHero({ content }: ServiceHeroProps) {
               </div>
             </AnimateItem>
           )}
-
           {safeData.description && (
             <AnimateItem delay={0.2}>
               <p className="text-[16px] md:text-[18px] text-muted-foreground leading-relaxed max-w-[600px] mb-8">
@@ -119,7 +118,6 @@ export function ServiceHero({ content }: ServiceHeroProps) {
               </p>
             </AnimateItem>
           )}
-
           {(safeData.primaryCta || safeData.secondaryCta) && (
             <AnimateItem delay={0.28}>
               <div className="flex gap-3 flex-wrap mb-12 md:mb-16">
@@ -142,7 +140,6 @@ export function ServiceHero({ content }: ServiceHeroProps) {
               </div>
             </AnimateItem>
           )}
-
           {safeData.stats.length > 0 && (
             <AnimateItem delay={0.36}>
               <div
@@ -159,7 +156,7 @@ export function ServiceHero({ content }: ServiceHeroProps) {
                     <span className="text-[28px] md:text-[36px] font-bold text-primary leading-none">
                       {stat.value}
                     </span>
-                    <span className="text-[12px] text-muted-foreground uppercase tracking-[0.14em]">
+                    <span className="text-[12px] md:text-[14px] text-muted-foreground uppercase tracking-[0.14em]">
                       {stat.label}
                     </span>
                   </div>
@@ -168,25 +165,35 @@ export function ServiceHero({ content }: ServiceHeroProps) {
             </AnimateItem>
           )}
         </div>
+        {safeData.photoUrl && (
+          <AnimateItem delay={0.2}>
+            <div className="max-w-[500px] xl:max-w-[700px]">
+              {safeData.mediaType === MediaType.VIDEO ? (
+                <video
+                  src={safeData.photoUrl}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  className="object-contain w-full h-full"
+                  aria-label={safeData.photoAlt || safeData.badge}
+                />
+              ) : (
+                <Image
+                  src={safeData.photoUrl}
+                  alt={safeData.photoAlt}
+                  width={400}
+                  height={400}
+                  priority
+                  unoptimized
+                  className="object-contain w-full h-full"
+                />
+              )}
+            </div>
+          </AnimateItem>
+        )}
       </div>
-
-      {/* Scroll hint */}
-      <motion.a
-        href="#breakdown"
-        aria-label="Przewiń do szczegółów usługi"
-        className="absolute bottom-7 right-8 hidden md:flex flex-col items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9 }}
-      >
-        <span className="text-[10px] uppercase tracking-[0.18em]">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown size={16} aria-hidden="true" />
-        </motion.div>
-      </motion.a>
     </section>
   );
 }

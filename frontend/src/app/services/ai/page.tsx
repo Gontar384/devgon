@@ -13,9 +13,9 @@ export const generateMetadata = (): Metadata =>
 
 export default async function AiPage() {
   const { contents } = await loadPageContents([
-    'service-hero',
-    'service-breakdown',
-    'service-why',
+    'ai-hero',
+    'ai-breakdown',
+    'ai-why',
     'home-contact',
   ]);
 

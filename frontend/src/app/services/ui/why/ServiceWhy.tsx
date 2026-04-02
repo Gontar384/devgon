@@ -19,7 +19,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
     <section
       id="why"
       aria-label={safeData.title || 'Dlaczego warto'}
-      className="w-full border-b"
+      className="w-full border-b select-none"
     >
       <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_580px] gap-10 xl:gap-20 items-start">

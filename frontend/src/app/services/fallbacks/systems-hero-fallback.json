@@ -1,16 +1,16 @@
 {
   "title": "Systemy, które <span class=\"text-primary\">napędzają</span> Twój biznes",
-  "subtitle": "Aplikacje i systemy",
   "description": "Projektujemy i budujemy dedykowane ekosystemy cyfrowe — od sklepów, przez aplikacje webowe, po złożone platformy SaaS. Stabilne, bezpieczne i gotowe na skalę.",
   "media": [
     {
-      "url": "/image/business-apps.jpg",
-      "alt": "Software & Web Development — dedykowane systemy cyfrowe",
+      "url": "/svg/services/systems-hero.svg",
+      "alt": "Aplikacje i systemy",
       "type": "IMAGE"
     }
   ],
   "customData": {
-    "badge": "Software & Web Development",
+    "badge": "Aplikacje i systemy",
+    "accentWords": ["sklepy", "aplikacje", "platformy", "systemy"],
     "primaryCta": {
       "label": "Omów projekt",
       "href": "/services/systems#contact"
@@ -23,7 +23,6 @@
       { "value": "40+", "label": "Projektów" },
       { "value": "98%", "label": "Klientów wraca" },
       { "value": "3×", "label": "Szybszy czas wdrożenia" }
-    ],
-    "accentWords": ["sklepy", "aplikacje", "platformy", "systemy"]
+    ]
   }
 }

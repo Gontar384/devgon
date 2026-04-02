@@ -13,9 +13,9 @@ export const generateMetadata = (): Metadata =>
 
 export default async function IntegrationsPage() {
   const { contents } = await loadPageContents([
-    'service-hero',
-    'service-breakdown',
-    'service-why',
+    'integrations-hero',
+    'integrations-breakdown',
+    'integrations-why',
     'home-contact',
   ]);
 

@@ -44,13 +44,13 @@ const FALLBACKS = {
 export function ServiceManager({ contents, slug }: ServicePageManagerProps) {
   const fallbacks = FALLBACKS[slug];
 
-  const heroCMS = contents['service-hero']?.[0];
+  const heroCMS = contents[`${slug}-hero`]?.[0];
   const hero: ContentOrFallback = heroCMS ?? fallbacks.hero;
 
-  const breakdownCMS = contents['service-breakdown']?.[0];
+  const breakdownCMS = contents[`${slug}-breakdown`]?.[0];
   const breakdown: ContentOrFallback = breakdownCMS ?? fallbacks.breakdown;
 
-  const whyCMS = contents['service-why']?.[0];
+  const whyCMS = contents[`${slug}-why`]?.[0];
   const why: ContentOrFallback = whyCMS ?? fallbacks.why;
 
   const contactCMS = contents['home-contact']?.[0];
