@@ -104,29 +104,7 @@ export function useNavigation() {
 
       router.push(href, { scroll: false });
 
-      if (sectionId) {
-        let attempts = 0;
-        const checkExist = setInterval(() => {
-          const element = document.getElementById(sectionId);
-          attempts++;
-
-          if (element) {
-            clearInterval(checkExist);
-            setTimeout(() => {
-              scrollToSection(sectionId, () => {
-                navigationSuppressRef.current = false;
-                setIsNavigating(false);
-              });
-            }, 100);
-          }
-
-          if (attempts > 50) {
-            clearInterval(checkExist);
-            navigationSuppressRef.current = false;
-            setIsNavigating(false);
-          }
-        }, 100);
-      } else {
+      if (!sectionId) {
         setTimeout(() => {
           performScroll(0, () => {
             navigationSuppressRef.current = false;
@@ -135,7 +113,7 @@ export function useNavigation() {
         }, 100);
       }
     },
-    [closeBar, setIsNavigating, pathname, router],
+    [closeBar, pathname, router, setIsNavigating],
   );
 
   const getLinkHandler = useCallback(
@@ -167,6 +145,7 @@ export function useNavigation() {
 
 export function useHashScrollOnMount() {
   const { setIsNavigating } = useMobileBarStore();
+  const pathname = usePathname();
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -200,6 +179,5 @@ export function useHashScrollOnMount() {
     }, 50);
 
     return () => clearInterval(checkExist);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setIsNavigating, pathname]);
 }
