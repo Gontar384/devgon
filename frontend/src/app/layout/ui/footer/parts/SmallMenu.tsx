@@ -1,5 +1,5 @@
 'use client';
-import { smallMenu } from '@/app/layout/ui/footer/linksData';
+import { smallMenu } from '@/app/layout/util/linksData';
 import React from 'react';
 import { useNavigation } from '@/app/layout/util/useNavigation';
 import { NavLink } from '@/app/layout/util/NavLink';

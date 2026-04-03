@@ -1,0 +1,45 @@
+{
+  "title": "Co wchodzi w skład tej usługi?",
+  "subtitle": "Każde wdrożenie dopasowujemy do rzeczywistych potrzeb — nie kopiujemy szablonów.",
+  "customData": {
+    "highlightWord": "tej usługi?",
+    "items": [
+      {
+        "icon": "ShoppingCart",
+        "title": "Sklepy internetowe",
+        "description": "E-commerce nowej generacji — szybkie, konwertujące, zintegrowane z ERP i systemami płatności. Budujemy na Next.js, Shopify lub rozwiązaniach custom.",
+        "tags": ["Next.js", "Shopify", "E-commerce", "Płatności"]
+      },
+      {
+        "icon": "Globe",
+        "title": "Strony i landing pages",
+        "description": "Strony, które sprzedają i pozycjonują się. Łączymy wydajność techniczną (Core Web Vitals) z copywritingiem zorientowanym na konwersję.",
+        "tags": ["SEO", "CMS", "Performance", "Konwersja"]
+      },
+      {
+        "icon": "Layers",
+        "title": "Aplikacje webowe",
+        "description": "Dedykowane platformy SaaS, panele zarządzania i narzędzia wewnętrzne. Skalowalne architektury mikroserwisowe lub monolit — dobieramy to co pasuje.",
+        "tags": ["SaaS", "Dashboard", "React", "NestJS"]
+      },
+      {
+        "icon": "Database",
+        "title": "Systemy backendowe",
+        "description": "REST API, GraphQL, mikroserwisy i kolejki wiadomości. Projektujemy systemy gotowe na miliony operacji bez utraty stabilności.",
+        "tags": ["API", "Mikroserwisy", "PostgreSQL", "Redis"]
+      },
+      {
+        "icon": "Smartphone",
+        "title": "Aplikacje mobilne",
+        "description": "Cross-platform z React Native lub natywne iOS/Android. Jeden kod, dwie platformy — bez kompromisów jakościowych.",
+        "tags": ["React Native", "iOS", "Android", "PWA"]
+      },
+      {
+        "icon": "Cloud",
+        "title": "Cloud & DevOps",
+        "description": "Wdrożenia na AWS, GCP lub Azure. CI/CD, monitoring, autoskalowanie — Twój system działa bez przestojów i bez zbędnych kosztów.",
+        "tags": ["AWS", "Docker", "Kubernetes", "CI/CD"]
+      }
+    ]
+  }
+}

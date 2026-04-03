@@ -1,19 +1,19 @@
 [
   {
-    "title": "Software & Web Development",
-    "subtitle": "Dedykowane ekosystemy cyfrowe",
+    "title": "Aplikacje i systemy",
+    "subtitle": "Dedykowane ekosystemy cyfrowe dla biznesu",
     "description": "Projektujemy i budujemy szybkie sklepy, strony oraz aplikacje webowe, które nie tylko dobrze wyglądają, ale stają się silnikiem Twojej sprzedaży. Stabilne, bezpieczne i gotowe na chmurę.",
     "media": [
       {
         "url": "/image/business-apps.jpg",
-        "alt": "Software & Web Development",
+        "alt": "Aplikacje i systemy",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Zbuduj swój system",
-        "href": "/#services"
+        "label": "Stwórz swój dedykowany system",
+        "href": "/services/systems"
       },
       "tags": [
         "E-commerce",
@@ -23,20 +23,20 @@
     }
   },
   {
-    "title": "Automatyzacja i Integracje",
+    "title": "Automatyzacje i integracje",
     "subtitle": "Uwolnij czas swoich pracowników",
     "description": "Eliminujemy wąskie gardła, łącząc Twoje narzędzia w jeden płynny organizm. Zastępujemy żmudną, ręczną pracę inteligentnymi botami i przepływami danych.",
     "media": [
       {
         "url": "/image/work-optimization.jpg",
-        "alt": "Automatyzacja i Integracje",
+        "alt": "Automatyzacje i integracje",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Zautomatyzuj biznes",
-        "href": "/#services"
+        "label": "Zautomatyzuj swój biznes",
+        "href": "/services/integrations"
       },
       "tags": [
         "Procesy",
@@ -46,20 +46,20 @@
     }
   },
   {
-    "title": "AI & Data Engineering",
-    "subtitle": "Analityka i sztuczna inteligencja",
+    "title": "Analityka i wdrażanie AI",
+    "subtitle": "Analiza danych i sztuczna inteligencja",
     "description": "Przekuwamy chaos danych w konkretne decyzje. Wdrażamy modele AI, migrujemy infrastrukturę do chmury i optymalizujemy procesy, by Twój biznes rósł szybciej niż konkurencja.",
     "media": [
       {
         "url": "/image/company-scaling.jpg",
-        "alt": "AI & Data Engineering",
+        "alt": "Analityka i wdrażanie AI",
         "type": "IMAGE"
       }
     ],
     "customData": {
       "cta": {
-        "label": "Wdróż AI",
-        "href": "/#services"
+        "label": "Wdróż AI w swojej firmie",
+        "href": "/services/ai"
       },
       "tags": [
         "AI Implementation",

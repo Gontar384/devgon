@@ -9,6 +9,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
     },
     {
+      url: `https://${domain}/services/systems`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${domain}/services/integrations`,
+      lastModified: new Date(),
+    },
+    {
+      url: `https://${domain}/services/ai`,
+      lastModified: new Date(),
+    },
+    {
       url: `https://${domain}/privacy-policy`,
       lastModified: new Date(),
     },

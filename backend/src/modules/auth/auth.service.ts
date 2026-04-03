@@ -8,6 +8,8 @@ import { randomBytes } from 'crypto';
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { AUTH_POLICY } from './auth.policy';
 import { clearAuthCookie, setAuthCookie } from './auth.cookies';
+import { MailerService } from '@nestjs-modules/mailer';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Core authentication service handling OAuth login, session management,
@@ -27,12 +29,19 @@ import { clearAuthCookie, setAuthCookie } from './auth.cookies';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
+  private readonly CONTACT_MAIL_TO: string;
 
   constructor(
     private jwtService: JwtService,
     private userRepo: UserRepository,
     private refreshTokenRepo: RefreshTokenRepository,
-  ) {}
+    private mailerService: MailerService,
+    private configService: ConfigService,
+  ) {
+    this.CONTACT_MAIL_TO =
+      this.configService.get<string>('CONTACT_MAIL_TO') ??
+      'devgonteam@gmail.com';
+  }
 
   /**
    * Validates a Google OAuth profile and returns a JWT payload.
@@ -61,6 +70,21 @@ export class AuthService {
         role: UserRole.USER,
       });
       this.logger.log(`New user created: ${email}`);
+
+      this.mailerService
+        .sendMail({
+          to: this.CONTACT_MAIL_TO,
+          subject: `Nowy użytkownik: ${email}`,
+          html: `
+        <h2>Nowa rejestracja</h2>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Username:</strong> ${user.username}</p>
+        <p><strong>ID:</strong> ${user.id}</p>
+        <p><strong>Rola:</strong> ${user.role}</p>
+        <p><strong>Data:</strong> ${new Date().toISOString()}</p>
+      `,
+        })
+        .catch((err) => this.logger.error('New user mail error', err));
     }
 
     return {

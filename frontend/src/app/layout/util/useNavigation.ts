@@ -65,11 +65,6 @@ export function useNavigation() {
   const navigateToTop = useCallback(() => {
     closeBar();
 
-    if (pathname !== '/') {
-      router.push('/');
-      return;
-    }
-
     router.push('/', { scroll: false });
     navigationSuppressRef.current = true;
     setIsNavigating(true);
@@ -77,22 +72,26 @@ export function useNavigation() {
       navigationSuppressRef.current = false;
       setIsNavigating(false);
     });
-  }, [closeBar, setIsNavigating, pathname, router]);
+  }, [closeBar, setIsNavigating, router]);
 
   const navigateTo = useCallback(
     (href: string) => {
       closeBar();
 
-      const isAnchor = href.startsWith('/#');
+      const [rawPath, sectionId] = href.split('#');
+      const targetPath = rawPath || pathname;
 
-      if (!isAnchor) {
+      const isSamePage =
+        pathname === targetPath || (targetPath === '/' && pathname === '/');
+
+      if (sectionId && isSamePage) {
         navigationSuppressRef.current = true;
         setIsNavigating(true);
 
-        router.push(href);
+        router.push(href, { scroll: false });
 
         setTimeout(() => {
-          performScroll(0, () => {
+          scrollToSection(sectionId, () => {
             navigationSuppressRef.current = false;
             setIsNavigating(false);
           });
@@ -100,31 +99,21 @@ export function useNavigation() {
         return;
       }
 
-      const sectionId = href.slice(2);
-
-      if (pathname !== '/') {
-        navigationSuppressRef.current = true;
-        setIsNavigating(true);
-        router.push(href);
-        setTimeout(() => {
-          navigationSuppressRef.current = false;
-          setIsNavigating(false);
-        }, 1500);
-        return;
-      }
-
-      router.push(href, { scroll: false });
       navigationSuppressRef.current = true;
       setIsNavigating(true);
 
-      setTimeout(() => {
-        scrollToSection(sectionId, () => {
-          navigationSuppressRef.current = false;
-          setIsNavigating(false);
-        });
-      }, 50);
+      router.push(href, { scroll: false });
+
+      if (!sectionId) {
+        setTimeout(() => {
+          performScroll(0, () => {
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          });
+        }, 100);
+      }
     },
-    [closeBar, setIsNavigating, pathname, router],
+    [closeBar, pathname, router, setIsNavigating],
   );
 
   const getLinkHandler = useCallback(
@@ -156,21 +145,39 @@ export function useNavigation() {
 
 export function useHashScrollOnMount() {
   const { setIsNavigating } = useMobileBarStore();
+  const pathname = usePathname();
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
 
-    const timeout = setTimeout(() => {
-      navigationSuppressRef.current = true;
-      setIsNavigating(true);
-      scrollToSection(hash, () => {
+    navigationSuppressRef.current = true;
+    setIsNavigating(true);
+
+    let attempts = 0;
+    const maxAttempts = 100;
+
+    const checkExist = setInterval(() => {
+      const element = document.getElementById(hash);
+      attempts++;
+
+      if (element) {
+        clearInterval(checkExist);
+        setTimeout(() => {
+          scrollToSection(hash, () => {
+            navigationSuppressRef.current = false;
+            setIsNavigating(false);
+          });
+        }, 100);
+      }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(checkExist);
         navigationSuppressRef.current = false;
         setIsNavigating(false);
-      });
-    }, 100);
+      }
+    }, 50);
 
-    return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => clearInterval(checkExist);
+  }, [setIsNavigating, pathname]);
 }

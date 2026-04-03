@@ -2,7 +2,6 @@ import { createMetadata } from '@/lib/metadata/metadata';
 import { Metadata } from 'next';
 import { HomeManager } from '@/app/home/HomeManager';
 import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
-import { HashScrollHandler } from '@/app/home/util/useHashScrollOnMount';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
@@ -26,7 +25,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <HashScrollHandler />
       <HomeManager contents={contents} />
     </>
   );

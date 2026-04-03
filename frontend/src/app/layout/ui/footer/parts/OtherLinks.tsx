@@ -1,5 +1,5 @@
 'use client';
-import { otherLinks } from '@/app/layout/ui/footer/linksData';
+import { otherLinks } from '@/app/layout/util/linksData';
 import React from 'react';
 import { NavLink } from '@/app/layout/util/NavLink';
 

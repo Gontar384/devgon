@@ -14,8 +14,8 @@ export function ShortCompanyNote() {
       <div className="flex flex-col max-w-[400px] gap-2 text-sm text-muted-foreground">
         <span className="font-semibold">devgon</span>
         <span>
-          Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i
-          integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.
+          Analizujemy, tworzymy systemy i optymalizujemy procesy. W skrócie -
+          skup się na rozwoju firmy, resztę zostaw nam.
         </span>
       </div>
     </div>

@@ -1,5 +1,28 @@
 import { FooterLinkData, SocialLinkData } from '@/app/layout/layout-types';
 
+export const smallMenu: FooterLinkData[] = [
+  {
+    title: 'Start',
+    href: '/',
+  },
+  {
+    title: 'Oferta',
+    href: '/#services',
+  },
+  {
+    title: 'Współpraca',
+    href: '/#solutions',
+  },
+  {
+    title: 'O devgon',
+    href: '/#about',
+  },
+  {
+    title: 'Skontaktuj się',
+    href: '/#contact',
+  },
+];
+
 export const socialLinks: SocialLinkData[] = [
   {
     title: 'Facebook',
@@ -28,25 +51,6 @@ export const socialLinks: SocialLinkData[] = [
     iconSrc: '/svg/footer/github.svg',
     iconWidth: 18,
     iconHeight: 18,
-  },
-];
-
-export const smallMenu: FooterLinkData[] = [
-  {
-    title: 'Start',
-    href: '/',
-  },
-  {
-    title: 'Oferta',
-    href: '/#services',
-  },
-  {
-    title: 'Współpraca',
-    href: '/#solutions',
-  },
-  {
-    title: 'O devgon',
-    href: '/#about',
   },
 ];
 

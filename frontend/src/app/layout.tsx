@@ -9,6 +9,7 @@ import NavbarClient from '@/app/layout/ui/navbar/NavbarClient';
 import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
 import { AuthInitializer } from '@/lib/auth/AuthInitializer';
 import { CookieBanner } from '@/app/layout/ui/additional/CookieBanner';
+import { HashScrollHandler } from '@/app/layout/util/useHashScrollOnMount';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -33,6 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="pl">
       <body>
+        <HashScrollHandler />
         <AuthInitializer />
         <NavbarClient />
         <MobileBar />
