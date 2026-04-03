@@ -1,5 +1,5 @@
 {
-  "title": "AI, które <span class=\"text-primary\">pracuje</span> zamiast Ciebie",
+  "title": "AI, które pracuje zamiast Ciebie",
   "description": "Wdrażamy inteligentne rozwiązania, które uczą się Twojego biznesu i działają za Ciebie. Asystenci AI, analityka predykcyjna i optymalizacja oparta na danych.",
   "media": [
     {
@@ -10,14 +10,15 @@
   ],
   "customData": {
     "badge": "Analityka i wdrażanie AI",
+    "highlightWord": "pracuje",
     "accentWords": ["analizuje", "prognozuje", "optymalizuje", "uczy się"],
     "primaryCta": {
       "label": "Wdróż AI",
       "href": "/services/ai#contact"
     },
     "secondaryCta": {
-      "label": "Sprawdź możliwości",
-      "href": "/#services"
+      "label": "Dlaczego warto?",
+      "href": "/services/ai#why"
     },
     "stats": [
       { "value": "60%", "label": "Redukcja kosztów operacyjnych" },

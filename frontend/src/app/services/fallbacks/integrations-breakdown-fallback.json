@@ -1,7 +1,8 @@
 {
-  "title": "Co robimy w ramach <span class=\"text-primary\">automatyzacji?</span>",
+  "title": "Co robimy w ramach automatyzacji?",
   "subtitle": "Każdy proces, który robisz ręcznie więcej niż raz, nadaje się do automatyzacji.",
   "customData": {
+    "highlightWord": "automatyzacji?",
     "items": [
       {
         "icon": "GitMerge",

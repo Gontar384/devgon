@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HomeServicesCarouselProps } from '@/app/home/home-types';
 
-const MOBILE_INITIAL = 3;
+const MOBILE_INITIAL = 6;
 const GAP = 32;
 
 function getVisible(windowWidth: number): number {

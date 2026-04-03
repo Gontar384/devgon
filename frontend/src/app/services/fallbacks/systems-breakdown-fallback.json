@@ -1,7 +1,8 @@
 {
-  "title": "Co wchodzi w skład <span class=\"text-primary\">tej usługi?</span>",
+  "title": "Co wchodzi w skład tej usługi?",
   "subtitle": "Każde wdrożenie dopasowujemy do rzeczywistych potrzeb — nie kopiujemy szablonów.",
   "customData": {
+    "highlightWord": "tej usługi?",
     "items": [
       {
         "icon": "ShoppingCart",

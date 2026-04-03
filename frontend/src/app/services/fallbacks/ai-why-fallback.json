@@ -1,7 +1,9 @@
 {
-  "title": "Dlaczego AI właśnie <span class=\"text-primary\">teraz?</span>",
+  "title": "Dlaczego AI właśnie teraz?",
   "subtitle": "Firmy, które wdrożą AI w ciągu najbliższych 2 lat, będą miały przewagę, której konkurencja nie dogoni.",
   "customData": {
+    "topHeader": "Dlaczego my",
+    "highlightWord": "teraz?",
     "items": [
       {
         "icon": "Gauge",

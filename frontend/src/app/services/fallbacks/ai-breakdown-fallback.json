@@ -1,13 +1,14 @@
 {
-  "title": "Co obejmuje <span class=\"text-primary\">oferta AI?</span>",
+  "title": "Co obejmuje oferta AI?",
   "subtitle": "Wdrażamy AI tam gdzie realnie przynosi wartość — nie dla efektu, ale dla wyników.",
   "customData": {
+    "highlightWord": "oferta AI?",
     "items": [
       {
         "icon": "Bot",
         "title": "Asystenci i chatboty AI",
-        "description": "Inteligentne boty obsługi klienta, wewnętrzne asystenty wiedzy firmowej, agenty wykonujące zadania. Zasilane GPT-4, Claude lub modelami open-source.",
-        "tags": ["GPT-4", "Claude", "RAG", "Chatbot"]
+        "description": "Inteligentne boty obsługi klienta, wewnętrzne asystenty wiedzy firmowej, agenty wykonujące zadania. Zasilane GPT-5, Claude lub modelami open-source.",
+        "tags": ["GPT-5", "Claude", "RAG", "Chatbot"]
       },
       {
         "icon": "BrainCircuit",

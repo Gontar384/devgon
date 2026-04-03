@@ -17,6 +17,7 @@ export function ServiceHero({ content }: ServiceHeroProps) {
     photoAlt: content.media?.[0]?.alt ?? '',
     mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
     badge: content.customData?.badge ?? '',
+    highlightWord: (content.customData?.highlightWord as string) ?? '',
     accentWords: (content.customData?.accentWords as string[]) ?? [],
     primaryCta: content.customData?.primaryCta ?? null,
     secondaryCta: content.customData?.secondaryCta ?? null,
@@ -34,20 +35,27 @@ export function ServiceHero({ content }: ServiceHeroProps) {
     return () => clearInterval(interval);
   }, [safeData.accentWords.length]);
 
+  const renderedTitle = safeData.highlightWord
+    ? safeData.title.replace(
+        safeData.highlightWord,
+        `<span class="text-primary">${safeData.highlightWord}</span>`,
+      )
+    : safeData.title;
+
   if (!content) return null;
 
   return (
     <section
       aria-label={`${safeData.badge} — sekcja powitalna`}
-      className="relative min-h-screen w-full flex items-center pb-16 md:pb-24 overflow-hidden border-b select-none"
+      className="relative w-full overflow-hidden select-none min-h-screen"
     >
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: [
-            'linear-gradient(to right, oklch(0.506 0.004 17.282 / 0.3) 1px, transparent 1px)',
-            'linear-gradient(to bottom, oklch(0.506 0.004 17.282 / 0.3) 1px, transparent 1px)',
+            'repeating-linear-gradient(0deg,   oklch(0.506 0.004 17.282 / 0.1) 0px, oklch(0.506 0.004 17.282 / 0.1) 1px, transparent 1px, transparent 72px)',
+            'repeating-linear-gradient(90deg,  oklch(0.506 0.004 17.282 / 0.1) 0px, oklch(0.506 0.004 17.282 / 0.1) 1px, transparent 1px, transparent 72px)',
           ].join(', '),
           backgroundSize: '72px 72px',
         }}
@@ -68,128 +76,127 @@ export function ServiceHero({ content }: ServiceHeroProps) {
             'linear-gradient(to bottom, transparent, oklch(0.812 0.01 106.613))',
         }}
       />
-      <div className="relative w-full max-w-[1600px] items-center mx-auto px-4 md:px-10 mt-10 flex flex-col xl:flex-row gap-[40px] xl:gap-[70px]">
-        <div className="max-w-[900px] flex flex-col">
-          {safeData.badge && (
-            <AnimateItem delay={0}>
-              <div className="inline-flex items-center gap-2 rounded-full border bg-background/80 backdrop-blur-sm px-4 py-1.5 mb-6">
-                <span
-                  className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
-                  aria-hidden="true"
+      <div className="relative w-full max-w-[1600px] mx-auto px-4 md:px-10">
+        <div className="flex flex-col xl:flex-row xl:items-center xl:gap-[80px] pt-16 md:pt-24 pb-0">
+          <div className="flex-1 flex flex-col xl:max-w-[700px]">
+            {safeData.badge && (
+              <AnimateItem delay={0}>
+                <div className="inline-flex items-center gap-2 rounded-full border bg-background/80 backdrop-blur-sm px-4 py-1.5 mb-6 w-fit">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                    aria-hidden="true"
+                  />
+                  <span className="text-[12px] md:text-[13px] uppercase tracking-[0.18em] font-semibold text-primary">
+                    {safeData.badge}
+                  </span>
+                </div>
+              </AnimateItem>
+            )}
+            {safeData.title && (
+              <AnimateItem delay={0.08}>
+                <h1
+                  className="text-[42px] md:text-[58px] xl:text-[68px] font-bold leading-[1.05] tracking-tight mb-4"
+                  dangerouslySetInnerHTML={{ __html: renderedTitle }}
                 />
-                <span className="text-[12px] md:text-[14px] uppercase tracking-[0.18em] font-semibold text-primary">
-                  {safeData.badge}
-                </span>
-              </div>
-            </AnimateItem>
-          )}
-          {safeData.title && (
-            <AnimateItem delay={0.08}>
-              <h1
-                className="text-[50px] md:text-[70px] font-bold leading-[1.05] tracking-tight mb-4"
-                dangerouslySetInnerHTML={{ __html: safeData.title }}
-              />
-            </AnimateItem>
-          )}
-          {safeData.accentWords.length > 0 && (
-            <AnimateItem delay={0.14}>
-              <div
-                className="text-[24px] md:text-[32px] text-primary font-semibold mb-5 h-[1.4em] overflow-hidden"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                <motion.span
-                  key={wordIndex}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -18 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className="block uppercase tracking-[0.12em]"
+              </AnimateItem>
+            )}
+            {safeData.accentWords.length > 0 && (
+              <AnimateItem delay={0.14}>
+                <div
+                  className="text-[22px] md:text-[28px] text-primary font-semibold mb-5 h-[1.4em] overflow-hidden"
+                  aria-live="polite"
+                  aria-atomic="true"
                 >
-                  {safeData.accentWords[wordIndex]}
-                </motion.span>
-              </div>
-            </AnimateItem>
-          )}
-          {safeData.description && (
-            <AnimateItem delay={0.2}>
-              <p className="text-[16px] md:text-[18px] text-muted-foreground leading-relaxed max-w-[600px] mb-8">
-                {safeData.description}
-              </p>
-            </AnimateItem>
-          )}
-          {(safeData.primaryCta || safeData.secondaryCta) && (
-            <AnimateItem delay={0.28}>
-              <div className="flex gap-3 flex-wrap mb-12 md:mb-16">
-                {safeData.primaryCta && (
-                  <NavigationButton
-                    href={safeData.primaryCta.href}
-                    label={safeData.primaryCta.label}
-                    primary
-                    icon={<ArrowRight size={18} aria-hidden="true" />}
-                    size="lg"
-                  />
-                )}
-                {safeData.secondaryCta && (
-                  <NavigationButton
-                    href={safeData.secondaryCta.href}
-                    label={safeData.secondaryCta.label}
-                    size="lg"
-                  />
-                )}
-              </div>
-            </AnimateItem>
-          )}
-          {safeData.stats.length > 0 && (
-            <AnimateItem delay={0.36}>
-              <div
-                className="flex flex-wrap gap-6 md:gap-10"
-                role="list"
-                aria-label="Kluczowe liczby"
-              >
-                {safeData.stats.map((stat, i) => (
-                  <div
-                    key={i}
-                    role="listitem"
-                    className="flex flex-col gap-0.5"
+                  <motion.span
+                    key={wordIndex}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -18 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className="block uppercase tracking-[0.12em]"
                   >
-                    <span className="text-[28px] md:text-[36px] font-bold text-primary leading-none">
-                      {stat.value}
-                    </span>
-                    <span className="text-[12px] md:text-[14px] text-muted-foreground uppercase tracking-[0.14em]">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
+                    {safeData.accentWords[wordIndex]}
+                  </motion.span>
+                </div>
+              </AnimateItem>
+            )}
+            {safeData.description && (
+              <AnimateItem delay={0.2}>
+                <div
+                  className="text-[15px] md:text-[17px] text-muted-foreground leading-relaxed max-w-[560px] mb-8"
+                  dangerouslySetInnerHTML={{ __html: safeData.description }}
+                />
+              </AnimateItem>
+            )}
+            {(safeData.primaryCta || safeData.secondaryCta) && (
+              <AnimateItem delay={0.28}>
+                <div className="flex gap-3 flex-wrap">
+                  {safeData.primaryCta && (
+                    <NavigationButton
+                      href={safeData.primaryCta.href}
+                      label={safeData.primaryCta.label}
+                      primary
+                      icon={<ArrowRight size={18} aria-hidden="true" />}
+                      size="lg"
+                    />
+                  )}
+                  {safeData.secondaryCta && (
+                    <NavigationButton
+                      href={safeData.secondaryCta.href}
+                      label={safeData.secondaryCta.label}
+                      size="lg"
+                    />
+                  )}
+                </div>
+              </AnimateItem>
+            )}
+          </div>
+          {safeData.photoUrl && (
+            <AnimateItem delay={0.18}>
+              <div className="relative mt-10 xl:mt-0 w-full xl:w-[480px] 2xl:w-[560px] flex items-center justify-center">
+                {safeData.mediaType === MediaType.VIDEO ? (
+                  <video
+                    src={safeData.photoUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    className="relative z-10 w-full max-h-[340px] xl:max-h-none object-contain drop-shadow-xl pointer-events-none"
+                    aria-label={safeData.photoAlt || safeData.badge}
+                  />
+                ) : (
+                  <Image
+                    src={safeData.photoUrl}
+                    alt={safeData.photoAlt}
+                    width={560}
+                    height={560}
+                    priority
+                    unoptimized
+                    className="relative z-10 w-full max-h-[300px] xl:max-h-none object-contain pointer-events-none"
+                  />
+                )}
               </div>
             </AnimateItem>
           )}
         </div>
-        {safeData.photoUrl && (
-          <AnimateItem delay={0.2}>
-            <div className="max-w-[500px] xl:max-w-[700px]">
-              {safeData.mediaType === MediaType.VIDEO ? (
-                <video
-                  src={safeData.photoUrl}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  className="object-contain w-full h-full"
-                  aria-label={safeData.photoAlt || safeData.badge}
-                />
-              ) : (
-                <Image
-                  src={safeData.photoUrl}
-                  alt={safeData.photoAlt}
-                  width={400}
-                  height={400}
-                  priority
-                  unoptimized
-                  className="object-contain w-full h-full"
-                />
-              )}
+        {safeData.stats.length > 0 && (
+          <AnimateItem delay={0.38}>
+            <div
+              className="flex flex-wrap gap-x-8 gap-y-4 md:gap-x-14 mt-10 md:mt-14 pb-10 md:pb-16 pt-8 md:pt-10"
+              role="list"
+              aria-label="Kluczowe liczby"
+            >
+              {safeData.stats.map((stat, i) => (
+                <div key={i} role="listitem" className="flex flex-col gap-0.5">
+                  <span className="text-[30px] md:text-[38px] font-bold text-primary leading-none">
+                    {stat.value}
+                  </span>
+                  <span className="text-[11px] md:text-[13px] text-muted-foreground uppercase tracking-[0.16em]">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </AnimateItem>
         )}

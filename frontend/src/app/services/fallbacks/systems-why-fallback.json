@@ -1,7 +1,9 @@
 {
-  "title": "Dlaczego warto wybrać <span class=\"text-primary\">nasze podejście?</span>",
+  "title": "Dlaczego warto wybrać nasze podejście?",
   "subtitle": "Nie jesteśmy kolejną agencją z ofertą z katalogu. Każdy projekt traktujemy jak własny produkt.",
   "customData": {
+    "topHeader": "Dlaczego my",
+    "highlightWord": "nasze podejście?",
     "items": [
       {
         "icon": "Zap",

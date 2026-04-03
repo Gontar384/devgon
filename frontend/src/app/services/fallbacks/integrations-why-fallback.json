@@ -1,7 +1,9 @@
 {
-  "title": "Dlaczego automatyzacja <span class=\"text-primary\">się opłaca?</span>",
+  "title": "Dlaczego automatyzacja się opłaca?",
   "subtitle": "ROI z automatyzacji jest policzalny. Pokazujemy liczby przed wdrożeniem.",
   "customData": {
+    "topHeader": "Dlaczego my",
+    "highlightWord": "się opłaca?",
     "items": [
       {
         "icon": "Clock",

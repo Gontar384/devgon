@@ -1,5 +1,5 @@
 {
-  "title": "Integracje, które <span class=\"text-primary\">eliminują</span> ręczną pracę",
+  "title": "Integracje, które eliminują ręczną pracę",
   "description": "Łączymy Twoje narzędzia w jeden płynny organizm. Dane płyną tam gdzie powinny, kiedy powinny — bez udziału człowieka.",
   "media": [
     {
@@ -10,14 +10,15 @@
   ],
   "customData": {
     "badge": "Automatyzacje i integracje",
+    "highlightWord": "eliminują",
     "accentWords": ["automatyzuje", "integruje", "synchronizuje", "eliminuje"],
     "primaryCta": {
       "label": "Zautomatyzuj biznes",
       "href": "/services/integrations#contact"
     },
     "secondaryCta": {
-      "label": "Zobacz możliwości",
-      "href": "/#services"
+      "label": "Dlaczego warto?",
+      "href": "/services/integrations#why"
     },
     "stats": [
       { "value": "80%", "label": "Mniej ręcznej pracy" },
