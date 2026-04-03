@@ -14,6 +14,8 @@ export default function NavbarClient() {
   const isTransitioning = useRef(false);
   const transitionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { openedBar, isNavigating } = useMobileBarStore();
+  const isResizing = useRef(false);
+  const resizeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const applyVisibility = (hide: boolean) => {
     if (hiddenRef.current === hide) return;
@@ -76,7 +78,8 @@ export default function NavbarClient() {
         navigationSuppressRef.current ||
         openedBar ||
         suppressScrollRef.current ||
-        isTransitioning.current
+        isTransitioning.current ||
+        isResizing.current
       ) {
         lastY.current = window.scrollY;
         return;
@@ -112,6 +115,24 @@ export default function NavbarClient() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      isResizing.current = true;
+      lastY.current = window.scrollY;
+      if (resizeTimeout.current) clearTimeout(resizeTimeout.current);
+      resizeTimeout.current = setTimeout(() => {
+        isResizing.current = false;
+        lastY.current = window.scrollY;
+      }, 200);
+    };
+
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => {
+      window.removeEventListener('resize', onResize);
+      if (resizeTimeout.current) clearTimeout(resizeTimeout.current);
+    };
   }, []);
 
   return (

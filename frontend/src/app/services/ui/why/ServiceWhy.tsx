@@ -46,7 +46,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
       />
       <div
         aria-hidden="true"
-        className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-12 pointer-events-none"
         style={{
           background:
             'linear-gradient(to top, transparent, oklch(0.812 0.01 106.613))',
