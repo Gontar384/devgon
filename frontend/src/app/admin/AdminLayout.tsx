@@ -23,6 +23,36 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </TabsTrigger>
             <TabsTrigger
+              value="/admin/services/systems"
+              className="cursor-pointer bg-background border data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+              id={undefined}
+              aria-controls={undefined}
+            >
+              <NavLink href="/admin/services/systems" className="text-xl">
+                Aplikacje i systemy
+              </NavLink>
+            </TabsTrigger>
+            <TabsTrigger
+              value="/admin/services/integrations"
+              className="cursor-pointer bg-background border data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+              id={undefined}
+              aria-controls={undefined}
+            >
+              <NavLink href="/admin/services/integrations" className="text-xl">
+                Automatyzacje i integracje
+              </NavLink>
+            </TabsTrigger>
+            <TabsTrigger
+              value="/admin/services/ai"
+              className="cursor-pointer bg-background border data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
+              id={undefined}
+              aria-controls={undefined}
+            >
+              <NavLink href="/admin/services/ai" className="text-xl">
+                Analityka i wdrażanie AI
+              </NavLink>
+            </TabsTrigger>
+            <TabsTrigger
               value="/admin/privacy-policy"
               className="cursor-pointer bg-background border data-[state=active]:bg-primary data-[state=active]:text-primary-foreground hover:bg-accent hover:text-foreground active:bg-accent active:text-foreground"
               id={undefined}
