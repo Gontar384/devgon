@@ -15,7 +15,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { WhyItem } from '@/app/services/service-page-types';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import React from 'react';
 
 const ICONS: Record<string, LucideIcon> = {
@@ -36,53 +36,36 @@ const ICONS: Record<string, LucideIcon> = {
 export function WhyCard({ item, index }: { item: WhyItem; index: number }) {
   const Icon = ICONS[item.icon] ?? Zap;
   const hasMetric = !!item.metric;
-  const prefersReduced = useReducedMotion();
-  const [hovered, setHovered] = React.useState(false);
+
+  const [active, setActive] = React.useState(false);
 
   return (
     <motion.article
-      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 16, scale: 0.98, filter: 'blur(3px)' }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
-      whileHover={
-        prefersReduced
-          ? undefined
-          : {
-              x: -6,
-              scale: 1.015,
-              transition: { duration: 0.18, ease: 'easeOut' },
-            }
-      }
-      whileTap={
-        prefersReduced
-          ? undefined
-          : {
-              x: -4,
-              scale: 1.008,
-              transition: { duration: 0.1, ease: 'easeOut' },
-            }
-      }
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setHovered(false)}
-      onTouchCancel={() => setHovered(false)}
-      className="relative flex gap-3 md:gap-5 rounded-2xl border bg-background p-4 md:p-6 hover:shadow-md active:shadow-md hover:border-primary/50 active:border-primary/50
-                 transition-[box-shadow,border-color] duration-300"
+      transition={{ duration: 0.3, ease: 'easeOut', delay: index * 0.1 }}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      onTouchStart={() => setActive(true)}
+      onTouchEnd={() => setActive(false)}
+      onTouchCancel={() => setActive(false)}
+      className={`relative flex gap-3 md:gap-5 rounded-2xl border bg-background p-4 md:p-6 overflow-hidden
+                 ${active ? 'shadow-md border-primary/50' : ''} transition-all duration-300`}
     >
       {hasMetric && (
         <motion.div
           aria-hidden="true"
+          initial={{ opacity: 0, y: -6, scale: 0.95 }}
           animate={
-            prefersReduced
-              ? { opacity: 1, scale: 1, y: 0 }
-              : hovered
-                ? { opacity: 1, scale: 1, y: 0 }
-                : { opacity: 0, scale: 0.85, y: -4 }
+            active
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: -6, scale: 0.95 }
           }
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="absolute -top-0.5 -right-0.5 max-w-[180px] rounded-bl-2xl rounded-tr-xl bg-primary px-3 py-1.5 text-right text-primary-foreground/90 overflow-hidden"
+          className="pointer-events-none absolute -top-0.5 -right-0.5 max-w-[220px]
+                     rounded-bl-2xl rounded-tr-xl bg-primary px-3 py-1.5 text-right
+                     text-primary-foreground/90"
         >
           <p className="text-[18px] font-black leading-none truncate">
             {item.metric}
@@ -96,7 +79,7 @@ export function WhyCard({ item, index }: { item: WhyItem; index: number }) {
       )}
       <div
         className={`flex items-center justify-center w-10 h-10 rounded-xl shrink-0 mt-0.5
-                   ${hovered ? 'bg-primary text-primary-foreground' : 'bg-primary/20 text-primary'} transition-all duration-200`}
+                   ${active ? 'bg-primary text-primary-foreground' : 'bg-primary/20 text-primary'} transition-all duration-300`}
         aria-hidden="true"
       >
         <Icon size={18} />

@@ -95,6 +95,8 @@ jobs:
           {
             echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:4000"
             echo "NEXT_PUBLIC_DOMAIN=test.site"
+            echo "NEXT_PUBLIC_UMAMI_SRC=http://localhost:3003/script.js"
+            echo "NEXT_PUBLIC_UMAMI_WEBSITE_ID="
             echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY_TEST }}"
             echo "DATABASE_URL=${{ env.DATABASE_URL }}"
           } > .env.test

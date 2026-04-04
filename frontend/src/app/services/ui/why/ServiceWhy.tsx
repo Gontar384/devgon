@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ServiceWhyProps, WhyItem } from '@/app/services/service-page-types';
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 import { WhyCard } from '@/app/services/ui/why/WhyCard';
+import { CursorGlow } from '@/app/home/ui/home-intro/parts/CursorGlow';
 
 export function ServiceWhy({ content }: ServiceWhyProps) {
   if (!content) return null;
@@ -28,7 +29,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
     <section
       id="why"
       aria-label={safeData.title || 'Dlaczego warto'}
-      className="w-full select-none relative [clip-path:inset(0)]"
+      className="w-full select-none relative"
     >
       <div
         aria-hidden="true"
@@ -103,6 +104,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
           )}
         </div>
       </div>
+      <CursorGlow cursorColor="primary" />
     </section>
   );
 }
