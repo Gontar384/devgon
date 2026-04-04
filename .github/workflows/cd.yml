@@ -18,7 +18,12 @@ jobs:
         run: docker build -t backend:latest ./backend
 
       - name: Build frontend image
-        run: docker build --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.site --build-arg NEXT_PUBLIC_DOMAIN=devgon.site -t frontend:latest ./frontend
+        run: docker build \
+               --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.site \
+               --build-arg NEXT_PUBLIC_DOMAIN=devgon.site \
+               --build-arg NEXT_PUBLIC_UMAMI_WEBSITE_ID=${{ secrets.UMAMI_WEBSITE_ID }} \
+               --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.site/script.js \
+               -t frontend:latest ./frontend
 
       - name: Save images as tar.gz
         run: |
@@ -80,6 +85,8 @@ jobs:
               echo "COOKIE_DOMAIN=.devgon.site"
               echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
               echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
+              echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
+              echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
               echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/devgon"
               echo "MINIO_ENDPOINT=minio"
               echo "MINIO_PORT=9000"
@@ -94,6 +101,7 @@ jobs:
               echo "SMTP_PASS=${{ secrets.SMTP_PASS }}"
               echo "SMTP_FROM=devgonteam@gmail.com"
               echo "CONTACT_MAIL_TO=devgonteam@gmail.com"
+              echo "UMAMI_APP_SECRET=${{ secrets.UMAMI_APP_SECRET }}"
             } > .env
             
             echo "Starting postgres and minio first..."
