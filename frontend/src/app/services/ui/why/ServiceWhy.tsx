@@ -28,7 +28,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
     <section
       id="why"
       aria-label={safeData.title || 'Dlaczego warto'}
-      className="w-full select-none relative [clip-path:inset(0)]"
+      className="w-full select-none relative"
     >
       <div
         aria-hidden="true"
