@@ -18,12 +18,13 @@ jobs:
         run: docker build -t backend:latest ./backend
 
       - name: Build frontend image
-        run: docker build \
-               --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.pl \
-               --build-arg NEXT_PUBLIC_DOMAIN=devgon.pl \
-               --build-arg NEXT_PUBLIC_UMAMI_WEBSITE_ID=${{ secrets.UMAMI_WEBSITE_ID }} \
-               --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.pl/script.js \
-               -t frontend:latest ./frontend
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.pl \
+            --build-arg NEXT_PUBLIC_DOMAIN=devgon.pl \
+            --build-arg NEXT_PUBLIC_UMAMI_WEBSITE_ID=${{ secrets.UMAMI_WEBSITE_ID }} \
+            --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.pl/script.js \
+            -t frontend:latest ./frontend
 
       - name: Save images as tar.gz
         run: |
