@@ -19,10 +19,10 @@ jobs:
 
       - name: Build frontend image
         run: docker build \
-               --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.site \
-               --build-arg NEXT_PUBLIC_DOMAIN=devgon.site \
+               --build-arg NEXT_PUBLIC_BACKEND_URL=https://api.devgon.pl \
+               --build-arg NEXT_PUBLIC_DOMAIN=devgon.pl \
                --build-arg NEXT_PUBLIC_UMAMI_WEBSITE_ID=${{ secrets.UMAMI_WEBSITE_ID }} \
-               --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.site/script.js \
+               --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.pl/script.js \
                -t frontend:latest ./frontend
 
       - name: Save images as tar.gz
@@ -79,10 +79,10 @@ jobs:
             echo "Writing environment variables to .env..."
             {
               echo "NODE_ENV=production"
-              echo "FRONTEND_URL=https://devgon.site"
-              echo "BACKEND_URL=https://api.devgon.site"
+              echo "FRONTEND_URL=https://devgon.pl"
+              echo "BACKEND_URL=https://api.devgon.pl"
               echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
-              echo "COOKIE_DOMAIN=.devgon.site"
+              echo "COOKIE_DOMAIN=.devgon.pl"
               echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
               echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
               echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
@@ -94,7 +94,7 @@ jobs:
               echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}"
               echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}"
               echo "MINIO_BUCKET_NAME=media"
-              echo "MINIO_PUBLIC_URL=https://minio.devgon.site"
+              echo "MINIO_PUBLIC_URL=https://minio.devgon.pl"
               echo "SMTP_HOST=smtp-relay.brevo.com"
               echo "SMTP_PORT=587"
               echo "SMTP_USER=${{ secrets.SMTP_USER }}"
