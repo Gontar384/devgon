@@ -16,7 +16,6 @@
 
 html {
   overflow-y: scroll;
-  scroll-behavior: smooth;
 }
 
 section[id] {
