@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useMobileBarStore } from '@/store/mobileBarStore';
 
@@ -64,15 +64,26 @@ export function useNavigation() {
 
   const navigateToTop = useCallback(() => {
     closeBar();
-
     router.push('/', { scroll: false });
-    navigationSuppressRef.current = true;
-    setIsNavigating(true);
-    performScroll(0, () => {
-      navigationSuppressRef.current = false;
-      setIsNavigating(false);
-    });
-  }, [closeBar, setIsNavigating, router]);
+
+    const isSamePage = pathname === '/';
+
+    if (isSamePage) {
+      navigationSuppressRef.current = true;
+      setIsNavigating(true);
+      performScroll(0, () => {
+        navigationSuppressRef.current = false;
+        setIsNavigating(false);
+      });
+    } else {
+      navigationSuppressRef.current = true;
+      setIsNavigating(true);
+      setTimeout(() => {
+        navigationSuppressRef.current = false;
+        setIsNavigating(false);
+      }, 100);
+    }
+  }, [closeBar, setIsNavigating, router, pathname]);
 
   const navigateTo = useCallback(
     (href: string) => {
@@ -101,15 +112,12 @@ export function useNavigation() {
 
       navigationSuppressRef.current = true;
       setIsNavigating(true);
-
       router.push(href, { scroll: false });
 
       if (!sectionId) {
         setTimeout(() => {
-          performScroll(0, () => {
-            navigationSuppressRef.current = false;
-            setIsNavigating(false);
-          });
+          navigationSuppressRef.current = false;
+          setIsNavigating(false);
         }, 100);
       }
     },
@@ -146,6 +154,20 @@ export function useNavigation() {
 export function useHashScrollOnMount() {
   const { setIsNavigating } = useMobileBarStore();
   const pathname = usePathname();
+  const prevPathname = useRef(pathname);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      window.scrollTo(0, 0);
+      prevPathname.current = pathname;
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
