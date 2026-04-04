@@ -57,10 +57,51 @@ services:
       timeout: 10s
       retries: 3
 
+  umami-db:
+    image: postgres:17.5-alpine
+    container_name: dev_umami_db
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
+    volumes:
+      - umami_dev_db_data:/var/lib/postgresql/data
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U umami -d umami"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: dev_umami
+    ports:
+      - "3003:3000"
+    environment:
+      DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: dev-app-secret-change-on-prod
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    networks:
+      - dev_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
 volumes:
   postgres_dev_data:
   postgres_test_data:
   minio_dev_data:
+  umami_dev_db_data:
 
 networks:
   dev_network:

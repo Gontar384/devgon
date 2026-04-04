@@ -10,6 +10,7 @@ import { LoginDialog } from '@/app/layout/ui/navbar/login-dialog/LoginDialog';
 import { AuthInitializer } from '@/lib/auth/AuthInitializer';
 import { CookieBanner } from '@/app/layout/ui/additional/CookieBanner';
 import { HashScrollHandler } from '@/app/layout/util/useHashScrollOnMount';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -45,6 +46,11 @@ export default async function RootLayout({
         <LoginDialog />
         <Toaster position="bottom-center" />
         <CookieBanner />
+        <Script
+          src={process.env.NEXT_PUBLIC_UMAMI_SRC}
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
