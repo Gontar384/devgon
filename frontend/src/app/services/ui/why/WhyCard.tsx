@@ -63,7 +63,7 @@ export function WhyCard({ item, index }: { item: WhyItem; index: number }) {
               : { opacity: 0, y: -6, scale: 0.95 }
           }
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="pointer-events-none absolute -top-0.5 -right-0.5 max-w-[180px]
+          className="pointer-events-none absolute -top-0.5 -right-0.5 max-w-[220px]
                      rounded-bl-2xl rounded-tr-xl bg-primary px-3 py-1.5 text-right
                      text-primary-foreground/90"
         >

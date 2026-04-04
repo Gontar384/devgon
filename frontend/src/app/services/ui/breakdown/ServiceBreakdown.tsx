@@ -7,6 +7,7 @@ import {
 } from '@/app/services/service-page-types';
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 import { BreakdownCard } from '@/app/services/ui/breakdown/BreakdownCard';
+import { TiltCard } from '@/app/home/ui/home-services/parts/TiltCard';
 
 export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
   if (!content) return null;
@@ -66,7 +67,9 @@ export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
               >
                 {safeData.items.map((item, i) => (
                   <li key={i} className="flex">
-                    <BreakdownCard item={item} index={i} />
+                    <TiltCard>
+                      <BreakdownCard item={item} index={i} />
+                    </TiltCard>
                   </li>
                 ))}
               </ul>
