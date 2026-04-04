@@ -82,7 +82,7 @@ export function CursorGlow({ cursorColor }: CursorGlowProps) {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 pointer-events-none z-35"
+      className="absolute inset-0 pointer-events-none z-35 overflow-hidden"
     >
       <div
         ref={glowRef}

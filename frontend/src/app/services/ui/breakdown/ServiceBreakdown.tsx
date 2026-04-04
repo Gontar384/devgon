@@ -56,7 +56,7 @@ export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
                 className="absolute -inset-[10%] pointer-events-none"
                 style={{
                   background:
-                    'radial-gradient(ellipse 80% 80% at 50% 50%, oklch(0.706 0.128 27.786 / 0.15) 0%, transparent 70%)',
+                    'radial-gradient(ellipse 80% 80% at 50% 50%, oklch(0.706 0.128 27.786 / 0.15) 0%, transparent 50%)',
                 }}
               />
               <ul
