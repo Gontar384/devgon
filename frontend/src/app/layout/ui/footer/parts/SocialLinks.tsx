@@ -1,7 +1,7 @@
-import { socialLinks } from '@/app/layout/util/linksData';
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
+import { socialLinks } from '@/app/layout/util/data/footerData';
 
 export function SocialLinks() {
   return (

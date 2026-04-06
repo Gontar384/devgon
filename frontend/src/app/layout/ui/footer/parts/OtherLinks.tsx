@@ -1,7 +1,7 @@
 'use client';
-import { otherLinks } from '@/app/layout/util/linksData';
 import React from 'react';
 import { NavLink } from '@/app/layout/util/NavLink';
+import { otherLinks } from '@/app/layout/util/data/footerData';
 
 export function OtherLinks() {
   return (

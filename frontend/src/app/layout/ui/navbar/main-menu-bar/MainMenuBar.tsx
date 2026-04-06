@@ -3,7 +3,7 @@ import { Menubar } from '@radix-ui/react-menubar';
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from '@/app/layout/ui/navbar/main-menu-bar/Dropdown';
 import { DropdownOption } from '@/app/layout/ui/navbar/main-menu-bar/DropdownOption';
-import { dropdownData } from '@/app/layout/util/dropdownData';
+import { menuData } from '@/app/layout/util/data/navbarData';
 
 export function MainMenuBar() {
   const [openMenu, setOpenMenu] = useState('');
@@ -24,7 +24,7 @@ export function MainMenuBar() {
         onValueChange={setOpenMenu}
         className="flex gap-4"
       >
-        {dropdownData.map((dropdown) => (
+        {menuData.map((dropdown) => (
           <Dropdown
             title={dropdown.title}
             href={dropdown.href}

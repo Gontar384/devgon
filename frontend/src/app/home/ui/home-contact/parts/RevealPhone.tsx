@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Phone, Eye } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const PARTS = ['+48', '517', '988', '760'];
+import { CONTACT_PHONE, CONTACT_PHONE_FORMATTED } from '@/lib/contact';
 
 export function RevealPhone() {
   const [revealed, setRevealed] = useState(false);
@@ -37,19 +36,14 @@ export function RevealPhone() {
           ) : (
             <motion.a
               key="phone"
-              href={`tel:${PARTS.join('')}`}
-              aria-label={`Zadzwoń: ${PARTS.join(' ')}`}
+              href={`tel:${CONTACT_PHONE}`}
+              aria-label={`Zadzwoń: ${CONTACT_PHONE_FORMATTED}`}
               initial={{ opacity: 0, scale: 1.05, filter: 'blur(8px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
               className="text-xl font-semibold hover:text-primary active:text-primary transition-colors tracking-wide"
             >
-              {PARTS.map((part, i) => (
-                <span key={i}>
-                  {part}
-                  {i < PARTS.length - 1 ? ' ' : ''}
-                </span>
-              ))}
+              <span>{CONTACT_PHONE_FORMATTED}</span>
             </motion.a>
           )}
         </AnimatePresence>

@@ -97,6 +97,8 @@ jobs:
             echo "NEXT_PUBLIC_DOMAIN=test.site"
             echo "NEXT_PUBLIC_UMAMI_SRC=http://localhost:3003/script.js"
             echo "NEXT_PUBLIC_UMAMI_WEBSITE_ID="
+            echo "NEXT_PUBLIC_CONTACT_EMAIL=test@email.com"
+            echo "NEXT_PUBLIC_CONTACT_PHONE=+48678678678"
             echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY_TEST }}"
             echo "DATABASE_URL=${{ env.DATABASE_URL }}"
           } > .env.test

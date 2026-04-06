@@ -1,6 +1,6 @@
-import { DropdownData } from '@/app/layout/layout-types';
+import { MenuData } from '@/app/layout/layout-types';
 
-export const dropdownData: DropdownData[] = [
+export const menuData: MenuData[] = [
   {
     title: 'Oferta',
     href: '/#services',
