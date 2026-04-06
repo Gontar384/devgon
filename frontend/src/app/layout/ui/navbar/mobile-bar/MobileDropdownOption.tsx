@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { DropdownOptionProps } from '@/app/layout/layout-types';
+import { MenuOptionProps } from '@/app/layout/layout-types';
 import { NavLink } from '@/app/layout/util/NavLink';
 
 export function MobileDropdownOption({
@@ -11,7 +11,7 @@ export function MobileDropdownOption({
   imageSrc,
   imageW,
   imageH,
-}: DropdownOptionProps) {
+}: MenuOptionProps) {
   return (
     <NavLink
       href={href}

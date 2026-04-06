@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { MobileDropdown } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdown';
 import { MobileDropdownOption } from '@/app/layout/ui/navbar/mobile-bar/MobileDropdownOption';
 import { AuthButton } from '@/app/layout/ui/navbar/auth-button/AuthButton';
-import { dropdownData } from '@/app/layout/util/dropdownData';
+import { menuData } from '@/app/layout/util/data/navbarData';
 import { suppressScrollRef } from '@/app/layout/util/scrollControl';
 
 export default function MobileBar() {
@@ -100,7 +100,7 @@ export default function MobileBar() {
           }}
         >
           <div className="md:hidden flex flex-col justify-center gap-6 mt-8">
-            {dropdownData.map((dropdown) => (
+            {menuData.map((dropdown) => (
               <MobileDropdown
                 title={dropdown.title}
                 href={dropdown.href}

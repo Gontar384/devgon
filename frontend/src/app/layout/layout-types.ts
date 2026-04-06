@@ -2,7 +2,7 @@ import React, { AnchorHTMLAttributes } from 'react';
 import { AuthUser } from '@/lib/auth/auth-types';
 import { LinkProps } from 'next/link';
 
-export interface DropdownOptionProps {
+export interface MenuOptionProps {
   title: string;
   href: string;
   imageSrc: string;
@@ -37,10 +37,10 @@ export interface LogoutButtonProps {
   setLogoutCooldown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface DropdownData {
+export interface MenuData {
   title: string;
   href: string;
-  option: DropdownOptionProps[];
+  option: MenuOptionProps[];
 }
 
 export interface FooterLinkData {

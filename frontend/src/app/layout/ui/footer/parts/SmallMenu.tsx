@@ -1,8 +1,8 @@
 'use client';
-import { smallMenu } from '@/app/layout/util/linksData';
 import React from 'react';
 import { useNavigation } from '@/app/layout/util/useNavigation';
 import { NavLink } from '@/app/layout/util/NavLink';
+import { smallMenu } from '@/app/layout/util/data/footerData';
 
 export function SmallMenu() {
   const { navigateToTop } = useNavigation();

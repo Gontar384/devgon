@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { MenubarItem } from '@/components/ui/menubar';
-import { DropdownOptionProps } from '@/app/layout/layout-types';
+import { MenuOptionProps } from '@/app/layout/layout-types';
 import { NavLink } from '@/app/layout/util/NavLink';
 
 export function DropdownOption({
@@ -11,7 +11,7 @@ export function DropdownOption({
   imageSrc,
   imageW,
   imageH,
-}: DropdownOptionProps) {
+}: MenuOptionProps) {
   return (
     <MenubarItem asChild className="text-base">
       <NavLink
