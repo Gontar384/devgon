@@ -39,8 +39,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {
     this.CONTACT_MAIL_TO =
-      this.configService.get<string>('CONTACT_MAIL_TO') ??
-      'devgonteam@gmail.com';
+      this.configService.get<string>('CONTACT_MAIL_TO') ?? '';
   }
 
   /**

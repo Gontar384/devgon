@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { RevealPhone } from '@/app/home/ui/home-contact/parts/RevealPhone';
 import { Mail, MessageSquare } from 'lucide-react';
 import { HomeContactProps } from '@/app/home/home-types';
+import { CONTACT_EMAIL } from '@/lib/contact';
 
 export function HomeContact({ content }: HomeContactProps) {
   const safeData = {
@@ -58,10 +59,10 @@ export function HomeContact({ content }: HomeContactProps) {
                   <p className="text-base font-medium">Email</p>
                 </div>
                 <Link
-                  href="mailto:devgonteam@gmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-lg font-semibold hover:text-primary active:text-primary transition-colors break-all"
                 >
-                  devgonteam@gmail.com
+                  {CONTACT_EMAIL}
                 </Link>
               </div>
             </AnimateItem>

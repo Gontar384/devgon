@@ -24,6 +24,8 @@ jobs:
             --build-arg NEXT_PUBLIC_DOMAIN=devgon.pl \
             --build-arg NEXT_PUBLIC_UMAMI_WEBSITE_ID=${{ secrets.UMAMI_WEBSITE_ID }} \
             --build-arg NEXT_PUBLIC_UMAMI_SRC=https://analytics.devgon.pl/script.js \
+            --build-arg NEXT_PUBLIC_CONTACT_EMAIL=devgonteam@gmail.com \
+            --build-arg NEXT_PUBLIC_CONTACT_PHONE=${{ secrets.CONTACT_PHONE }} \
             -t frontend:latest ./frontend
 
       - name: Save images as tar.gz
