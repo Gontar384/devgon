@@ -58,3 +58,12 @@ export type NavLinkProps = LinkProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     onNavigate?: () => void;
   };
+
+export interface ShortNoteData {
+  imageSrc: string;
+  imageAlt: string;
+  imageW: number;
+  imageH: number;
+  title: string;
+  description: string;
+}

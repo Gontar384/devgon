@@ -1,4 +1,18 @@
-import { FooterLinkData, SocialLinkData } from '@/app/layout/layout-types';
+import {
+  FooterLinkData,
+  ShortNoteData,
+  SocialLinkData,
+} from '@/app/layout/layout-types';
+
+export const shortNote: ShortNoteData = {
+  imageSrc: '/svg/footer/page-designer.svg',
+  imageAlt: 'Programista devgon',
+  imageW: 92,
+  imageH: 84,
+  title: 'devgon',
+  description:
+    'Analizujemy, tworzymy systemy i optymalizujemy procesy. W skrócie - skup się na rozwoju firmy, resztę zostaw nam.',
+};
 
 export const smallMenu: FooterLinkData[] = [
   {
