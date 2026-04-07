@@ -43,9 +43,10 @@ export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
                 />
               )}
               {safeData.subtitle && (
-                <p className="text-[16px] md:text-[18px] text-muted-foreground leading-relaxed">
-                  {safeData.subtitle}
-                </p>
+                <div
+                  className="text-[16px] md:text-[18px] text-muted-foreground leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
+                />
               )}
             </div>
           </AnimateItem>
