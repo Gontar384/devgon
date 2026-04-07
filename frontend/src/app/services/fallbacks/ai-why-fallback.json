@@ -8,7 +8,7 @@
       {
         "icon": "Gauge",
         "title": "Prędkość, której człowiek nie osiągnie",
-        "description": "AI analizuje tysiące danych w sekundach. Raporty, które zajmowały analitykowi dzień — gotowe w chwili zapytania.",
+        "description": "AI analizuje tysiące danych w sekundach. Raporty, które zajmowały analitykowi dzień - gotowe w chwili zapytania.",
         "metric": "1000×",
         "metricLabel": "szybsza analiza vs człowiek"
       },
@@ -22,14 +22,14 @@
       {
         "icon": "DollarSign",
         "title": "Zwrot z inwestycji jest policzalny",
-        "description": "Nie sprzedajemy AI jako buzzwordu. Przed wdrożeniem szacujemy konkretny ROI — ile godzin, ile błędów, ile kosztów oszczędzamy miesięcznie.",
+        "description": "Nie sprzedajemy AI jako buzzwordu. Przed wdrożeniem szacujemy konkretny ROI - ile godzin, ile błędów, ile kosztów oszczędzamy miesięcznie.",
         "metric": "6mies.",
         "metricLabel": "średni czas do ROI"
       },
       {
         "icon": "Lock",
         "title": "Twoje dane zostają Twoje",
-        "description": "Wdrożenia on-premise lub private cloud — Twoje dane firmowe nie trafiają do modeli publicznych. Pełna kontrola i zgodność z RODO."
+        "description": "Wdrożenia on-premise lub private cloud - Twoje dane firmowe nie trafiają do modeli publicznych. Pełna kontrola i zgodność z RODO."
       }
     ]
   }

@@ -21,8 +21,8 @@
       "href": "/services/ai#why"
     },
     "stats": [
-      { "value": "60%", "label": "Redukcja kosztów operacyjnych" },
-      { "value": "5×", "label": "Szybsza analiza danych" },
+      { "value": "50%", "label": "Redukcja kosztów operacyjnych" },
+      { "value": "4×", "label": "Szybsza analiza danych" },
       { "value": "24/7", "label": "Asystent bez przerwy" }
     ]
   }

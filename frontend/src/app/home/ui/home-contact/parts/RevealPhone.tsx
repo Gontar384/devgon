@@ -12,7 +12,7 @@ export function RevealPhone() {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2.5 text-primary">
         <Phone className="w-5 h-5" />
-        <p className="text-base font-medium">Telefon</p>
+        <p className="text-base font-medium">Telefon / WhatsApp</p>
       </div>
       <div className="h-11 flex items-center">
         <AnimatePresence mode="wait">

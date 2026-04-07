@@ -1,7 +1,7 @@
 {
   "title": "O devgon",
   "subtitle": "Technologia, która realnie wspiera biznes",
-  "description": "W devgon tworzymy systemy rozwiązujące realne problemy biznesowe. Łączymy inżynierską precyzję z myśleniem o użytkowniku i efektach sprzedaży. Jako zespół stawiamy na optymalizację i automatyzację — budujemy narzędzia, które po prostu mają sens. Wierzę, że technologia powinna działać jak dobrze nastrojony silnik — precyzyjnie i bezawaryjnie. Prywatnie jestem pasjonatem motoryzacji, dlatego w pracy nie uznaję półśrodków. Lubię rozwiązania dopracowane i niezawodne.",
+  "description": "W devgon tworzymy systemy rozwiązujące realne problemy biznesowe. Łączymy inżynierską precyzję z myśleniem o użytkowniku i efektach sprzedaży. Stawiamy na optymalizację i automatyzację - budujemy narzędzia, które po prostu mają sens. Wierzę, że technologia powinna działać jak dobrze nastrojony silnik - precyzyjnie i bezawaryjnie. Jako pasjonat motoryzacji, w pracy nie uznaję półśrodków. Lubię rozwiązania dopracowane i niezawodne.",
   "media": [
     {
       "url": "/logo/logo-black.svg",
@@ -10,6 +10,6 @@
     }
   ],
   "customData": {
-    "signature": "Jakub"
+    "signature": "Jakub Gontarek"
   }
 }
