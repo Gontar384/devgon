@@ -25,7 +25,7 @@
       {
         "icon": "Bell",
         "title": "Powiadomienia i alerty",
-        "description": "Inteligentny system notyfikacji — Slack, e-mail, SMS, push. Właściwa osoba dostaje alert dokładnie wtedy gdy powinna.",
+        "description": "Inteligentny system notyfikacji - Slack, e-mail, SMS, push. Właściwa osoba dostaje alert dokładnie wtedy gdy powinna.",
         "tags": ["Slack", "Email", "SMS", "Push"]
       },
       {
@@ -38,7 +38,7 @@
         "icon": "BarChart3",
         "title": "Raportowanie i dashboardy",
         "description": "Automatyczne raporty spływające do skrzynki, dashboardy live z kluczowymi KPI. Decyzje na podstawie danych, nie przeczuć.",
-        "tags": ["BI", "Dashboards", "KPI", "Raporty"]
+        "tags": ["Dashboards", "KPI", "Raporty"]
       }
     ]
   }
