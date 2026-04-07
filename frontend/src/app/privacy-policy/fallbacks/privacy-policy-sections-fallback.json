@@ -17,7 +17,7 @@
   },
   {
     "title": "Cel i podstawa prawna przetwarzania danych",
-    "description": "Dane osobowe przetwarzane są wyłącznie w celu odpowiedzi na zapytanie przesłane przez formularz kontaktowy oraz prowadzenia korespondencji związanej z działalnością devgon. Dane mogą być również przetwarzane w wewnętrznym systemie informatycznym (panelu CMS) w celu przypisania zapytań do konkretnego konsultanta oraz usprawnienia obsługi kontaktów z klientami. Podstawą prawną przetwarzania danych jest dobrowolnie wyrażona zgoda Użytkownika (art. 6 ust. 1 lit. a RODO).",
+    "description": "Dane osobowe przetwarzane są wyłącznie w celu odpowiedzi na zapytanie przesłane przez formularz kontaktowy oraz prowadzenia korespondencji związanej z działalnością devgon. Dane mogą być również przetwarzane w wewnętrznym systemie informatycznym w celu przypisania zapytań do konkretnego konsultanta oraz usprawnienia obsługi kontaktów z klientami. Podstawą prawną przetwarzania danych jest dobrowolnie wyrażona zgoda Użytkownika (art. 6 ust. 1 lit. a RODO).",
     "customData": {
       "items": [
         "odpowiedzi na zapytanie przesłane przez formularz kontaktowy",

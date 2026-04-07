@@ -15,21 +15,21 @@
       {
         "icon": "Shield",
         "title": "Kod, który nie wywraca się po roku",
-        "description": "Piszemy testy, stosujemy code review i trzymamy się standardów. Żaden projekt nie wychodzi bez dokumentacji i pokrycia testami.",
+        "description": "Piszemy testy, stosujemy code review i trzymamy się standardów. Żaden projekt nie wychodzi bez skrupulatnej dokumentacji.",
         "metric": "99.9%",
         "metricLabel": "uptime gwarantowany"
       },
       {
         "icon": "TrendingUp",
         "title": "Skaluj bez bólu",
-        "description": "Architektura zaprojektowana pod wzrost — nie będziesz przepisywał wszystkiego od zera, kiedy przyjdą pierwsze tysiące użytkowników.",
+        "description": "Architektura zaprojektowana pod wzrost - nie będziesz przepisywał wszystkiego od zera, kiedy przyjdą pierwsze tysiące użytkowników.",
         "metric": "10×",
         "metricLabel": "przestrzeń na wzrost"
       },
       {
         "icon": "HeartHandshake",
         "title": "Partnerstwo, nie jednorazowe zlecenie",
-        "description": "Zostajemy z Tobą po wdrożeniu. Monitoring, rozwój i wsparcie — jesteśmy jednym Slacku od rozwiązania problemu."
+        "description": "Zostajemy z Tobą po wdrożeniu. Monitoring, rozwój i wsparcie - jesteśmy do dyspozycji w razie problemów."
       }
     ]
   }
