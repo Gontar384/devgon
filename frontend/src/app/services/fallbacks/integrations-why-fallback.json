@@ -15,7 +15,7 @@
       {
         "icon": "AlertTriangle",
         "title": "Zero błędów ludzkich",
-        "description": "Automat nie pomyli się w arkuszu, nie zapomni o fakturze, nie wyśle oferty do złego klienta. Raz skonfigurowany — działa perfekcyjnie.",
+        "description": "Automat nie pomyli się w arkuszu, nie zapomni o fakturze, nie wyśle oferty do złego klienta. Raz skonfigurowany - działa perfekcyjnie.",
         "metric": "0",
         "metricLabel": "błędów przy przepisywaniu"
       },
@@ -29,7 +29,7 @@
       {
         "icon": "Eye",
         "title": "Pełna widoczność procesów",
-        "description": "Każda automatyzacja generuje logi. Widzisz co działa, co się zatrzymało i dlaczego — w czasie rzeczywistym, nie po fakcie."
+        "description": "Każda automatyzacja generuje logi. Widzisz co działa, co się zatrzymało i dlaczego - w czasie rzeczywistym, nie po fakcie."
       }
     ]
   }

@@ -11,7 +11,7 @@ export const shortNote: ShortNoteData = {
   imageH: 84,
   title: 'devgon',
   description:
-    'Analizujemy, tworzymy systemy i optymalizujemy procesy. W skrócie - skup się na rozwoju firmy, resztę zostaw nam.',
+    'Analizujemy, optymalizujemy, wdrażamy. W skrócie - skup się na rozwoju firmy, a resztę zostaw nam.',
 };
 
 export const smallMenu: FooterLinkData[] = [
