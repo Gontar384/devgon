@@ -48,13 +48,13 @@ export function HomeAbout({ content }: HomeAboutProps) {
               )}
               {safeData.description && (
                 <div
-                  className="text-base md:text-lg mt-5 text-muted-foreground space-y-4"
+                  className="text-base md:text-lg mt-5 text-muted-foreground whitespace-pre-line"
                   dangerouslySetInnerHTML={{ __html: safeData.description }}
                 />
               )}
               {safeData.signature && (
                 <div className="flex flex-col items-end gap-0.5">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/40">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
                     Founder & CEO
                   </span>
                   <span
