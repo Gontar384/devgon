@@ -23,6 +23,11 @@
       "type": "IMAGE"
     },
     {
+      "url": "/svg/tech/claude.svg",
+      "alt": "Claude",
+      "type": "IMAGE"
+    },
+    {
       "url": "/svg/tech/python.svg",
       "alt": "Python",
       "type": "IMAGE"
@@ -90,6 +95,11 @@
     {
       "url": "/svg/tech/jira.svg",
       "alt": "Jira",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/slack.svg",
+      "alt": "Slack",
       "type": "IMAGE"
     }
   ]

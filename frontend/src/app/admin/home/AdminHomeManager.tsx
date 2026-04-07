@@ -92,7 +92,7 @@ export function AdminHomeManager({
             description: 0,
             customData: 0,
           }}
-          maxMedia={20}
+          maxMedia={25}
         />
         <ContentCardManager
           contents={homeAbout}
