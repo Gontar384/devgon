@@ -1,6 +1,6 @@
 {
   "title": "Co obejmuje oferta AI?",
-  "subtitle": "Wdrażamy AI tam gdzie realnie przynosi wartość — nie dla efektu, ale dla wyników.",
+  "subtitle": "Wdrażamy AI tam gdzie realnie przynosi wartość - nie dla efektu czy mody, ale dla wyników.",
   "customData": {
     "highlightWord": "oferta AI?",
     "items": [
@@ -8,37 +8,65 @@
         "icon": "Bot",
         "title": "Asystenci i chatboty AI",
         "description": "Inteligentne boty obsługi klienta, wewnętrzne asystenty wiedzy firmowej, agenty wykonujące zadania. Zasilane GPT-5, Claude lub modelami open-source.",
-        "tags": ["GPT-5", "Claude", "RAG", "Chatbot"]
+        "tags": [
+          "GPT-5",
+          "Claude",
+          "Chatbot"
+        ]
       },
       {
         "icon": "BrainCircuit",
         "title": "Automatyzacja kognitywna",
         "description": "AI przejmuje zadania wymagające rozumienia: kategoryzacja maili, analiza umów, klasyfikacja zgłoszeń, ekstrakcja danych z dokumentów.",
-        "tags": ["NLP", "Klasyfikacja", "Ekstrakcja", "OCR+AI"]
+        "tags": [
+          "NLP",
+          "Klasyfikacja",
+          "Ekstrakcja",
+          "OCR+AI"
+        ]
       },
       {
         "icon": "TrendingUp",
         "title": "Analityka predykcyjna",
-        "description": "Modele prognozowania sprzedaży, ryzyka, churnu klientów. Zamiast reagować na problemy — przewidujesz je z tygodniowym wyprzedzeniem.",
-        "tags": ["Forecasting", "ML", "Churn", "Anomalie"]
+        "description": "Modele prognozowania sprzedaży, ryzyka, churnu klientów. Zamiast reagować na problemy - przewidujesz je z tygodniowym wyprzedzeniem.",
+        "tags": [
+          "Forecasting",
+          "ML",
+          "Churn",
+          "Anomalie"
+        ]
       },
       {
         "icon": "Database",
         "title": "Data Engineering",
-        "description": "Hurtownia danych, data lakehouse, pipelines ETL. Zbieramy dane z wszystkich źródeł, porządkujemy i udostępniamy w formie gotowej do analizy.",
-        "tags": ["Data Lake", "Snowflake", "dbt", "Airflow"]
+        "description": "Porządkujemy i łączymy dane z różnych systemów w jedno spójne źródło. Dzięki temu masz dostęp do aktualnych, wiarygodnych informacji i możesz podejmować decyzje w oparciu o dane, a nie intuicję.",
+        "tags": [
+          "Integracje",
+          "Dane",
+          "Automatyzacja",
+          "Raporty"
+        ]
       },
       {
         "icon": "Search",
         "title": "Wyszukiwanie semantyczne (RAG)",
-        "description": "Systemy wyszukiwania bazujące na znaczeniu, nie słowach kluczowych. Asystent, który naprawdę rozumie bazę wiedzy Twojej firmy.",
-        "tags": ["Vector DB", "Embeddings", "RAG", "Pinecone"]
+        "description": "Tworzymy inteligentne wyszukiwanie, które rozumie kontekst zapytań. Dzięki temu szybko znajdujesz potrzebne informacje w dokumentach, systemach i bazach wiedzy - bez ręcznego przekopywania się przez dane.",
+        "tags": [
+          "AI Search",
+          "Baza wiedzy",
+          "RAG",
+          "Automatyzacja"
+        ]
       },
       {
         "icon": "SlidersHorizontal",
         "title": "Optymalizacja i rekomendacje",
         "description": "Silniki rekomendacji produktów, optymalizacja cen, dopasowanie ofert do klientów. Personalizacja na skali, której człowiek nie osiągnie.",
-        "tags": ["Rekomendacje", "Personalizacja", "A/B", "Pricing"]
+        "tags": [
+          "Rekomendacje",
+          "Personalizacja",
+          "Pricing"
+        ]
       }
     ]
   }

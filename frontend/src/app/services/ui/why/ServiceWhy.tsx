@@ -74,7 +74,7 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
                 )}
                 {safeData.subtitle && (
                   <div
-                    className="text-[15px] md:text-[17px] text-muted-foreground leading-relaxed max-w-[440px]"
+                    className="text-[16px] md:text-[18px] text-muted-foreground leading-relaxed max-w-[480px]"
                     dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
                   />
                 )}
