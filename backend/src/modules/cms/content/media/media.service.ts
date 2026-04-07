@@ -251,8 +251,7 @@ export class MediaService {
   /**
    * Generates a human-readable alt text string from a filename.
    * Strips the file extension, replaces underscores and hyphens with spaces,
-   * removes non-alphanumeric characters, normalizes whitespace,
-   * and capitalizes the first letter.
+   * removes non-alphanumeric characters and normalizes whitespace.
    * Falls back to `"Media"` if the result is empty.
    *
    * @param filename - Original filename (e.g. "my_photo-01.jpg")
@@ -263,9 +262,6 @@ export class MediaService {
     let alt = nameWithoutExt.replace(/[_-]/g, ' ');
     alt = alt.replace(/[^a-zA-Z0-9\s]/g, '');
     alt = alt.replace(/\s+/g, ' ').trim();
-    if (alt.length > 0) {
-      alt = alt.charAt(0).toUpperCase() + alt.slice(1);
-    }
 
     return alt || 'Media';
   }

@@ -334,16 +334,16 @@ describe('MediaService', () => {
       return lastCall[0]['alt'] as string;
     };
 
-    it('capitalizes first letter and replaces separators with spaces', async () => {
-      expect(await captureAlt('my_photo-01.jpg')).toBe('My photo 01');
+    it('replaces separators with spaces', async () => {
+      expect(await captureAlt('my_photo-01.jpg')).toBe('my photo 01');
     });
 
     it('strips non-alphanumeric characters leaving alphanumeric and spaces', async () => {
-      expect(await captureAlt('hello(world)!.png')).toBe('Helloworld');
+      expect(await captureAlt('Hello(world)!.png')).toBe('Helloworld');
     });
 
     it('converts hyphens and underscores to spaces before stripping', async () => {
-      expect(await captureAlt('hello_world-test.jpg')).toBe('Hello world test');
+      expect(await captureAlt('hello_world-test.jpg')).toBe('hello world test');
     });
 
     it('falls back to "Media" for blank result', async () => {
