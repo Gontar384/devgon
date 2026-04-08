@@ -1,4 +1,4 @@
-# 🔶 devgon
+<h1><img src="./frontend/public/logo/logo-black.svg" height="30" alt="devgon" /> devgon</h1>
 
 **devgon** is an IT services brand specializing in custom web applications, automations, and AI implementations.
 
