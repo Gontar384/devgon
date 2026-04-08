@@ -19,7 +19,6 @@ import {
   TrendingUp,
   Workflow,
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import React from 'react';
 
 const ICONS: Record<string, LucideIcon> = {
@@ -52,11 +51,7 @@ export function BreakdownCard({
   const Icon = ICONS[item.icon] ?? Globe;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.07 }}
+    <div
       className="group relative flex flex-col gap-4 rounded-2xl border bg-background p-6 h-full hover:shadow-lg active:shadow-lg hover:border-primary/50
                  active:border-primary/50 hover:-translate-y-0.5 active:-translate-y-0.5 transition-all duration-300"
     >
@@ -98,6 +93,6 @@ export function BreakdownCard({
           ))}
         </div>
       )}
-    </motion.article>
+    </div>
   );
 }

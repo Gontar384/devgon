@@ -96,9 +96,19 @@ export function ServiceWhy({ content }: ServiceWhyProps) {
               aria-label="Powody by wybrać nasze usługi"
             >
               {safeData.items.map((item, i) => (
-                <li key={i}>
-                  <WhyCard item={item} index={i} />
-                </li>
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0 }}
+                  transition={{
+                    delay: i * 0.07,
+                    duration: 0.7,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <WhyCard item={item} />
+                </motion.li>
               ))}
             </ul>
           )}

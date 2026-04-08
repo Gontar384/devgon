@@ -33,18 +33,14 @@ const ICONS: Record<string, LucideIcon> = {
   Lock,
 };
 
-export function WhyCard({ item, index }: { item: WhyItem; index: number }) {
+export function WhyCard({ item }: { item: WhyItem }) {
   const Icon = ICONS[item.icon] ?? Zap;
   const hasMetric = !!item.metric;
 
   const [active, setActive] = React.useState(false);
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 16, scale: 0.98, filter: 'blur(3px)' }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.3, ease: 'easeOut', delay: index * 0.1 }}
+    <div
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onTouchStart={() => setActive(true)}
@@ -92,6 +88,6 @@ export function WhyCard({ item, index }: { item: WhyItem; index: number }) {
           {item.description}
         </p>
       </div>
-    </motion.article>
+    </div>
   );
 }
