@@ -8,6 +8,7 @@ import {
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 import { BreakdownCard } from '@/app/services/ui/breakdown/BreakdownCard';
 import { TiltCard } from '@/app/home/ui/home-services/parts/TiltCard';
+import { motion } from 'framer-motion';
 
 export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
   if (!content) return null;
@@ -67,11 +68,22 @@ export function ServiceBreakdown({ content }: ServiceBreakdownProps) {
                 aria-label="Zakres usług"
               >
                 {safeData.items.map((item, i) => (
-                  <li key={i} className="flex">
+                  <motion.li
+                    key={i}
+                    className="flex"
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0 }}
+                    transition={{
+                      delay: i * 0.07,
+                      duration: 0.7,
+                      ease: 'easeOut',
+                    }}
+                  >
                     <TiltCard>
                       <BreakdownCard item={item} index={i} />
                     </TiltCard>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
