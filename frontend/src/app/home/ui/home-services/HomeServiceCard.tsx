@@ -62,7 +62,7 @@ export function HomeServiceCard({
           )}
           {safeData.subtitle && (
             <div
-              className="text-[15px] md:text-[16px] leading-snug text-muted-foreground line-clamp-1"
+              className="text-[15px] md:text-[16px] leading-snug text-muted-foreground line-clamp-2"
               dangerouslySetInnerHTML={{ __html: safeData.subtitle }}
             />
           )}
