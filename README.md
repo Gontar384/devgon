@@ -1,8 +1,6 @@
 <h1><img src="./frontend/public/logo/logo-black.svg" height="30" alt="devgon" /> devgon</h1>
 
-**devgon** is an IT services brand specializing in custom web applications, automations, and AI implementations.
-
-## Code-first CMS - devgon's core product
+## Code-first CMS
 
 **A fullstack framework that lets developers build custom websites and products where the frontend structure
 is directly mirrored into a powerful, configurable CMS - without sacrificing design freedom.**
