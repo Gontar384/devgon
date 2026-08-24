@@ -16,10 +16,6 @@ export const shortNote: ShortNoteData = {
 
 export const smallMenu: FooterLinkData[] = [
   {
-    title: 'Start',
-    href: '/',
-  },
-  {
     title: 'Projects',
     href: '/#projects',
   },
@@ -34,10 +30,6 @@ export const smallMenu: FooterLinkData[] = [
   {
     title: 'The CMS',
     href: '/cms',
-  },
-  {
-    title: 'Contact',
-    href: '/#contact',
   },
 ];
 

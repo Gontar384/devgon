@@ -10,7 +10,7 @@ devgon gives you the tools to turn any part of that UI into structured, admin-ed
 everything from scratch.
 
 Live project: **[devgon.pl](https://devgon.pl)**  
-Contact: **devgonteam@gmail.com**
+Contact: **gontarek384@gmail.com**
 
 ---
 

@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     description:
       'Fullstack Engineer with 3 years of experience taking projects from requirements to production. React, Next.js, NestJS, Java, Spring Boot, PostgreSQL, Docker and CI/CD.',
     path: '/',
-    image: '/logo/logo-caption-black.svg',
   }),
   icons: {
     icon: '/logo-icon/favicon.ico',
