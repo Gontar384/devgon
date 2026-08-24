@@ -26,7 +26,7 @@ export function HamburgerButton() {
   return (
     <button
       className={`flex items-center justify-center h-12 px-2.5 mr-3 md:hidden cursor-pointer rounded-md ${hovered ? 'bg-accent' : ''}`}
-      aria-label="Otwórz menu nawigacji mobilnej"
+      aria-label="Open the mobile navigation menu"
       onClick={toggleBar}
       {...handlers}
     >

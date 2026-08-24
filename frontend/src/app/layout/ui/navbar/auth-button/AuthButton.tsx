@@ -28,7 +28,7 @@ export function AuthButton({ isMobileBar }: AuthButtonProps) {
     <div
       role="toolbar"
       className={`gap-2 select-none ${isMobileBar ? 'flex mt-12' : 'hidden md:flex'}`}
-      aria-label="Akcje użytkownika"
+      aria-label="User actions"
     >
       {isAdmin && <AdminButton />}
       <LoginButton

@@ -76,9 +76,9 @@ export function LoginDialog() {
           ${animateState === 'open' ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
       >
         <div className="flex flex-col space-y-2 text-center md:text-left mb-4">
-          <h2 className="text-3xl font-semibold">Logowanie</h2>
+          <h2 className="text-3xl font-semibold">Sign in</h2>
           <p className="text-sm text-muted-foreground">
-            Zaloguj się, używając którejś z poniższych metod
+            Sign in using one of the methods below
           </p>
         </div>
         <Card className="shadow-none bg-background border-border/50">
@@ -90,11 +90,11 @@ export function LoginDialog() {
             >
               <Image
                 src="/svg/login/google.svg"
-                alt="Zaloguj się za pomocą Google"
+                alt="Google"
                 width={24}
                 height={24}
               />
-              Zaloguj przez Google
+              Sign in with Google
             </Button>
           </CardContent>
           <CardFooter className="flex justify-end">
@@ -103,7 +103,7 @@ export function LoginDialog() {
               className="cursor-pointer text-primary-foreground hover:scale-105 active:scale-105 hover:bg-secondary"
               onClick={() => setDialogOpen(false)}
             >
-              Anuluj
+              Cancel
             </Button>
           </CardFooter>
         </Card>

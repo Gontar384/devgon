@@ -90,7 +90,7 @@ export default function MobileBar() {
           className="fixed inset-0 top-16 z-40 bg-background p-8 md:hidden flex flex-col items-center overflow-y-auto overflow-x-hidden select-none"
           role="dialog"
           aria-modal="true"
-          aria-label="Menu mobilne"
+          aria-label="Mobile menu"
           tabIndex={-1}
           style={{
             msOverflowStyle: 'none',

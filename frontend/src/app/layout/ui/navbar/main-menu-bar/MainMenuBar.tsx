@@ -17,7 +17,7 @@ export function MainMenuBar() {
   return (
     <div
       className="hidden md:flex select-none"
-      aria-label="Główne opcje nawigacji"
+      aria-label="Main navigation options"
     >
       <Menubar
         value={openMenu}

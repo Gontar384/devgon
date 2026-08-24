@@ -85,8 +85,8 @@ export function LoginButton({
         >
           <span className="truncate min-w-0 flex-1 text-center">
             {isAuthenticated
-              ? (authUser.email?.split('@')[0] ?? 'Użytkownik')
-              : 'Zaloguj się'}
+              ? (authUser.email?.split('@')[0] ?? 'User')
+              : 'Sign in'}
           </span>
         </Button>
       </TooltipTrigger>
@@ -96,7 +96,7 @@ export function LoginButton({
         onClick={() => setShowTooltipOnMobile(false)}
         role="tooltip"
       >
-        <span>Zaloguj się i odblokuj pełne możliwości naszej strony!</span>
+        <span>Sign in to unlock everything this site can do!</span>
         <Image
           src="/svg/login/login-guy.svg"
           alt="Login icon"
