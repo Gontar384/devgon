@@ -1,24 +1,5 @@
 [
   {
-    "title": "carsold.pl",
-    "subtitle": "Car marketplace platform, built solo from scratch",
-    "description": "Full car listing platform built solo - Spring Boot backend, React frontend, PostgreSQL schema, cloud services and deployment. Custom auth (Google OAuth2, JWT in HttpOnly cookies), real-time chat over WebSocket, admin panel with RBAC, automated content moderation via Google Cloud.",
-    "media": [
-      {
-        "url": "/image/projects/carsold.jpg",
-        "alt": "carsold.pl - car marketplace platform",
-        "type": "IMAGE"
-      }
-    ],
-    "customData": {
-      "cta": {
-        "label": "Visit carsold.pl",
-        "href": "https://carsold.pl"
-      },
-      "tags": ["Java · Spring Boot", "React", "PostgreSQL"]
-    }
-  },
-  {
     "title": "devgon",
     "subtitle": "Code-first CMS - and the engine behind this site",
     "description": "A universal content layer: build the UI freely in Next.js, then expose any section to admin editing - no backend changes, no schema migrations. One extensible Content entity backs every section, behind a GraphQL API. Full production DevOps owned solo.",
@@ -31,10 +12,37 @@
     ],
     "customData": {
       "cta": {
-        "label": "See how it works",
+        "label": "How it works",
         "href": "/cms"
       },
+      "repoCta": {
+        "label": "Source",
+        "href": "https://github.com/Gontar384/devgon"
+      },
       "tags": ["Next.js · NestJS", "GraphQL", "MinIO · Docker"]
+    }
+  },
+  {
+    "title": "carsold.pl",
+    "subtitle": "Car marketplace platform, built solo from scratch",
+    "description": "Full car listing platform built solo - Spring Boot backend, React frontend, PostgreSQL schema, cloud services and deployment. Custom auth (Google OAuth2, JWT in HttpOnly cookies), real-time chat over WebSocket, admin panel with RBAC, automated content moderation via Google Cloud.",
+    "media": [
+      {
+        "url": "/image/projects/carsold.png",
+        "alt": "carsold.pl - car marketplace platform",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "Live site",
+        "href": "https://carsold.pl"
+      },
+      "repoCta": {
+        "label": "Source",
+        "href": "https://github.com/Gontar384/carsold"
+      },
+      "tags": ["Java · Spring Boot", "React", "PostgreSQL"]
     }
   },
   {
@@ -53,20 +61,13 @@
         "label": "More about my work",
         "href": "/#experience"
       },
-      "tags": ["Next.js", "PostgreSQL · MinIO", "Three.js"]
+      "tags": ["Next.js", "PostgreSQL · MinIO", "VPS"]
     }
   },
   {
     "title": "PV quoting & BOM tools",
     "subtitle": "Hours of quote preparation cut down to minutes",
     "description": "A suite of quoting and bill-of-materials tools for photovoltaic structures - roof-mount, tracker and carport - with deep product parametrization and calculation algorithms. Adopted across a 20-person engineering and sales division and consumed directly by production.",
-    "media": [
-      {
-        "url": "/image/projects/pv-tools.jpg",
-        "alt": "Photovoltaic quoting and BOM tools",
-        "type": "IMAGE"
-      }
-    ],
     "customData": {
       "cta": {
         "label": "More about my work",
@@ -77,15 +78,8 @@
   },
   {
     "title": "PV field-inspection app",
-    "subtitle": "Mobile inspections for photovoltaic farms",
-    "description": "A React Native application for field inspections - GPS route tracking, photo capture, defect logging and automated report generation. I contributed code alongside requirements, UI and UX, feature design, testing and acceptance criteria.",
-    "media": [
-      {
-        "url": "/image/projects/inspection-app.jpg",
-        "alt": "React Native field-inspection application",
-        "type": "IMAGE"
-      }
-    ],
+    "subtitle": "Smart inspections for photovoltaic farms",
+    "description": "A mobile application for field inspections - GPS route tracking, photo capture, defect logging and automated report generation. I contributed alongside requirements, UI and UX, feature design, testing and acceptance criteria.",
     "customData": {
       "cta": {
         "label": "More about my work",

@@ -3,9 +3,9 @@
   "description": "devgon is a code-first CMS I designed and built: developers build the UI freely in Next.js, then expose any section to admin editing - no backend changes, no schema migrations. Every word and image on this website is served through it.",
   "media": [
     {
-      "url": "/image/cms/screenshot_1.png",
+      "url": "/image/cms/video_1.mp4",
       "alt": "devgon CMS admin panel",
-      "type": "IMAGE"
+      "type": "VIDEO"
     }
   ],
   "customData": {
@@ -22,7 +22,7 @@
     },
     "stats": [
       { "value": "1", "label": "Universal content entity" },
-      { "value": "15", "label": "Editable sections live" },
+      { "value": "Multiple", "label": "Editable sections live" },
       { "value": "0", "label": "Migrations to add a field" }
     ]
   }

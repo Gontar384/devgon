@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import React from 'react';
 import { HomeProjectCardProps } from '@/app/home/home-types';
 import { MediaType } from '@/cms/content/content-types';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 
 const CARD_HEIGHT = 675;
@@ -24,6 +24,7 @@ export function HomeProjectCard({
     photoAlt: content.media?.[0]?.alt ?? '',
     mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
     cta: content.customData?.cta ?? null,
+    repoCta: content.customData?.repoCta ?? null,
     tags: content.customData?.tags ?? [],
   };
 
@@ -103,21 +104,42 @@ export function HomeProjectCard({
               )}
             </div>
           )}
-          {safeData.cta?.href && (
-            <NavigationButton
-              href={safeData.cta.href}
-              label={safeData.cta.label ?? 'Learn more'}
-              icon={
-                <ExternalLink
-                  size={16}
-                  className="shrink-0"
-                  aria-hidden="true"
+          {(safeData.cta?.href || safeData.repoCta?.href) && (
+            <div
+              className={`grid gap-2 ${
+                safeData.cta?.href && safeData.repoCta?.href
+                  ? 'grid-cols-2'
+                  : 'grid-cols-1'
+              }`}
+            >
+              {safeData.cta?.href && (
+                <NavigationButton
+                  href={safeData.cta.href}
+                  label={safeData.cta.label ?? 'Learn more'}
+                  icon={
+                    <ExternalLink
+                      size={16}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+                  }
+                  primary
+                  size={'md'}
+                  ariaLabel={`${safeData.cta.label ?? 'Learn more'} — ${safeData.title}`}
                 />
-              }
-              primary
-              size={'md'}
-              ariaLabel={`${safeData.cta.label ?? 'Learn more'} — ${safeData.title}`}
-            />
+              )}
+              {safeData.repoCta?.href && (
+                <NavigationButton
+                  href={safeData.repoCta.href}
+                  label={safeData.repoCta.label ?? 'Source'}
+                  icon={
+                    <Github size={16} className="shrink-0" aria-hidden="true" />
+                  }
+                  size={'md'}
+                  ariaLabel={`${safeData.repoCta.label ?? 'Source'} — ${safeData.title}`}
+                />
+              )}
+            </div>
           )}
         </div>
       </CardContent>

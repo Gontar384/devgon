@@ -28,7 +28,7 @@ export function AdminButton() {
     <Tooltip>
       <TooltipTrigger asChild>{trigger}</TooltipTrigger>
       <TooltipContent className="select-none" side="bottom">
-        <span>Panel administratora</span>
+        <span>Admin panel</span>
       </TooltipContent>
     </Tooltip>
   );

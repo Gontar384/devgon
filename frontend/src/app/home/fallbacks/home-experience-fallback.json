@@ -3,7 +3,7 @@
   "subtitle": "Three years of production work - manufacturing systems, internal tooling and my own products, from first requirement to running deployment.",
   "media": [
     {
-      "url": "/image/profile.jpg",
+      "url": "/image/portrait.png",
       "alt": "Jakub Gontarek",
       "type": "IMAGE"
     }
@@ -17,10 +17,11 @@
         "company": "Budmat - manufacturing group · Płock, Poland (Hybrid)",
         "bullets": [
           "Built and shipped a fencing product configurator end-to-end - data model, API, calculation logic, UI and deployment. Used daily by 30+ sales representatives and distributors.",
-          "Worked as part of an external development team on the extended platform version, including interactive 3D fence visualization: feature and business-logic design, API and data-flow decisions, UX, code contributions, code review and full-stack QA.",
+          "Worked as part of an external development team on the extended platform version, including interactive 3D fence visualization: feature and business-logic design, API and data-flow decisions, UX, code and full-stack QA.",
           "Designed and delivered a suite of quoting and BOM tools for photovoltaic structures - adopted across a 20-person division, cutting quote preparation from hours to minutes.",
-          "Contributed to a React Native field-inspection application for PV farms - GPS route tracking, photo capture, defect logging and automated reports.",
-          "Modelled and implemented the division's end-to-end delivery process in Jira for 40+ users - BPMN, custom workflows, automation rules, Google Drive integration."
+          "Contributed to a mobile field-inspection application for PV farms - GPS route tracking, photo capture, defect logging and automated reports.",
+          "Modelled and implemented the division's end-to-end delivery process in Jira for 40+ users - BPMN, custom workflows, automation rules, Google Drive integration.",
+          "Polish (native), English (fluent), German (basic). Agile / Scrum, technical communication in both PL and EN."
         ]
       },
       {
@@ -29,19 +30,10 @@
         "role": "Fullstack Developer",
         "company": "Independent projects & freelance · Remote",
         "bullets": [
+          "Three years of continuous, project-based learning: fullstack development, system design, security and DevOps - every concept validated by shipping something that runs in production.",
           "Designed, built and operate two production systems end-to-end - architecture, backend, frontend, database schema, cloud services, deployment, tests and UX. One on Java / Spring Boot and React, one on NestJS and Next.js.",
           "Own full production DevOps: Docker Compose, nginx reverse proxy, GitHub Actions CI/CD, self-hosted Linux VPS, S3-compatible object storage, self-hosted analytics.",
           "Delivered client websites on a freelance basis, from requirements through deployment and handover."
-        ]
-      },
-      {
-        "icon": "graduation",
-        "period": "2023 – Present",
-        "role": "Self-directed software engineering",
-        "company": "Project-based learning",
-        "bullets": [
-          "Three years of continuous, project-based learning: fullstack development, system design, security and DevOps - every concept validated by shipping something that runs in production.",
-          "Polish (native), English (fluent), German (basic). Agile / Scrum, technical communication in both PL and EN."
         ]
       }
     ],

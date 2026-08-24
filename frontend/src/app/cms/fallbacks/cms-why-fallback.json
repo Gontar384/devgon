@@ -9,7 +9,7 @@
         "icon": "Zap",
         "title": "UI-first instead of schema-first",
         "description": "Traditional CMSes force the design to fit the data model. Here the model absorbs whatever the design needs, so a new section is a key and a JSON fallback - not a migration, a resolver and an admin form.",
-        "metric": "~10 min",
+        "metric": "~5 min",
         "metricLabel": "to make a section editable"
       },
       {
@@ -22,7 +22,7 @@
       {
         "icon": "TrendingUp",
         "title": "One entity instead of N models",
-        "description": "Fifteen live sections across three pages share a single table. Adding a fourth page costs no backend work at all - the content engine already handles it.",
+        "description": "Multiple live sections across three pages share a single table. Adding a fourth page costs no backend work at all - the content engine already handles it.",
         "metric": "1",
         "metricLabel": "table behind every section"
       },

@@ -68,11 +68,6 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/python.svg",
-      "alt": "Python",
-      "type": "IMAGE"
-    },
-    {
       "url": "/svg/tech/jira.svg",
       "alt": "Jira",
       "type": "IMAGE"
