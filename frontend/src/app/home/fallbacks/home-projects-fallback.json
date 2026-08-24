@@ -1,0 +1,97 @@
+[
+  {
+    "title": "carsold.pl",
+    "subtitle": "Car marketplace platform, built solo from scratch",
+    "description": "Full car listing platform built solo - Spring Boot backend, React frontend, PostgreSQL schema, cloud services and deployment. Custom auth (Google OAuth2, JWT in HttpOnly cookies), real-time chat over WebSocket, admin panel with RBAC, automated content moderation via Google Cloud.",
+    "media": [
+      {
+        "url": "/image/projects/carsold.jpg",
+        "alt": "carsold.pl - car marketplace platform",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "Visit carsold.pl",
+        "href": "https://carsold.pl"
+      },
+      "tags": ["Java · Spring Boot", "React", "PostgreSQL"]
+    }
+  },
+  {
+    "title": "devgon",
+    "subtitle": "Code-first CMS - and the engine behind this site",
+    "description": "A universal content layer: build the UI freely in Next.js, then expose any section to admin editing - no backend changes, no schema migrations. One extensible Content entity backs every section, behind a GraphQL API. Full production DevOps owned solo.",
+    "media": [
+      {
+        "url": "/image/cms/screenshot_1.png",
+        "alt": "devgon CMS admin panel",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "See how it works",
+        "href": "/cms"
+      },
+      "tags": ["Next.js · NestJS", "GraphQL", "MinIO · Docker"]
+    }
+  },
+  {
+    "title": "Fencing product configurator",
+    "subtitle": "Built end-to-end at Budmat, used daily in sales",
+    "description": "Built end-to-end - data model, API, calculation logic, UI and deployment - fully parametrized for offer and production capacity. Used daily by 30+ sales representatives, feeding straight into the ordering pipeline. Later extended with 3D visualization.",
+    "media": [
+      {
+        "url": "/image/projects/configurator.jpg",
+        "alt": "Fencing product configurator",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "More about my work",
+        "href": "/#experience"
+      },
+      "tags": ["Next.js", "PostgreSQL · MinIO", "Three.js"]
+    }
+  },
+  {
+    "title": "PV quoting & BOM tools",
+    "subtitle": "Hours of quote preparation cut down to minutes",
+    "description": "A suite of quoting and bill-of-materials tools for photovoltaic structures - roof-mount, tracker and carport - with deep product parametrization and calculation algorithms. Adopted across a 20-person engineering and sales division and consumed directly by production.",
+    "media": [
+      {
+        "url": "/image/projects/pv-tools.jpg",
+        "alt": "Photovoltaic quoting and BOM tools",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "More about my work",
+        "href": "/#experience"
+      },
+      "tags": ["TypeScript", "Calculation engine", "Internal tooling"]
+    }
+  },
+  {
+    "title": "PV field-inspection app",
+    "subtitle": "Mobile inspections for photovoltaic farms",
+    "description": "A React Native application for field inspections - GPS route tracking, photo capture, defect logging and automated report generation. I contributed code alongside requirements, UI and UX, feature design, testing and acceptance criteria.",
+    "media": [
+      {
+        "url": "/image/projects/inspection-app.jpg",
+        "alt": "React Native field-inspection application",
+        "type": "IMAGE"
+      }
+    ],
+    "customData": {
+      "cta": {
+        "label": "More about my work",
+        "href": "/#experience"
+      },
+      "tags": ["React Native", "GPS · Media", "Reporting"]
+    }
+  }
+]

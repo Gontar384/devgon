@@ -23,7 +23,7 @@ export function HomeTech({ content }: HomeTechProps) {
 
   return (
     <section
-      aria-label={safeData.title || 'Technologie'}
+      aria-label={safeData.title || 'Tech stack'}
       className="relative w-full py-10 md:py-20 overflow-hidden select-none bg-muted/60"
     >
       <div

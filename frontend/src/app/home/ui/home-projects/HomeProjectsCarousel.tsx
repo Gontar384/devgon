@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HomeServicesCarouselProps } from '@/app/home/home-types';
+import { HomeProjectsCarouselProps } from '@/app/home/home-types';
 
 const MOBILE_INITIAL = 6;
 const GAP = 32;
@@ -13,10 +13,10 @@ function getVisible(windowWidth: number): number {
   return 1;
 }
 
-export function HomeServicesCarousel({
+export function HomeProjectsCarousel({
   children,
   count,
-}: HomeServicesCarouselProps) {
+}: HomeProjectsCarouselProps) {
   const [offset, setOffset] = useState(0);
   const [cardWidth, setCardWidth] = useState<number | null>(null);
   const [visible, setVisible] = useState(3);
@@ -96,7 +96,11 @@ export function HomeServicesCarousel({
   const hasMore = count > MOBILE_INITIAL;
 
   return (
-    <section id="services" aria-label="Nasze usługi" className="w-full py-12">
+    <section
+      id="projects"
+      aria-label="Selected projects"
+      className="w-full py-12"
+    >
       <div className="max-w-[1700px] mx-auto">
         <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
           <AnimatePresence>
@@ -123,7 +127,7 @@ export function HomeServicesCarousel({
             <button
               onClick={() => setExpanded((e) => !e)}
               aria-expanded={expanded}
-              aria-controls="services-mobile-list"
+              aria-controls="projects-mobile-list"
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
             >
               <motion.div
@@ -133,7 +137,7 @@ export function HomeServicesCarousel({
               >
                 <ChevronDown size={18} />
               </motion.div>
-              {expanded ? 'Zwiń' : `Pokaż więcej (${count - MOBILE_INITIAL})`}
+              {expanded ? 'Show less' : `Show more (${count - MOBILE_INITIAL})`}
             </button>
           )}
         </div>
@@ -189,19 +193,19 @@ export function HomeServicesCarousel({
           <div
             className="hidden sm:flex items-center justify-center gap-4 mt-6"
             role="group"
-            aria-label="Nawigacja karuzeli"
+            aria-label="Carousel navigation"
           >
             <button
               onClick={() => go(-1)}
               disabled={!canPrev}
-              aria-label="Poprzednia usługa"
+              aria-label="Previous project"
               className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
             >
               <ChevronLeft size={20} aria-hidden="true" />
             </button>
             <div
               role="tablist"
-              aria-label="Pozycja w karuzeli"
+              aria-label="Carousel position"
               className="flex gap-2"
             >
               {Array.from({ length: count }).map((_, i) => {
@@ -212,7 +216,7 @@ export function HomeServicesCarousel({
                     key={i}
                     role="tab"
                     aria-selected={isActive}
-                    aria-label={`Usługa ${i + 1}`}
+                    aria-label={`Project ${i + 1}`}
                     onClick={() => {
                       if (i < clampedOffset) {
                         setOffset(Math.min(i, maxOffset));
@@ -234,7 +238,7 @@ export function HomeServicesCarousel({
             <button
               onClick={() => go(1)}
               disabled={!canNext}
-              aria-label="Następna usługa"
+              aria-label="Next project"
               className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
             >
               <ChevronRight size={20} aria-hidden="true" />

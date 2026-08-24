@@ -1,30 +1,28 @@
 import React from 'react';
 import {
   ArrowRight,
+  Briefcase,
   CheckCircle2,
-  Clock,
-  LayoutGrid,
-  Rocket,
-  Zap,
+  Code2,
+  GraduationCap,
 } from 'lucide-react';
 import { MediaType } from '@/cms/content/content-types';
-import { ScrollRevealImage } from '@/app/home/ui/home-solution/parts/ScrollRevealImage';
+import { ScrollRevealImage } from '@/app/home/ui/home-experience/parts/ScrollRevealImage';
 import {
-  HomeSolutionProps,
-  ProblemIcon,
-  ProblemItem,
+  HomeExperienceProps,
+  ExperienceIcon,
+  ExperienceItem,
 } from '@/app/home/home-types';
 import { AnimateItem } from '@/app/home/ui/home-hero/parts/AnimateItem';
 import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
 
-const ICONS: Record<ProblemIcon, React.ReactNode> = {
-  clock: <Clock size={15} aria-hidden="true" />,
-  chaos: <LayoutGrid size={15} aria-hidden="true" />,
-  rocket: <Rocket size={15} aria-hidden="true" />,
-  zap: <Zap size={15} aria-hidden="true" />,
+const ICONS: Record<ExperienceIcon, React.ReactNode> = {
+  briefcase: <Briefcase size={15} aria-hidden="true" />,
+  code: <Code2 size={15} aria-hidden="true" />,
+  graduation: <GraduationCap size={15} aria-hidden="true" />,
 };
 
-export function HomeSolution({ content }: HomeSolutionProps) {
+export function HomeExperience({ content }: HomeExperienceProps) {
   if (!content) return null;
 
   const safeData = {
@@ -33,7 +31,7 @@ export function HomeSolution({ content }: HomeSolutionProps) {
     photoUrl: content.media?.[0]?.url ?? '',
     photoAlt: content.media?.[0]?.alt ?? '',
     mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
-    problems: (content.customData?.problems as ProblemItem[] | undefined) ?? [],
+    roles: (content.customData?.roles as ExperienceItem[] | undefined) ?? [],
     cta: content.customData?.cta ?? { label: '', href: '' },
     badge: content.customData?.badge ?? '',
     topHeader: content.customData?.topHeader ?? '',
@@ -41,8 +39,8 @@ export function HomeSolution({ content }: HomeSolutionProps) {
 
   return (
     <section
-      id="solutions"
-      aria-label={safeData.title || 'Nasze rozwiązania'}
+      id="experience"
+      aria-label={safeData.title || 'Experience'}
       className="w-full border-t"
     >
       <div className="max-w-[1500px] mx-auto px-4 md:px-10 py-16 md:py-24 select-none">
@@ -80,10 +78,10 @@ export function HomeSolution({ content }: HomeSolutionProps) {
                 )}
               </div>
             </AnimateItem>
-            {safeData.problems.length > 0 && (
+            {safeData.roles.length > 0 && (
               <ul className="flex flex-col gap-3 list-none p-0 m-0">
-                {safeData.problems.map((item, index) => (
-                  <li key={'problem-id' + index}>
+                {safeData.roles.map((item, index) => (
+                  <li key={'role-id' + index}>
                     <AnimateItem delay={0.1}>
                       <div className="flex flex-col gap-0 rounded-2xl border bg-background overflow-hidden transition duration-300 hover:shadow-md hover:scale-101 active:scale-101">
                         <div className="flex items-center gap-2 px-4 pt-2 pb-2 border-b">
@@ -94,40 +92,36 @@ export function HomeSolution({ content }: HomeSolutionProps) {
                             {ICONS[item.icon]}
                           </span>
                           <span className="text-[12px] md:text-[14px] uppercase tracking-[0.16em] font-semibold text-primary">
-                            {item.tag}
+                            {item.period}
                           </span>
                         </div>
                         <div className="flex flex-col gap-4 px-5 py-5">
-                          <div className="flex items-start gap-3">
-                            <span
-                              aria-hidden="true"
-                              className="mt-[6px] shrink-0 w-[5px] h-[5px] rounded-full bg-muted-foreground/40"
-                            />
-                            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-relaxed">
-                              {item.problem}
-                            </p>
+                          <div className="flex flex-col gap-0.5">
+                            <h3 className="text-[17px] md:text-[19px] font-semibold leading-snug">
+                              {item.role}
+                            </h3>
+                            {item.company && (
+                              <p className="text-[14px] md:text-[15px] text-muted-foreground">
+                                {item.company}
+                              </p>
+                            )}
                           </div>
-                          <div
-                            aria-hidden="true"
-                            className="flex items-center gap-2 pl-[18px]"
-                          >
-                            <div className="h-px w-5 bg-border" />
-                            <ArrowRight
-                              size={12}
-                              className="text-primary shrink-0"
-                            />
-                            <div className="h-px flex-1 bg-border" />
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <CheckCircle2
-                              size={17}
-                              aria-hidden="true"
-                              className="mt-[3px] shrink-0 text-primary"
-                            />
-                            <p className="text-[15px] md:text-[16px] leading-relaxed">
-                              {item.solution}
-                            </p>
-                          </div>
+                          {item.bullets?.length > 0 && (
+                            <div className="flex flex-col gap-3">
+                              {item.bullets.map((bullet, i) => (
+                                <div key={i} className="flex items-start gap-3">
+                                  <CheckCircle2
+                                    size={17}
+                                    aria-hidden="true"
+                                    className="mt-[3px] shrink-0 text-primary"
+                                  />
+                                  <p className="text-[15px] md:text-[16px] leading-relaxed">
+                                    {bullet}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </AnimateItem>

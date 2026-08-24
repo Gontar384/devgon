@@ -51,7 +51,7 @@ export function MediaMarquee({ logos }: MediaMarqueeProps) {
       <div
         className="relative w-full overflow-hidden"
         role="region"
-        aria-label="Lista technologii"
+        aria-label="Technologies"
       >
         <motion.div
           ref={marqueeRef}

@@ -25,7 +25,7 @@ export function HomeIntro({ content }: HomeIntroProps) {
   return (
     <section
       id="intro"
-      aria-label={safeData.title || 'Sekcja wprowadzająca'}
+      aria-label={safeData.title || 'Intro'}
       className="relative h-[60vh] w-full overflow-hidden flex items-center justify-center"
     >
       {safeData.photoUrl && (

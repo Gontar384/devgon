@@ -1,10 +1,25 @@
 {
-  "title": "Nasz stack technologiczny",
-  "subtitle": "Wykorzystujemy nowoczesne i stabilne rozwiązania. Dobieramy narzędzia pod Twój biznes, nie odwrotnie.",
+  "title": "What I build with",
+  "subtitle": "The stack I use day to day - picked because I have shipped and maintained production systems on it.",
   "media": [
+    {
+      "url": "/svg/tech/typescript.svg",
+      "alt": "TypeScript",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/react.svg",
+      "alt": "React",
+      "type": "IMAGE"
+    },
     {
       "url": "/svg/tech/nextjs.svg",
       "alt": "Next.js",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/nodejs.svg",
+      "alt": "Node.js",
       "type": "IMAGE"
     },
     {
@@ -13,33 +28,18 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/n8n.svg",
-      "alt": "n8n",
+      "url": "/svg/tech/java.svg",
+      "alt": "Java",
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/openai.svg",
-      "alt": "OpenAI",
+      "url": "/svg/tech/springboot.svg",
+      "alt": "Spring Boot",
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/claude.svg",
-      "alt": "Claude",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/python.svg",
-      "alt": "Python",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/aws.svg",
-      "alt": "AWS",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/gcp.svg",
-      "alt": "GCP",
+      "url": "/svg/tech/postgresql.svg",
+      "alt": "PostgreSQL",
       "type": "IMAGE"
     },
     {
@@ -53,43 +53,23 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/java.svg",
-      "alt": "Java",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/springboot.svg",
-      "alt": "SpringBoot",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/postgresql.svg",
-      "alt": "PostgreSQL",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/typescript.svg",
-      "alt": "TypeScript",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/nodejs.svg",
-      "alt": "Node.js",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/react.svg",
-      "alt": "React.js",
-      "type": "IMAGE"
-    },
-    {
-      "url": "/svg/tech/shopify.svg",
-      "alt": "Shopify",
-      "type": "IMAGE"
-    },
-    {
       "url": "/svg/tech/github.svg",
-      "alt": "GitHub",
+      "alt": "GitHub Actions",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/gcp.svg",
+      "alt": "Google Cloud Platform",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/aws.svg",
+      "alt": "AWS",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/svg/tech/python.svg",
+      "alt": "Python",
       "type": "IMAGE"
     },
     {
@@ -98,8 +78,8 @@
       "type": "IMAGE"
     },
     {
-      "url": "/svg/tech/slack.svg",
-      "alt": "Slack",
+      "url": "/svg/tech/claude.svg",
+      "alt": "Claude Code",
       "type": "IMAGE"
     }
   ]

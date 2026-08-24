@@ -33,7 +33,7 @@ export function HomeContact({ content }: HomeContactProps) {
               aria-hidden="true"
             >
               <MessageSquare className="w-4 h-4" />
-              Kontakt
+              Contact
             </div>
             {safeData.title && (
               <h2

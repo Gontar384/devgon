@@ -1,24 +1,24 @@
 {
-  "title": "Jak budujemy Twój sukces",
-  "subtitle": "Od audytu procesów biznesowych po inteligentne systemy pracujące na Twój zysk.",
+  "title": "How I work",
+  "subtitle": "The same four steps whether I'm building solo, inside a team or alongside an external development partner.",
   "customData": {
-    "topHeader": "Proces devgon",
+    "topHeader": "My process",
     "items": [
       {
-        "title": "Analiza i mapowanie",
-        "description": "Nie zgadujemy. Analizujemy Twoje procesy, znajdujemy wąskie gardła i wyceniamy realne oszczędności czasu."
+        "title": "Understand the problem",
+        "description": "I start with the people who will use it, not the ticket. Requirements, edge cases and the process behind them - before a single line of code."
       },
       {
-        "title": "Architektura rozwiązań",
-        "description": "Dobieramy sprawdzone, niezawodne narzędzia, które najlepiej rozwiążą Twój problem przy zachowaniu optymalnego budżetu."
+        "title": "Design the model",
+        "description": "Data model and API first. Get those right and the UI, the tests and every later feature fall into place instead of fighting each other."
       },
       {
-        "title": "Zwinna implementacja",
-        "description": "Wdrażamy automatyzacje i systemy iteracyjnie. Szybko widzisz pierwsze efekty i masz realny wpływ na kształt narzędzia."
+        "title": "Ship iteratively",
+        "description": "Small, working increments in front of real users early. Feedback shapes the tool while it is still cheap to change."
       },
       {
-        "title": "Optymalizacja i opieka",
-        "description": "Uruchamiamy system, szkolimy zespół i monitorujemy wydajność w chmurze, by wszystko działało jak w zegarku."
+        "title": "Own it in production",
+        "description": "Deployment, CI/CD, monitoring and the bug reports that follow. I stay responsible for what I build after it goes live."
       }
     ]
   }

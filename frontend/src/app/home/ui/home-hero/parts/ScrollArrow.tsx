@@ -10,14 +10,14 @@ export function ScrollArrow() {
   return (
     <button
       onClick={handleClick}
-      aria-label="Przewiń do następnej sekcji"
+      aria-label="Scroll to the next section"
       className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary active:text-primary transition-colors duration-200 cursor-pointer mt-4"
     >
       <span
         className="text-sm md:text-base tracking-widest uppercase"
         aria-hidden="true"
       >
-        Przewiń
+        Scroll
       </span>
       <motion.div
         aria-hidden="true"

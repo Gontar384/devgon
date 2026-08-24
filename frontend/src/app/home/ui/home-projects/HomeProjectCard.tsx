@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import React from 'react';
-import { HomeServiceCardProps } from '@/app/home/home-types';
+import { HomeProjectCardProps } from '@/app/home/home-types';
 import { MediaType } from '@/cms/content/content-types';
 import { ExternalLink } from 'lucide-react';
 import { NavigationButton } from '@/app/home/ui/home-hero/parts/NavigationButton';
@@ -10,10 +10,10 @@ const CARD_HEIGHT = 675;
 const PHOTO_HEIGHT = 270;
 const TEXT_HEIGHT = 280;
 
-export function HomeServiceCard({
+export function HomeProjectCard({
   content,
   priority = false,
-}: HomeServiceCardProps) {
+}: HomeProjectCardProps) {
   if (!content) return null;
 
   const safeData = {
@@ -39,7 +39,7 @@ export function HomeServiceCard({
         >
           {safeData.tags.length > 0 && (
             <ul
-              aria-label="Kategorie"
+              aria-label="Tech stack"
               className="flex flex-wrap gap-1.5 overflow-hidden max-h-[26px] mb-0.5 list-none p-0 m-0"
             >
               {safeData.tags.slice(0, 3).map((tag: string, i: number) => (
@@ -106,7 +106,7 @@ export function HomeServiceCard({
           {safeData.cta?.href && (
             <NavigationButton
               href={safeData.cta.href}
-              label={safeData.cta.label ?? 'Dowiedz się więcej'}
+              label={safeData.cta.label ?? 'Learn more'}
               icon={
                 <ExternalLink
                   size={16}
@@ -116,7 +116,7 @@ export function HomeServiceCard({
               }
               primary
               size={'md'}
-              ariaLabel={`${safeData.cta.label ?? 'Dowiedz się więcej'} — ${safeData.title}`}
+              ariaLabel={`${safeData.cta.label ?? 'Learn more'} — ${safeData.title}`}
             />
           )}
         </div>

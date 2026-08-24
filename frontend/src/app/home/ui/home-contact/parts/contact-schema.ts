@@ -1,21 +1,24 @@
 import { z } from 'zod';
 
 export const contactSchema = z.object({
-  firstName: z.string().min(2, 'Imię musi mieć co najmniej 2 znaki').max(100),
+  firstName: z
+    .string()
+    .min(2, 'First name must be at least 2 characters')
+    .max(100),
   lastName: z
     .string()
-    .min(2, 'Nazwisko musi mieć co najmniej 2 znaki')
+    .min(2, 'Last name must be at least 2 characters')
     .max(100),
-  email: z.email('Nieprawidłowy adres email'),
+  email: z.email('Invalid email address'),
   phone: z
     .string()
-    .regex(/^\+?[\d\s\-()]{7,20}$/, 'Nieprawidłowy numer telefonu')
+    .regex(/^\+?[\d\s\-()]{7,20}$/, 'Invalid phone number')
     .optional()
     .or(z.literal('')),
   message: z
     .string()
-    .min(10, 'Wiadomość musi mieć co najmniej 10 znaków')
-    .max(2000, 'Wiadomość może mieć maksymalnie 2000 znaków'),
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message can be at most 2000 characters'),
   website: z.string().optional(), // honeypot
 });
 

@@ -12,7 +12,7 @@ export function RevealPhone() {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2.5 text-primary">
         <Phone className="w-5 h-5" />
-        <p className="text-base font-medium">Telefon / WhatsApp</p>
+        <p className="text-base font-medium">Phone / WhatsApp</p>
       </div>
       <div className="h-11 flex items-center">
         <AnimatePresence mode="wait">
@@ -30,14 +30,14 @@ export function RevealPhone() {
                 className="gap-2.5 h-11 px-5 text-base border-primary/30 hover:border-primary/60 hover:bg-primary/5 hover:text-primary active:border-primary/60 active:bg-primary/5 active:text-primary transition-all cursor-pointer"
               >
                 <Eye className="w-4 h-4" />
-                Pokaż numer
+                Show number
               </Button>
             </motion.div>
           ) : (
             <motion.a
               key="phone"
               href={`tel:${CONTACT_PHONE}`}
-              aria-label={`Zadzwoń: ${CONTACT_PHONE_FORMATTED}`}
+              aria-label={`Call: ${CONTACT_PHONE_FORMATTED}`}
               initial={{ opacity: 0, scale: 1.05, filter: 'blur(8px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
