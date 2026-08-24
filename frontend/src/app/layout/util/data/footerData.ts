@@ -6,12 +6,12 @@ import {
 
 export const shortNote: ShortNoteData = {
   imageSrc: '/svg/footer/page-designer.svg',
-  imageAlt: 'Programista devgon',
+  imageAlt: 'Jakub Gontarek, Fullstack Engineer',
   imageW: 92,
   imageH: 84,
-  title: 'devgon',
+  title: 'Jakub Gontarek',
   description:
-    'Analizujemy, optymalizujemy, wdrażamy. W skrócie - skup się na rozwoju firmy, a resztę zostaw nam.',
+    'Fullstack Engineer. I take features end-to-end - architecture, API, UI, tests and deployment. This site runs on devgon, a CMS I built myself.',
 };
 
 export const smallMenu: FooterLinkData[] = [
@@ -20,35 +20,32 @@ export const smallMenu: FooterLinkData[] = [
     href: '/',
   },
   {
-    title: 'Oferta',
-    href: '/#services',
+    title: 'Projects',
+    href: '/#projects',
   },
   {
-    title: 'Współpraca',
-    href: '/#solutions',
+    title: 'Experience',
+    href: '/#experience',
   },
   {
-    title: 'O devgon',
+    title: 'About me',
     href: '/#about',
   },
   {
-    title: 'Skontaktuj się',
+    title: 'The CMS',
+    href: '/cms',
+  },
+  {
+    title: 'Contact',
     href: '/#contact',
   },
 ];
 
 export const socialLinks: SocialLinkData[] = [
   {
-    title: 'Facebook',
-    href: 'https://www.facebook.com/kuba.gontarek.3',
-    iconSrc: '/svg/footer/facebook.svg',
-    iconWidth: 18,
-    iconHeight: 18,
-  },
-  {
-    title: 'Instagram',
-    href: 'https://www.instagram.com/g0ntar',
-    iconSrc: '/svg/footer/instagram.svg',
+    title: 'GitHub',
+    href: 'https://github.com/Gontar384',
+    iconSrc: '/svg/footer/github.svg',
     iconWidth: 18,
     iconHeight: 18,
   },
@@ -59,18 +56,11 @@ export const socialLinks: SocialLinkData[] = [
     iconWidth: 18,
     iconHeight: 18,
   },
-  {
-    title: 'GitHub',
-    href: 'https://github.com/Gontar384',
-    iconSrc: '/svg/footer/github.svg',
-    iconWidth: 18,
-    iconHeight: 18,
-  },
 ];
 
 export const otherLinks: FooterLinkData[] = [
   {
-    title: 'Polityka prywatności',
+    title: 'Privacy policy',
     href: '/privacy-policy',
   },
 ];

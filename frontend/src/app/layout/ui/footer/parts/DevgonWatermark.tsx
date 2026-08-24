@@ -16,7 +16,7 @@ export function DevgonWatermark() {
       </Link>
       <Image
         src="/logo/logo-black.svg"
-        alt="Mini logo devgon"
+        alt="devgon logo"
         width={16}
         height={12}
         priority

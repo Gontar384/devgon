@@ -7,7 +7,7 @@ export function OtherLinks() {
   return (
     <div
       className="flex flex-wrap text-xs text-muted-foreground gap-4 whitespace-nowrap"
-      aria-label="Linki do podstron"
+      aria-label="Other links"
     >
       {otherLinks.map((link) => (
         <NavLink

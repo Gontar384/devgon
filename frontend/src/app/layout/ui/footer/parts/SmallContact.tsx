@@ -13,7 +13,7 @@ export function SmallContact() {
 
   return (
     <div className="flex flex-col gap-2 text-sm font-semibold">
-      <div className="text-muted-foreground">Kontakt</div>
+      <div className="text-muted-foreground">Contact</div>
       <Link
         href={`mailto:${CONTACT_EMAIL}`}
         className="flex items-center gap-2 hover:text-primary active:text-primary transition-colors"
@@ -35,7 +35,7 @@ export function SmallContact() {
           className="flex items-center gap-2 hover:text-primary active:text-primary transition-colors cursor-pointer"
         >
           <Phone size={14} />
-          Pokaż numer
+          Show number
         </button>
       )}
     </div>

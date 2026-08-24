@@ -36,14 +36,14 @@ export function CookieBanner() {
                      max-w-[1000px] w-[90%] bg-secondary text-white py-4 px-4 md:px-8 rounded-xl shadow-lg z-50 select-none"
         >
           <span className="text-center md:text-left">
-            Ta strona używa ciasteczek, aby poprawnie działać i zapewnić lepsze
-            doświadczenia.
+            This site uses cookies to work correctly and to give you a better
+            experience.
           </span>
           <button
             onClick={acceptCookies}
             className="bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
           >
-            Akceptuję
+            Accept
           </button>
         </motion.div>
       )}

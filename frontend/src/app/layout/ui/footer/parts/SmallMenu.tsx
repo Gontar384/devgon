@@ -9,10 +9,10 @@ export function SmallMenu() {
 
   return (
     <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-      <div className="font-semibold">Nawigacja</div>
+      <div className="font-semibold">Navigation</div>
       <div
         className="flex flex-col justify-center gap-1 whitespace-nowrap"
-        aria-label="Nawigacja"
+        aria-label="Navigation"
       >
         {smallMenu.map((link) => (
           <NavLink
