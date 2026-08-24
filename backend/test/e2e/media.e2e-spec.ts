@@ -158,7 +158,7 @@ describe('Media upload (e2e)', () => {
       expect(await listBucketObjects()).toHaveLength(2);
     });
 
-    it('skips unsupported MIME types and uploads only valid ones', async () => {
+    it('returns 400 and stores nothing when a MIME type is unsupported', async () => {
       const contentId = await insertContent(ds, 'hero', 0);
 
       const res = await uploadFiles(
@@ -174,10 +174,9 @@ describe('Media upload (e2e)', () => {
         ['tmp-bad', 'tmp-good'],
       );
 
-      expect(res.status).toBe(201);
-      expect(res.body.media).toHaveLength(1);
-      expect(res.body.media[0].tempId).toBe('tmp-good');
-      expect(await listBucketObjects()).toHaveLength(1);
+      expect(res.status).toBe(400);
+      expect(res.body.message).toContain('doc.pdf');
+      expect(await listBucketObjects()).toHaveLength(0);
     });
 
     it('returns 400 when tempIds JSON is malformed', async () => {

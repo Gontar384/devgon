@@ -58,7 +58,7 @@ export class ContentCardPOM {
     });
   }
 
-  /** Two-step delete: "Usuń" → "Potwierdź" */
+  /** Two-step delete: "Delete" → "Confirm" */
   async clickDelete(): Promise<void> {
     await this.root.getByTestId('delete-button').click();
     await this.root.getByTestId('delete-confirm-button').click();

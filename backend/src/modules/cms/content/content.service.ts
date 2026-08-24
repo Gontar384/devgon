@@ -21,7 +21,7 @@ import * as sanitizeHtml from 'sanitize-html';
  *
  * This service handles the full lifecycle of content blocks:
  * creation, update (including media management), deletion, and reordering.
- * Media files are stored in MinIO object storage and referenced via signed URLs.
+ * Media files are stored in MinIO object storage and referenced via public URLs.
  */
 @Injectable()
 export class ContentService {
@@ -37,7 +37,7 @@ export class ContentService {
   /**
    * Retrieves all content blocks for a given page section key,
    * sorted by `order` ascending. Related media are also sorted
-   * by `order` and enriched with signed MinIO URLs before returning.
+   * by `order` and enriched with public MinIO URLs before returning.
    *
    * @param key - The page section identifier (e.g. "hero", "team")
    * @returns Ordered list of content blocks with hydrated media URLs
@@ -52,7 +52,7 @@ export class ContentService {
       },
     });
 
-    await this.enrichMediaWithUrls(contents);
+    this.enrichMediaWithUrls(contents);
 
     return contents;
   }
@@ -270,19 +270,19 @@ export class ContentService {
   }
 
   /**
-   * Mutates each media object in place by attaching a temporary signed URL
-   * fetched from MinIO. Called before returning data to the client.
+   * Mutates each media object in place by attaching its public MinIO URL.
+   * Called before returning data to the client.
    * Skips content blocks that have no associated media.
    *
    * @param contents - List of content blocks whose media should be enriched
    */
-  private async enrichMediaWithUrls(contents: Content[]): Promise<void> {
+  private enrichMediaWithUrls(contents: Content[]): void {
     for (const content of contents) {
       if (!content.media?.length) continue;
 
       for (const media of content.media) {
         Object.assign(media, {
-          url: await this.minioService.getSignedUrl(media.storageKey),
+          url: this.minioService.getPublicUrl(media.storageKey),
         });
       }
     }

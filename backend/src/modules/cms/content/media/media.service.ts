@@ -15,7 +15,7 @@ import { MediaType, UploadedFileType, UploadedMediaItem } from './media-types';
  * later resolved to a real database ID when the parent content is saved.
  *
  * Supported file types:
- * - Images: JPEG, PNG, GIF, WebP, SVG
+ * - Images: JPEG, PNG, GIF, WebP, AVIF, SVG
  * - Videos: MP4, MPEG, QuickTime, AVI, WebM
  *
  * Max file size is enforced at the controller level (50 MB per file).
@@ -30,6 +30,7 @@ export class MediaService {
     'image/png',
     'image/gif',
     'image/webp',
+    'image/avif',
     'image/svg+xml',
   ];
 
@@ -51,7 +52,9 @@ export class MediaService {
    * Uploads multiple files to MinIO and persists their metadata to the database.
    * Each file must have a corresponding client-generated `tempId` at the same index.
    *
-   * Files with unsupported MIME types are silently skipped (logged as warnings).
+   * The whole batch is rejected before anything is stored if any file has an
+   * unsupported MIME type — the caller resolves every `tempId` it sent, so a
+   * partial result would leave it referencing media that was never created.
    * If any individual upload fails, all previously uploaded files in the batch
    * are rolled back (deleted from both MinIO and the database).
    *
@@ -59,7 +62,8 @@ export class MediaService {
    * @param files - Array of uploaded files (from Multer)
    * @param tempIds - Client-generated temporary IDs matched by index to `files`
    * @returns Array of uploaded media items with their resolved IDs and tempIds
-   * @throws BadRequestException if no files are provided, counts mismatch, or upload fails
+   * @throws BadRequestException if no files are provided, counts mismatch, a file
+   *   has an unsupported MIME type, or the upload fails
    */
   async uploadMany(
     contentId: string,
@@ -75,24 +79,24 @@ export class MediaService {
       );
     }
 
+    const rejected = files.filter((file) => !this.isValidFileType(file));
+    if (rejected.length > 0) {
+      const details = rejected
+        .map((file) => `${file.originalname} (${file.mimetype})`)
+        .join(', ');
+      this.logger.warn(`⚠️ Unsupported file type: ${details}`);
+      throw new BadRequestException(`Unsupported file type: ${details}`);
+    }
+
     this.logger.log(
       `📤 Uploading ${files.length} files for content ${contentId}`,
     );
 
     const uploadedMedia: Array<UploadedMediaItem> = [];
-    const skippedFiles: string[] = [];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const tempId = tempIds[i];
-
-      if (!this.isValidFileType(file)) {
-        this.logger.warn(
-          `⚠️ Skipping invalid file type: ${file.originalname} (${file.mimetype})`,
-        );
-        skippedFiles.push(file.originalname);
-        continue;
-      }
 
       try {
         const media = await this.uploadSingleWithTempId(
@@ -118,12 +122,6 @@ export class MediaService {
           `Could not upload file: ${file.originalname}`,
         );
       }
-    }
-
-    if (skippedFiles.length > 0) {
-      this.logger.log(
-        `⚠️ Skipped ${skippedFiles.length} invalid files: ${skippedFiles.join(', ')}`,
-      );
     }
 
     this.logger.log(`✅ Successfully uploaded ${uploadedMedia.length} files`);
