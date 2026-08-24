@@ -6,10 +6,10 @@ import { AdminPrivacyPolicyManager } from '@/app/admin/privacy-policy/AdminPriva
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
+    title: 'Privacy policy — Jakub Gontarek',
     description:
-      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
-    path: '/',
+      'How personal data submitted through this website is processed.',
+    path: '/privacy-policy',
   });
 
 export const dynamic = 'force-dynamic';

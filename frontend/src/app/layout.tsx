@@ -14,9 +14,9 @@ import Script from 'next/script';
 
 export const metadata: Metadata = {
   ...createMetadata({
-    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
+    title: 'Jakub Gontarek — Fullstack Engineer',
     description:
-      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
+      'Fullstack Engineer with 3 years of experience taking projects from requirements to production. React, Next.js, NestJS, Java, Spring Boot, PostgreSQL, Docker and CI/CD.',
     path: '/',
     image: '/logo/logo-caption-black.svg',
   }),
@@ -33,7 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl">
+    <html lang="en">
       <body>
         <HashScrollHandler />
         <AuthInitializer />
