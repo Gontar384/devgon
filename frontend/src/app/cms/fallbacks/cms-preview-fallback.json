@@ -1,0 +1,21 @@
+{
+  "title": "The admin panel",
+  "subtitle": "A structured mirror of the real UI - each card maps to one section of one page, with exactly the fields that section renders.",
+  "media": [
+    {
+      "url": "/image/cms/screenshot_1.png",
+      "alt": "Content cards in the devgon admin panel",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/image/cms/screenshot_2.png",
+      "alt": "Inline editing with the Tiptap rich text toolbar",
+      "type": "IMAGE"
+    },
+    {
+      "url": "/image/cms/screenshot_3.png",
+      "alt": "JSON editor for customData and media management",
+      "type": "IMAGE"
+    }
+  ]
+}

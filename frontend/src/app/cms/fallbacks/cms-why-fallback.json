@@ -1,0 +1,38 @@
+{
+  "title": "The decisions behind it",
+  "subtitle": "Four choices that shaped the architecture - and what each one bought me.",
+  "customData": {
+    "topHeader": "Design decisions",
+    "highlightWord": "behind it",
+    "items": [
+      {
+        "icon": "Zap",
+        "title": "UI-first instead of schema-first",
+        "description": "Traditional CMSes force the design to fit the data model. Here the model absorbs whatever the design needs, so a new section is a key and a JSON fallback - not a migration, a resolver and an admin form.",
+        "metric": "~10 min",
+        "metricLabel": "to make a section editable"
+      },
+      {
+        "icon": "Shield",
+        "title": "Fallbacks that keep the site alive",
+        "description": "Every section ships with a JSON fallback compiled into the bundle. If the backend or database is unreachable, pages still render fully - the CMS degrades to a static site instead of a 500.",
+        "metric": "0",
+        "metricLabel": "blank pages on backend failure"
+      },
+      {
+        "icon": "TrendingUp",
+        "title": "One entity instead of N models",
+        "description": "Fifteen live sections across three pages share a single table. Adding a fourth page costs no backend work at all - the content engine already handles it.",
+        "metric": "1",
+        "metricLabel": "table behind every section"
+      },
+      {
+        "icon": "Lock",
+        "title": "Tested where it actually breaks",
+        "description": "Unit tests cover content and media services including MinIO rollback paths; Playwright drives the real admin panel through create, edit, delete, reorder and upload against a live database.",
+        "metric": "Jest + Playwright",
+        "metricLabel": "unit, integration and E2E"
+      }
+    ]
+  }
+}

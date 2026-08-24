@@ -1,0 +1,29 @@
+{
+  "title": "From static markup to editable content",
+  "subtitle": "Traditional CMSes make you design the database first and bend the UI to fit. devgon inverts it - the admin panel becomes a structured mirror of whatever UI you already built.",
+  "customData": {
+    "topHeader": "Development flow",
+    "items": [
+      {
+        "title": "Build the UI freely",
+        "description": "No templates, no theme system, no constraints. Next.js, Tailwind and whatever the design needs."
+      },
+      {
+        "title": "Declare what is editable",
+        "description": "Wrap a section in ContentCardManager, name the fields and their limits. That is the entire integration."
+      },
+      {
+        "title": "The backend just stores it",
+        "description": "One universal Content entity absorbs every section site-wide. New field, new section - no migration."
+      },
+      {
+        "title": "Fetch via GraphQL with ISR",
+        "description": "Pages are statically generated and cached by tag, with JSON fallbacks so the site renders even if the backend is down."
+      },
+      {
+        "title": "Edit live, revalidate instantly",
+        "description": "Saving in the panel triggers on-demand revalidation of exactly the pages that use that content key."
+      }
+    ]
+  }
+}

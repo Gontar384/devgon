@@ -1,0 +1,29 @@
+{
+  "title": "The CMS this site runs on",
+  "description": "devgon is a code-first CMS I designed and built: developers build the UI freely in Next.js, then expose any section to admin editing - no backend changes, no schema migrations. Every word and image on this website is served through it.",
+  "media": [
+    {
+      "url": "/image/cms/screenshot_1.png",
+      "alt": "devgon CMS admin panel",
+      "type": "IMAGE"
+    }
+  ],
+  "customData": {
+    "badge": "Code-first CMS",
+    "highlightWord": "this site runs on",
+    "accentWords": ["UI-FIRST", "NO MIGRATIONS", "FULLY TYPED", "SELF-HOSTED"],
+    "primaryCta": {
+      "label": "See the code",
+      "href": "https://github.com/Gontar384/devgon"
+    },
+    "secondaryCta": {
+      "label": "Back to my work",
+      "href": "/#projects"
+    },
+    "stats": [
+      { "value": "1", "label": "Universal content entity" },
+      { "value": "15", "label": "Editable sections live" },
+      { "value": "0", "label": "Migrations to add a field" }
+    ]
+  }
+}
