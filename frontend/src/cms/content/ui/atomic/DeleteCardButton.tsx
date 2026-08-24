@@ -26,11 +26,11 @@ export function DeleteCardButton({
             className="hover:scale-105 active:scale-105 cursor-pointer"
             onClick={() => setConfirmOpen(true)}
           >
-            Usuń
+            Delete
           </Button>
         ) : (
           <div className="flex flex-wrap justify-center gap-2 items-center">
-            <p>Czy jesteś pewny?</p>
+            <p>Are you sure?</p>
             <div className="flex gap-2">
               <Button
                 size="sm"
@@ -38,7 +38,7 @@ export function DeleteCardButton({
                 className="hover:bg-background hover:scale-105 active:bg-background active:scale-105 cursor-pointer"
                 onClick={() => setConfirmOpen(false)}
               >
-                Anuluj
+                Cancel
               </Button>
               <Button
                 data-testid="delete-confirm-button"
@@ -47,7 +47,7 @@ export function DeleteCardButton({
                 className="hover:scale-105 active:scale-105 cursor-pointer"
                 onClick={() => handleDelete(contentId)}
               >
-                Potwierdź
+                Confirm
               </Button>
             </div>
           </div>

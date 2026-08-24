@@ -20,7 +20,7 @@ export function AddCardButton({
         variant="default"
         className="hover:bg-primary hover:scale-105 active:bg-primary active:scale-105 cursor-pointer w-fit"
       >
-        Dodaj
+        Add
       </Button>
     </div>
   );

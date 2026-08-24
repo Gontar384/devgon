@@ -193,7 +193,7 @@ export function SortableMediaItem({
         <div
           className={`absolute bottom-7 right-1 bg-gray-300 text-black text-xs px-2 py-1 rounded ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''} transition-opacity`}
         >
-          Nowy
+          New
         </div>
       )}
     </div>
