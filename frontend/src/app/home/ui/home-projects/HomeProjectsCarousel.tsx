@@ -1,0 +1,251 @@
+'use client';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HomeProjectsCarouselProps } from '@/app/home/home-types';
+
+const MOBILE_INITIAL = 6;
+const GAP = 32;
+
+function getVisible(windowWidth: number): number {
+  if (windowWidth >= 1400) return 3;
+  if (windowWidth >= 900) return 2;
+  return 1;
+}
+
+export function HomeProjectsCarousel({
+  children,
+  count,
+}: HomeProjectsCarouselProps) {
+  const [offset, setOffset] = useState(0);
+  const [cardWidth, setCardWidth] = useState<number | null>(null);
+  const [visible, setVisible] = useState(3);
+  const [expanded, setExpanded] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const touchStart = useRef<number | null>(null);
+  const mouseStart = useRef<number | null>(null);
+  const isDragging = useRef(false);
+
+  const childrenArray = React.Children.toArray(children);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const update = () => {
+      const v = getVisible(window.innerWidth);
+      setVisible(v);
+      const totalWidth = container.offsetWidth;
+      setCardWidth((totalWidth - GAP * (v - 1)) / v);
+    };
+
+    const ro = new ResizeObserver(update);
+    ro.observe(container);
+    update();
+    return () => ro.disconnect();
+  }, []);
+
+  const maxOffset = Math.max(0, count - visible);
+  const clampedOffset = Math.min(offset, maxOffset);
+  const canPrev = clampedOffset > 0;
+  const canNext = clampedOffset + visible < count;
+
+  const go = useCallback(
+    (dir: 1 | -1) => {
+      if (dir === 1 && !canNext) return;
+      if (dir === -1 && !canPrev) return;
+      setOffset((o) => {
+        const current = Math.min(o, maxOffset);
+        return Math.min(Math.max(current + dir, 0), maxOffset);
+      });
+    },
+    [canNext, canPrev, maxOffset],
+  );
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart.current === null) return;
+    const diff = touchStart.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) go(diff > 0 ? 1 : -1);
+    touchStart.current = null;
+  };
+  const onMouseDown = (e: React.MouseEvent) => {
+    mouseStart.current = e.clientX;
+    isDragging.current = false;
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (mouseStart.current === null) return;
+    if (Math.abs(e.clientX - mouseStart.current) > 5) isDragging.current = true;
+  };
+  const onMouseUp = (e: React.MouseEvent) => {
+    if (mouseStart.current === null) return;
+    const diff = mouseStart.current - e.clientX;
+    if (Math.abs(diff) > 50) go(diff > 0 ? 1 : -1);
+    mouseStart.current = null;
+  };
+  const onMouseLeave = () => {
+    mouseStart.current = null;
+  };
+
+  const mobileVisible = expanded
+    ? childrenArray
+    : childrenArray.slice(0, MOBILE_INITIAL);
+  const hasMore = count > MOBILE_INITIAL;
+
+  return (
+    <section
+      id="projects"
+      aria-label="Selected projects"
+      className="w-full py-12"
+    >
+      <div className="max-w-[1700px] mx-auto">
+        <div className="flex flex-col gap-6 sm:hidden px-4 py-2">
+          <AnimatePresence>
+            {mobileVisible.map((child, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0 }}
+                transition={{
+                  duration: 0.7,
+                  ease: 'easeOut',
+                  delay:
+                    i >= MOBILE_INITIAL
+                      ? (i - MOBILE_INITIAL) * 0.15
+                      : i * 0.15,
+                }}
+              >
+                {child}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {hasMore && (
+            <button
+              onClick={() => setExpanded((e) => !e)}
+              aria-expanded={expanded}
+              aria-controls="projects-mobile-list"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+            >
+              <motion.div
+                animate={{ rotate: expanded ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                aria-hidden="true"
+              >
+                <ChevronDown size={18} />
+              </motion.div>
+              {expanded ? 'Show less' : `Show more (${count - MOBILE_INITIAL})`}
+            </button>
+          )}
+        </div>
+        <div className="hidden sm:block overflow-hidden">
+          <div className="px-5 py-5">
+            <div
+              ref={containerRef}
+              className="select-none touch-pan-y"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseLeave}
+            >
+              <motion.div
+                className="flex gap-8"
+                animate={{
+                  x: cardWidth ? -(clampedOffset * (cardWidth + GAP)) : 0,
+                }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {childrenArray.map((child, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0 }}
+                    transition={{
+                      duration: 0.7,
+                      ease: 'easeOut',
+                      delay: i * 0.15,
+                    }}
+                    style={
+                      cardWidth
+                        ? {
+                            width: cardWidth,
+                            minWidth: cardWidth,
+                            flexShrink: 0,
+                          }
+                        : undefined
+                    }
+                    className={`flex-shrink-0${!cardWidth ? ' w-full md:w-[calc(50%-1rem)] xl:w-[calc(33.333%-1.334rem)]' : ''}`}
+                  >
+                    {child}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+        {count > visible && (
+          <div
+            className="hidden sm:flex items-center justify-center gap-4 mt-6"
+            role="group"
+            aria-label="Carousel navigation"
+          >
+            <button
+              onClick={() => go(-1)}
+              disabled={!canPrev}
+              aria-label="Previous project"
+              className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+            >
+              <ChevronLeft size={20} aria-hidden="true" />
+            </button>
+            <div
+              role="tablist"
+              aria-label="Carousel position"
+              className="flex gap-2"
+            >
+              {Array.from({ length: count }).map((_, i) => {
+                const isActive =
+                  i >= clampedOffset && i < clampedOffset + visible;
+                return (
+                  <button
+                    key={i}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`Project ${i + 1}`}
+                    onClick={() => {
+                      if (i < clampedOffset) {
+                        setOffset(Math.min(i, maxOffset));
+                      } else {
+                        setOffset(
+                          Math.min(Math.max(i - visible + 1, 0), maxOffset),
+                        );
+                      }
+                    }}
+                    className={`h-2 rounded-full transition-all duration-200 ${
+                      isActive
+                        ? 'bg-primary w-4 pointer-events-none'
+                        : 'bg-muted-foreground/40 w-2 cursor-pointer hover:bg-primary/50'
+                    }`}
+                  />
+                );
+              })}
+            </div>
+            <button
+              onClick={() => go(1)}
+              disabled={!canNext}
+              aria-label="Next project"
+              className="p-2 rounded-full border hover:scale-105 active:scale-95 transition duration-200 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+            >
+              <ChevronRight size={20} aria-hidden="true" />
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}

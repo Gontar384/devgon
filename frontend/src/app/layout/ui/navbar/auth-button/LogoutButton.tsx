@@ -32,9 +32,9 @@ export function LogoutButton({
       router.refresh();
       if (openedBar) closeBar();
       setLogoutCooldown(true);
-      toast.success('Zostałeś wylogowany👋');
+      toast.success('You have been signed out👋');
     } catch {
-      toast.error('Coś poszło nie tak... ⚙️');
+      toast.error('Something went wrong... ⚙️');
       console.error('Unable to log out');
       window.location.href = '/';
     }
@@ -50,13 +50,13 @@ export function LogoutButton({
               size="lg"
               className={`hover:scale-105 active:scale-105 cursor-pointer`}
               onClick={handleLogout}
-              aria-label="Wyloguj się"
+              aria-label="Sign out"
             >
               <DoorOpen className="!w-7 !h-7" aria-hidden="true" />
             </Button>
           </TooltipTrigger>
           <TooltipContent className="select-none" side="bottom">
-            <span>Wyloguj się</span>
+            <span>Sign out</span>
           </TooltipContent>
         </Tooltip>
       )}

@@ -2,61 +2,54 @@ import { MenuData } from '@/app/layout/layout-types';
 
 export const menuData: MenuData[] = [
   {
-    title: 'Oferta',
-    href: '/#services',
+    title: 'Work',
+    href: '/#projects',
     option: [
       {
-        title: 'Aplikacje i systemy',
-        href: '/services/systems',
-        imageSrc: '/svg/menu/mobile.svg',
-        imageW: 35,
-        imageH: 35,
-      },
-      {
-        title: 'Automatyzacje i integracje',
-        href: '/services/integrations',
-        imageSrc: '/svg/menu/plug.svg',
-        imageW: 35,
-        imageH: 35,
-      },
-      {
-        title: 'Analityka i wdrażanie AI',
-        href: '/services/ai',
-        imageSrc: '/svg/menu/brain.svg',
-        imageW: 35,
-        imageH: 35,
-      },
-    ],
-  },
-  {
-    title: 'O nas',
-    href: '/#intro',
-    option: [
-      {
-        title: 'Rozwiązywane problemy',
-        href: '/#solutions',
+        title: 'Projects',
+        href: '/#projects',
         imageSrc: '/svg/menu/puzzle.svg',
         imageW: 35,
         imageH: 35,
       },
       {
-        title: 'Jak wygląda współpraca',
-        href: '/#workflow',
-        imageSrc: '/svg/menu/handshake.svg',
+        title: 'Experience',
+        href: '/#experience',
+        imageSrc: '/svg/menu/team.svg',
         imageW: 35,
         imageH: 35,
       },
       {
-        title: 'O devgon',
-        href: '/#about',
-        imageSrc: '/svg/menu/team.svg',
+        title: 'How I work',
+        href: '/#workflow',
+        imageSrc: '/svg/menu/handshake.svg',
         imageW: 35,
         imageH: 35,
       },
     ],
   },
   {
-    title: 'Kontakt',
+    title: 'CMS',
+    href: '/cms',
+    option: [
+      {
+        title: 'Features',
+        href: '/cms#breakdown',
+        imageSrc: '/svg/menu/brain.svg',
+        imageW: 35,
+        imageH: 35,
+      },
+      {
+        title: 'Design decisions',
+        href: '/cms#why',
+        imageSrc: '/svg/menu/plug.svg',
+        imageW: 35,
+        imageH: 35,
+      },
+    ],
+  },
+  {
+    title: 'Contact',
     href: '/#contact',
     option: [],
   },

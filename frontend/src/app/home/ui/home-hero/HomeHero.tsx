@@ -22,7 +22,7 @@ export function HomeHero({ content }: HomeHeroProps) {
 
   return (
     <section
-      aria-label="Strona główna — sekcja powitalna"
+      aria-label="Introduction"
       className="flex justify-center items-center w-full min-h-screen relative select-none"
     >
       <div className="backdrop-blur-[14px] absolute inset-0 z-20" />
@@ -30,7 +30,10 @@ export function HomeHero({ content }: HomeHeroProps) {
       <div className="flex flex-col items-center justify-center px-6 py-12 gap-2 md:gap-3 text-center relative z-30 max-w-[800px]">
         {safeData.typingWord && (
           <AnimateItem delay={0}>
-            <p aria-hidden="true" className="text-6xl md:text-7xl font-bold">
+            <p
+              aria-hidden="true"
+              className="text-4xl sm:text-6xl md:text-7xl font-bold"
+            >
               <TypingEffect
                 text={safeData.typingWord}
                 speed={200}

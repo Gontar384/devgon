@@ -58,7 +58,7 @@ export class ContentCardPOM {
     });
   }
 
-  /** Two-step delete: "Usuń" → "Potwierdź" */
+  /** Two-step delete: "Delete" → "Confirm" */
   async clickDelete(): Promise<void> {
     await this.root.getByTestId('delete-button').click();
     await this.root.getByTestId('delete-confirm-button').click();
@@ -122,7 +122,11 @@ export class ContentManagerPOM {
   }
 
   async clickAdd(): Promise<void> {
+    const created = this.page.waitForResponse(
+      (r) => r.url().includes('/api/graphql') && r.status() === 200,
+    );
     await this.addBtn.click();
+    await created;
   }
 
   async expectAddButtonDisabled(): Promise<void> {

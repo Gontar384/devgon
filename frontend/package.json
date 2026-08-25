@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "devgon - Code-first CMS framework for building scalable fullstack applications",
-  "author": "devgon<devgonteam@gmail.com> - Gontar",
+  "author": "Jakub Gontarek<gontarek384@gmail.com>",
   "private": true,
   "license": "LICENSE",
   "type": "module",

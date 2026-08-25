@@ -28,7 +28,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const CMS_URL = '/admin/home';
 const SINGLE_KEY = 'home-hero'; // mode="single", maxMedia=0
-const MULTI_KEY = 'home-services'; // mode="multiple", maxMedia=1
+const MULTI_KEY = 'home-projects'; // mode="multiple", maxMedia=1
 
 /**
  * Minimal 1×1 JPEG — created inline so no external file is needed.
@@ -126,7 +126,7 @@ test.describe('updateContent — text fields', () => {
 
     await waitForGql(adminPage);
 
-    await expect(adminPage.getByText(/edytowana/i)).toBeVisible({
+    await expect(adminPage.getByText(/content updated/i)).toBeVisible({
       timeout: 6_000,
     });
 

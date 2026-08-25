@@ -23,7 +23,7 @@ export interface HomeIntroImageProps {
   mediaType: MediaType;
 }
 
-export interface HomeServiceCardProps {
+export interface HomeProjectCardProps {
   content: ContentOrFallback;
   priority?: boolean;
 }
@@ -48,7 +48,7 @@ export interface AnimateItemProps {
   className?: string;
 }
 
-export interface HomeServicesCarouselProps {
+export interface HomeProjectsCarouselProps {
   children: React.ReactNode[];
   count: number;
 }
@@ -64,17 +64,18 @@ export interface ScrollRevealImageProps {
   badge: { title: string; subtitle: string };
 }
 
-export interface HomeSolutionProps {
+export interface HomeExperienceProps {
   content: ContentOrFallback;
 }
 
-export type ProblemIcon = 'clock' | 'chaos' | 'rocket' | 'zap';
+export type ExperienceIcon = 'briefcase' | 'code' | 'graduation';
 
-export interface ProblemItem {
-  icon: ProblemIcon;
-  tag: string;
-  problem: string;
-  solution: string;
+export interface ExperienceItem {
+  icon: ExperienceIcon;
+  period: string;
+  role: string;
+  company: string;
+  bullets: string[];
 }
 
 export interface HomeTechProps {

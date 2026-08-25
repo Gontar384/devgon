@@ -73,13 +73,13 @@ export class AuthService {
       this.mailerService
         .sendMail({
           to: this.CONTACT_MAIL_TO,
-          subject: `Nowy użytkownik: ${email}`,
+          subject: `New user: ${email}`,
           html: `
-        <h2>Nowa rejestracja</h2>
+        <h2>New sign-up</h2>
         <p><strong>Email:</strong> ${user.email}</p>
         <p><strong>Username:</strong> ${user.username}</p>
         <p><strong>ID:</strong> ${user.id}</p>
-        <p><strong>Rola:</strong> ${user.role}</p>
+        <p><strong>Role:</strong> ${user.role}</p>
         <p><strong>Data:</strong> ${new Date().toISOString()}</p>
       `,
         })

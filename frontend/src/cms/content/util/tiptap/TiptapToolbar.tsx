@@ -83,25 +83,25 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
         icon={Bold}
         onClick={() => editor.chain().focus().toggleBold().run()}
         isActive={editor.isActive('bold')}
-        title="Pogrubienie"
+        title="Bold"
       />
       <ToolbarButton
         icon={Italic}
         onClick={() => editor.chain().focus().toggleItalic().run()}
         isActive={editor.isActive('italic')}
-        title="Kursywa"
+        title="Italic"
       />
       <ToolbarButton
         icon={Underline}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         isActive={editor.isActive('underline')}
-        title="Podkreślenie"
+        title="Underline"
       />
       <ToolbarButton
         icon={LinkIcon}
         onClick={() => setShowLinkInput((prev) => !prev)}
         isActive={editor.isActive('link')}
-        title="Dodaj link"
+        title="Add link"
       />
       {showLinkInput && (
         <div
@@ -138,13 +138,13 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             icon={List}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             isActive={editor.isActive('bulletList')}
-            title="Lista punktowana"
+            title="Bullet list"
           />
           <ToolbarButton
             icon={ListOrdered}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             isActive={editor.isActive('orderedList')}
-            title="Lista numerowana"
+            title="Numbered list"
           />
         </>
       )}

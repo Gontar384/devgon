@@ -7,7 +7,7 @@ export function SocialLinks() {
   return (
     <div
       className="flex flex-col gap-2 text-sm text-muted-foreground"
-      aria-label="Linki społecznościowe"
+      aria-label="Social links"
     >
       <div className="font-semibold">Social media</div>
       <div className="flex flex-col gap-2">

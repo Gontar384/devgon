@@ -1,60 +1,60 @@
 [
   {
-    "title": "Administrator danych",
-    "description": "Administratorem danych osobowych jest Jakub Gontarek, prowadzący działalność nierejestrowaną pod nazwą devgon, z adresem do korespondencji: devgonteam@gmail.com"
+    "title": "Data controller",
+    "description": "The controller of personal data is Jakub Gontarek, operating unregistered business activity under the name devgon, correspondence address: gontarek384@gmail.com"
   },
   {
-    "title": "Zakres zbieranych danych",
-    "description": "Za pośrednictwem formularza kontaktowego zbierane są następujące dane:",
+    "title": "Scope of collected data",
+    "description": "The following data is collected through the contact form:",
     "customData": {
       "items": [
-        "imię i nazwisko",
-        "adres e-mail",
-        "numer telefonu (jeśli podany)",
-        "treść wiadomości"
+        "first and last name",
+        "e-mail address",
+        "phone number (if provided)",
+        "message content"
       ]
     }
   },
   {
-    "title": "Cel i podstawa prawna przetwarzania danych",
-    "description": "Dane osobowe przetwarzane są wyłącznie w celu odpowiedzi na zapytanie przesłane przez formularz kontaktowy oraz prowadzenia korespondencji związanej z działalnością devgon. Dane mogą być również przetwarzane w wewnętrznym systemie informatycznym w celu przypisania zapytań do konkretnego konsultanta oraz usprawnienia obsługi kontaktów z klientami. Podstawą prawną przetwarzania danych jest dobrowolnie wyrażona zgoda Użytkownika (art. 6 ust. 1 lit. a RODO).",
+    "title": "Purpose and legal basis of processing",
+    "description": "Personal data is processed solely to respond to enquiries sent through the contact form and to carry on correspondence related to devgon's activity. Data may also be processed in an internal system in order to assign enquiries and improve handling of contacts. The legal basis for processing is the freely given consent of the User (Art. 6(1)(a) GDPR).",
     "customData": {
       "items": [
-        "odpowiedzi na zapytanie przesłane przez formularz kontaktowy",
-        "prowadzenia korespondencji związanej z działalnością devgon"
+        "responding to enquiries sent through the contact form",
+        "carrying on correspondence related to devgon's activity"
       ]
     }
   },
   {
-    "title": "Przekazywanie danych",
-    "description": "Dane mogą być udostępnione podmiotom technicznym (np. operatorowi hostingu, dostawcy poczty e-mail), wyłącznie w zakresie niezbędnym do świadczenia usług."
+    "title": "Data sharing",
+    "description": "Data may be shared with technical service providers (e.g. the hosting operator, e-mail provider) only to the extent necessary to deliver those services."
   },
   {
-    "title": "Czas przechowywania danych",
-    "description": "Dane będą przechowywane przez czas niezbędny do realizacji kontaktu i ewentualnej współpracy lub do momentu cofnięcia zgody."
+    "title": "Data retention",
+    "description": "Data will be stored for as long as necessary to handle the contact and any resulting cooperation, or until consent is withdrawn."
   },
   {
-    "title": "Prawa użytkownika",
-    "description": "Każdy Użytkownik ma prawo do:",
+    "title": "User rights",
+    "description": "Every User has the right to:",
     "customData": {
       "items": [
-        "dostępu do swoich danych",
-        "ich sprostowania, usunięcia lub ograniczenia przetwarzania",
-        "cofnięcia zgody w dowolnym momencie",
-        "wniesienia skargi do Prezesa UODO"
+        "access their data",
+        "rectify, erase or restrict the processing of their data",
+        "withdraw consent at any time",
+        "lodge a complaint with the President of the Personal Data Protection Office (UODO)"
       ]
     }
   },
   {
-    "title": "Dobrowolność podania danych",
-    "description": "Podanie danych osobowych jest dobrowolne, ale niezbędne do realizacji kontaktu."
+    "title": "Voluntary nature of providing data",
+    "description": "Providing personal data is voluntary, but necessary in order to be contacted."
   },
   {
-    "title": "Pliki cookies i analityka",
-    "description": "Serwis wykorzystuje pliki cookies wyłącznie w celach technicznych, związanych z uwierzytelnianiem użytkowników. Po zalogowaniu przez Google OAuth 2.0 system zapisuje dwa tokeny sesyjne: token autoryzacyjny (auth token) oraz token odświeżający (refresh token). Tokeny te przechowywane są w bezpiecznych plikach cookies i służą wyłącznie do utrzymania sesji zalogowanego użytkownika. Serwis nie stosuje cookies marketingowych ani śledzących. Serwis korzysta z narzędzia analitycznego Umami, które zbiera anonimowe dane statystyczne dotyczące ruchu na stronie (np. liczba odwiedzin, przeglądane podstrony, typ urządzenia, kraj pochodzenia). Umami nie używa plików cookies, nie zbiera danych osobowych ani adresów IP w sposób umożliwiający identyfikację użytkownika. Dane analityczne przechowywane są na serwerze administratora i nie są przekazywane podmiotom trzecim."
+    "title": "Cookies and analytics",
+    "description": "The website uses cookies for technical purposes only, related to user authentication. After signing in through Google OAuth 2.0 the system stores two session tokens: an authorization token and a refresh token. These tokens are kept in secure cookies and serve solely to maintain the signed-in user's session. The website does not use marketing or tracking cookies. The website uses Umami analytics, which collects anonymous statistical data about traffic (e.g. number of visits, pages viewed, device type, country of origin). Umami does not use cookies and does not collect personal data or IP addresses in a way that allows a user to be identified. Analytics data is stored on the controller's own server and is not shared with third parties."
   },
   {
-    "title": "Zabezpieczenie danych",
-    "description": "Dane osobowe są przechowywane i przetwarzane w sposób zapewniający ich bezpieczeństwo, integralność i poufność. Dostęp do danych mają wyłącznie uprawnione osoby, a system informatyczny, w którym są przechowywane, zabezpieczony jest przed nieautoryzowanym dostępem poprzez odpowiednie środki techniczne i organizacyjne, zgodnie z wymogami RODO."
+    "title": "Data security",
+    "description": "Personal data is stored and processed in a way that ensures its security, integrity and confidentiality. Access is limited to authorized persons, and the system in which it is stored is protected against unauthorized access by appropriate technical and organizational measures, in line with GDPR requirements."
   }
 ]

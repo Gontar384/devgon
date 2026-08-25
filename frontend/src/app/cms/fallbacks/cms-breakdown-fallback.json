@@ -1,0 +1,45 @@
+{
+  "title": "What is actually in the box",
+  "subtitle": "Everything below is built from scratch - no headless CMS SDK, no admin panel generator.",
+  "customData": {
+    "highlightWord": "in the box",
+    "items": [
+      {
+        "icon": "Layers",
+        "title": "Universal content layer",
+        "description": "A single Content entity - title, subtitle, description, customData, media, key, order - backs every section of every page. Adding a section means picking a new key, not writing a model, an API and an admin form.",
+        "tags": ["TypeORM", "PostgreSQL", "GraphQL"]
+      },
+      {
+        "icon": "Database",
+        "title": "customData as the escape hatch",
+        "description": "A JSONB column holds anything a section needs: CTA buttons, tag lists, stat rows, nested objects, feature flags. Extending a block never requires a schema migration.",
+        "tags": ["JSONB", "Schema-free", "Validated"]
+      },
+      {
+        "icon": "FileText",
+        "title": "Rich text and JSON editing",
+        "description": "Tiptap for description fields with a sanitizing paste pipeline, plus a validating JSON editor for customData - so structured content stays structured even when edited by hand.",
+        "tags": ["Tiptap", "Sanitizer", "Inline editing"]
+      },
+      {
+        "icon": "Cloud",
+        "title": "Media pipeline",
+        "description": "Uploads land in MinIO with rollback on failure, drag-and-drop reordering on desktop and directional buttons on mobile, and permanent public URLs that browsers can cache.",
+        "tags": ["MinIO", "S3 API", "Drag & drop"]
+      },
+      {
+        "icon": "GitMerge",
+        "title": "Auth and access control",
+        "description": "Google OAuth2, dual JWT with access and refresh tokens in HttpOnly cookies, refresh-token rotation in the database, and role-based guards - editing is gated behind the admin role.",
+        "tags": ["OAuth2", "JWT", "RBAC"]
+      },
+      {
+        "icon": "Workflow",
+        "title": "ISR and on-demand revalidation",
+        "description": "Content is fetched with Next.js cache tags, so saving a block revalidates only the pages that consume that key. Static performance, live editing, no rebuild.",
+        "tags": ["Next.js ISR", "Cache tags", "SWR"]
+      }
+    ]
+  }
+}

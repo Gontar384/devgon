@@ -17,7 +17,7 @@ export function HomeWorkflow({ content }: HomeWorkflowProps) {
   return (
     <section
       id="workflow"
-      aria-label={safeData.title || 'Nasz proces'}
+      aria-label={safeData.title || 'How I work'}
       className="relative pt-24 pb-24 lg:pb-36 overflow-hidden select-none"
     >
       <div aria-hidden="true" className="absolute inset-0 -z-10">

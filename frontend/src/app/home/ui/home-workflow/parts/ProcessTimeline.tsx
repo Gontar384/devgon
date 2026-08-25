@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ProcessTimelineProps } from '@/app/home/home-types';
 
-const CARDS_PER_ROW = 4;
+const CARDS_PER_ROW = 5;
 
 export function ProcessTimeline({ items }: ProcessTimelineProps) {
   const ref = useRef<HTMLDivElement>(null);

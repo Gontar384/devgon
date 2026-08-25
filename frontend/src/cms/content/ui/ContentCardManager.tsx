@@ -84,10 +84,10 @@ export function ContentCardManager({
       const newContent = await createContent(contentKey);
       if (newContent) {
         await handleRevalidate();
-        toast.success('Nowa treść została dodana ✅');
+        toast.success('New content block added ✅');
       }
     } catch (err) {
-      toast.error('Coś poszło nie tak... ⚙️');
+      toast.error('Something went wrong... ⚙️');
       console.error('Create failed:', err);
     }
   };
@@ -100,10 +100,10 @@ export function ContentCardManager({
         newItems.map((c) => c.id),
       );
       await handleRevalidate();
-      toast.success('Zmieniono kolejność treści ➡️');
+      toast.success('Content reordered ➡️');
     } catch (err) {
       setItems(items);
-      toast.error('Coś poszło nie tak... ⚙️');
+      toast.error('Something went wrong... ⚙️');
       console.error('Reorder failed:', err);
     }
   };

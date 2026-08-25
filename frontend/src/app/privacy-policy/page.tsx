@@ -5,10 +5,10 @@ import { PrivacyPolicyManager } from '@/app/privacy-policy/PrivacyPolicyManager'
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'Polityka Prywatności – devgon',
+    title: 'Privacy policy — Jakub Gontarek',
     description:
-      'Dowiedz się, jak przetwarzamy Twoje dane osobowe. Polityka prywatności serwisu devgon.pl zgodna z RODO.',
-    path: '/polityka-prywatnosci',
+      'How personal data submitted through this website is processed, in line with GDPR.',
+    path: '/privacy-policy',
   });
 
 export default async function PrivacyPolicyPage() {

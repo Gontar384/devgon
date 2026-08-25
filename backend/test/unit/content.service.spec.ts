@@ -26,7 +26,7 @@ const mockMediaService = () => ({
 });
 
 const mockMinioService = () => ({
-  getSignedUrl: jest.fn(),
+  getPublicUrl: jest.fn(),
 });
 
 describe('ContentService', () => {
@@ -58,7 +58,7 @@ describe('ContentService', () => {
   afterEach(() => jest.clearAllMocks());
 
   describe('getMany', () => {
-    it('enriches media with signed URLs', async () => {
+    it('enriches media with public URLs', async () => {
       const media = {
         id: 'm1',
         storageKey: 'key.jpg',
@@ -66,20 +66,22 @@ describe('ContentService', () => {
       } as Content['media'][number];
       const content = makeContent({ media: [media] });
       contentRepo.find.mockResolvedValue([content]);
-      minioService.getSignedUrl.mockResolvedValue('https://signed.url/key.jpg');
+      minioService.getPublicUrl.mockReturnValue(
+        'https://minio.test/media/key.jpg',
+      );
 
       const result = await service.getMany('hero');
 
-      expect(minioService.getSignedUrl).toHaveBeenCalledWith('key.jpg');
+      expect(minioService.getPublicUrl).toHaveBeenCalledWith('key.jpg');
       expect(
         (result[0].media[0] as unknown as Record<string, unknown>)['url'],
-      ).toBe('https://signed.url/key.jpg');
+      ).toBe('https://minio.test/media/key.jpg');
     });
 
     it('skips URL enrichment for contents with no media', async () => {
       contentRepo.find.mockResolvedValue([makeContent({ media: [] })]);
       await service.getMany('hero');
-      expect(minioService.getSignedUrl).not.toHaveBeenCalled();
+      expect(minioService.getPublicUrl).not.toHaveBeenCalled();
     });
 
     it('returns empty array when no content exists for key', async () => {

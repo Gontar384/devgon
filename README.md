@@ -10,7 +10,7 @@ devgon gives you the tools to turn any part of that UI into structured, admin-ed
 everything from scratch.
 
 Live project: **[devgon.pl](https://devgon.pl)**  
-Contact: **devgonteam@gmail.com**
+Contact: **gontarek384@gmail.com**
 
 ---
 
@@ -103,11 +103,13 @@ The admin panel becomes a **structured mirror** of the real UI - no duplicated m
 
 > Screenshots from the live admin interface:
 
-<img src="./docs/screenshots/screenshot_1.png" width="800" alt="devgon-cms-screenshot-1"/>
+<img src="./frontend/public/image/cms/screenshot_1.png" width="800" alt="devgon-cms-screenshot-1"/>
 
-<img src="./docs/screenshots/screenshot_2.png" width="800" alt="devgon-cms-screenshot-2"/>
+<img src="./frontend/public/image/cms/screenshot_4.png" width="800" alt="devgon-cms-screenshot-4"/>
 
-<img src="./docs/screenshots/screenshot_3.png" width="800" alt="devgon-cms-screenshot-3"/>
+<img src="./frontend/public/image/cms/screenshot_2.png" width="800" alt="devgon-cms-screenshot-2"/>
+
+<img src="./frontend/public/image/cms/screenshot_3.png" width="800" alt="devgon-cms-screenshot-3"/>
 
 ---
 

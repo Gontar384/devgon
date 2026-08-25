@@ -5,9 +5,9 @@ import { loadPageContents } from '@/cms/content/util/service/loadPageContents';
 
 export const generateMetadata = (): Metadata =>
   createMetadata({
-    title: 'devgon – Nowoczesne aplikacje i automatyzacja dla firm',
+    title: 'Jakub Gontarek — Fullstack Engineer',
     description:
-      'Tworzymy inteligentne aplikacje biznesowe, optymalizujemy procesy i integrujemy systemy. Skup się na rozwoju firmy, resztę zostaw nam.',
+      'Fullstack Engineer with 3 years of experience taking projects from requirements to production. React, Next.js, NestJS, Java, Spring Boot, PostgreSQL, Docker and CI/CD.',
     path: '/',
   });
 
@@ -15,8 +15,8 @@ export default async function HomePage() {
   const { contents } = await loadPageContents([
     'home-hero',
     'home-intro',
-    'home-services',
-    'home-solution',
+    'home-projects',
+    'home-experience',
     'home-workflow',
     'home-tech',
     'home-about',

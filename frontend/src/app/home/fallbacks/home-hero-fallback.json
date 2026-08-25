@@ -1,21 +1,21 @@
 {
-  "title": "Budujemy systemy które",
-  "subtitle": "Pomagamy firmom upraszczać procesy, tworzyć aplikacje i integrować narzędzia.",
-  "description": "Projektujemy rozwiązania technologiczne dopasowane do realnych potrzeb biznesu - od analizy procesów po wdrożenie gotowego systemu.",
+  "title": "Fullstack Engineer",
+  "subtitle": "I take projects from requirements to production - architecture, API, data model, UI, tests, deployment.",
+  "description": "TypeScript and Java. React and Next.js on the frontend, NestJS and Spring Boot on the backend, with PostgreSQL, Docker, CI/CD and self-hosted infrastructure.",
   "customData": {
-    "typingWord": "devgon",
+    "typingWord": "Jakub Gontarek",
     "heroWords": [
-      "AUTOMATYZUJĄ PRACĘ",
-      "ELIMINUJĄ CHAOS",
-      "SKALUJĄ BIZNES",
-      "UPRASZCZAJĄ PROCESY"
+      "REACT · NEXT.JS",
+      "NODE.JS · NESTJS",
+      "JAVA · SPRING BOOT",
+      "POSTGRESQL · DOCKER · CI/CD"
     ],
     "primaryCta": {
-      "label": "Zobacz ofertę",
-      "href": "/#services"
+      "label": "See my work",
+      "href": "/#projects"
     },
     "secondaryCta": {
-      "label": "Umów rozmowę",
+      "label": "Get in touch",
       "href": "/#contact"
     }
   }

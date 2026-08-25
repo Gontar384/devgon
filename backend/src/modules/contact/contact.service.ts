@@ -31,7 +31,7 @@ export class ContactService {
 
     if (recent) {
       throw new HttpException(
-        `Możesz wysłać wiadomość raz na ${this.RATE_LIMIT_MINUTES} minut.`,
+        `You can send one message every ${this.RATE_LIMIT_MINUTES} minutes.`,
         HttpStatus.TOO_MANY_REQUESTS,
       );
     }
@@ -42,12 +42,12 @@ export class ContactService {
     this.mailerService
       .sendMail({
         to: this.CONTACT_MAIL_TO,
-        subject: `Nowa wiadomość od ${dto.firstName} ${dto.lastName}`,
+        subject: `New message from ${dto.firstName} ${dto.lastName}`,
         html: `
-        <h2>Nowa wiadomość kontaktowa</h2>
-        <p><strong>Imię i nazwisko:</strong> ${dto.firstName} ${dto.lastName}</p>
+        <h2>New contact message</h2>
+        <p><strong>Name:</strong> ${dto.firstName} ${dto.lastName}</p>
         <p><strong>Email:</strong> ${dto.email}</p>
-        <p><strong>Telefon:</strong> ${dto.phone ?? '—'}</p>
+        <p><strong>Phone:</strong> ${dto.phone ?? '—'}</p>
         <hr />
         <p>${dto.message.replace(/\n/g, '<br />')}</p>
       `,

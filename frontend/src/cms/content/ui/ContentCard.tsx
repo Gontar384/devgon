@@ -197,7 +197,7 @@ export function ContentCard({
   const handleSave = async () => {
     if (!content) return;
     if (!isValidJSON(draftCustomData)) {
-      toast.error('Błąd w JSON: niepoprawny format');
+      toast.error('JSON error: invalid format');
       return;
     }
     setIsLoading(true);
@@ -213,9 +213,9 @@ export function ContentCard({
     try {
       await updateContent(content.id, payload, maxMedia);
       await handleRevalidate();
-      toast.success('Treść została edytowana ✏️');
+      toast.success('Content updated ✏️');
     } catch (err) {
-      toast.error('Coś poszło nie tak... ⚙️');
+      toast.error('Something went wrong... ⚙️');
       console.error('Update failed:', err);
     } finally {
       setIsLoading(false);
@@ -228,9 +228,9 @@ export function ContentCard({
     try {
       await deleteContent(id);
       await handleRevalidate();
-      toast.success('Wybrana treść została usunięta ❌');
+      toast.success('Content deleted ❌');
     } catch (err) {
-      toast.error('Coś poszło nie tak... ⚙️');
+      toast.error('Something went wrong... ⚙️');
       console.error('Delete failed:', err);
     }
   };

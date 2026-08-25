@@ -6,15 +6,16 @@ const siteUrl = `https://${siteName}`;
 
 /**
  * Generates a Next.js Metadata object with canonical URL, OpenGraph,
- * and Twitter Card tags. The `image` field is optional — omitting it
- * switches the Twitter card to `summary` instead of `summary_large_image`.
+ * and Twitter Card tags. The `image` field defaults to the site-wide social
+ * card — Next overwrites the whole `openGraph` object per segment rather than
+ * merging it, so every page has to carry its own image or lose the parent's.
  * Site name and base URL are read from NEXT_PUBLIC_DOMAIN env variable.
  */
 export function createMetadata({
   title,
   description,
   path,
-  image,
+  image = '/logo/og.png',
 }: MetadataOptions): Metadata {
   const url = path ? `${siteUrl}${path}` : siteUrl;
 

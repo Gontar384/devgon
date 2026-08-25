@@ -14,7 +14,7 @@ export function AdminPrivacyPolicyManager({
   return (
     <div className="flex flex-col items-center px-2">
       {error && <AdminContentErrorBanner failedKeys={failedKeys} />}
-      <h1 className="sr-only">Polityka prywatności</h1>
+      <h1 className="sr-only">Privacy policy</h1>
       <div className="flex flex-col items-center gap-12 w-full mt-5">
         <ContentCardManager
           contents={privacyPolicyInfo}

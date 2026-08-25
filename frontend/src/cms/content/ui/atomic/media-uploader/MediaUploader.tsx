@@ -27,7 +27,20 @@ import {
   MediaUploaderProps,
 } from '@/cms/content/content-types';
 
-const ALLOWED = ['image/', 'video/'];
+const ALLOWED = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/avif',
+  'image/svg+xml',
+  'video/mp4',
+  'video/mpeg',
+  'video/quicktime',
+  'video/x-msvideo',
+  'video/webm',
+];
 
 /**
  * Media upload and preview area within the content editor.
@@ -49,11 +62,9 @@ export function MediaUploader({
   );
 
   const filterValidFiles = (files: File[]) => {
-    const valid = files.filter((f) =>
-      ALLOWED.some((t) => f.type.startsWith(t)),
-    );
+    const valid = files.filter((f) => ALLOWED.includes(f.type));
     if (valid.length !== files.length) {
-      toast.warning('Dozwolone są tylko zdjęcia i wideo');
+      toast.warning('Allowed: JPEG, PNG, GIF, WebP, AVIF, SVG, MP4, WebM');
     }
     return valid;
   };
@@ -63,7 +74,7 @@ export function MediaUploader({
     files = filterValidFiles(files);
 
     if (maxMedia && media.length + files.length > maxMedia) {
-      toast.warning(`Maksymalna liczba mediów to ${maxMedia}`);
+      toast.warning(`You can add at most ${maxMedia} media items`);
       return;
     }
 
@@ -189,7 +200,7 @@ export function MediaUploader({
         <div className="flex items-center justify-center p-5 gap-2">
           <input
             type="file"
-            accept="image/*,video/*"
+            accept={ALLOWED.join(',')}
             multiple
             onChange={handleFileSelect}
             className="hidden"
@@ -205,7 +216,7 @@ export function MediaUploader({
             >
               <span>
                 <Upload className="w-4 h-4 mr-2" />
-                Dodaj media
+                Add media
                 {maxMedia && ` (${media.length}/${maxMedia})`}
               </span>
             </Button>

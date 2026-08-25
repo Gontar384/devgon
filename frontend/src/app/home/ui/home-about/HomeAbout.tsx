@@ -21,6 +21,7 @@ export function HomeAbout({ content }: HomeAboutProps) {
     photoAlt: content.media?.[0]?.alt ?? '',
     mediaType: content.media?.[0]?.type ?? MediaType.IMAGE,
     signature: content.customData?.signature ?? '',
+    signatureRole: content.customData?.signatureRole ?? '',
   };
 
   return (
@@ -54,9 +55,11 @@ export function HomeAbout({ content }: HomeAboutProps) {
               )}
               {safeData.signature && (
                 <div className="flex flex-col items-end gap-0.5">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
-                    Founder & CEO
-                  </span>
+                  {safeData.signatureRole && (
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/60">
+                      {safeData.signatureRole}
+                    </span>
+                  )}
                   <span
                     className={`${cookie.className} text-6xl md:text-7xl leading-none`}
                   >

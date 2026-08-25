@@ -10,8 +10,8 @@ export function AdminHomeManager({
 }: AdminManagerProps) {
   const homeHero = contents['home-hero'] ?? [];
   const homeIntro = contents['home-intro'] ?? [];
-  const homeServices = contents['home-services'] ?? [];
-  const homeSolution = contents['home-solution'] ?? [];
+  const homeProjects = contents['home-projects'] ?? [];
+  const homeExperience = contents['home-experience'] ?? [];
   const homeWorkflow = contents['home-workflow'] ?? [];
   const homeTech = contents['home-tech'] ?? [];
   const homeAbout = contents['home-about'] ?? [];
@@ -20,7 +20,7 @@ export function AdminHomeManager({
   return (
     <div className="flex flex-col items-center px-2">
       {error && <AdminContentErrorBanner failedKeys={failedKeys} />}
-      <h1 className="sr-only">Strona główna</h1>
+      <h1 className="sr-only">Home page</h1>
       <div className="flex flex-col items-center gap-12 w-full mt-5">
         <ContentCardManager
           contents={homeHero}
@@ -47,8 +47,8 @@ export function AdminHomeManager({
           maxMedia={1}
         />
         <ContentCardManager
-          contents={homeServices}
-          contentKey={'home-services'}
+          contents={homeProjects}
+          contentKey={'home-projects'}
           mode={'multiple'}
           fields={{
             title: 100,
@@ -59,14 +59,14 @@ export function AdminHomeManager({
           maxMedia={1}
         />
         <ContentCardManager
-          contents={homeSolution}
-          contentKey={'home-solution'}
+          contents={homeExperience}
+          contentKey={'home-experience'}
           mode={'single'}
           fields={{
             title: 100,
             subtitle: 200,
             description: 0,
-            customData: 2000,
+            customData: 3500,
           }}
           maxMedia={1}
         />
@@ -78,7 +78,7 @@ export function AdminHomeManager({
             title: 100,
             subtitle: 200,
             description: 0,
-            customData: 1000,
+            customData: 1500,
           }}
           maxMedia={0}
         />
@@ -102,7 +102,7 @@ export function AdminHomeManager({
             title: 100,
             subtitle: 200,
             description: 1000,
-            customData: 100,
+            customData: 200,
           }}
           maxMedia={1}
         />

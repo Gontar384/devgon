@@ -88,27 +88,24 @@ describe('MediaService', () => {
       expect(result[0].tempId).toBe('tmp-1');
     });
 
-    it('skips files with unsupported MIME types', async () => {
+    it('rejects the whole batch when a file has an unsupported MIME type', async () => {
       const validFile = makeFile();
       const invalidFile = makeFile({
         originalname: 'doc.pdf',
         mimetype: 'application/pdf',
       });
-      const media = makeMedia();
-      minioService.uploadFile.mockResolvedValue('key.jpg');
-      mediaRepo.create.mockReturnValue(media);
-      mediaRepo.save.mockResolvedValue(media);
 
-      const result = await service.uploadMany(
-        'content-1',
-        [invalidFile, validFile].map(
-          (f) => f as unknown as Express.Multer.File,
+      await expect(
+        service.uploadMany(
+          'content-1',
+          [invalidFile, validFile].map(
+            (f) => f as unknown as Express.Multer.File,
+          ),
+          ['tmp-bad', 'tmp-1'],
         ),
-        ['tmp-bad', 'tmp-1'],
-      );
+      ).rejects.toThrow(/doc\.pdf \(application\/pdf\)/);
 
-      expect(result).toHaveLength(1);
-      expect(minioService.uploadFile).toHaveBeenCalledTimes(1);
+      expect(minioService.uploadFile).not.toHaveBeenCalled();
     });
 
     it('rolls back successful uploads when a later one fails', async () => {

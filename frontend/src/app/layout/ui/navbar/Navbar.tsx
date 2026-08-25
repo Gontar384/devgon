@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <nav
       className="w-full h-16 flex items-center justify-between bg-background shadow-md"
-      aria-label="Główna nawigacja"
+      aria-label="Main navigation"
       role="navigation"
     >
       <SiteLogo />

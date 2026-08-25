@@ -12,11 +12,11 @@ export function SiteLogo() {
       href="/"
       onNavigate={navigateToTop}
       className="ml-4 select-none flex-shrink-0"
-      aria-label="Przejdź do strony głównej"
+      aria-label="Go to the home page"
     >
       <Image
         src="/logo/logo-caption-black.svg"
-        alt="Logo strony głównej"
+        alt="Site logo"
         width={80}
         height={60}
         priority

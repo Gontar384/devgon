@@ -1,15 +1,16 @@
 {
-  "title": "O devgon",
-  "subtitle": "Technologia, która realnie wspiera biznes",
-  "description": "W devgon tworzymy systemy rozwiązujące realne problemy biznesowe. Łączymy inżynierską precyzję z myśleniem o użytkowniku i efektach sprzedaży. Stawiamy na optymalizację i automatyzację - budujemy narzędzia, które po prostu mają sens. Wierzę, że technologia powinna działać jak dobrze nastrojony silnik - precyzyjnie i bezawaryjnie. Jako pasjonat motoryzacji, w pracy nie uznaję półśrodków. Lubię rozwiązania dopracowane i niezawodne.",
+  "title": "About me",
+  "subtitle": "Self-taught, production-tested",
+  "description": "I learned engineering by building things that had to work - not by collecting certificates. Three years in, that means two production systems of my own and internal tools a manufacturing division relies on every day. I like owning a feature end to end: the data model, the API, the interface, the tests and the deployment. It is the only way I know to make sure the seams hold. I believe software should run like a well-tuned engine - precise, predictable, no surprises. As someone who has always been into cars, I have little patience for half measures. I prefer solutions that are finished and dependable.",
   "media": [
     {
-      "url": "/logo/logo-black.svg",
-      "alt": "devgon founder",
+      "url": "/image/coding.png",
+      "alt": "Jakub Gontarek",
       "type": "IMAGE"
     }
   ],
   "customData": {
-    "signature": "Jakub Gontarek"
+    "signature": "Jakub Gontarek",
+    "signatureRole": "Fullstack Engineer"
   }
 }

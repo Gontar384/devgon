@@ -45,7 +45,7 @@ export function EditButtons({
               onClick={handleCancel}
               className="hover:bg-background hover:scale-105 active:bg-background active:scale-105 cursor-pointer"
             >
-              Anuluj
+              Cancel
             </Button>
             <Button
               data-testid="save-button"
@@ -53,7 +53,7 @@ export function EditButtons({
               onClick={handleSave}
               className="hover:bg-primary hover:scale-105 active:bg-primary active:scale-105 cursor-pointer"
             >
-              Zapisz
+              Save
             </Button>
           </div>
         )}

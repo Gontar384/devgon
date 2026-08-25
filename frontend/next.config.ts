@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'minio.devgon.site',
+        hostname: 'minio.devgon.pl',
         pathname: '/**',
       },
     ],

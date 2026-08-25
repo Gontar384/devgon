@@ -85,7 +85,7 @@ export function EditableDataField({
             />
           </div>
           {error && (
-            <p className="text-red-500 text-xs mt-1">Błąd w JSON: {error}</p>
+            <p className="text-red-500 text-xs mt-1">JSON error: {error}</p>
           )}
         </>
       ) : (

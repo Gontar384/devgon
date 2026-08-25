@@ -39,10 +39,10 @@ export function HomeContactForm() {
       if (error.response?.status === 429) {
         setSubmitError(
           error.response.data?.message ??
-            'Możesz wysłać wiadomość raz na 15 minut.',
+            'You can send one message every 15 minutes.',
         );
       } else {
-        setSubmitError('Coś poszło nie tak. Spróbuj ponownie później.');
+        setSubmitError('Something went wrong. Please try again later.');
       }
     }
   };
@@ -74,9 +74,9 @@ export function HomeContactForm() {
             transition={{ delay: 0.3 }}
             className="flex flex-col gap-2"
           >
-            <h3 className="text-3xl font-semibold">Wiadomość wysłana!</h3>
+            <h3 className="text-3xl font-semibold">Message sent!</h3>
             <p className="text-muted-foreground text-lg">
-              Dziękuję za kontakt. Odezwę się najszybciej jak to możliwe.
+              Thanks for reaching out. I will get back to you as soon as I can.
             </p>
           </motion.div>
           <motion.div
@@ -90,7 +90,7 @@ export function HomeContactForm() {
               onClick={() => setSuccess(false)}
               className="mt-2 border-primary/30 cursor-pointer hover:border-primary/60 active:border-primary/60 hover:bg-primary/5 active:bg-primary/5 hover:text-primary active:text-primary"
             >
-              Wyślij kolejną wiadomość
+              Send another message
             </Button>
           </motion.div>
         </motion.div>
@@ -115,11 +115,11 @@ export function HomeContactForm() {
           <div className="grid sm:grid-cols-2 gap-5">
             <div className="flex flex-col gap-2">
               <Label htmlFor="firstName" className="text-base font-medium">
-                Imię *
+                First name *
               </Label>
               <Input
                 id="firstName"
-                placeholder="Jan"
+                placeholder="Jane"
                 className="h-12 text-base px-4"
                 {...register('firstName')}
                 aria-invalid={!!errors.firstName}
@@ -139,11 +139,11 @@ export function HomeContactForm() {
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="lastName" className="text-base font-medium">
-                Nazwisko *
+                Last name *
               </Label>
               <Input
                 id="lastName"
-                placeholder="Kowalski"
+                placeholder="Doe"
                 className="h-12 text-base px-4"
                 {...register('lastName')}
                 aria-invalid={!!errors.lastName}
@@ -169,7 +169,7 @@ export function HomeContactForm() {
             <Input
               id="email"
               type="email"
-              placeholder="jan.kowalski@email.com"
+              placeholder="jane.doe@email.com"
               className="h-12 text-base px-4"
               {...register('email')}
               aria-invalid={!!errors.email}
@@ -187,9 +187,9 @@ export function HomeContactForm() {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="phone" className="text-base font-medium">
-              Telefon{' '}
+              Phone{' '}
               <span className="text-muted-foreground text-sm font-normal">
-                (opcjonalnie)
+                (optional)
               </span>
             </Label>
             <Input
@@ -213,11 +213,11 @@ export function HomeContactForm() {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="message" className="text-base font-medium">
-              Wiadomość *
+              Message *
             </Label>
             <Textarea
               id="message"
-              placeholder="Opisz swój pomysł lub zadaj pytanie..."
+              placeholder="Tell me about the role, or just say hi..."
               rows={6}
               className="text-base px-4 py-3 resize-none"
               {...register('message')}
@@ -255,12 +255,12 @@ export function HomeContactForm() {
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-                Wysyłanie...
+                Sending...
               </>
             ) : (
               <>
                 <Send className="w-4 h-4" aria-hidden="true" />
-                Wyślij wiadomość
+                Send message
               </>
             )}
           </Button>
