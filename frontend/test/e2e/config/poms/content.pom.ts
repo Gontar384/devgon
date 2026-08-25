@@ -122,7 +122,11 @@ export class ContentManagerPOM {
   }
 
   async clickAdd(): Promise<void> {
+    const created = this.page.waitForResponse(
+      (r) => r.url().includes('/api/graphql') && r.status() === 200,
+    );
     await this.addBtn.click();
+    await created;
   }
 
   async expectAddButtonDisabled(): Promise<void> {
