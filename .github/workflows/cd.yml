@@ -103,7 +103,7 @@ jobs:
               echo "SMTP_USER=${{ secrets.SMTP_USER }}"
               echo "SMTP_PASS=${{ secrets.SMTP_PASS }}"
               echo "SMTP_FROM=devgonteam@gmail.com"
-              echo "CONTACT_MAIL_TO=devgonteam@gmail.com"
+              echo "CONTACT_MAIL_TO=gontarek384@gmail.com"
               echo "UMAMI_APP_SECRET=${{ secrets.UMAMI_APP_SECRET }}"
             } > .env
             
