@@ -5,7 +5,7 @@
     "description": "A universal content layer: build the UI freely in Next.js, then expose any section to admin editing - no backend changes, no schema migrations. One extensible Content entity backs every section, behind a GraphQL API. Full production DevOps owned solo.",
     "media": [
       {
-        "url": "/image/cms/screenshot_1.png",
+        "url": "/image/cms/screenshot_3.png",
         "alt": "devgon CMS admin panel",
         "type": "IMAGE"
       }
@@ -51,7 +51,7 @@
     "description": "Built end-to-end - data model, API, calculation logic, UI and deployment - fully parametrized for offer and production capacity. Used daily by 30+ sales representatives, feeding straight into the ordering pipeline. Later extended with 3D visualization.",
     "media": [
       {
-        "url": "/image/projects/configurator.jpg",
+        "url": "/image/projects/configurator.png",
         "alt": "Fencing product configurator",
         "type": "IMAGE"
       }
